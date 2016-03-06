@@ -24,20 +24,20 @@
 \newcommand{\mbf}[1]{\mathbf{#1}}
 
 \title{\LARGE{Improved Bounds for Sub-linear Time Compressed Sensing for Support Recovery using Sparse-Graph Codes}}
-\author{\IEEEauthorblockN{Krishna R. Narayanan\\}
+\author{\IEEEauthorblockN{Avinash Vem, Nagaraj Thenkarai Janakiraman, Krishna Narayanan \\}
 \IEEEauthorblockA{Dept. of Elect. \& Comp. Engg., \\
 Texas A\&M University, \\
-College Station, TX, U.S.A}
+College Station, TX, U.S.A\\}
 %\and
-%\IEEEauthorblockN{Krishna R. Narayanan}
+%\IEEEauthorblockN{Nagaraj Thenkarai Janakiraman\\}
+%\IEEEauthorblockA{Dept. of Elect. \& Comp. Engg., \\
+%Texas A\&M University, \\
+%College Station, TX, U.S.A\\}
+%\and
+%\IEEEauthorblockN{Krishna R. Narayanan\\}
 %\IEEEauthorblockA{Dept. of Elect. \& Comp. Engg., \\
 %Texas A\&M University, \\
 %College Station, TX, U.S.A}
-%\and
-%\IEEEauthorblockN{Joseph Boutros}
-%\IEEEauthorblockA{Dept. of Elect. \& Comp. Engg., \\
-%Texas A\&M University, \\
-%Doha, Qatar}
 }
 \date{Feb 20, 2016}
 \maketitle
@@ -135,13 +135,13 @@ It should be noted that if the objective is to get the probability of error to d
 Based on this, indeed, it appears that when using RandomNoisy measurement matrix, it is not even required to switch to the $\mathcal{G}_{\rm reg-reg}$ ensemble and we could have simply chosen $P = O(N^\beta)$. However, if we want to choose the Random DFT ensembele (see Page 22 \cite{li2015subdraft}), then we have to switch to the $\mathcal{G}_{\rm reg-reg}$. It appears convenient to switch to this ensemble for all results
 
 \section{Proofs}
-We have to prove that we can use the $\mathcal{G}^N_{\rm reg,reg}\left(R,d, \frac{dN}{R} \right)$ for optimal peeling. This indeed appears to be straightforward. 
-%Still it may be useful to make the equivalence between the erasure decoding problem and syndrome source coding problem and show that this ensemble will provide a probability of failure of at most $O\left(\frac{1}{K}\right)$. 
+We have to prove that we can use the $\mathcal{G}^N_{\rm reg,reg}\left(R,d, \frac{dN}{R} \right)$ for optimal peeling. This indeed appears to be straightforward.
+%Still it may be useful to make the equivalence between the erasure decoding problem and syndrome source coding problem and show that this ensemble will provide a probability of failure of at most $O\left(\frac{1}{K}\right)$.
 In the next section we consider a $\mathcal{G}(R,d,\frac{dN}{R})$ ensemble and show that this ensemble will provide a probability of failure of at most $O\left(\frac{1}{K}\right)$. Although it appears simple to use a spatially-coupled code ensemble and use existing results to show this there are two main obstacles to this:
 \begin{itemize}
 \item  In traditional LDPC codes and peeling decoder over binary erasure channel, the input to the decoder is the channel output corresponding to $N$ bit nodes and the check nodes on the right are mere parity checks whose sum modulo 2 is zero. Whereas in this problem the values corresponding to the $N$ bit nodes on the left need to be evaluated by the decoder given the values corresponding to the $R$ check nodes (the real sum of the bit nodes connected) on the right node are non-zero  and are given as input to the decoder.
 \item  In traditional LDPC case a constant fraction $\epsilon$ of these $N$ bit nodes are erased by the channel and usually the emphasis is on analyzing the performance of peeling decoder asymptotically in $N$ or $R$ when rate=$1-\frac{R}{N}$ is fixed. But in our case the fraction of the nodes erased $=1-\frac{K}{N}$, where $K$ is usually of the form $K=N^{\delta}$, tend to one and the rate of the code$=1-\frac{R}{N}=1-\frac{\eta N^{\delta}}{N}$ tend to one asymptotically in $N$.
-\end{itemize} 
+\end{itemize}
 
 Consider a left and right regular LDPC code $\mathcal{G}_{\text{LDPC}}(N,l,r)$ where $N$ is the number of variable nodes on the left and $l,r$ are the regular left and right degrees respectively. Let $P_{\text{BEC}}^{(i)}(\mathbf{y})$ be the degree distribution of the number of check nodes after iteration $i$ of peeling decoder given $\mathbf{y}$ is the channel output. And similarly $\mathcal{G}_{\text{reg-reg}}(N,l,r)$ be the graph corresponding to the parity check matrix in compressed sensing problem and $P_{\text{CS}}^{(i)}(\mathbf{z})$ be the degree distribution of the check nodes the right after iteration $i$ of the oracle-based peeling decoder, given $\mathbf{z}$ is the CS equivalent of syndrome corresponding to $\mathbf{x}$ i.e., $\mbf{z}=\mbf{H}\mbf{x}$. Note that $\mbf{y}$ is a vector of dimension $N$ whereas $\mbf{z}$ is of dimension $\frac{Nl}{r}$.\\
 
@@ -194,12 +194,18 @@ Here is the brief outline of the proof. We first show that expressions for the e
 
 
 
-\section{Extensions}  For the group testing problem addressed in \cite{lee2015saffron} also, it appears we can replace the ensemble used by Lee, Pedarsani and Ramchandran by the regular-regular ensemble and obtain a sharper result, i.e., $O(K \log (N/K))$ measurements for the case of $K = N^\delta$, where $\delta < 2/3$.
+\section{Extensions} % For the group testing problem addressed in \cite{lee2015saffron} also, it appears we can replace the ensemble used by Lee, Pedarsani and Ramchandran by the regular-regular ensemble and obtain a sharper result, i.e., $O(K \log (N/K))$ measurements for the case of $K = N^\delta$, where $\delta < 2/3$.
+%
+%When the right regular ensemble is considered, then the probability of error at each measurement node will be $O\left(\frac{K^2}{N^2}\right)$ and there are $K$ stages in the peeling process. Thus, for the overall error probability to decay with $K$, we require that
+%\[
+%\frac{K^3}{N^2} < 1 \Rightarrow \frac{N^{3\delta}}{N^2} < 1 \Rightarrow \delta < \frac{2}{3}.
+%\]
+%
+%The main idea in the proof is to look at the reduced subgraph induced only by the defective items and when $N/K \rightarrow \infty$, this graph will be a graph from the left regular, right Poisson ensemble considered in \cite{lee2015saffron}.
 
-When the right regular ensemble is considered, then the probability of error at each measurement node will be $O\left(\frac{K^2}{N^2}\right)$ and there are $K$ stages in the peeling process. Thus, for the overall error probability to decay with $K$, we require that
-\[
-\frac{K^3}{N^2} < 1 \Rightarrow \frac{N^{3\delta}}{N^2} < 1 \Rightarrow \delta < \frac{2}{3}.
-\]
+For the group testing problem addressed in \cite{lee2015saffron} also, it appears we can replace the ensemble used by Lee, Pedarsani and Ramchandran by the regular-regular ensemble and obtain a sharper result, i.e., $O(K \log (N/K))$ measurements for the case of $K = N^\delta$.
+
+We use a left and right regular ensemble for the LDPC code and we use a measurement matrix with $2 \beta \log_2(N/K)$ rows and $N/K$ columns. When the right regular ensemble is considered, then the probability of error at each measurement node will be $O\left(\frac{K^{\beta-1}}{N^{\beta-1}}\right)$ and there are $K$ stages in the peeling process. Thus, for the overall error probability to decay with $K$ according to $O\left(\frac{K^{\beta}}{N^{\beta-1}}\right) = O\left(N^{\delta \beta - \beta + 1}\right)$. If we want this probability of error to be $O(N^{-\delta})$, then we can set $\beta = \frac{1+\delta}{1-\delta}$ to satisfy this. Then, the total number of measurements will be $2 (1+\delta) K \log_2 N$. This is strictly an improvement over $6 K \log_2 N$ measurements used in \cite{lee2015saffron}.
 
 The main idea in the proof is to look at the reduced subgraph induced only by the defective items and when $N/K \rightarrow \infty$, this graph will be a graph from the left regular, right Poisson ensemble considered in \cite{lee2015saffron}.
 \bibliographystyle{IEEEtran}
