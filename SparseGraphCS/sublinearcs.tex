@@ -1,5 +1,5 @@
-\documentclass[journal,draft,onecolumn]{IEEEtran}
-\usepackage{graphicx,psfrag,epsfig,epsf,latexsym,hhline,amsmath,amssymb}
+\documentclass[conference,onecolumn]{IEEEtran}
+\usepackage{graphicx,psfrag,epsfig,epsf,latexsym,hhline,amsmath,amssymb,amsthm}
 \usepackage{url}
 \interdisplaylinepenalty=2500
 \oddsidemargin =0.0in
@@ -21,7 +21,11 @@
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{corollary}[theorem]{Corollary}
+
+%\renewcommand{\epsilon}{\varepsilon}
 \newcommand{\mbf}[1]{\mathbf{#1}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\Prob}{\text{Pr}}
 
 \title{\LARGE{Improved Bounds for Sub-linear Time Compressed Sensing for Support Recovery using Sparse-Graph Codes}}
 \author{\IEEEauthorblockN{Avinash Vem, Nagaraj Thenkarai Janakiraman, Krishna Narayanan \\}
@@ -137,61 +141,94 @@ Based on this, indeed, it appears that when using RandomNoisy measurement matrix
 \section{Proofs}
 We have to prove that we can use the $\mathcal{G}^N_{\rm reg,reg}\left(R,d, \frac{dN}{R} \right)$ for optimal peeling. This indeed appears to be straightforward.
 %Still it may be useful to make the equivalence between the erasure decoding problem and syndrome source coding problem and show that this ensemble will provide a probability of failure of at most $O\left(\frac{1}{K}\right)$.
-In the next section we consider a $\mathcal{G}(R,d,\frac{dN}{R})$ ensemble and show that this ensemble will provide a probability of failure of at most $O\left(\frac{1}{K}\right)$. Although it appears simple to use a spatially-coupled code ensemble and use existing results to show this there are two main obstacles to this:
+In the next section we consider a $\mathcal{G}(R,d,\frac{dN}{R})$ ensemble and show that this ensemble will provide a probability of failure of at most $O\left(\frac{1}{K}\right)$. Although it appears this can be achieved in a straight forward manner by using a capacity achieving spatially-coupled LDPC ensemble and use the existing results, there are two main obstacles to this:
 \begin{itemize}
-\item  In traditional LDPC codes and peeling decoder over binary erasure channel, the input to the decoder is the channel output corresponding to $N$ bit nodes and the check nodes on the right are mere parity checks whose sum modulo 2 is zero. Whereas in this problem the values corresponding to the $N$ bit nodes on the left need to be evaluated by the decoder given the values corresponding to the $R$ check nodes (the real sum of the bit nodes connected) on the right node are non-zero  and are given as input to the decoder.
-\item  In traditional LDPC case a constant fraction $\epsilon$ of these $N$ bit nodes are erased by the channel and usually the emphasis is on analyzing the performance of peeling decoder asymptotically in $N$ or $R$ when rate=$1-\frac{R}{N}$ is fixed. But in our case the fraction of the nodes erased $=1-\frac{K}{N}$, where $K$ is usually of the form $K=N^{\delta}$, tend to one and the rate of the code$=1-\frac{R}{N}=1-\frac{\eta N^{\delta}}{N}$ tend to one asymptotically in $N$.
+\item  In traditional LDPC codes and peeling decoder over binary erasure channel, the input to the decoder is the channel output corresponding to $N$ bit nodes and the check nodes on the right are mere parity checks whose sum modulo 2 is zero. Whereas in this problem the values corresponding to the $N$ variable nodes on the left need to be evaluated by the decoder given the values corresponding to the $R$ check nodes (the real sum of the variable nodes connected) on the right node are non-zero  and are given as input to the decoder.\\
+\item  In traditional LDPC case a constant fraction $\epsilon$ of these $N$ variable nodes are erased by the channel and usually the emphasis is on analyzing the performance of peeling decoder asymptotically in $N$ or $R$ when rate=$1-\frac{R}{N}$ is fixed. But in our case the fraction of the nodes erased $=1-\frac{K}{N}$, where $K$ is usually of the form $K=N^{\delta}$, tend to one and the rate of the code$=1-\frac{R}{N}=1-\frac{\eta N^{\delta}}{N}$ tend to one asymptotically in $N$.
 \end{itemize}
+\vspace{1ex}
 
-Consider a left and right regular LDPC code $\mathcal{G}_{\text{LDPC}}(N,l,r)$ where $N$ is the number of variable nodes on the left and $l,r$ are the regular left and right degrees respectively. Let $P_{\text{BEC}}^{(i)}(\mathbf{y})$ be the degree distribution of the number of check nodes after iteration $i$ of peeling decoder given $\mathbf{y}$ is the channel output. And similarly $\mathcal{G}_{\text{reg-reg}}(N,l,r)$ be the graph corresponding to the parity check matrix in compressed sensing problem and $P_{\text{CS}}^{(i)}(\mathbf{z})$ be the degree distribution of the check nodes the right after iteration $i$ of the oracle-based peeling decoder, given $\mathbf{z}$ is the CS equivalent of syndrome corresponding to $\mathbf{x}$ i.e., $\mbf{z}=\mbf{H}\mbf{x}$. Note that $\mbf{y}$ is a vector of dimension $N$ whereas $\mbf{z}$ is of dimension $\frac{Nl}{r}$.\\
+Consider a left and right regular LDPC code $\mathcal{G}_{\text{LDPC}}(N,l,r)$ where $N$ is the number of variable nodes on the left and $l,r$ are the regular left and right degrees respectively. Let $\text{P}_{\text{BEC}}^{(i)}(\mathbf{y})$ be the degree distribution of the number of check nodes after iteration $i$ of peeling decoder given $\mathbf{y}$ is the channel output. And similarly $\mathcal{G}_{\text{reg-reg}}(N,l,r)$ be the graph corresponding to the parity check matrix in compressed sensing problem and $\text{P}_{\text{CS}}^{(i)}(\mathbf{z})$ be the degree distribution of the check nodes on the right after iteration $i$ of the oracle-based peeling decoder, given $\mathbf{z}$ is the CS equivalent of syndrome corresponding to $\mathbf{x}$ i.e., $\mbf{z}=\mbf{H}\mbf{x}$ where the operations are over the real field. Note that $\mbf{y}$ is a vector of dimension $N$ whereas $\mbf{z}$ is of dimension $\frac{Nl}{r}$.\\
 
-Note that in the peeling decoder we consider, we remove one degree-1 check node and the bit node connected to it from the graph in each iteration. In the following theorems we will show that we can indeed use a left and right regular ensemble and show similar results. %In the case of LDPC-BEC we remove all the bit nodes that are not erased by the channel and the resulting graph is input to the decoder. Similarly in the case of compressed sensing we take the route of oracle based peeling decoder\cite{li2015subdraft} and we input the \textit{pruned}-graph to the decoder where we remove all the zero nodes from the original graph.
+Note that in the peeling decoder we consider, we peel off one degree-1 check node and the variable node connected to it from the graph in each iteration. In the case of LDPC-BEC we remove all the variable nodes that are not erased by the channel and the resulting graph is input to the decoder. Similarly in the case of compressed sensing we consider the  oracle based peeling decoder in \cite{li2015subdraft} and we analyze the \textit{pruned}-graph where we remove all the zero nodes from the original graph.
 
 \begin{lemma}[Equivalence to LDPC-BEC]
+\label{Lemma:Equiv_LDPC_BEC}
 Whenever $\mbf{y}$ and $\mbf{z}$ satisfy
 \begin{align*}
-\mbf{z=Hx} \text{ such that  } |\text{supp}(\mbf{x})|=|\{i:y_i=\mathcal{E}\}| \qquad \text{where } \mathcal{E} \text{ denotes erasure},
+\mbf{z=Hx} \text{ such that  } S:=|\text{supp}(\mbf{x})|=|\{i:y_i=\mathcal{E}\}| \qquad \text{where } \mathcal{E} \text{ denotes erasure},
 \end{align*}
-then $P_{\text{BEC}}^{(i)}(\mbf{y})=P_{\text{CS}}^{(i)}(\mbf{z}) \quad \forall i$.
+then $\text{P}_{\text{BEC}}^{(i)}(\mbf{y})=\text{P}_{\text{CS}}^{(i)}(\mbf{z}) \quad \forall i$.
 \end{lemma}
-
-The above lemma gives us the equivalence of peeling decoder of LDPC codes on BEC and oracle based peeling decoder of compressed sensing problem. Thus by considering an BEC of erasure probability $\frac{K}{N}$ we can equivalently consider peeling decoder of LDPC codes on BEC channel and use a lot of the existing results.
-
+\begin{IEEEproof}
+Define $S^c=[1:N]\backslash S$. In the case of LDPC codes on BEC we peel off all non-erased variable nodes corresponding to $S^c$  and input the resulting graph to the peeling decoder. Similarly in the case of bipartite graph in CS problem we peel off all the zero nodes corresponding to $S^c$ and we input the resulting graph to oracle based peeling decoder. From this point onward the peeling decoders are identical and thus we have our result.
+\end{IEEEproof}
+\vspace{1ex}
+%The above lemma gives us the equivalence of peeling decoder of LDPC codes on BEC and oracle based peeling decoder of compressed sensing problem. 
+Thus by considering a BEC of erasure probability $\epsilon=\frac{K}{N}$ we can equivalently consider peeling decoder of LDPC codes on BEC channel and use various existing results.
 \begin{lemma}
 \label{lem:RightDegEvolution}
 The evolution of the left and right degree distribution as the peeling decoder progresses can be given by
 \begin{align*}
-\tilde{L}_d(y)&=\epsilon y^i,\\
-\tilde{R}_{0}(y)&=1-\sum_{j\geq 1}\tilde{R}_{j}(y),\\
-\tilde{R}_{1}(y)&=R'(1)\epsilon y^{d-1}[y-1+ (1-\epsilon y^{d-1})^{r-1}]\\
-\tilde{R}_{j}(y)&=\sum_{j\geq 2}R_{j}\binom{j}{i}(\epsilon y^{d-1})^i (1-\epsilon y^{d-1})^{j-1}, \quad i\geq 2
+\tilde{L}_d(y)&= y^d,\\
+\tilde{R}_{1}(y)&=r\epsilon y^{l-1}[y-1+ (1-\epsilon y^{l-1})^{r-1}]\\
+\tilde{R}_{i}(y)&=\binom{r}{i}(\epsilon y^{l-1})^i (1-\epsilon y^{l-1})^{r-1}, \quad i\geq 2
+%\tilde{R}_{0}(y)&=1-\sum_{j\geq 1}\tilde{R}_{j}(y),\\
 \end{align*}
-where $\epsilon=\frac{K}{N}$ and $r=\frac{Nd}{\eta K}$.
+where $\epsilon=\frac{K}{N}$ and $r=\frac{Nd}{\eta K}$. Note that the curve corresponding to $\tilde{L}_i(y)(\tilde{R}_{i}(y))$ for $y\in[0,1]$ gives the expected number of degree $i$ variable nodes (check nodes) normalized with respect to $K$ ($\eta K)$.
 \end{lemma}
 \begin{IEEEproof}
-In fact these are exact results for an LDPC code on BEC channel for a given $N,R$ and $\epsilon$. We just restated the result.
+As we showed in Lemma \ref{Lemma:Equiv_LDPC_BEC} the peeling decoder for an LDPC on BEC channel and oracle based peeling decoder for CS are identical upto the residual degree distributions at each iteration. Hence we can use the result for LDPC codes \cite{richardson2008modern} with equivalent channel erasure probability $\epsilon=\frac{K}{N}$.
 \end{IEEEproof}
 
 \begin{definition}[BP Threshold]
-We define the BP threshold, $\eta^{\text{BP}}$ to be the value of $\eta$ for which there is a unique non-zero solution for the equation:
+We define the BP threshold, $\eta^{\text{BP}}$ to be the minimum value of $\eta$ for which there is no non-zero solution for the equation:
 \begin{align*}
-y&=\lim_{N\rightarrow\infty}1-\left(1-\frac{y^{d-1}}{N^{1-\delta}}\right)^{\frac{dN^{1-\delta}}{\eta}}\\
-  &=1-e^{\frac{-dy^{d-1}}{\eta}}
+y&=\lim_{N\rightarrow\infty}1-\left(1-\frac{y^{l-1}}{N^{1-\delta}}\right)^{\frac{dN^{1-\delta}}{\eta}}\\
+  &=1-e^{\frac{-ly^{l-1}}{\eta}}
 \end{align*}
+in the range $y\in [0,1]$.
 \end{definition}
 
-\begin{lemma}\label{lem:PeelSmallGraph}
-If $\eta>\eta^{BP}$ then with probability at least $1-O\left(N^{1/6}e^{-\frac{\sqrt{(N(d-1)}}{(dr)^3}}\right)$ the peeling decoder of a specific instance progresses until the number of residual nodes in the graph has reached size $\gamma N$ where $\gamma$ is an arbitrary positive constant.
+
+\begin{lemma}\cite{richardson2008modern}
+\label{lem:PeelSmallGraph}
+If $\eta>\eta^{BP}$ then with probability at least $1-O\left(K^{1/6}e^{-\frac{\sqrt{Kl}}{(lr)^3}}\right)$ the peeling decoder of a specific instance progresses until the number of residual variable nodes in the graph has reached size $\gamma K$ where $\gamma$ is an arbitrary positive constant.
 \end{lemma}
 
+\begin{definition}[Expander Graphs]
+\label{Def:ExpanderGraph}
+A bipartite graph with K left nodes and regular left degree $l$ is called a $(\gamma,1/2)-$ expander if for all subsets $S$ of left nodes with $|S|\leq \gamma K$, the right neighborhood of $S$ denoted by $\mathcal{N}(S)$ satisfies $|\mc{N}(S)|>l|S|/2$.
+\end{definition}
+
+\begin{lemma}\label{Lem:ExpGraph}
+Consider a left and right regular ensemble $\mc{G}_{\text{reg-reg}}(N,l,\frac{Nl}{\eta K})$, then the pruned graph resulting from any given $K$-sparse signal $\mbf{x}$ is a $(\gamma,1/2)$-expander with probability at least $1-O\left(\frac{1}{K^{l-2}}\right)$ for a sufficiently small constant $\gamma >0$.
+\end{lemma}
+\begin{IEEEproof}
+The proof is similar to the proof used in \cite{li2015subdraft} with minor modifications. Let $E_{v}$ denote the event that a subset $S_{v}$ of variable nodes on the left with size $v$ has at most $l|S_v|/2$ neighbors whose probability can be computed as
+\begin{align}
+\Prob(E_v)&\leq \binom{K}{v}\binom{\eta K}{lv/2}\left(\frac{vl}{2\eta K}\right)^{lv}\label{Eqn:ExpIneq1}\\
+				&\leq c^{vl/2}\left(\frac{v}{K}\right)^{v(l/2-1)}\label{Eqn:ExpIneq2_Binom}
+%				&\leq \left(\frac{vc}{K}\right)^{vl/2}\notag
+\end{align}
+where $c=\frac{le^{2}}{2\eta}$ is a constant. In \eqref{Eqn:ExpIneq1} we upper bound the probability of $E_v$ via union bound over all possible size $v$ subsets on the left and size $lv/2$ subsets on the right. In \eqref{Eqn:ExpIneq2_Binom} we use the inequality $\binom{a}{b}\leq \left(ae/b\right)^b$ and we assume $l\geq 2$ to simplify the constant factor. Then we union bound over all subsets of size upto the remaining nodes $\gamma^{*} K$ where we choose $\gamma^{*}=\left(4c^l\right)^{\frac{-1}{l-2}}$
+\begin{align*}
+\sum_{v=2}^{\gamma^{*} K}\Prob(E_{v})&\leq \sum_{v=2}^{\gamma^{*} K}\left(c^{l}\left(\frac{v}{K}\right)^{l-2}\right)^{v/2}\\
+														&=O\left(\frac{1}{K^{l-2}}\right)
+\end{align*}
+Thus we showed that asymptotically in $K$, the left and right regular graphs are good expander graphs with probability atleast $1-O(1/K^{l-2}).$
+\end{IEEEproof}
+\vspace{1ex}
+
+
 \begin{theorem}
-Consider the ensemble $\mathcal{G}_{\text{reg-reg}}(N,l,\frac{Nl}{\eta K})$, the oracle based peeling decoder peels off all the edges in the pruned graph in $O(K)$ iterations with probability at least $1-O(1/K)$.
+Consider the ensemble $\mathcal{G}_{\text{reg-reg}}(N,l,\frac{Nl}{\eta K})$, the oracle based peeling decoder peels off all the edges in the pruned graph in $\eta K$ iterations with probability at least $1-O\left(1/K^{l-2}\right)$.
 \end{theorem}
 \begin{IEEEproof}
-Here is the brief outline of the proof. We first show that expressions for the evolution of degree distributions from LDPC-BEC are valid here as shown in Lemma. \ref{lem:RightDegEvolution}. Then Lemma. \ref{lem:PeelSmallGraph} shows us that the peeling decoder fails to peel off till the residual graph has $\gamma N$ variable nodes remaining with an exponentially low probability. Then similar to \cite{li2015subisit} we show that the left and right regular graphs are good expander graphs with probability $O(\frac{1}{K})$ and hence the remaining $\gamma N$ nodes can be peeled off.
+%Here is the brief outline of the proof. We first show that expressions for the evolution of degree distributions from LDPC-BEC are valid here as shown in Lemma. \ref{lem:RightDegEvolution}. Then
+ Lemma \ref{lem:PeelSmallGraph} shows us that the peeling decoder fails to peel off till the residual graph has $\gamma N$ variable nodes remaining with an exponentially low probability. Then in Lemma \ref{Lem:ExpGraph} tells us that the left regular graphs are not good expanders with a probability of atmost $O(1/K^{l-2})$ and hence the remaining $\gamma N$ nodes can be peeled off with high probability. Thus the overall probability of failure will be dominated by small stopping sets which can be upper bounded by $O(1/K^{l-2})$.
 \end{IEEEproof}
-
-
+\vspace{3ex}
 
 
 \section{Extensions} % For the group testing problem addressed in \cite{lee2015saffron} also, it appears we can replace the ensemble used by Lee, Pedarsani and Ramchandran by the regular-regular ensemble and obtain a sharper result, i.e., $O(K \log (N/K))$ measurements for the case of $K = N^\delta$, where $\delta < 2/3$.
