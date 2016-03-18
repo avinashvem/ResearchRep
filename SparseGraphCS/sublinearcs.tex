@@ -1,13 +1,7 @@
-\documentclass[conference,onecolumn]{IEEEtran}
-\usepackage{graphicx,psfrag,epsfig,epsf,latexsym,hhline,amsmath,amssymb,amsthm}
-\usepackage{url}
-\interdisplaylinepenalty=2500
-\oddsidemargin =0.0in
-\evensidemargin=0.0in
-\topmargin=-0.1in
-\headsep=0.0in
-\textwidth=6.5in
-\textheight=9.0in
+\documentclass[conference]{IEEEtran}
+\input{/Users/avinashvem/Dropbox/Sub-linearCompressedSensing/Preamble.tex}
+\input{/Users/avinashvem/Dropbox/Sub-linearCompressedSensing/Avinash.def}
+
 \begin{document}
 %\pgfdeclarelayer{background}
 %\pgfdeclarelayer{foreground}
@@ -16,32 +10,13 @@
 %\CLASSINPUTinnersidemargin
 %\CLASSINPUToutersidemargin
 \IEEEoverridecommandlockouts
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{remark}[theorem]{Remark}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{corollary}[theorem]{Corollary}
 
-%\renewcommand{\epsilon}{\varepsilon}
-\newcommand{\mbf}[1]{\mathbf{#1}}
-\newcommand{\mc}[1]{\mathcal{#1}}
-\newcommand{\Prob}{\text{Pr}}
 
 \title{\LARGE{Improved Bounds for Sub-linear Time Compressed Sensing for Support Recovery using Sparse-Graph Codes}}
 \author{\IEEEauthorblockN{Avinash Vem, Nagaraj Thenkarai Janakiraman, Krishna Narayanan \\}
 \IEEEauthorblockA{Dept. of Elect. \& Comp. Engg., \\
 Texas A\&M University, \\
 College Station, TX, U.S.A\\}
-%\and
-%\IEEEauthorblockN{Nagaraj Thenkarai Janakiraman\\}
-%\IEEEauthorblockA{Dept. of Elect. \& Comp. Engg., \\
-%Texas A\&M University, \\
-%College Station, TX, U.S.A\\}
-%\and
-%\IEEEauthorblockN{Krishna R. Narayanan\\}
-%\IEEEauthorblockA{Dept. of Elect. \& Comp. Engg., \\
-%Texas A\&M University, \\
-%College Station, TX, U.S.A}
 }
 \date{Feb 20, 2016}
 \maketitle
@@ -57,7 +32,7 @@ In the absence of noise, given any $K$-sparse signal $x$ with $x[k] \in \mathcal
 \begin{center}
 \begin{tabular}{|c|c|c|}
   \hline
-   & Measurement cost $M$ &  Computational Complexity $T$ \\
+   &  $M$ &  $T$ \\
   \hline
   Fourier noisy & $2(1+\epsilon)K$ & $O(K)$ \\
   \hline
@@ -65,6 +40,7 @@ In the absence of noise, given any $K$-sparse signal $x$ with $x[k] \in \mathcal
   \hline
 \end{tabular}
 \end{center}
+where $M$ and $T$ are measurement cost and computational complexity respectively.
 \end{theorem}
 \vspace{2ex}
 
@@ -74,7 +50,7 @@ variance $\sigma^2$, given any $K$-sparse signal $x$ with $x[k] \in \mathcal{X}$
 \begin{center}
 \begin{tabular}{|c|c|c|}
   \hline
-   & Measurement cost $M$ &  Computational Complexity $T$ \\
+   & $M$ &  $T$ \\
   \hline
   Fourier noisy & $O(K \log^{1.3}N)$ & $O(K \log^{1.3}N)$ \\
   \hline
@@ -96,7 +72,7 @@ variance $\sigma^2$, given any $K$-sparse signal $x$ with $x[k] \in \mathcal{X}$
 \begin{center}
 \begin{tabular}{|c|c|c|}
   \hline
-   & Measurement cost $M$ &  Computational Complexity $T$ \\
+   & $M$ &  $T$ \\
   \hline
   Fourier noisy & $O\left(K \log^{1.3} \frac{N}{K} \right)$ & $O\left(K \log^{1.3} \frac{N}{K} \right)$ \\
   \hline
@@ -110,15 +86,27 @@ variance $\sigma^2$, given any $K$-sparse signal $x$ with $x[k] \in \mathcal{X}$
 variance $\sigma^2$, given any $K$-sparse signal $x$ with $x[k] \in \mathcal{X}$ for $k \in supp (x)$, the RandomNoisy scheme achieves a vanishing failure probability $\mathbb{P}_F \rightarrow 0$ asymptotically in $K$ and $N$ with a measurement complexity of $M = O \left( K \log \frac{N}{K} \right)$ and computational complexity of $T = O \left( N \log \frac{N}{K} \right)$.
 \end{theorem}
 
+\section{System Model}
+A classical problem of much interest is that of estimating a signal $\mbf{x}$ which is sparse in some basis from a noisy measurement signal $\mbf{y}$ of lower dimension compared to $\mbf{x}$. More precisely,
+\begin{align*}
+\mbf{y=Ax+w},
+\end{align*}
+where $\mbf{x}$ is an $N$-dimensional vector, $\mbf{A}$ is a known $m\times N$ matrix commonly referred to as \emph{sensing matrix} and $\mbf{w}$ is additive noise. The unknown signal $\mbf{x}$ is sparse in some basis and we denote the sparsity of $\mbf{x}$ by $K$. If there is no noise then we refer to it as noiseless setting. It is well-known in \emph{compressive sensing} that if $K<< N$ we can recover the unknown signal in significantly fewer number of measurements.  Particularly in this paper we focus on recovering the exact support of $\mbf{x}$ defined as supp$(\mbf{x}):=\card{\{i:x_i\neq 0, i\in[N]\}}$ where $\mbf{x}=[x_1,\ldots , x_i \ldots ,x_N]^{T}$ and $[N]=\{1,2,\ldots N\}$. For a given scheme, given the reconstruction vector $\widehat{\mbf{x}}$, we measure it's performance by the metric probability of failure of support recovery which can be defined as
+\begin{align*}
+\mbb{P}_{F}\coleq\Pr(\text{supp}(\widehat{\mbf{x}})\neq \text{supp}(\mbf{x})).
+\end{align*}
+For this support recovery problem, under noisy settings, Wainwright \cite{wainwright2009information} showed information theoretically that $O\left(K\log(\frac{N}{K})\right)$ number of measurements is necessary and sufficient for asymptotically reliable recovery. Note that the above statement is valid as long as the non-zero elements in $\mbf{x}$ have a sufficiently large minimum absolute value. In view of this condition we set a minimum absolute value for the non-zero elements and further assume that they are from a discrete set. More precisely for the noisy setting we assume that all the non-zero elements of $\mbf{x}$ belong to the set $\{Ae^{i\theta}:A\in\mc{A},\theta\in\Theta\}$ where $\mc{A}\coleq \{A_{\text{min}}+\rho l\}^{L_1}_{l=0},\Theta\coleq\{2\pi l/L_2\}_{l=0}^{L_2}$ for finite but arbitrarily large integers $L_1$ and $L_2$.
+\section{Sparse-Graph based Support Recovery}\label{Sec:Review}
+\section{Proposed Construction}
+
 \subsection{Main Idea}
-The main difference between \cite{li2015subdraft} and our approach is that we replace the left $d$-regular ensemble of graphs $\mathcal{G}^N_{\rm reg}(R,d)$ in \cite{li2015subdraft} by $\left(d, \frac{dN}{R} \right)$ left {\em and} right regular ensemble with fixed degree. This allows us to use a bin detection matrix with $P' = O\left(\log_2 \left( \frac{N}{K} \right)\right)$ rows
-instead of using a bin detection matrix with $P = O(\log_2 N)$ rows.
+The main difference between \cite{li2015subdraft} and our approach is that we replace the left $l$-regular ensemble of graphs $\mathcal{G}^N_{\rm reg}(R,l)$ corresponding to the parity check matrix $H$ described in Sec \ref{Sec:Review} by left {\em and} right $\left(l, r\right)$-regular ensemble of graphs. We know from modern coding theory that to peel off $K$ unknown variable nodes successfully from the bipartite graph we need approximately $\eta K$ number of observations(check nodes) for some $eta>1$. This gives us a maximum degree of $O(\frac{N}{K}$ on the right and hence allows us to use a bin detection matrix with $P' = O\left(\log_2 \left( \frac{N}{K} \right)\right)$ rows instead of using a bin detection matrix with $P = O(\log_2 N)$ rows.
 
 \begin{definition}[Left and right regular graph ensemble]\label{def:leftandrighreg}
-Let $\mathcal{G}^N_{\rm reg,reg}\left(R,d, \frac{dN}{R} \right)$ denote the ensemble of graphs with $N$ left nodes and $R$ right nodes, where each left node $k \in [N]$ is connected to $d$ right nodes and each right node $j \in [R]$ is connected to $\frac{dN}{R}$ left nodes.
+Let $\mathcal{G}^N_{\rm reg-reg}\left(R,l, \frac{lN}{R} \right)$ denote the ensemble of left and right regular bipartite graphs with $N$ left (variable) nodes and $R$ right (check) nodes, where each left node $k \in [N]$ is connected to $l$ right nodes and each right node $j \in [R]$ is connected to $\frac{lN}{R}$ left nodes.
 \end{definition}
 
-The number of observations $R$ will be chosen to be $R = \eta K = O(K)$. A matrix $\mathbf{H}$ is chosen at random from this ensemble and used as the coding matrix. A bin detection matrix $\mathbf{S}$ is chosen similar to that in \cite{li2015subdraft} however now the bin detection matrix has only $P' = \log_2 \left(\frac{N}{R}\right)$ rows. Since $R = O(K)$, this implies that $P' = O(N/K)$. The probability of error for the bin detection algorithm can be analyzed exactly as in \cite{li2015subdraft} with the new $P'$ and shown to have exactly the same behavior in $K$. However, there will be a penalty to pay in terms of the minimum SNR required and this is discussed next.
+The number of observations $R$ will be chosen to be $R = \eta K = O(K)$. A matrix $\mathbf{H}$ is chosen at random from this ensemble and used as the coding matrix. A bin detection matrix $\mathbf{S}$ is chosen similar to that in \cite{li2015subdraft} however now the bin detection matrix has only $P' = O\left(\log (\frac{lN}{R})\right)$ rows. Since $R = O(K)$, this implies that $P' = O(\log(N/K))$. The probability of error for the bin detection algorithm can be analyzed exactly as in \cite{li2015subdraft} with the new $P'$ and shown to have exactly the same behavior in $K$. However, there will be a penalty to pay in terms of the minimum SNR required and this is discussed next.
 
 \subsection{Minimum SNR required}
 We will take the RandomNoisy case as an example and let us consider the case when $K = O(N^\delta)$ for some $0 < \delta < 1$.  In the derivation of the probability of error in \cite{li2015subdraft} in Proposition 3 and Proposition 4 in Appendix D, it can be seen that the probability of error includes terms of the form
@@ -156,9 +144,9 @@ Note that in the peeling decoder we consider, we peel off one degree-1 check nod
 \label{Lemma:Equiv_LDPC_BEC}
 Whenever $\mbf{y}$ and $\mbf{z}$ satisfy
 \begin{align*}
-\mbf{z=Hx} \text{ such that  } S:=|\text{supp}(\mbf{x})|=|\{i:y_i=\mathcal{E}\}| \qquad \text{where } \mathcal{E} \text{ denotes erasure},
+\mbf{z=Hx} \text{ such that  } S:=|\text{supp}(\mbf{x})|=|\{i:y_i=\mathcal{E}\}|  \qquad
 \end{align*}
-then $\text{P}_{\text{BEC}}^{(i)}(\mbf{y})=\text{P}_{\text{CS}}^{(i)}(\mbf{z}) \quad \forall i$.
+where $\mathcal{E}$ denotes erasure, then $\text{P}_{\text{BEC}}^{(i)}(\mbf{y})=\text{P}_{\text{CS}}^{(i)}(\mbf{z}) \quad \forall i$.
 \end{lemma}
 \begin{IEEEproof}
 Define $S^c=[1:N]\backslash S$. In the case of LDPC codes on BEC we peel off all non-erased variable nodes corresponding to $S^c$  and input the resulting graph to the peeling decoder. Similarly in the case of bipartite graph in CS problem we peel off all the zero nodes corresponding to $S^c$ and we input the resulting graph to oracle based peeling decoder. From this point onward the peeling decoders are identical and thus we have our result.
@@ -226,10 +214,12 @@ Consider the ensemble $\mathcal{G}_{\text{reg-reg}}(N,l,\frac{Nl}{\eta K})$, the
 \end{theorem}
 \begin{IEEEproof}
 %Here is the brief outline of the proof. We first show that expressions for the evolution of degree distributions from LDPC-BEC are valid here as shown in Lemma. \ref{lem:RightDegEvolution}. Then
- Lemma \ref{lem:PeelSmallGraph} shows us that the peeling decoder fails to peel off till the residual graph has $\gamma N$ variable nodes remaining with an exponentially low probability. Then in Lemma \ref{Lem:ExpGraph} tells us that the left regular graphs are not good expanders with a probability of atmost $O(1/K^{l-2})$ and hence the remaining $\gamma N$ nodes can be peeled off with high probability. Thus the overall probability of failure will be dominated by small stopping sets which can be upper bounded by $O(1/K^{l-2})$.
+ Lemma \ref{lem:PeelSmallGraph} shows us that the peeling decoder fails to peel off till the residual graph has $\gamma N$ variable nodes remaining with an exponentially low probability. Then in Lemma \ref{Lem:ExpGraph} we show that the left regular graphs are good expanders with a probability of atleast $1-O(1/K^{l-2})$ and hence the remaining $\gamma N$ nodes can be peeled off with high probability. Thus the overall probability of failure will be dominated by small stopping sets which can be upper bounded by $O(1/K^{l-2})$.
 \end{IEEEproof}
 \vspace{3ex}
 
+\section{Numerical Results}
+In this section we provide the empirical performance of our scheme in the noisy setting. We fix the parameters $K=50$ and $N=10^5$. For each data point we generate a $K$-sparse signal at random and keep it fixed for all the simulations. Specifically, $\text{supp}(\mbf{x})$ is chosen uniformly at random from $[N]$ and the non-zero values in $\mbf{x}$ are chosen uniformly at random from the set $\{+1,-1\}$. We sample the coding matrix $\mbf{H}$ from the ensemble $\mc{G}_{\text{reg,reg}}^{N}(R=2K,l=4,r=\frac{2N}{K})$ for each simulation. For the bin detection matrix $\mbf{S}$ we use a QAM-modulated codebook of $(12,n)$ truncated convolutional codes corresponding to rates $\frac{1}{2},\frac{1}{4}$ and $\frac{1}{8}$ where $n=24,48$ and $96$ respectively. Note that we pad an extra row of all ones for determining the sign of $x_i$ thus resulting in the bin detection matrix dimensions of $13\times r, 25\times r$ and $49\times r$ where $r=4000$ is the right degree of the graph corresponding to $\mbf{H}$. We use a Viterbi decoder for singleton identification.
 
 \section{Extensions} % For the group testing problem addressed in \cite{lee2015saffron} also, it appears we can replace the ensemble used by Lee, Pedarsani and Ramchandran by the regular-regular ensemble and obtain a sharper result, i.e., $O(K \log (N/K))$ measurements for the case of $K = N^\delta$, where $\delta < 2/3$.
 %
