@@ -26,49 +26,50 @@ College Station, TX, U.S.A\\}
 \section{Introduction}
 In \cite{li2015subisit} (and in the expanded version in \cite{li2015subdraft}), Li, Pawar and Ramchandran have considered the problem of recovering the support of a $K$-sparse, $N$-dimensional signal from $M$ linear measurements in the presence of noise. Based on sparse-graph codes and a peeling decoder, they have proposed an elegant design of the measurement matrix and a recovery algorithm that is nearly optimal in terms of measurement complexity and computational complexity. In particular, they have proposed two designs - the first design requires $M = O(K \log N)$ measurements and a near-linear ($O(N \log N)$) decoding complexity, whereas the second design requires $M = O(K \log^{1.3} N)$ measurements with a sub-linear decoding complexity.
 
-Specifically, the following theorems are given by Li, Pawar and Ramchandran in \cite{li2015subdraft}
-\begin{theorem}[\cite{li2015subdraft} Noiseless recovery]\label{thm:li1}
-In the absence of noise, given any $K$-sparse signal $x$ with $x[k] \in \mathcal{X}$ for $k \in supp (x)$, their noiseless recovery schemes achieve a vanishing failure probability $\mathbb{P}_F(O\left(\frac{1}{K})\right) \rightarrow 0$ asymptotically in $K$ and $N$ with
-\begin{center}
-\begin{tabular}{|c|c|c|}
-  \hline
-   &  $M$ &  $T$ \\
-  \hline
-  Fourier noisy & $2(1+\epsilon)K$ & $O(K)$ \\
-  \hline
-  Binary noisy & $(1+\epsilon)K(\log_2 N+1)$ & $O(K \log N)$ \\
-  \hline
-\end{tabular}
-\end{center}
-where $M$ and $T$ are measurement cost and computational complexity respectively.
-\end{theorem}
-\vspace{2ex}
+\section{System Model}
+A classical problem of much interest is that of estimating a signal $\mbf{x}$, which is sparse in some basis, from a noisy measurement signal $\mbf{y}$ of smaller dimension compared to $\mbf{x}$. More precisely,
+\begin{align*}
+\mbf{y=Ax+w},
+\end{align*}
+where $\mbf{x}$ is an $N$-dimensional vector, $\mbf{A}$ is a known $m\times N$ matrix commonly referred to as \emph{measurement matrix} and $\mbf{w}$ is additive noise. The unknown signal $\mbf{x}$ is sparse in some basis and we denote the sparsity of $\mbf{x}$ by $K$. If there is no noise then we refer to it as noiseless setting. It is well-known in \emph{compressive sensing} that if $K<< N$ we can recover the unknown signal in significantly fewer number of measurements compared to $N$.  Particularly in this paper we focus on recovering the exact support of $\mbf{x}$ defined as supp$(\mbf{x}):=\card{\{i:x_i\neq 0, i\in[N]\}}$ where $\mbf{x}=[x_1,\ldots , x_i \ldots ,x_N]^{T}$ and $[N]=\{1,2,\ldots N\}$. For a given scheme, given the reconstruction vector $\widehat{\mbf{x}}$, we consider the  metric probability of failure of support recovery which can be defined as
+\begin{align*}
+\mbb{P}_{F}\coleq\Pr(\text{supp}(\widehat{\mbf{x}})\neq \text{supp}(\mbf{x})).
+\end{align*}
+For this support recovery problem, under noisy settings, Wainwright \cite{wainwright2009information} showed information theoretically that $O\left(K\log(\frac{N}{K})\right)$ number of measurements is necessary and sufficient for asymptotically reliable recovery. Note that this result is valid as long as the non-zero elements in $\mbf{x}$ have a sufficiently large minimum absolute value. In view of this condition we set a minimum absolute value for the non-zero elements and further assume that they are from a discrete set. More precisely for the noisy setting we assume that all the non-zero elements of $\mbf{x}$ belong to the set $\{Ae^{i\theta}:A\in\mc{A},\theta\in\Theta\}$ where $\mc{A}\coleq \{A_{\text{min}}+\rho l\}^{L_1}_{l=0},\Theta\coleq\{2\pi l/L_2\}_{l=0}^{L_2}$ for finite but arbitrarily large integers $L_1$ and $L_2$.
+\section{Prior Work }\label{Sec:Review}
+\input{/Users/avinashvem/Dropbox/Sub-linearCompressedSensing/prior_work.tex}
+
+\section{Proposed Construction}
+%\subsection{Main Idea}
+The main difference between \cite{li2015subdraft} and our approach is that we replace the left $l$-regular ensemble of graphs corresponding to the coding matrix $\mbf{H}$ described in Sec \ref{Sec:Review} by left {\em and} right $\left(l, r\right)$-regular ensemble of graphs.
+
+\begin{definition}[Left and right regular graph ensemble]\label{def:leftandrighreg}
+Let $\mathcal{G}^N_{\rm reg,reg}\left(R,l, \frac{lN}{R} \right)$ denote the ensemble of left and right regular bipartite graphs with $N$ variable nodes and $R$ check nodes, where each variable node $k \in [N]$ is connected to $l$ check nodes and each check node $j \in [R]$ is connected to $\frac{lN}{R}$ left nodes.
+\end{definition}
+We know from the modern coding theory that to peel off $K$ unknown variable nodes successfully from the bipartite graph we need $\eta K$ number of check nodes for some $\eta>1$. So we choose the number of check nodes $R = \eta K$. A matrix $\mathbf{H}$ is chosen at random from this ensemble $\mathcal{G}^N_{\rm reg,reg}\left(\eta K,l, \frac{lN}{\eta K} \right)$ and used as the coding matrix.\\
+In the case of bin detection matrix we now have only $r=\frac{lN}{\eta K}=O\left(\frac{N}{K}\right)$ variable nodes connected to each check node and thus we require only a bin detection matrix $\mbf{S}$ of $O(\frac{N}{K})$ columns. For the bin detection matrix designs in Sec. \ref{Sec:Review} we know from \cite{li2015subdraft} that to differentiate between a zero-ton, single-ton and a multi-ton successfully with probability approaching $1$ asymptotically in $\frac{N}{K}$ we only require $\log(\frac{N}{K})$ rows in $\mbf{S}$. We choose the bin detection matrix similar to the \emph{RandomNoisy, FourierNoisy, BinaryNoisy} designs but with dimensions $P'\times r$ where $P'=O\left(\log(\frac{N}{K})\right)$.
 
 
-\begin{theorem}[\cite{li2015subdraft} Sub-linear Time Noisy Recovery]\label{thm:li2}. In the presence of i.i.d. Gaussian noise with zero mean and
-variance $\sigma^2$, given any $K$-sparse signal $x$ with $x[k] \in \mathcal{X}$ for $k \in supp (x)$, our noiseless recovery schemes achieve a vanishing failure probability $\mathbb{P}_F \rightarrow 0$ asymptotically in $K$ and $N$ with
-\begin{center}
-\begin{tabular}{|c|c|c|}
-  \hline
-   & $M$ &  $T$ \\
-  \hline
-  Fourier noisy & $O(K \log^{1.3}N)$ & $O(K \log^{1.3}N)$ \\
-  \hline
-  Binary noisy & $O(K \log N)$ & $O(K \log N)$ \\
-  \hline
-\end{tabular}
-\end{center}
-\end{theorem}
-\vspace{2ex}
+The measurement matrix $\bf A$ for the proposed construction with $\bf H_{R \times N} = [h_1, h_2, \cdots, h_R]^{T}$ and $\bf S_{P' \times r}= [s_1, s_2 \cdots s_r]	$ is given by $ {\bf A}_{RP' \times N} = {\bf H \boxplus S }$,
+ where $ \boxplus$ is the new tensoring operation, which is slightly different from the row-tensor operation used in Sec \ref{Sec:Review} and is defined as 
+  \[ {\bf A}_{RP' \times N} = {\bf H \boxplus S } = \begin{bmatrix} \bf
+ h_1 \boxtimes S_1 \\ \bf
+ h_2 \boxtimes S_2 \\ \bf
+ \vdots\\ \bf
+ h_R \boxtimes S_R  \bf
+\end{bmatrix}  \]
+ 
+ where, \\
+ $\bf S_i= [0, \cdots, s_1 , 0, \cdots, s_2, \cdots, 0, s_r, \cdots, 0],$ $(i\in[R])$, where $\bf 0$ is an all-zero column vector of length $P'$ placed in positions $j$ where $h_{ij}=0$ and the column vectors $\bf s_j$, $j\in[r]$ are placed sequentially in the positions $j$where $h_{ij}=1$.       
+ 
+The example illustrates the new tensoring operation $\boxplus$.
+\input{/Users/avinashvem/Dropbox/Sub-linearCompressedSensing/tensoring_example.tex}
 
-\begin{theorem}[\cite{li2015subdraft} Near-linear Time Noisy Recovery]\label{thm:li3}. In the presence of i.i.d. Gaussian noise with zero mean and
-variance $\sigma^2$, given any $K$-sparse signal $x$ with $x[k] \in \mathcal{X}$ for $k \in supp (x)$, the RandomNoisy scheme achieves a vanishing failure probability $\mathbb{P}_F \rightarrow 0$ asymptotically in $K$ and $N$ with a measurement complexity of $M = O(K \log N)$ and computational complexity of $T = O(N \log N)$.
-\end{theorem}
-
-\section{Main Results}
-We believe that Theorem~\ref{thm:li2} and Theorem~\ref{thm:li3} can be sharpened to the following new theorems
-\begin{theorem}[Sub-linear Time Noisy Recovery]\label{thm:our1}. In the presence of i.i.d. Gaussian noise with zero mean and
-variance $\sigma^2$, given any $K$-sparse signal $x$ with $x[k] \in \mathcal{X}$ for $k \in supp (x)$, our noisy recovery schemes achieve a vanishing failure probability $\mathbb{P}_F \rightarrow 0$ asymptotically in $K$ and $N$ with
+\section{Improved Bounds}
+%\subsubsection*{Main Results}
+With our proposed construction of the sensing matrix, Theorem~\ref{thm:li2} and Theorem~\ref{thm:li3} can be sharpened to the following new theorems.
+\begin{theorem}[Sub-linear Time Noisy Recovery]\label{Thm:ourSubLinearNoisy}. In the presence of i.i.d. Gaussian noise with zero mean and
+variance $\sigma^2$, given any $K$-sparse signal $\mbf{x}$ with $x_k \in \mathcal{X}$ for $k \in \text{supp} (\mbf{x})$, our noisy recovery schemes achieve a vanishing failure probability $\mathbb{P}_F \rightarrow 0$ asymptotically in $K$ and $N$ with
 \begin{center}
 \begin{tabular}{|c|c|c|}
   \hline
@@ -82,39 +83,22 @@ variance $\sigma^2$, given any $K$-sparse signal $x$ with $x[k] \in \mathcal{X}$
 \end{center}
 \end{theorem}
 
-\begin{theorem} [Near-linear Time Noisy Recovery]\label{thm:our2}. In the presence of i.i.d. Gaussian noise with zero mean and
-variance $\sigma^2$, given any $K$-sparse signal $x$ with $x[k] \in \mathcal{X}$ for $k \in supp (x)$, the RandomNoisy scheme achieves a vanishing failure probability $\mathbb{P}_F \rightarrow 0$ asymptotically in $K$ and $N$ with a measurement complexity of $M = O \left( K \log \frac{N}{K} \right)$ and computational complexity of $T = O \left( N \log \frac{N}{K} \right)$.
+\begin{theorem} [Near-linear Time Noisy Recovery]\label{Thm:ourNearLinearNoisy}. In the presence of i.i.d. Gaussian noise with zero mean and
+variance $\sigma^2$, given any $K$-sparse signal $\mbf{x}$ with $x_k \in \mathcal{X}$ for $k \in \text{supp} (\mbf{x})$, the RandomNoisy scheme achieves a vanishing failure probability $\mathbb{P}_F \rightarrow 0$ asymptotically in $K$ and $N$ with a measurement complexity of $M = O \left( K \log \frac{N}{K} \right)$ and computational complexity of $T = O \left( N \log \frac{N}{K} \right)$.
 \end{theorem}
 
-\section{System Model}
-A classical problem of much interest is that of estimating a signal $\mbf{x}$ which is sparse in some basis from a noisy measurement signal $\mbf{y}$ of lower dimension compared to $\mbf{x}$. More precisely,
-\begin{align*}
-\mbf{y=Ax+w},
-\end{align*}
-where $\mbf{x}$ is an $N$-dimensional vector, $\mbf{A}$ is a known $m\times N$ matrix commonly referred to as \emph{sensing matrix} and $\mbf{w}$ is additive noise. The unknown signal $\mbf{x}$ is sparse in some basis and we denote the sparsity of $\mbf{x}$ by $K$. If there is no noise then we refer to it as noiseless setting. It is well-known in \emph{compressive sensing} that if $K<< N$ we can recover the unknown signal in significantly fewer number of measurements.  Particularly in this paper we focus on recovering the exact support of $\mbf{x}$ defined as supp$(\mbf{x}):=\card{\{i:x_i\neq 0, i\in[N]\}}$ where $\mbf{x}=[x_1,\ldots , x_i \ldots ,x_N]^{T}$ and $[N]=\{1,2,\ldots N\}$. For a given scheme, given the reconstruction vector $\widehat{\mbf{x}}$, we measure it's performance by the metric probability of failure of support recovery which can be defined as
-\begin{align*}
-\mbb{P}_{F}\coleq\Pr(\text{supp}(\widehat{\mbf{x}})\neq \text{supp}(\mbf{x})).
-\end{align*}
-For this support recovery problem, under noisy settings, Wainwright \cite{wainwright2009information} showed information theoretically that $O\left(K\log(\frac{N}{K})\right)$ number of measurements is necessary and sufficient for asymptotically reliable recovery. Note that the above statement is valid as long as the non-zero elements in $\mbf{x}$ have a sufficiently large minimum absolute value. In view of this condition we set a minimum absolute value for the non-zero elements and further assume that they are from a discrete set. More precisely for the noisy setting we assume that all the non-zero elements of $\mbf{x}$ belong to the set $\{Ae^{i\theta}:A\in\mc{A},\theta\in\Theta\}$ where $\mc{A}\coleq \{A_{\text{min}}+\rho l\}^{L_1}_{l=0},\Theta\coleq\{2\pi l/L_2\}_{l=0}^{L_2}$ for finite but arbitrarily large integers $L_1$ and $L_2$.
-\section{Sparse-Graph based Support Recovery}\label{Sec:Review}
-\section{Proposed Construction}
+\begin{IEEEproof}
+The bin detection matrix and the decoding methods employed to identify a singleton are identical to that of \cite{li2015subdraft} except that $P=O(\log N)$ is replaced by $P'=O\left(\log(\frac{N}{K})\right)$. Hence the probability of error for the bin detection algorithm can be analyzed exactly as in \cite{li2015subdraft} with $P'$ replaced by $P$ and thus can be shown to be exponentially decaying in $P'$. Therefore all it remains to be shown is that the $\mathcal{G}^N_{\rm reg,reg}\left(R,l, \frac{lN}{R} \right)$ ensemble with peeling process fails with a vanishing error probability $\mbb{P}_F$ asymptotically in $K$ and $N$. We show this in Theorem.~\ref{Thm:PeelingOptimal} and that completes the proof.
+\end{IEEEproof}
 
-\subsection{Main Idea}
-The main difference between \cite{li2015subdraft} and our approach is that we replace the left $l$-regular ensemble of graphs $\mathcal{G}^N_{\rm reg}(R,l)$ corresponding to the parity check matrix $H$ described in Sec \ref{Sec:Review} by left {\em and} right $\left(l, r\right)$-regular ensemble of graphs. We know from modern coding theory that to peel off $K$ unknown variable nodes successfully from the bipartite graph we need approximately $\eta K$ number of observations(check nodes) for some $eta>1$. This gives us a maximum degree of $O(\frac{N}{K}$ on the right and hence allows us to use a bin detection matrix with $P' = O\left(\log_2 \left( \frac{N}{K} \right)\right)$ rows instead of using a bin detection matrix with $P = O(\log_2 N)$ rows.
-
-\begin{definition}[Left and right regular graph ensemble]\label{def:leftandrighreg}
-Let $\mathcal{G}^N_{\rm reg-reg}\left(R,l, \frac{lN}{R} \right)$ denote the ensemble of left and right regular bipartite graphs with $N$ left (variable) nodes and $R$ right (check) nodes, where each left node $k \in [N]$ is connected to $l$ right nodes and each right node $j \in [R]$ is connected to $\frac{lN}{R}$ left nodes.
-\end{definition}
-
-The number of observations $R$ will be chosen to be $R = \eta K = O(K)$. A matrix $\mathbf{H}$ is chosen at random from this ensemble and used as the coding matrix. A bin detection matrix $\mathbf{S}$ is chosen similar to that in \cite{li2015subdraft} however now the bin detection matrix has only $P' = O\left(\log (\frac{lN}{R})\right)$ rows. Since $R = O(K)$, this implies that $P' = O(\log(N/K))$. The probability of error for the bin detection algorithm can be analyzed exactly as in \cite{li2015subdraft} with the new $P'$ and shown to have exactly the same behavior in $K$. However, there will be a penalty to pay in terms of the minimum SNR required and this is discussed next.
-
+By using the left and right regular ensemble we are able to achieve the order optimal bounds for measurement cost. However, there will be a penalty to pay in terms of the minimum SNR required and this is discussed next.
 \subsection{Minimum SNR required}
-We will take the RandomNoisy case as an example and let us consider the case when $K = O(N^\delta)$ for some $0 < \delta < 1$.  In the derivation of the probability of error in \cite{li2015subdraft} in Proposition 3 and Proposition 4 in Appendix D, it can be seen that the probability of error includes terms of the form
+We will take the \emph{RandomNoisy} case as an example and let us consider the case when $K = O(N^\delta)$ for some $0 < \delta < 1$.  In the derivation of the probability of error in \cite{li2015subdraft} in Proposition 3 and Proposition 4 in Appendix D, it can be seen that the probability of error includes terms of the form
 \[
-e^{-\frac{P}{4} \frac{\gamma^2}{1+4\gamma}} + 2 e^{-c_6 P \left(1-\frac{\gamma \sigma^2}{A^2_{\rm min}} \right)}
+e^{-\frac{P}{4} \frac{\gamma^2}{1+4\gamma}} + 2 e^{-c_6 P \left(1-\frac{\gamma \sigma^2}{A^2_{\rm min}} \right)}.
 \]
-
-Right after Proposition~5, it is mentioned that by choosing $P = O(\log N)$, the probability of error can be made to decay as $O\left(\frac{1}{N^3} \right) <  O\left(\frac{1}{K^3} \right)$. First, it should be noted that when $P = O(\log N)$, in order for the probability of error to decay as $O\left(\frac{1}{K^3} \right)$, the following two conditions must be satisfied on $\gamma$
+%Right after Proposition~5, i
+It is mentioned that by choosing $P = O(\log N)$, the probability of error can be made to decay as $O\left(\frac{1}{N^3} \right) <  O\left(\frac{1}{K^3} \right)$. First, it should be noted that when $P = O(\log N)$, in order for the probability of error to decay as $O\left(\frac{1}{K^3} \right)$, the following two conditions must be satisfied on $\gamma$
 \[
 \frac{\gamma^2}{4(1+4\gamma)} > 2 \delta, \ \ {\rm and} \ c_6 \left(1 - \frac{\gamma \sigma^2}{A_{\rm min}^2} \right) > 2 \delta
 \]
@@ -127,18 +111,16 @@ It should be noted that if the objective is to get the probability of error to d
 Based on this, indeed, it appears that when using RandomNoisy measurement matrix, it is not even required to switch to the $\mathcal{G}_{\rm reg-reg}$ ensemble and we could have simply chosen $P = O(N^\beta)$. However, if we want to choose the Random DFT ensembele (see Page 22 \cite{li2015subdraft}), then we have to switch to the $\mathcal{G}_{\rm reg-reg}$. It appears convenient to switch to this ensemble for all results
 
 \section{Proofs}
-We have to prove that we can use the $\mathcal{G}^N_{\rm reg,reg}\left(R,d, \frac{dN}{R} \right)$ for optimal peeling. This indeed appears to be straightforward.
-%Still it may be useful to make the equivalence between the erasure decoding problem and syndrome source coding problem and show that this ensemble will provide a probability of failure of at most $O\left(\frac{1}{K}\right)$.
-In the next section we consider a $\mathcal{G}(R,d,\frac{dN}{R})$ ensemble and show that this ensemble will provide a probability of failure of at most $O\left(\frac{1}{K}\right)$. Although it appears this can be achieved in a straight forward manner by using a capacity achieving spatially-coupled LDPC ensemble and use the existing results, there are two main obstacles to this:
+In this section we consider a $\mathcal{G}^{N}_{\rm reg,reg}(R,l,\frac{lN}{R})$ ensemble and show that this ensemble with the oracle based peeling decoder fails to recover all the variable nodes with a probability of at most $O\left(\frac{1}{K}\right)$. Although it appears this can be achieved in a straight forward manner by using a capacity achieving spatially-coupled LDPC ensemble and use the existing results, there are two main obstacles to this:
 \begin{itemize}
-\item  In traditional LDPC codes and peeling decoder over binary erasure channel, the input to the decoder is the channel output corresponding to $N$ bit nodes and the check nodes on the right are mere parity checks whose sum modulo 2 is zero. Whereas in this problem the values corresponding to the $N$ variable nodes on the left need to be evaluated by the decoder given the values corresponding to the $R$ check nodes (the real sum of the variable nodes connected) on the right node are non-zero  and are given as input to the decoder.\\
+\item  In traditional LDPC codes and peeling decoder over binary erasure channel, the input to the decoder is the channel output corresponding to $N$ bit nodes and the check nodes on the right are mere parity checks whose sum modulo 2 is zero. Whereas in our problem the values corresponding to the $N$ variable nodes on the left need to be evaluated by the decoder given the values corresponding to the $R$ check nodes (the real sum of the variable nodes connected) on the right node are non-zero  and are given as input to the decoder.\\
 \item  In traditional LDPC case a constant fraction $\epsilon$ of these $N$ variable nodes are erased by the channel and usually the emphasis is on analyzing the performance of peeling decoder asymptotically in $N$ or $R$ when rate=$1-\frac{R}{N}$ is fixed. But in our case the fraction of the nodes erased $=1-\frac{K}{N}$, where $K$ is usually of the form $K=N^{\delta}$, tend to one and the rate of the code$=1-\frac{R}{N}=1-\frac{\eta N^{\delta}}{N}$ tend to one asymptotically in $N$.
 \end{itemize}
 \vspace{1ex}
 
-Consider a left and right regular LDPC code $\mathcal{G}_{\text{LDPC}}(N,l,r)$ where $N$ is the number of variable nodes on the left and $l,r$ are the regular left and right degrees respectively. Let $\text{P}_{\text{BEC}}^{(i)}(\mathbf{y})$ be the degree distribution of the number of check nodes after iteration $i$ of peeling decoder given $\mathbf{y}$ is the channel output. And similarly $\mathcal{G}_{\text{reg-reg}}(N,l,r)$ be the graph corresponding to the parity check matrix in compressed sensing problem and $\text{P}_{\text{CS}}^{(i)}(\mathbf{z})$ be the degree distribution of the check nodes on the right after iteration $i$ of the oracle-based peeling decoder, given $\mathbf{z}$ is the CS equivalent of syndrome corresponding to $\mathbf{x}$ i.e., $\mbf{z}=\mbf{H}\mbf{x}$ where the operations are over the real field. Note that $\mbf{y}$ is a vector of dimension $N$ whereas $\mbf{z}$ is of dimension $\frac{Nl}{r}$.\\
+Consider a left and right regular LDPC code $\mathcal{G}_{\text{LDPC}}(N,l,r)$ where $N$ is the number of variable nodes on the left and $l,r$ are the regular left and right degrees respectively. Let $\text{P}_{\text{BEC}}^{(i)}(\mathbf{y})$ be the degree distribution of the number of check nodes after iteration $i$ of peeling decoder given $\mathbf{y}$ is the channel output. And similarly $\mathcal{G}^{N}_{\text{reg,reg}}(R,l,\frac{lN}{R})$ be the graph corresponding to the parity check matrix in the support recovery problem and $\text{P}_{\text{SR}}^{(i)}(\mathbf{z})$ be the degree distribution of the check nodes on the right after iteration $i$ of the oracle-based peeling decoder, given $\mathbf{z}$ is the support recovery equivalent of syndrome corresponding to $\mathbf{x}$ i.e., $\mbf{z}=\mbf{H}\mbf{x}$ where the operations are over the real field. Note that $\mbf{y}$ is a vector of dimension $N$ whereas $\mbf{z}$ is of dimension $\frac{Nl}{r}$.\\
 
-Note that in the peeling decoder we consider, we peel off one degree-1 check node and the variable node connected to it from the graph in each iteration. In the case of LDPC-BEC we remove all the variable nodes that are not erased by the channel and the resulting graph is input to the decoder. Similarly in the case of compressed sensing we consider the  oracle based peeling decoder in \cite{li2015subdraft} and we analyze the \textit{pruned}-graph where we remove all the zero nodes from the original graph.
+Note that in the peeling decoder we consider, we peel off one degree-1 check node and the variable node connected to it from the graph in each iteration. In the case of LDPC-BEC we remove all the variable nodes that are not erased by the channel and the resulting graph is input to the decoder. Similarly in the case of support recovery problem we consider the  oracle based peeling decoder in \cite{li2015subdraft} and we analyze the \textit{pruned}-graph where we remove all the zero nodes from the original graph.
 
 \begin{lemma}[Equivalence to LDPC-BEC]
 \label{Lemma:Equiv_LDPC_BEC}
@@ -146,10 +128,10 @@ Whenever $\mbf{y}$ and $\mbf{z}$ satisfy
 \begin{align*}
 \mbf{z=Hx} \text{ such that  } S:=|\text{supp}(\mbf{x})|=|\{i:y_i=\mathcal{E}\}|  \qquad
 \end{align*}
-where $\mathcal{E}$ denotes erasure, then $\text{P}_{\text{BEC}}^{(i)}(\mbf{y})=\text{P}_{\text{CS}}^{(i)}(\mbf{z}) \quad \forall i$.
+where $\mathcal{E}$ denotes erasure, then $\text{P}_{\text{BEC}}^{(i)}(\mbf{y})=\text{P}_{\text{SR}}^{(i)}(\mbf{z}) \quad \forall i$.
 \end{lemma}
 \begin{IEEEproof}
-Define $S^c=[1:N]\backslash S$. In the case of LDPC codes on BEC we peel off all non-erased variable nodes corresponding to $S^c$  and input the resulting graph to the peeling decoder. Similarly in the case of bipartite graph in CS problem we peel off all the zero nodes corresponding to $S^c$ and we input the resulting graph to oracle based peeling decoder. From this point onward the peeling decoders are identical and thus we have our result.
+Define $S^c=[1:N]\backslash S$. In the case of LDPC codes on BEC we peel off all non-erased variable nodes corresponding to $S^c$  and input the resulting graph to the peeling decoder. Similarly in the case of bipartite graph in support recovery problem we peel off all the zero nodes corresponding to $S^c$ and we input the resulting graph to oracle based peeling decoder. From this point onward the peeling decoders are identical and thus we have our result.
 \end{IEEEproof}
 \vspace{1ex}
 %The above lemma gives us the equivalence of peeling decoder of LDPC codes on BEC and oracle based peeling decoder of compressed sensing problem. 
@@ -158,15 +140,15 @@ Thus by considering a BEC of erasure probability $\epsilon=\frac{K}{N}$ we can e
 \label{lem:RightDegEvolution}
 The evolution of the left and right degree distribution as the peeling decoder progresses can be given by
 \begin{align*}
-\tilde{L}_d(y)&= y^d,\\
+\tilde{L}_l(y)&= y^kl,\\
 \tilde{R}_{1}(y)&=r\epsilon y^{l-1}[y-1+ (1-\epsilon y^{l-1})^{r-1}]\\
 \tilde{R}_{i}(y)&=\binom{r}{i}(\epsilon y^{l-1})^i (1-\epsilon y^{l-1})^{r-1}, \quad i\geq 2
 %\tilde{R}_{0}(y)&=1-\sum_{j\geq 1}\tilde{R}_{j}(y),\\
 \end{align*}
-where $\epsilon=\frac{K}{N}$ and $r=\frac{Nd}{\eta K}$. Note that the curve corresponding to $\tilde{L}_i(y)(\tilde{R}_{i}(y))$ for $y\in[0,1]$ gives the expected number of degree $i$ variable nodes (check nodes) normalized with respect to $K$ ($\eta K)$.
+where $\epsilon=\frac{K}{N}$ and $r=\frac{lN}{\eta K}$. Note that the curve corresponding to $\tilde{L}_i(y)(\tilde{R}_{i}(y))$ for $y\in[0,1]$ gives the expected number of degree $i$ variable nodes (check nodes) normalized with respect to $K$ ($\eta K)$.
 \end{lemma}
 \begin{IEEEproof}
-As we showed in Lemma \ref{Lemma:Equiv_LDPC_BEC} the peeling decoder for an LDPC on BEC channel and oracle based peeling decoder for CS are identical upto the residual degree distributions at each iteration. Hence we can use the result for LDPC codes \cite{richardson2008modern} with equivalent channel erasure probability $\epsilon=\frac{K}{N}$.
+As we showed in Lemma.~\ref{Lemma:Equiv_LDPC_BEC} the peeling decoder for an LDPC on BEC channel and oracle based peeling decoder for CS are identical upto the residual degree distributions at each iteration. Hence we can use the result for LDPC codes \cite{richardson2008modern} with equivalent channel erasure probability $\epsilon=\frac{K}{N}$.
 \end{IEEEproof}
 
 \begin{definition}[BP Threshold]
@@ -190,7 +172,7 @@ A bipartite graph with K left nodes and regular left degree $l$ is called a $(\g
 \end{definition}
 
 \begin{lemma}\label{Lem:ExpGraph}
-Consider a left and right regular ensemble $\mc{G}_{\text{reg-reg}}(N,l,\frac{Nl}{\eta K})$, then the pruned graph resulting from any given $K$-sparse signal $\mbf{x}$ is a $(\gamma,1/2)$-expander with probability at least $1-O\left(\frac{1}{K^{l-2}}\right)$ for a sufficiently small constant $\gamma >0$.
+Consider a left and right regular ensemble $\mc{G}^{N}_{\text{reg,reg}}(\eta K,l,\frac{Nl}{\eta K})$, then the pruned graph resulting from any given $K$-sparse signal $\mbf{x}$ is a $(\gamma,1/2)$-expander with probability at least $1-O\left(\frac{1}{K^{l-2}}\right)$ for a sufficiently small constant $\gamma >0$.
 \end{lemma}
 \begin{IEEEproof}
 The proof is similar to the proof used in \cite{li2015subdraft} with minor modifications. Let $E_{v}$ denote the event that a subset $S_{v}$ of variable nodes on the left with size $v$ has at most $l|S_v|/2$ neighbors whose probability can be computed as
@@ -209,8 +191,8 @@ Thus we showed that asymptotically in $K$, the left and right regular graphs are
 \vspace{1ex}
 
 
-\begin{theorem}
-Consider the ensemble $\mathcal{G}_{\text{reg-reg}}(N,l,\frac{Nl}{\eta K})$, the oracle based peeling decoder peels off all the edges in the pruned graph in $\eta K$ iterations with probability at least $1-O\left(1/K^{l-2}\right)$.
+\begin{theorem}\label{Thm:PeelingOptimal}
+Consider the ensemble $\mathcal{G}^{N}_{\text{reg-reg}}(\eta K,l,\frac{Nl}{\eta K})$, the oracle based peeling decoder peels off all the variable nodes in the pruned graph in $\eta K$ iterations with probability at least $1-O\left(1/K^{l-2}\right)$.
 \end{theorem}
 \begin{IEEEproof}
 %Here is the brief outline of the proof. We first show that expressions for the evolution of degree distributions from LDPC-BEC are valid here as shown in Lemma. \ref{lem:RightDegEvolution}. Then
@@ -220,6 +202,16 @@ Consider the ensemble $\mathcal{G}_{\text{reg-reg}}(N,l,\frac{Nl}{\eta K})$, the
 
 \section{Numerical Results}
 In this section we provide the empirical performance of our scheme in the noisy setting. We fix the parameters $K=50$ and $N=10^5$. For each data point we generate a $K$-sparse signal at random and keep it fixed for all the simulations. Specifically, $\text{supp}(\mbf{x})$ is chosen uniformly at random from $[N]$ and the non-zero values in $\mbf{x}$ are chosen uniformly at random from the set $\{+1,-1\}$. We sample the coding matrix $\mbf{H}$ from the ensemble $\mc{G}_{\text{reg,reg}}^{N}(R=2K,l=4,r=\frac{2N}{K})$ for each simulation. For the bin detection matrix $\mbf{S}$ we use a QAM-modulated codebook of $(12,n)$ truncated convolutional codes corresponding to rates $\frac{1}{2},\frac{1}{4}$ and $\frac{1}{8}$ where $n=24,48$ and $96$ respectively. Note that we pad an extra row of all ones for determining the sign of $x_i$ thus resulting in the bin detection matrix dimensions of $13\times r, 25\times r$ and $49\times r$ where $r=4000$ is the right degree of the graph corresponding to $\mbf{H}$. We use a Viterbi decoder for singleton identification.
+
+\begin{figure}
+\resizebox{0.5\textwidth}{!}{
+\begin{centering}
+\input{/Users/avinashvem/Dropbox/Sub-linearCompressedSensing/Figures/succ_prb_near_sublinear.tex}
+\end{centering}
+}
+\caption{Required $E_b/N_0$ for a target FER of $10^{-4}$,  Rate $\frac{1}{2}$.}	
+\label{Fig:FERRateHalf}	
+\end{figure}
 
 \section{Extensions} % For the group testing problem addressed in \cite{lee2015saffron} also, it appears we can replace the ensemble used by Lee, Pedarsani and Ramchandran by the regular-regular ensemble and obtain a sharper result, i.e., $O(K \log (N/K))$ measurements for the case of $K = N^\delta$, where $\delta < 2/3$.
 %
