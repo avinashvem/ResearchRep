@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage{graphicx,psfrag,epsfig,epsf,latexsym,hhline,amsmath,amssymb,multirow}
+\usepackage[usenames,dvipsnames]{pstricks}
+\usepackage{pst-plot}
+\usepackage{pstricks-add}
+\usepackage{color}
+\usepackage{stmaryrd}
+\usepackage{makecell}
+
+\interdisplaylinepenalty=2500
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{footnote}
+
+\usepackage{blindtext}
+\usepackage{etoolbox}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepgflibrary{shapes}
+\usetikzlibrary{arrows,shapes,chains,matrix,positioning,scopes,patterns	}
+\pgfplotsset{compat=newest}
+\pgfplotsset{plot coordinates/math parser=false}
+%\newcommand*{\radius}{0.1}
+
+\begin{document}
+
+
+
+\begin{tikzpicture}
+\path[use as bounding box] (-2,3) rectangle (2,-3);
+
+\def \radius{0.1}
+\def \extraedge{0.3cm}
+\def \xa{-1.5};
+\def \xb{-0.5};
+\def \xc{0.5};
+\def \xd{1.5};
+\def \ya{2};
+\def \yb{-2};
+\pgfmathsetmacro{\yoA}{0+\radius}
+\pgfmathsetmacro{\yoB}{0-\radius}
+\pgfmathsetmacro{\yaA}{\ya-\radius}
+\pgfmathsetmacro{\ybA}{\yb+\radius}
+
+\draw [black,thick] (0.1,0.1) rectangle (-0.1,-0.1); 
+
+	\draw [black,thick] (\xa,\ya) circle (\radius); 
+		\draw [black,thick] (\xb,\ya) circle (\radius); 
+			\draw [black,thick] (\xc,\ya) circle (\radius); 
+				\draw [black,thick] (\xd,\ya) circle (\radius); 
+	\draw [black,thick] (\xa,\yb) circle (\radius); 
+		\draw [black,thick] (\xb,\yb) circle (\radius); 
+			\draw [black,thick] (\xc,\yb) circle (\radius); 
+				\draw [black,thick] (\xd,\yb) circle (\radius); 		
+
+
+\draw [black,thick] (0,\yoA) -- (\xa,\yaA);
+\draw [black,thick] (0,\yoA) -- (\xb,\yaA);
+\draw [black,thick] (0,\yoA) -- (\xc,\yaA);
+\draw [black,thick] (0,\yoA) -- (\xd,\yaA);
+
+\draw [black,thick] (0,\yoB) -- (\xa,\ybA);
+\draw [black,thick] (0,\yoB) -- (\xb,\ybA);
+\draw [black,thick] (0,\yoB) -- (\xc,\ybA);
+\draw [black,thick] (0,\yoB) -- (\xd,\ybA);
+
+ \draw [thick] (\xa,\yaA) -- +(-85:\extraedge);  
+  \draw [thick] (\xa,\yaA) -- +(-125:\extraedge);  
+
+ \draw [thick] (\xb,\yaA) -- +(-110:\extraedge);  
+  \draw [thick] (\xb,\yaA) -- +(-45:\extraedge);  
+
+ \draw [thick] (\xc,\yaA) -- +(-75:\extraedge);  
+  \draw [thick] (\xc,\yaA) -- +(-130:\extraedge);  
+
+ \draw [thick] (\xd,\yaA) -- +(-65:\extraedge);  
+  \draw [thick] (\xd,\yaA) -- +(-90:\extraedge);  
+
+
+
+ \draw [thick] (\xa,\ybA) -- +(85:\extraedge);  
+  \draw [thick] (\xa,\ybA) -- +(125:\extraedge);  
+
+ \draw [thick] (\xb,\ybA) -- +(110:\extraedge);  
+  \draw [thick] (\xb,\ybA) -- +(45:\extraedge);  
+
+ \draw [thick] (\xc,\ybA) -- +(75:\extraedge);  
+  \draw [thick] (\xc,\ybA) -- +(130:\extraedge);  
+
+ \draw [thick] (\xd,\ybA) -- +(65:\extraedge);  
+  \draw [thick] (\xd,\ybA) -- +(90:\extraedge);  
+
+\end{tikzpicture} 
+\end{document}
