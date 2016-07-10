@@ -1,0 +1,52 @@
+\begin{tikzpicture}[scale=0.75,>=latex,
+point/.style={circle,radius=0.1,draw,fill=black},
+empty/.style={circle,radius=0.1,draw,fill=none},
+sha/.style={circle,radius=\r,draw,pattern=north west lines,pattern color=blue}]
+
+\def\r{0.1}
+\node[point] (23) at (0,0){};
+\node[empty] (24) [right=of 23]{}
+edge [dashed,->] 	node[above]	{\small{$\beta^{2}_{2,3}$}}      (23);
+\node[empty] (22) [left=of 23]{}
+edge [dashed,->] node[above]	{\small{$\alpha^{2}_{2,3}$}}   (23);
+\node[empty] (21) [left=of 22] {}
+edge [dashed,->] node[above]	{\small{$\alpha^{2}_{2,2}$}}   (22);
+
+
+\node[empty] (33) [above=of 23]{}
+edge [->] node[right]	{\small{$\gamma^{2}_{2,3}$}}   (23);
+\node[empty] (34) [right=of 33]{}
+edge [->] 	node[above]	{}(33);%\small{$\beta^{1}_{3,3}$}}      (33);
+\node[empty] (32) [left=of 33]{}
+edge [->] node[above]	{}(33);%\small{$\alpha^{1}_{3,3}$}}   (33);
+\node[empty] (31) [left=of 32] {}
+edge [->] node[above]	{}(32);%\small{$\alpha^{1}_{3,2}$}}   (32);
+
+\node[empty] (13) [below=of 23]{}
+edge [->] node[right]	{\small{$\nu^{2}_{2,3}$}}   (23);
+\node[empty] (14) [right=of 13]{}
+edge [->] 	node[above]	{}(13);%\small{$\beta^{1}_{1,3}$}}      (13);
+\node[empty] (12) [left=of 13]{}
+edge [->] node[above]	{}(13);%\small{$\alpha^{1}_{1,3}$}}   (13);
+\node[empty] (11) [left=of 12] {}
+edge [->] node[above]	{}(12);%\small{$\alpha^{1}_{1,2}$}}   (12);
+
+\draw[dashed,->] (11)--(21) edge [<-,dashed] (31);
+\draw[dashed,->] (12)--(22) edge [<-,dashed] (32);
+\draw[dashed,->] (14)--(24) edge [<-,dashed] (34);
+
+%\node[right] at (14){$p_{1,4}$};
+\node[right] at (24){$p_{2,4}$};
+\node[left] at (21) {$p_{2,1}$};
+
+\node[above] at (31) {$p_{3,1}$};
+\node[above] at (32) {$p_{3,2}$};
+\node[above] at (33) {$p_{3,3}$};
+\node[above] at (34){$p_{3,4}$};
+
+\node[below] at (11) {$p_{1,1}$};
+\node[below] at (12) {$p_{1,2}$};
+\node[below] at (13) {$p_{1,3}$};
+\node[below] at (14) {$p_{1,4}$};
+
+\end{tikzpicture}

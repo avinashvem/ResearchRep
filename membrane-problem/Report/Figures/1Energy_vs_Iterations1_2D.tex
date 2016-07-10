@@ -1,0 +1,68 @@
+% This file was created by matlab2tikz v0.4.7 running on MATLAB 7.14.
+% Copyright (c) 2008--2014, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% Minimal pgfplots version: 1.3
+% 
+\begin{tikzpicture}[scale=0.5]
+
+\begin{axis}[%
+width=6.01828521434821in,
+height=4.74667979002625in,
+scale only axis,
+xmin=0,
+xmax=20,
+xlabel={\Huge{Number of Iterations}},
+ymin=6,
+ymax=22,
+ylabel={\Huge{Energy of the System}},
+legend style={draw=black,fill=white,legend cell align=left}
+]
+\addplot [color=black,solid,mark=asterisk,mark options={solid}]
+  table[row sep=crcr]{1	20.158516462554\\
+2	16.1961617178195\\
+3	13.0160697017717\\
+4	10.8473134303782\\
+5	9.14086714689641\\
+6	6.73284434597266\\
+7	6.78745526016872\\
+8	6.75166418373078\\
+9	6.64376023222287\\
+10	6.64376023222288\\
+11	6.64376023222288\\
+12	6.6268318011085\\
+13	6.60990336999412\\
+14	6.60990336999412\\
+15	6.60990336999412\\
+16	6.60990336999412\\
+17	6.60990336999412\\
+18	6.60990336999412\\
+19	6.60990336999412\\
+20	6.60990336999412\\
+};
+\addlegendentry{\Large{MP Results}};
+
+\addplot [color=red,solid]
+  table[row sep=crcr]{1	6.60990336999411\\
+2	6.60990336999411\\
+3	6.60990336999411\\
+4	6.60990336999411\\
+5	6.60990336999411\\
+6	6.60990336999411\\
+7	6.60990336999411\\
+8	6.60990336999411\\
+9	6.60990336999411\\
+10	6.60990336999411\\
+11	6.60990336999411\\
+12	6.60990336999411\\
+13	6.60990336999411\\
+14	6.60990336999411\\
+15	6.60990336999411\\
+16	6.60990336999411\\
+17	6.60990336999411\\
+18	6.60990336999411\\
+19	6.60990336999411\\
+20	6.60990336999411\\
+};
+\addlegendentry{\Large{Symmetric Config Energy}};
+\end{axis}
+\end{tikzpicture}

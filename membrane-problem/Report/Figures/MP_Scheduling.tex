@@ -1,0 +1,76 @@
+\tikzset{
+  bigarr/.style={
+    decoration={markings,mark=at position 1 with {\arrow[scale=1.2]{>}}},
+    postaction={decorate},
+    }}
+
+\begin{tikzpicture}[scale=0.6]
+
+ \def \radius{0.5em}
+ \def \side{10em}
+\def  \halfside{5em}
+\def \xa{0};
+\def \xb{\xa+\side};
+\def \xc{\xb+\side};
+\def \xd{\xc+\side};
+\def \xe{\xd+\side};
+
+\def \ya{0};
+\def \yb{\ya+\side};
+\def \yc{\yb+\side};
+\def \yd{\yc+\side};
+\def \ye{\yd+\side};
+
+\draw [black,dashed] (\xa,\ya) -- (\xb,\ya) -- (\xc,\ya) -- (\xd,\ya) -- (\xe,\ya); 
+
+	\draw [black,thick,fill] (\xa,\ya) circle (\radius); 
+	\draw [black,thick,fill] (\xb,\ya) circle (\radius); 
+	\draw [black,thick,fill] (\xc,\ya) circle (\radius); 
+	\draw [black,thick,fill] (\xd,\ya) circle (\radius); 
+	\draw [black,thick,fill] (\xe,\ya) circle (\radius); 
+
+\draw [black,thick,bigarr] (\xa,\yb) -- (\xb-\radius,\yb);
+\draw [black,thick,bigarr] (\xb,\yb) -- (\xc-\radius,\yb); 
+\draw [black,thick,bigarr]  (\xd,\yb) -- (\xc+\radius,\yb); 
+\draw [black,thick,bigarr]  (\xe,\yb) -- (\xd+\radius,\yb); 
+
+	\draw [black,thick,fill] (\xa,\yb) circle (\radius); 
+	\draw [black,thick,fill] (\xb,\yb) circle (\radius); 
+	\draw [black,thick,fill] (\xc,\yb) circle (\radius); 
+	\draw [black,thick,fill] (\xd,\yb) circle (\radius); 
+	\draw [black,thick,fill] (\xe,\yb) circle (\radius); 
+
+\draw [black,dashed] (\xa,\yc) -- (\xb,\yc) -- (\xc,\yc) -- (\xd,\yc) -- (\xe,\yc); 
+
+	\draw [black,thick,fill] (\xa,\yc) circle (\radius); 
+	\draw [black,thick,fill] (\xb,\yc) circle (\radius); 
+	\draw [black,thick,fill] (\xc,\yc) circle (\radius); 
+	\draw [black,thick,fill] (\xd,\yc) circle (\radius); 
+	\draw [black,thick,fill] (\xe,\yc) circle (\radius); 
+
+\draw [black,thick,bigarr] (\xa,\ya) -- (\xa,\yb-\radius);  \draw [black,thick,bigarr]   (\xa,\yc) -- (\xa,\yb+\radius);
+\draw [black,thick,bigarr] (\xb,\ya) -- (\xb,\yb-\radius);  \draw [black,thick,bigarr]   (\xb,\yc) -- (\xb,\yb+\radius);
+\draw [black,thick,bigarr] (\xc,\ya) -- (\xc,\yb-\radius);
+\draw [black,thick,bigarr] (\xc,\yc) -- (\xc,\yb+\radius);
+\draw [black,thick,bigarr] (\xd,\ya) -- (\xd,\yb-\radius);  \draw [black,thick,bigarr]   (\xd,\yc) -- (\xd,\yb+\radius);
+\draw [black,thick,bigarr] (\xe,\ya) -- (\xe,\yb-\radius);  \draw [black,thick,bigarr]   (\xe,\yc) -- (\xe,\yb+\radius);
+
+\node[left] at (\xc,\ya+\halfside){\tiny $\gamma_{2,3}^{2}$};	
+\node[left] at (\xc,\yc-\halfside){\tiny $\nu_{2,3}^{2}$};	
+\node[left] at (\xb,\ya+\halfside){\tiny $\gamma^{1}_{2,2}$};	
+\node[left] at (\xb,\yc-\halfside){\tiny $\nu^{1}_{2,2}$};	
+\node[left] at (\xa,\ya+\halfside){\tiny $\gamma^{1}_{2,1}$};	
+\node[left] at (\xa,\yc-\halfside){\tiny $\nu^{1}_{2,1}$};	
+
+\node[left] at (\xd,\ya+\halfside){\tiny $\gamma^{1}_{2,4}$};	
+\node[left] at (\xd,\yc-\halfside){\tiny $\nu^{1}_{2,4}$};	
+\node[left] at (\xe,\ya+\halfside){\tiny $\gamma^{1}_{2,5}$};	
+\node[left] at (\xe,\yc-\halfside){\tiny $\nu^{1}_{2,5}$};	
+
+\node[above] at (\xa+\halfside,\yb){\tiny $\alpha_{2,2}^{2}$};	
+\node[above] at (\xb+\halfside,\yb){\tiny $\alpha_{2,3}^{2}$};	
+\node[above] at (\xc+\halfside,\yb){ \tiny $\beta_{2,3}^{2}$};	
+\node[above] at (\xd+\halfside,\yb){ \tiny $\beta_{2,4}^{2}$};	
+
+        \end{tikzpicture}     
+%  \end{document}
