@@ -1,0 +1,63 @@
+\documentclass[conference]{IEEEtran}
+
+\IEEEoverridecommandlockouts
+
+\input{preamble}
+
+\makeatletter %only needed in preamble
+\renewcommand\Huge{\@setfontsize\Large{22pt}{26}}
+\makeatother
+
+\begin{document}
+
+\title{Spatially-Coupled Codes for Side-Information Problems}
+
+\author{Santhosh Kumar, Avinash Vem, Krishna Narayanan, Henry D. Pfister
+  \thanks{This material is based upon work supported in part by the
+    National Science Foundation (NSF) under Grant No. 1320924.
+    Any opinions, findings, conclusions, and recommendations expressed
+    in this material are those of the authors and do not necessarily
+    reflect the views of these sponsors.}
+   \\Department of Electrical and Computer Engineering, Texas A\&M University
+}
+
+\maketitle
+
+\begin{abstract}
+For compound LDGM/LDPC codes with maximum a posteriori (MAP) processing, Wainwright and Martinian showed that the information-theoretic rate regions of the Wyner-Ziv (WZ) and Gelfand-Pinsker (GP) problems are achievable.
+For the same ensemble, these rates do not appear to be achievable with message-passing guided decimation (GD).
+Fortunately, spatially-coupled (SC) codes seem to provide an elegant remedy when iterative decoding falls short of MAP decoding.
+In particular, Aref et al.\ recently introduced SC LDGM codes that approach the rate-distortion region with belief-propagation guided decimation (BPGD).
+In this paper, we show that SC compound LDGM/LDPC codes with BPGD can approach the rate regions of the WZ and GP problems.
+\end{abstract}
+
+\begin{IEEEkeywords}
+  Belief-propagation, channel coding, convolutional LDPC codes, LDGM codes, LDPC codes, rate distortion.
+\end{IEEEkeywords}
+
+\input{intro}
+
+\section{Background}
+\input{background}
+
+\section{Spatially-Coupled Codes and Message-Passing}
+\input{coupling_mp}
+
+\vspace{-0.0mm}
+\section{Numerical Results}
+\input{numerical_results}
+
+\section{Conclusion}
+We have considered SC compound LDGM/LDPC codes that achieve the rate regions of the WZ and GP side-information problems.
+The decoding and encoding is based on message-passing algorithms.
+The encoding is performed using BPGD algorithm.
+For the WZ problem, LDGM codes were sufficient for the encoding to achieve the entire rate region.
+For the GP problem, we require compound codes and the encoding here is more complicated since the LDPC bit-nodes need to satisfy additional constraints.
+The structure enforced by spatial-coupling seems to be crucial for the BPGD algorithm to encode to a codeword in compound codes.
+Numerical evidence is provided that shows that the SC compound codes can approach the desired rate regions.
+
+\vspace{-0.0mm}
+\bibliographystyle{ieeetr}
+\bibliography{WCLabrv,WCLbib,WCLnewbib}
+
+\end{document}

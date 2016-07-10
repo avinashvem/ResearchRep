@@ -1,0 +1,408 @@
+\documentclass{beamer}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{algorithm,algorithmic}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,chains,matrix,positioning,scopes,patterns}
+\usepackage{pgfplots}
+\usepgflibrary{shapes}
+\pgfplotsset{compat=1.6}
+
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{\textcolor{blue}{\insertframenumber / \inserttotalframenumber}}
+
+\newcommand{\expt}{\mathbb{E}}
+\newcommand{\indicator}[1]{\mathbbm{1}_{\left\{ {#1} \right\} }}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+
+\newlength\tikzwidth
+\newlength\tikzheight
+
+\title{\large{Spatially-Coupled Codes for Write-Once Memories}}
+\author{\normalsize{\textbf{Santhosh Kumar} \\ Avinash Vem \\ Krishna Narayanan \\ Henry Pfister}}
+\date{Allerton 2015}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Write-Once Memories}
+  \begin{center}
+    \scalebox{0.5}{\input{Figures/write-once-memory}}    
+  \end{center}
+  \begin{block}{Flash Memory}<1->
+    \begin{itemize}
+    \item In typical flash memory, changing from $0$ to $1$ is easy
+    \item Resetting $1$ to $0$ requires \textcolor{blue}{rewriting whole block}
+    \item Write-once memories model such storage systems
+    \end{itemize}
+  \end{block}
+  \begin{block}{Binary Write-Once Memories}<2->
+    \begin{itemize}
+    \item<2-> \textcolor{blue}{$0 \longrightarrow 1$ is allowed}
+    \item<3-> \alert{$1 \longrightarrow 0$ is forbidden}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Capacity Region (I) - Noiseless}
+  \begin{center}
+    \scalebox{0.5}{\input{Figures/write-once-memory-capacity-noiseless}}    
+  \end{center}
+  \begin{block}{Write-Once Memory without Noise}
+    \begin{itemize}
+    \item In 1982, Rivest and Shamir gave first WOM codes 
+      \begin{itemize}
+      \item 2 bits in 2 writes with only 3 cells
+      \end{itemize}
+    \item Only about \textcolor{blue}{$n t / \log(t)$ cells} required to store $n$ bits for $t$ writes
+    \item<2-> In 1985, Heegard gave the \alert{capacity} for $t$-write system
+    \item<2-> For a $2$-write system, it is
+      \begin{align*}
+        & \Big{\{} (R_1,R_2) \mid 0 \leq R_1 <  h(\delta) , \,\,0 \leq R_2 < 1-\delta \Big{\}} 
+      \end{align*}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Capacity Region (II) - Read Errors}
+  \begin{center}
+    \scalebox{0.5}{\input{Figures/write-once-memory-capacity-noisy}}
+  \end{center}
+  \begin{block}{Write-Once Memory with Read Errors}
+    \begin{itemize}
+    \item Different from write errors
+    \item $Y = X \oplus \mathsf{Ber}(p)$, where $\mathsf{Ber}(p)$ denotes the Bernoulli noise
+    \item Capacity region is \alert{unknown}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Main Result}
+  \begin{block}{Objective}<1->
+    \begin{itemize}
+    \item Construct \alert{low-complexity} coding schemes that achieve the \textcolor{blue}{capacity region} of the WOM system\vspace{0.1cm}
+      \begin{itemize}
+      \item<1-> Low-complexity encoding and decoding
+      \end{itemize}
+    \item<2-> Focus on the 2-write WOM system
+      \begin{itemize}
+      \item Achieves the capacity region of the noiseless system
+      \item For read errors, achieves
+        \begin{align*}
+          R_1 &< h(\delta) - h(p), & R_2 &< 1 - \delta - h(p) .
+        \end{align*}
+      \end{itemize}
+    \item<3-> Extension to multi-write systems \alert{seems possible with BPGD}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Idea}<4->
+    \begin{itemize}
+      \item Use compound LDGM/LDPC codes
+      \item Encoding for second write is \alert{erasure quantization}
+      \item Use \textcolor{blue}{spatial coupling with message-passing}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Compound LDGM/LDPC Codes}
+  \begin{columns}
+    \column{0.45\textwidth}
+    \begin{center}
+      \setlength\tikzheight{5cm}
+      \setlength\tikzwidth{6cm}
+      \scalebox{0.5}{\input{Figures/compound_code}}
+    \end{center}
+    \column{0.55\textwidth}
+    \begin{itemize}
+    \item Codebook $(n,m-k-k')$ \vspace{0.1cm}
+    \item \textcolor{blue}{Message constraints} \vspace{-0.2cm}
+      \begin{align*}
+        u_1\oplus u_2 \oplus u_5&=s_1, &  u_1\oplus u_3 \oplus u_6&=0
+      \end{align*}
+    \item Codeword $(x_1,\cdots,x_9)$: \vspace{-0.2cm}
+      \begin{align*}
+        x_1 &= u_1 \oplus u_4, & x_2 &= \cdots
+      \end{align*}
+    \item Parametrized by $s^k$: $\mathcal{C}(s^k)$
+    \end{itemize}
+  \end{columns}
+  \vspace{0.2cm}
+  \begin{block}{Key Properties of Compound Codes}<2->
+      \begin{itemize}
+      \item a natural \textcolor{red}{coset decomposition}: $\mathcal{C}=\bigcup_{s^k \in \{0,1\}^k} \mathcal{C}(s^k)$
+      \item achieves capacity over eras. chan. under MAP (when $m=n$)
+      \item a \textcolor{blue}{good source code} under optimal encoding
+      \item a \textcolor{blue}{good channel code} under optimal decoding
+      \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Good Code}
+  \begin{block}{``Good'' source code}
+    \begin{itemize}
+    \item Rate of the code is $R=1-h(\delta)+\varepsilon$
+    \item When this code is used to \alert{optimally encode} $\mathsf{Ber}(\tfrac{1}{2})$
+    \item The average Hamming \textcolor{blue}{distortion is at most $\delta$}
+    \end{itemize}
+  \end{block}
+  \vspace{0.4cm}
+  \begin{block}{``Good'' channel code}
+    \begin{itemize}
+    \item Rate of the code is $R=1-h(p)-\varepsilon$
+    \item When this code is used for channel coding on $\mathsf{BSC}(p)$
+    \item Message est.~under \alert{optimal decoding} with \textcolor{blue}{error at most $\varepsilon$}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Coding Scheme for 2-write WOM: First Write}
+  \vspace{-2cm}
+  \begin{center}
+    \begin{align*}
+      R_1 < h(\delta) - h(p)
+    \end{align*}
+  \end{center}
+  \vspace{-0.5cm}
+  \begin{columns}
+    \column{0.45\textwidth}
+    \begin{center}
+      \scalebox{0.5}{\input{Figures/coding-scheme-first-write}}
+    \end{center}
+
+    \column{0.45\textwidth}
+    \begin{itemize}
+    \item<1-> With message $s^k$, encode $0^n$ to $x^n$ (Distortion $\approx \delta$)
+    \item<1-> \textcolor{red}{Store $x^n$}
+    \item<2-> Decoder has
+      \small{
+        \begin{align*}
+          y_i&=x_i \oplus \mathsf{Ber}(p) \\
+        \end{align*}
+      }
+    \vspace{-1.25cm}
+    \item <3-> \textcolor{blue}{Dec. $x^n$ and compute $s^k$}
+    \item <3-> $R_1=\tfrac{k}{n}\approx h(\delta)-h(p)$
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Coding Scheme for 2-write WOM: Second Write}
+  \begin{center}
+    \scalebox{0.5}{\input{Figures/coding-scheme-second-write-tape}}    
+  \end{center}
+  \begin{columns}
+    \column{0.45\textwidth}
+    \begin{center}
+      \scalebox{0.55}{\input{Figures/compound_ldgm_ldpc_wom_code}}
+    \end{center}
+    \column{0.45\textwidth}
+    \begin{itemize}
+    \item Need to find a \alert{consistent} codeword in $\mathcal{C}(s^k)$
+    \item<2-> Closely related to \textcolor{blue}{Binary Erasure Quantization (BEQ)}
+    \item<2-> En Gad, Huang, Li and Bruck (ISIT 2015)
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Binary Erasure Quantization}
+  \begin{itemize}
+  \item Quantize a sequence in $\{0,1,*\}^n$ to $x^n \in \mathcal{C} \subset \{0,1\}^n$
+    \begin{itemize}
+    \item $0$'s and $1$'s should \alert{match exactly}
+    \item $*$'s can take \textcolor{blue}{either $0$ or $1$}
+    \end{itemize}
+    \vspace{0.25cm}
+  \item Can map the second write of 2-write WOM to BEQ
+    \begin{itemize}
+    \item Map $0$'s to $*$'s and keep $1$'s
+    \item Quantize to codeword in $\mathcal{C}(s^k)$
+    \end{itemize}
+\vspace{0.25cm}
+  \item BEQ is the dual of decoding on binary erasure channel
+    \begin{itemize}
+    \item Martinian and Yedidia (Allerton 2003)
+    \item Can quan. all seq. with erasure pattern $e^n \in \{0,1\}^n$ to $\mathcal{C}$ \\ \hspace{3.5cm} $\Updownarrow$ \\ Chan. dec. for $\mathcal{C}^{\perp}$ can correct all vectors with eras. $1^n \oplus e^n$
+    \end{itemize}
+    \vspace{0.25cm}
+  \item Choose a good (dual) code $\mathcal{C}(s^k)$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Coding Scheme for 2-write WOM: Second Write}
+  \vspace{-2cm}
+  \begin{center}
+    \begin{align*}
+      R_2 < 1 - \delta - h(p)
+    \end{align*}
+  \end{center}
+  \vspace{-0.5cm}
+  \begin{columns}
+    \column{0.45\textwidth}
+    \begin{center}
+      \scalebox{0.5}{\input{Figures/coding-scheme-second-write}}
+    \end{center}
+
+    \column{0.45\textwidth}
+    \begin{itemize}
+    \item<1-> \alert{Change $0$'s to $*$'s}
+    \item<1-> With message $s^k$, encode seq. to $\mathcal{C}(s^k)$
+    \item<2-> Decoder has
+      \small{
+        \begin{align*}
+          y_i&=x_i \oplus \mathsf{Ber}(p) \\
+        \end{align*}
+      }
+    \vspace{-1.25cm}
+    \item <3-> \textcolor{blue}{Dec. $x^n$ and compute $s^k$}
+    \item <3-> $R_2=\tfrac{k}{n}\approx 1 - \delta - h(p)$
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Iterative Erasure Quantization Algorithm}
+  \begin{center}
+    \scalebox{0.5}{\input{Figures/peeling-encoder}}
+  \end{center}
+  \begin{itemize}
+  \item \alert{Peeling type encoder}
+  \begin{center}
+    \begin{algorithmic}
+      \WHILE{$\exists$ non-erasures in $V$}
+      \IF{$\exists$ non-erased $u \in U$ such that only one of its neighbors $v \in V$ is not erased}
+      \STATE Pair $(u,v)$.
+      \STATE Erase $u$ and $v$.
+      \ELSE
+      \STATE FAIL.
+      \STATE \textbf{break}.
+      \ENDIF
+      \ENDWHILE
+    \end{algorithmic}
+  \end{center}
+
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Remarks}
+  \begin{itemize}
+  \item Need codes that are \alert{simultaneously good} for channel/source coding and erasure quantization \vspace{0.2cm}
+  \item Use \textcolor{blue}{message-passing algorithms} instead of \alert{optimal} \vspace{0.2cm}
+  \item Use spatial-coupling for \alert{goodness} of codes under message-passing \vspace{0.2cm}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Spatially-Coupled Compound LDGM/LDPC Codes}
+  \begin{center}
+    \scalebox{0.7}{\input{Figures/spatially_coupled_compound_code}}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Decoding in Spatially-Coupled Compound Codes}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \setlength\tikzheight{5cm}
+    \setlength\tikzwidth{6cm}
+    \scalebox{0.5}{\input{Figures/mp_compound_code}}
+
+    \column{0.5\textwidth}
+    \scalebox{0.5}{\input{Figures/mp_ldgm_bit}}\\ \vspace{0.3cm}
+    \scalebox{0.5}{\input{Figures/mp_ldpc_bit}}\\ \vspace{0.3cm}
+    \scalebox{0.5}{\input{Figures/mp_check}}
+  \end{columns}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item Standard message-passing algorithm
+    \item Threshold saturation proven for SC compound codes on BEC
+    \item Empirically observed for BMS channels
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Numerical Results: Noiseless WOM}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+LDGM/LDPC & $\delta^{*}$ & $\delta$ & $\delta$ & $\delta$ \\
+$(d_v,d_c,d'_v,d'_c)$ & & $w=2$ & $w=3$ & $w=4$ \\
+\hline
+$(3,3,3,6)$  & $0.500$ & $0.477$ & $0.492$ & $0.494$\\
+$(3,3,4,6)$  & $0.333$ & $0.294$ & $0.324$ & $0.326$\\
+$(3,3,5,6)$  & $0.167$ & $0.095$ & $0.156$ & $0.158$\\
+$(4,4,3,6)$  & $0.500$ & $0.461$ & $0.491$ & $0.492$\\
+$(4,4,4,6)$  & $0.333$ & $0.278$ & $0.323$ & $0.325$\\
+$(4,4,5,6)$  & $0.167$ & $0.086$ & $0.155$ & $0.159$\\
+$(5,5,3,6)$  & $0.500$ & $0.436$ & $0.488$ & $0.491$\\
+$(5,5,4,6)$  & $0.333$ & $0.260$ & $0.320$ & $0.324$\\
+$(5,5,5,6)$  & $0.167$ & $0.079$ & $0.154$ & $0.159$\\
+\hline  
+\end{tabular}
+\end{center}
+\begin{block}{Remarks}
+  \begin{itemize}
+  \item $\delta^*$ is the Shannon threshold
+  \item $L=30$, Single system length $\approx 24000$
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Numerical Results: WOM with Read Errors}
+  \begin{center}
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+      LDGM/LDPC & $w$ & $(\delta^{*},p^*)$ & $(\delta,p)$ \\
+      $(d_v,d_c,d'_v,d'_c)$ &  &  & \\
+      \hline
+      $(3,3,4,6)$ & $3$ & $(0.333,0.0615)$ & $(0.321,0.0585)$ \\
+      $(3,3,4,8)$ & $3$ & $(0.500,0.0417)$ & $(0.490,0.0387)$ \\
+      $(3,3,6,8)$ & $4$ & $(0.250,0.0724)$ & $(0.239,0.0684)$ \\
+      $(4,4,4,6)$ & $4$ & $(0.333,0.0615)$ & $(0.324,0.0585)$ \\
+      $(4,4,4,8)$ & $4$ & $(0.500,0.0417)$ & $(0.492,0.0387)$ \\
+      $(4,4,6,8)$ & $4$ & $(0.250,0.0724)$ & $(0.241,0.0694)$ \\
+      \hline  
+    \end{tabular}
+  \end{center}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item $\delta^*$ and $p^*$ are the Shannon thresholds
+    \item $L=30$, Single system length $\approx 30000$
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Numerical Results: Small Blocklength}
+\begin{figure}[!tbh]
+  \centering
+  \setlength\tikzheight{3cm}
+  \setlength\tikzwidth{6cm} 
+  \input{./Figures/rewrite_failure_prob}
+\end{figure}
+\begin{block}{Remarks}
+  \begin{itemize}
+  \item $(L,w)=(30,3)$, Single system length $1200$, Shannon threshold of $0.5$
+  \item A total of $10^5$ were attempted to encode
+  \item No failures for $\delta < 0.43$
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Concluding Remarks}
+  \begin{block}{Conclusion}
+    \begin{itemize}
+    \item Spatially-coupled compound codes achieve the capacity of 2-write systems \vspace{0.2cm}
+    \item \textcolor{red}{Coupling structure} is also crucial 
+      \begin{itemize}
+      \item to achieve optimum thresholds  
+      \item for encoding to succeed 
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Multi-Write Systems}
+    \begin{itemize}
+    \item Will BPGD work for multi-write systems?
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\end{document}

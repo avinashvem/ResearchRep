@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+  [
+  yscale=1.2,
+  node distance = 12mm, draw=black, thick, >=stealth',
+  bitnode/.style={circle, inner sep = 0pt, minimum size = 5.5mm, draw=black},
+  checknode/.style={rectangle, inner sep = 0pt, minimum size = 4mm, draw=black},
+  bitnode2/.style={circle, inner sep = 0pt, minimum size = 4mm, draw=black, fill=black!50},
+  ]
+
+  \node[checknode] (v1) at (0,0) {\LARGE{$s$}};
+  
+  \draw[->] (-1,1) -- node[midway,above,sloped]{\LARGE{$L_1$}} (v1);
+  \node at (-1,0) {\LARGE{$\vdots$}};
+  \draw[->] (-1,-1) -- node[midway,below,sloped]{\LARGE{$L_k$}} (v1);
+
+  \draw[->] (v1) -- node[above,midway,xshift=3.1cm,yshift=0.2cm]{\Large{$\tanh L=(-1)^{s}\cdot \tanh L_1\cdots \tanh L_k$}} (1.5,0);
+
+\end{tikzpicture}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../talk"
+%%% End: 

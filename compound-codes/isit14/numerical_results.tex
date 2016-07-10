@@ -1,0 +1,85 @@
+\label{section:numerical_results}
+Table \ref{table:succ_enc} shows the number of attempts required to encode $50$ source sequences in $\mathcal{C}(s^k)$, with $s^k=0^k$, over different block lengths. 
+For example, at a block length of $9000$, $21$ sequences encoded in the first attempt and $9$ sequences did not encode in four attempts.
+Without removing $4$-cycles, only $5$ sequences encoded at first and $35$ failed after 4 attempts.
+%the number of attempts for the same parameters are $5/3/5/2/35$.
+At a block length of $81000$, all $50$ sequences encoded in the first attempt.
+
+Tables \ref{table:wyner_ziv} and \ref{table:gelfand_pinsker} provide the simulation results with SC compound codes with message-passing algorithms.
+In the LDGM part of the code, $1\%$ of the check-nodes have degree 1.
+This is to ensure that the decoding gets started for the channel coding problem.
+Encoding for the WZ problem is relatively easy, since this is performed using the codebook $\mathcal{SC}'$, which does not have LDPC check constraints.
+The optimal thresholds are calculated based on the rate of the code.
+For example, if a code of rate $R$ is used to encode a $\mathsf{Ber}(\tfrac{1}{2})$, then $D_{*}=h^{-1}(1-R)$.
+The reported distortion and the optimal thresholds correspond to the saturated section of the SC system uneffected by the boundary condition.
+
+For the GP problem, half of all the LDPC check-nodes are chosen randomly to carry message bits, except in the $w-1$ sections at the boundary where no message bits are placed.
+Since the bit-nodes in the left-most $w-1$ sections are initialized to $0$, the LDPC check nodes cannot carry any messages in the left-most $w-1$ sections.
+Also, since the channel code for the GP problem uses fewer parity checks for the right boundary LDPC bit-nodes, there is a small error floor if we place message bits in the right-most $w-1$ sections.
+To avoid this floor, we do not place message bits in these sections and instead incur a small rate loss.
+
+%\vspace{-0.2cm}
+\begin{table}[thb]
+\begin{center}
+\caption{No. of attempts for succ. encoding for $50$ codewords. 
+  $(d_v,d_c,d'_v,d'_c)=(6,3,3,6)$, $(L,w)=(15,3)$, $(\beta,T)=(0.65,10)$.}
+\label{table:succ_enc}
+\vspace{-1mm}
+\begin{tabular}{|c|c|c|}
+\hline
+Block length ($n$) & 4-cycles & $1/2/3/4/\geq 5$  \\
+\hline
+$9000$ & yes & $5/3/5/2/35$ \\
+$9000$ & no & $21/12/5/3/9$ \\
+$27000$ & no & $35/15/0/0/0$ \\
+$45000$ & no & $40/9/0/0/1$ \\
+$63000$ & no & $44/6/0/0/0$ \\
+$81000$ & no & $50/0/0/0/0$\\ 
+\hline  
+\end{tabular}
+\end{center}
+\vspace{-0.65cm}
+\end{table}
+
+\begin{table}[thb]
+\begin{center}
+\caption{Thresholds for Wyner-Ziv problem with $(n\approx 140000,\beta=1.04,T=10)$.}
+\label{table:wyner_ziv}
+\vspace{-1mm}
+\begin{tabular}{|p{0.8cm}|p{0.8cm}|p{0.7cm}|p{1.6cm}|p{1.65cm}|}
+\hline
+LDGM & LDPC & $(L,w)$ & $(D_{*},\delta_{*})$ & $(D,\delta)$ \\
+$(d_v,d_c)$ & $(d'_v,d'_c)$ &  &  & \\
+\hline
+$(6,3)$ & (3,6) & (20,4)  & (0.111,0.134)  & (0.1174,0.122) \\
+$(8,4)$ & (3,6) & (20,4)  & (0.111,0.134)  & (0.1149,0.120) \\
+$(10,5)$ & (3,6) & (20,4)  & (0.111,0.134)  & (0.1139,0.122) \\
+\hline  
+\end{tabular}
+\end{center}
+\vspace{-0.65cm}
+\end{table}
+
+\begin{table}[thb]
+\begin{center}
+\caption{Thresholds for Gelfand-Pinsker problem with $(n\approx 140000,\beta=0.65,T=10)$.} 
+\label{table:gelfand_pinsker}
+\vspace{-1mm}
+\begin{tabular}{|p{1.4cm}|p{0.8cm}|p{0.8cm}|p{1.4cm}|p{1.4cm}|}
+\hline
+LDGM & LDPC & $(L,w)$ & $(p_{*},\delta_{*})$ & $(p,\delta)$ \\
+$(d_v,d_c)$ & $(d'_v,d'_c)$ &  &  & \\
+\hline
+$(6,3)$ & (3,6) & (20,4)  & (0.215,0.157)  & (0.220,0.152) \\
+$(8,4)$ & (3,6) & (20,4)  & (0.215,0.157)  & (0.223,0.151) \\
+$(10,5)$ & (3,6) & (20,4)  & (0.215,0.157)  & (0.220,0.151) \\
+\hline
+\end{tabular}
+\end{center}
+\vspace{-0.5cm}
+\end{table}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "isit14"
+%%% End: 

@@ -1,0 +1,44 @@
+\begin{tikzpicture}
+  [draw=black,thick, >=stealth']
+  \foreach \x in {0,2cm,4cm,6cm,8cm,10cm,12cm,14cm,16cm} {
+    \draw (\x,0) rectangle (\x+2cm,-1.5cm);
+  }
+
+  \only<3>{
+    \foreach \x in {2cm,4cm,10cm,14cm} {
+      \draw[fill=black] (\x,0) rectangle (\x+2cm,-1.5cm);
+    }
+  }
+
+  \only<1>{
+    \foreach \x in {0,2cm,4cm,6cm,8cm,10cm,12cm,14cm,16cm} {
+      \node[white] at (\x+1cm,-2cm) {\Huge{$0$}};
+    }
+  }
+
+  \only<2>{
+    \foreach \x in {0,2cm,4cm,6cm,8cm,10cm,12cm,14cm,16cm} {
+      \node[] at (\x+1cm,-2cm) {\Huge{$0$}};
+    }
+  }
+
+  \only<3>{
+    \foreach \x in {0,6cm,8cm,12cm,16cm} {
+      \node[] at (\x+1cm,-2cm) {\Huge{$0$}};
+    }
+
+    \foreach \x in {2cm,4cm,10cm,14cm} {
+      \node[red] at (\x+1cm,-2cm) {\Huge{$1$}};
+    }
+  }
+
+
+%  \node[blue] at (3cm,-0.75cm) {$i$}; \node[blue] at (15cm,-0.75cm) {$j$};
+%  \draw[->,thick] (5cm,-2cm) ..controls(11cm,-2.5cm) .. node[midway,below]{$\pi$} (17cm,-2cm);
+\end{tikzpicture}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../talk"
+%%% End: 

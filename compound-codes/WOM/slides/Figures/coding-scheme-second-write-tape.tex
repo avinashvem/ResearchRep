@@ -1,0 +1,25 @@
+\begin{tikzpicture}
+  [draw=black,thick, >=stealth']
+  \foreach \x in {0,2cm,4cm,6cm,8cm,10cm,12cm,14cm,16cm} {
+    \draw (\x,0) rectangle (\x+2cm,-1.5cm);
+  }
+
+  \foreach \x in {0,6cm,10cm,12cm} {
+    \draw[fill=black] (\x,0) rectangle (\x+2cm,-1.5cm);
+  }
+  
+  \foreach \x in {2cm,4cm,8cm,14cm,16cm} {
+    \node[] at (\x+1cm,-2cm) {\Huge{$0$}};
+  }
+  
+  \foreach \x in {0,6cm,10cm,12cm} {
+    \node[red] at (\x+1cm,-2cm) {\Huge{$1$}};
+  }
+  
+
+\end{tikzpicture}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../talk"
+%%% End: 

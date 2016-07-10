@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+  [draw=black,thick, >=stealth']
+  \foreach \x in {0,2cm,4cm,6cm,8cm,10cm,12cm,14cm,16cm} {
+    \draw (\x,0) rectangle (\x+2cm,-1.5cm);
+  }
+
+  \foreach \x in {0,2cm,6cm,8cm,12cm,16cm} {
+    \node[] at (\x+1cm,-0.75cm) {\Huge{$0$}};
+  }
+
+  \foreach \x in {4cm,10cm,14cm} {
+    \node[] at (\x+1cm,-0.75cm) {\Huge{$1$}};
+  }
+
+  \node at (9cm,3cm) {\Huge{Message}};
+
+  \draw[->] (9cm,2cm) -- (9cm,0.5cm);
+
+\end{tikzpicture}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../talk"
+%%% End: 

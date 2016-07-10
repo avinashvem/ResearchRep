@@ -1,0 +1,436 @@
+\documentclass{beamer}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{algorithm,algorithmic}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,chains,matrix,positioning,scopes,patterns}
+\usepackage{pgfplots}
+\usepgflibrary{shapes}
+\pgfplotsset{compat=1.6}
+
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{\textcolor{blue}{\insertframenumber / \inserttotalframenumber}}
+
+\newcommand{\expt}{\mathbb{E}}
+\newcommand{\indicator}[1]{\mathbbm{1}_{\left\{ {#1} \right\} }}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+
+\newlength\tikzwidth
+\newlength\tikzheight
+
+\title{\large{Spatially-Coupled Codes for Side-Information Problems}}
+\author{\normalsize{\textbf{Santhosh Kumar} \\ Avinash Vem \\ Krishna Narayanan \\ Henry Pfister}}
+\date{June 30, 2014}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Lossy Source Coding Problem}
+  \centering{$X^n=(X_1,\cdots,X_n)$, $\alert{X_i \sim \mathsf{Bernoulli}(\frac{1}{2})}$ \\ \vspace{0.3cm} \alert{Binary code $\mathcal{C}=(n,k)$}, rate $R=k/n$}
+  \begin{block}{Lossy Source Coding}<2->
+    \begin{columns}
+      \column{0.55\textwidth}
+      \begin{itemize}
+      \item<2-> Compress $X^n$ to $\hat{X}^n \in \mathcal{C}$
+      \item<2-> \textcolor{blue}{Min.~Hamming distortion}
+        \begin{align*}
+          D=\frac{1}{n} \sum_{i=1}^n \expt \abs{X_i-\hat{X}_i}
+        \end{align*}
+      \item<3-> Rate-Distortion theory: \vspace{-0.15cm}
+        \begin{align*}
+          R > 1 - h(D)
+        \end{align*}
+        \vspace{-0.5cm}
+      \item<3-> $h(\cdot)$ is binary entropy function
+        \small{
+          \begin{align*}
+            h(D)\!=\!-D \log_2 D \!-\! (1\!-\!D) \log_2 (1-D)
+          \end{align*}
+        }
+      \end{itemize}
+      \column{0.45\textwidth}<3->
+      \setlength\tikzheight{3cm} 
+      \setlength\tikzwidth{3.5cm} 
+      \centering{\input{Figures/source_coding_rate}}
+    \end{columns}
+  \end{block}
+
+\end{frame}
+
+\begin{frame}{Side-Information Problems: Wyner-Ziv}
+  \begin{center}
+    \scalebox{0.5}{\input{Figures/wyner-ziv-block-diagram}}
+  \end{center}
+  \begin{block}{Wyner-Ziv Formulation}<1->
+    \begin{columns}
+      \column{0.55\textwidth}
+      \begin{itemize}
+      \item<1-> \textcolor{red}{Side-information} $Z^n$ about $X^n$
+      \item<1-> Decoder \textcolor{blue}{additionally} has $Z^n$
+      \item<1-> Say $Z_i = X_i \oplus \mathsf{Ber}(\delta)$
+      \item<2-> Wyner-Ziv theory:
+        \begin{align*}
+          R > l.c.e\{h(D*\delta)-h(D), (\delta,0)\}
+        \end{align*}
+      \item<2-> $D*\delta=D(1-\delta)+\delta(1-D)$
+      \end{itemize}
+      \column{0.45\textwidth}<2->
+      \setlength\tikzheight{3cm} 
+      \setlength\tikzwidth{3.5cm} 
+      \centering{\input{Figures/wyner_ziv_rate}}
+    \end{columns}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Side-Information Problems: Gelfand-Pinsker}
+  \begin{center}
+    \scalebox{0.5}{\input{Figures/gelfand-pinsker-block-diagram}}
+  \end{center}
+  \begin{block}{Gelfand-Pinsker Formulation}<2->
+    \begin{itemize}
+    \item<2-> Message $M^k$ encoded to $X^n \in \mathcal{C}$ with \textcolor{blue}{$\tfrac{1}{n} \sum_{i=1}^n \expt[X_i] \leq p \leq \frac{1}{2}$}
+    \item<2-> Side-information $Z^n$ is available \alert{only at the encoder}
+    \item<3-> The output at the decoder is
+      \begin{align*}
+        Y^n=X^n\oplus Z^n \oplus W^n, \quad \{W_i\} \sim \textsf{Ber}(\delta)
+      \end{align*}
+    \item<4-> Capacity region by Gelfand-Pinsker:
+      \begin{align*}
+        R < h(p) - h(\delta)
+      \end{align*}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Main Result}
+  \begin{block}{Objective}<1->
+    \begin{itemize}
+    \item Construct \alert{low-complexity} coding schemes that achieve the \textcolor{blue}{complete rate regions} of Wyner-Ziv and Gelfand-Pinsker \vspace{0.1cm}
+      \begin{itemize}
+      \item Low-complexity encoding and decoding
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+  \vspace{0.1cm}
+  \begin{block}{Idea}<2->
+    \begin{itemize}
+    \item Wainwright et al.~used compound LDGM/LDPC codes with \alert{optimal encoding/decoding}\vspace{0.1cm}
+    \item Message-passing algorithms have \textcolor{blue}{non-negligible gap}\vspace{0.1cm}
+    \item<3-> Remedy via \alert{Spatial-Coupling}
+      \begin{itemize}
+      \item Channel coding in coupled compound codes (Kasai et al.)
+      \item Lossy source coding with spatially-coupled LDGM (Aref et al.)
+      \item Encoding with \alert{compound codes has additional challenges}
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% \begin{frame}{A Brief History}
+%   \begin{itemize}
+%   \item Item 1
+%   \item Item 2
+%   \end{itemize}
+% \end{frame}
+
+\begin{frame}{Compound LDGM/LDPC Codes}
+  \begin{columns}
+    \column{0.45\textwidth}
+    \begin{center}
+      \setlength\tikzheight{5cm}
+      \setlength\tikzwidth{6cm}
+      \scalebox{0.5}{\input{Figures/compound_code}}
+    \end{center}
+    \column{0.55\textwidth}
+    \begin{itemize}
+    \item Codebook $\mathcal{C}(n,m-k-k')$ \vspace{0.1cm}
+    \item \textcolor{blue}{Message constraints} \vspace{-0.2cm}
+      \begin{align*}
+        u_1\oplus u_2 \oplus u_5&=s_1, &  u_1\oplus u_3 \oplus u_6&=0
+      \end{align*}
+    \item Codeword $(x_1,\cdots,x_9)$: \vspace{-0.2cm}
+      \begin{align*}
+        x_1 &= u_1 \oplus u_4, & x_2 &= \cdots
+      \end{align*}
+    \end{itemize}
+  \end{columns}
+  \vspace{0.2cm}
+  \begin{block}{Key Properties}<2->
+    \begin{itemize}
+    \item Compound code is 
+      \begin{itemize}
+      \item a \alert{good source code} under optimal encoding
+      \item a \alert{good channel code} under optimal decoding
+      \end{itemize}
+    % \item LDGM code is 
+    %   \begin{itemize}
+    %   \item a \alert{good source code} under optimal encoding
+    %   \item \textcolor{blue}{(side note)} LDGM code is \alert{not} a good channel code
+    %   \end{itemize}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Good Code}
+  \begin{block}{``Good'' source code}
+    \begin{itemize}
+    \item Rate of the code is $R=1-h(D)+\varepsilon$
+    \item When this code is used to \alert{optimally encode} $\mathsf{Ber}(\tfrac{1}{2})$
+    \item The average Hamming \textcolor{blue}{distortion is at most $D$}
+    \end{itemize}
+  \end{block}
+  \vspace{0.4cm}
+  \begin{block}{``Good'' channel code}
+    \begin{itemize}
+    \item Rate of the code is $R=1-h(\delta)-\varepsilon$
+    \item When this code is used for channel coding on $\mathsf{BSC}(\delta)$
+    \item Message est.~under \alert{optimal decoding} with \textcolor{blue}{error at most $\varepsilon$}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% \begin{frame}{Coding Scheme: Wyner-Ziv}
+%   \vspace{-0.2cm}
+%   \begin{center}
+%     \scalebox{0.5}{\input{Figures/wyner-ziv-block-diagram}}
+%   \end{center}
+%   \vspace{-0.35cm}
+%   \begin{columns}
+%     \column{0.5\textwidth}
+%     \vspace{-0.5cm}
+%     \begin{center}
+%       \setlength\tikzheight{5cm}
+%       \setlength\tikzwidth{6cm}
+%       \scalebox{0.5}{\input{Figures/wyner-ziv-coding}}
+%     \end{center}
+%     \column{0.5\textwidth}
+%     \begin{itemize}
+%     \item<2-> Encode $X^n$ to $\hat{X}^n$ using \alert{LDGM} w/ Distortion $\approx D$ \vspace{0.1cm}
+%     \item<3-> Compute \& \textcolor{blue}{transmit $s_i$'s} \vspace{0.1cm} \small{$R = \frac{k}{n} \approx h(D*\delta) - h(D)$} \vspace{0.1cm}
+%     \item <3-> Decoder has $Z^n$: \vspace{-0.2cm}
+%       \small{
+%         \begin{align*}
+%           Z_i &= X_i \oplus \mathsf{Ber}(\delta) \\
+%           &\approx \hat{X_i} \oplus \mathsf{Ber}(D) \oplus \mathsf{Ber}(\delta) \\
+%           &= \hat{X_i} \oplus \mathsf{Ber}(D*\delta)
+%         \end{align*}
+%       }
+%     \item <3-> Decode $\hat{X}^n$ from $Z^n$ \& $s_i$
+%     \end{itemize}
+%   \end{columns}
+% \end{frame}
+
+\begin{frame}{Coding Scheme: Gelfand-Pinsker}
+  \begin{center}
+    \scalebox{0.5}{\input{Figures/gelfand-pinsker-block-diagram}}
+  \end{center}
+  \vspace{-0.4cm}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \begin{center}
+      \setlength\tikzheight{5cm}
+      \setlength\tikzwidth{6cm}
+      \scalebox{0.5}{\input{Figures/gelfand-pinsker-coding}}
+    \end{center}
+    \column{0.5\textwidth}
+    \begin{itemize}
+    \item<2-> With message $M^k$, encode $Z^n$ to $\hat{Z}^n$ (Distortion $\approx p$) \vspace{0.1cm}
+    \item<2-> \textcolor{red}{Transmit $X^n=Z^n \oplus \hat{Z}^n$} \vspace{0.1cm}
+    \item<3-> Decoder has \vspace{-0.2cm}
+      \small{
+        \begin{align*}
+          Y^n&=X^n \oplus Z^n \oplus W^n\\
+          &= \hat{Z}^n \oplus W^n 
+        \end{align*}
+      }
+    \item <3-> \textcolor{blue}{Decode $\hat{Z}^n$ and compute $M^k$}
+    \item <4-> $R=\tfrac{k}{n}\approx h(p)-h(\delta)$
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Remarks}
+  \begin{itemize}
+  \item Need codes that are \alert{simultaneously good} for channel and source coding \vspace{0.2cm}
+  \item Use \textcolor{blue}{message-passing algorithms} instead of \alert{optimal} \vspace{0.2cm}
+  \item Use spatial-coupling for \alert{goodness} of codes under message-passing \vspace{0.2cm}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Spatially-Coupled Compound LDGM/LDPC Codes}
+  \begin{center}
+    \scalebox{0.8}{\input{Figures/spatially_coupled_compound_code}}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Decoding in Spatially-Coupled Compound Codes}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \setlength\tikzheight{5cm}
+    \setlength\tikzwidth{6cm}
+    \scalebox{0.5}{\input{Figures/mp_compound_code}}
+
+    \column{0.5\textwidth}
+    \scalebox{0.5}{\input{Figures/mp_ldgm_bit}}\\ \vspace{0.3cm}
+    \scalebox{0.5}{\input{Figures/mp_ldpc_bit}}\\ \vspace{0.3cm}
+    \scalebox{0.5}{\input{Figures/mp_check}}
+  \end{columns}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item Standard message-passing algorithm
+    \item Threshold saturation proven for SC compound codes on BEC
+    \item Empirically observed for BMS channels
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Encoding in Spatially-Coupled Compound Codes}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \setlength\tikzheight{5cm}
+    \setlength\tikzwidth{6cm}
+    \scalebox{0.5}{\input{Figures/bpgd_compound_code}}
+
+    \column{0.5\textwidth}
+    \scalebox{0.5}{\input{Figures/bpgd_ldgm_bit}}\\ \vspace{0.3cm}
+    \scalebox{0.5}{\input{Figures/bpgd_ldpc_bit}}\\ \vspace{0.3cm}
+    \scalebox{0.5}{\input{Figures/bpgd_check}}
+  \end{columns}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item \textcolor{blue}{Inverse temperature parameter $\beta$}
+    \item Message-passing rules are the same
+    \item However, a \alert{crucial decimation step is needed}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Encoding in SC Compound Codes: BPGD Algorithm}
+  \begin{algorithmic}
+  \WHILE{\textcolor{blue}{There are active LDPC bit-nodes}}
+    \FOR {\alert{$t=1$ to $T$}}
+    \STATE Run the BP equations
+    \ENDFOR
+    \STATE Evaluate LLRs $m_{i}$ for each LDPC bit-node
+    \STATE Choose max. of $|m_i|$ in \alert{left-most $w$ active sections}
+    \IF{$|m_{i^*}|=0$}
+    \STATE Set $u_{i^*}$ to $0$ or $1$ \textcolor{blue}{uniformly randomly}
+    \ELSE
+    \STATE Set $u_{i^*}$ to $0$ or $1$ with \alert{prob. $\frac{1+\tanh m_{i^*}}{2}$ or $\frac{1-\tanh m_{i^*}}{2}$}
+    \ENDIF
+    \STATE \alert{Decimate} (remove) LDPC bit-node $i^*$ and \textcolor{blue}{update parities}
+    \ENDWHILE
+    \STATE If $\{u_{i}\}$ fail to satisfy LDPC checks, then \textbf{\alert{re-encode}}
+    %% Not an issue for lossy source coding problem
+  \end{algorithmic}
+\end{frame}
+
+\begin{frame}{Encoding in SC Compound Codes: Remarks}
+  \begin{itemize}
+  \item \textcolor{blue}{Randomization} in setting $u_{i^*}$ is crucial \vspace{0.3cm}
+  \item BPGD applied to uncoupled code \alert{always failed} \vspace{0.3cm}
+  \item \alert{Spatially-coupled structure} is crucial for successful encoding \vspace{0.15cm}
+    \begin{itemize}
+    \item In addition, distortion is \textcolor{blue}{close to optimal thresholds} \vspace{0.2cm}
+    \item \alert{Does not encode} if decimated from both \textcolor{blue}{left and right}\vspace{0.2cm}
+    \item \alert{Does not encode} if both left and right boundary is set to 0 \vspace{0.2cm}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Encoding in SC Compound Codes: Numerical Example}
+  \begin{center}
+    \begin{tabular}{|c|c|c|}
+      \hline
+      Block length ($n$) & 4-cycles & Attempts $1/2/3/4/\geq 5$  \\
+      \hline
+      \textcolor{blue}{$9000$} & \textcolor{blue}{yes} & \textcolor{blue}{$5/3/5/2/35$} \\
+      $9000$ & no & $21/12/5/3/9$ \\
+      $27000$ & no & $35/15/0/0/0$ \\
+      $45000$ & no & $40/9/0/0/1$ \\
+      $63000$ & no & $44/6/0/0/0$ \\
+      \alert{$81000$} & \alert{no} & \alert{$50/0/0/0/0$}\\ 
+      \hline  
+    \end{tabular}
+  \end{center}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item \# Attempts to encode $50$ seq.~in $(6,3)$ LDGM / $(3,6)$ LDPC
+    \item $L=20$, $w=4$, $\beta=0.65$, $T=10$
+    \item Removing \alert{4-cycles} dramatically improves success
+    \item How much do \textcolor{blue}{6-cycles} matter?
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Numerical Results: Wyner-Ziv}
+  \begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      LDGM & LDPC & $(L,w)$ & $(D_{*},\delta_{*})$ & $(D,\delta)$ \\
+      $(d_v,d_c)$ & $(d'_v,d'_c)$ &  &  & \\
+      \hline
+      $(6,3)$ & (3,6) & (20,4)  & (0.111,0.134)  & (0.1174,0.122) \\
+      $(8,4)$ & (3,6) & (20,4)  & (0.111,0.134)  & (0.1149,0.120) \\
+      $(10,5)$ & (3,6) & (20,4)  & (0.111,0.134)  & (0.1139,0.122) \\
+      \hline  
+    \end{tabular}
+  \end{center}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item $D_*$ and $\delta_*$ are calculated based on the rate of the respective code:
+      \begin{align*}
+        D_*&=h^{-1}(1-R1)  & \delta_*&=h^{-1}(1-R2)
+      \end{align*}
+    \item $n\approx 140000$, $\beta=1.04$, $T=10$
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Numerical Results: Gelfand-Pinsker}
+  \begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      LDGM & LDPC & $(L,w)$ & $(p_{*},\delta_{*})$ & $(p,\delta)$ \\
+      $(d_v,d_c)$ & $(d'_v,d'_c)$ &  &  & \\
+      \hline
+      $(6,3)$ & (3,6) & (20,4)  & (0.215,0.157)  & (0.2200,0.152) \\
+      $(8,4)$ & (3,6) & (20,4)  & (0.215,0.157)  & (0.2230,0.151) \\
+      $(10,5)$ & (3,6) & (20,4)  & (0.215,0.157)  & (0.2200,0.151) \\
+      \hline
+    \end{tabular}
+  \end{center}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item $p_*$ and $\delta_*$ are calculated based on the rate of the respective code:
+      \begin{align*}
+        p_*&=h^{-1}(1-R1)  & \delta_*&=h^{-1}(1-R2)
+      \end{align*}
+    \item $n\approx 140000$, $\beta=0.65$, $T=10$
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Concluding Remarks}
+  \begin{block}{Conclusion}
+    \begin{itemize}
+    \item Spatially-coupled codes achieve the rate regions of Wyner-Ziv and Gelfand-Pinsker problems \vspace{0.2cm}
+    \item \textcolor{red}{Coupling structure} is also crucial 
+      \begin{itemize}
+      \item to achieve optimum thresholds
+      \item for encoding to succeed with decimation 
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Open Questions}
+    \begin{itemize}
+    \item Effect of degree profiles, short-cycles on encoding success \vspace{0.2cm}
+    \item Precise trade-offs with \textcolor{blue}{polar codes}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\end{document}

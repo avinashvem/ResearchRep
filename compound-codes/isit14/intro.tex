@@ -1,0 +1,74 @@
+\section{Introduction}
+
+In this paper, we focus on the Wyner-Ziv (WZ) and Gelfand-Pinsker (GP) coding problems.
+For lossy compression with a fixed distortion constraint and side information at the receiver, the WZ rate $R_{WZ}$ is the minimum achievable rate for source encoding~\cite{Wyner-it76}.
+For channel coding with an input constraint and side information at the transmitter, the GP rate $R_{GP}$ is the maximum achievable information rate~\cite{Gelfand-ppi80}.
+Source and channel coding problems with side information arise naturally in network information theory.
+Solutions to these problems often require the use of ``binning'', where a set of codewords is partitioned into separate bins such that each bin is a good source code or channel code~\cite{Cover-2006}.
+
+% Over the past 20 years, sparse-graph codes with iterative decoding
+% have revolutionized information theory and coding. First, turbo and
+% low-density parity-check (LDPC) codes demonstrated conclusively that
+% codes with low-complexity decoders are not constrained by the computational
+% cutoff rate~\cite{Berrou-icc93,MacKay-elet96}. Then, optimized irregular
+% LDPC codes with belief-propagation (BP) decoding were proven to achieve
+% capacity on the binary erasure channel (BEC) and later observed to
+% approach capacity for all of the standard channel-coding problems
+% (e.g., point-to-point, multiple-access, etc...)~\cite{Luby-it01,Richardson-it01*2,RU-2008}. 
+
+% The good news does not extend automatically, however, to problems
+% that require the quantization of an arbitrary sequence to a nearby
+% codeword (e.g., lossy compression, WZ, and GP). 
+% These problems are not easily solved via iterative decoding because the iterations only converge for a vanishing fraction of the entire sequence space.
+% These problems are not easily solved via iterative decoding because the iteration only
+% converges to a codeword for the sequence vectors that are not ``too
+% far'' from a valid codeword. Unfortunately, this subset generally
+% comprises a vanishing fraction of the entire sequence space.
+
+% In the past few years, a number of practical constructions for these
+% problems have been considered. In~\cite{Yang-asilomar03,Liveris-icip03,Sun-isit05},
+% nested linear codes are designed where trellis codes are used as the
+% source code and LDPC codes are used as the channel code. For the dirty-paper-coding
+% problem, Erez and ten~Brink proposed nested codes combining trellis-based
+% source codes with repeat-accumulate channel codes~\cite{Erez-it05}.
+% In all these cases, there are non-negligible performance gaps relative
+% to what is achievable for related single-user problems. In~\cite{Sun-it09},
+% Sun et al.\ show that, by using a 2048-state trellis coded quantizer
+% and carefully designed IRA code, a gap of about 0.63~dB from optimal
+% prcoessing can be obtained for a rate of 0.25 b/s. However, the complexity
+% of the trellis quantizer is somewhat prohibitive and one must optimize
+% the IRA code.
+
+%%%Replacement
+
+Sparse-graph codes with iterative decoding have been very successful for channel coding problems.
+This good news does not extend automatically, however, to problems that require the quantization of an arbitrary sequence to a nearby codeword (e.g., lossy compression, WZ, and GP).
+These problems are not easily solved via iterative decoding because the iterations only converge for a vanishing fraction of the entire sequence space.
+In the past few years, a number of practical constructions for these problems have been considered \cite{Yang-asilomar03,Liveris-icip03,Erez-it05,Sun-it09}.
+In all these cases, there are non-negligible performance gaps relative to what is achievable for related single-user problems. 
+%%%
+
+For lossy compression, low-density generator matrix (LDGM) codes with modified versions of BP decoding can achieve practically interesting results but they appear to have a non-negligible gap to the optimal compression rate~\cite{Murayama-physreve04,Regalia-com09}.
+Better results can be obtained by using guided decimation techniques where an iterative algorithm (e.g., BP or survey propagation (SP)) is used to sequentially identify bits with a large bias and then fix them to match the bias~\cite{Ciliberti-physrevlet05,Wainwright-it10}.
+Building on these results, spatially-coupled (SC) LDGM codes with BP guided decimation (BPGD) were recently shown by Aref et al.~to approach the optimal compression rate for a binary symmetric source (BSS)~\cite{Aref-isit12,Aref-arxiv13}.
+
+In this paper, we extend the approach of Aref et al. to the WZ and GP problems defined by BSSs and binary symmetric channels (BSCs).
+For these problems, Wainwright and Martinian showed that compound LDGM/LDPC codes can achieve the optimal rates when maximum-likelihood processing is used~\cite{Wainwright-it09}. In this work, we show empirically that BPGD of SC compound LDGM/LDPC codes can approach the optimal WZ and GP rates.
+
+A new complication with compound LDGM/LDPC codes is that the BPGD encoding now has the possibility of failure.
+For iterative encoding with LDGM codes, encoding always succeeds but the resulting distortion depends on the code and encoder details.
+For compound LDGM/LDPC codes, the compressed bits are also required to satisfy some parity checks and the iterative encoder is not guaranteed to find a valid encoding regardless of the target distortion.
+This is similar to what happens when BPGD is used for constraint satisfaction problems~\cite{Montanari-arxiv07a}.
+In fact, without spatial-coupling the BPGD encoder failed in every experiment.
+%One benefit of compound LDGM/LDPC codes is that they can achieve the optimal rate with finite bit and check degrees.
+
+Finally, it is important to note that the WZ and GP problems can also be solved using polar codes~\cite{Korada-it10}.
+In fact, polar codes allow the deterministic construction of codes that approach the optimal rates.
+The main drawback of polar codes is that their rate approaches the theoretical limit quite slowly as the block length increases.
+Thus, they require very large block lengths to operate at rates close to the limit.
+The precise trade-offs between SC codes and polar codes for these problems remains an interesting open problem.
+
+%%% Local Variables: 
+%%% mode: plain-tex
+%%% TeX-master: "isit14"
+%%% End: 

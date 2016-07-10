@@ -1,0 +1,35 @@
+\begin{tikzpicture}
+  [
+  yscale=1.2,
+  node distance = 12mm, draw=black, thick, >=stealth',
+  bitnode/.style={circle, inner sep = 0pt, minimum size = 6mm, draw=black},
+  checknode/.style={rectangle, inner sep = 0pt, minimum size = 6mm, draw=black},
+  ]
+  
+  \node[checknode] (c1) at (1,2) {\large{$1$}};
+  \node[checknode] (c2) at (3,2) {\huge{$*$}};
+  \node[checknode] (c3) at (5,2) {\huge{$*$}};
+  \node[checknode] (c4) at (7,2) {\large{$0$}};
+
+
+  \node[bitnode] (b1) at (2,0) {};
+  \node[bitnode] (b2) at (4,0) {\huge{$*$}};
+  \node[bitnode] (b3) at (6,0) {};
+
+  \draw[thick] (c1) -- (b1);
+  \draw[thick] (c1) -- (b3);
+  \draw[thick,red] (c2) -- (b1);
+  \draw[thick,red] (c2) -- (b2);
+  \draw[thick,red] (c3) -- (b2);
+  \draw[thick] (c4) -- (b3);
+
+  \node at (-1,2) {\Large{$U$}};
+  \node at (-1,0) {\Large{$V$}};
+
+
+\end{tikzpicture}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../talk"
+%%% End: 

@@ -1,0 +1,54 @@
+\begin{tikzpicture}
+  [yscale=0.8,
+  node distance = 12mm, draw=black, thick, >=stealth',
+  bitnode/.style={circle, inner sep = 0pt, minimum size = 4mm, draw=black},
+  bitnode2/.style={circle, inner sep = 0pt, minimum size = 4mm, draw=black, fill=gray},
+  checknode/.style={rectangle, inner sep = 0pt, minimum size = 4mm, draw=black},
+  ]
+
+  \foreach \x in {1,...,6} {
+    \node[bitnode2] (bu\x) at (\x,3) {};
+  }
+
+  \foreach \x in {1,...,6} {
+    \node[checknode] (cu\x) at (\x,2) {};
+  }
+
+  \foreach \x in {1,2} {
+    \node[bitnode,pattern=north east lines] (b\x) at (\x,0) {$0$};
+  }
+
+  \foreach \x in {3,...,8} {
+    \node[bitnode] (b\x) at (\x,0) {};
+  }
+
+  \foreach \x in {1,...,6} {
+    \node[checknode] (cl\x) at (\x+2,-2) {};
+  }
+
+  \foreach \x in {1,...,6} {
+    \draw (bu\x) -- (cu\x);
+  }
+
+  \foreach \x/\y/\z in {1/2/3,2/3/4,3/4/5,4/5/6,5/6/7,6/7/8} {
+    \draw (cu\x) -- (b\x);
+    \draw (cu\x) -- (b\y);
+    \draw (cu\x) -- (b\z);
+  }
+
+  \foreach \x/\y/\z in {1/2/3,2/3/4,3/4/5,4/5/6,5/6/7,6/7/8} {
+    \draw (cl\x) -- (b\x);
+    \draw (cl\x) -- (b\y);
+    \draw (cl\x) -- (b\z);
+  }
+
+  \draw[<->] (1,-2.5) -- node[above]{\footnotesize{$w-1$}} (2,-2.5);
+  \draw[<->] (1,-2.85) -- node[midway,fill=white]{\footnotesize{$L$}} (6,-2.85);
+  \draw[<->] (1,-3.3) -- node[midway,fill=white]{\footnotesize{$L+w-1$}} (8,-3.3);
+
+\end{tikzpicture}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../isit14"
+%%% End: 

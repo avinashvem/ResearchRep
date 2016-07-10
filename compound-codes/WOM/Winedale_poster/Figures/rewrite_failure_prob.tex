@@ -1,0 +1,38 @@
+% This file was created by matlab2tikz v0.1.2.
+% Copyright (c) 2008--2011, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% 
+% The latest updates can be retrieved from
+%   http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
+% where you can also make suggestions and rate matlab2tikz.
+% 
+\begin{tikzpicture}
+
+\begin{semilogyaxis}[%
+scale only axis,
+width=\tikzwidth,
+height=\tikzheight,
+xmin=0.38, xmax=0.47,
+ymin=1e-05, ymax=1,
+xlabel={The normalized weight after first write $\delta$},
+ylabel={Encoding failure probability},
+xmajorgrids,
+ymajorgrids]
+
+\addplot [
+line width=1.5pt,
+color=blue,
+solid,
+]
+coordinates{
+ (0.42,0)(0.43,9e-05)(0.44,0.00337)(0.45,0.07987)(0.46,0.5318)(0.47,0.9654) 
+};
+
+\end{semilogyaxis}
+\end{tikzpicture}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End: 

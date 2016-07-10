@@ -1,0 +1,319 @@
+\documentclass{beamer}
+
+\usepackage[orientation=portrait,size=a0,scale=1.1]{beamerposter}
+\usetheme{confposter}
+\usepackage{exscale} % Use after theme to display integrals properly
+\input{preamble}
+
+\newlength{\columnheight}
+\newlength{\onecolwid}
+\newlength{\twocolwid}
+\newlength{\threecolwid}
+\newlength{\halfcolwid}
+\newlength{\itemspace}
+\newlength{\subitemspace}
+
+\setlength{\columnheight}{105cm}
+\setlength{\onecolwid}{0.3\paperwidth}
+\setlength{\twocolwid}{0.3\paperwidth}
+\setlength{\threecolwid}{0.3\paperwidth}
+\setlength{\halfcolwid}{0.12\paperwidth}
+\setlength{\itemspace}{0.35cm}
+\setlength{\subitemspace}{0.1cm}
+
+\setbeamercolor{block title}{fg=blue,bg=white}
+\setbeamercolor{block body}{fg=black,bg=white}
+\setbeamercolor{block alerted title}{fg=white,bg=dblue!70}
+\setbeamercolor{block alerted body}{fg=black,bg=dblue!10}
+
+\title{\LARGE Spatially-Coupled LDGM/LDPC codes for Write-Once Memories}
+\author{Santhosh Kumar$^{\dagger}$, \textbf{Avinash Vem}$^{\dagger}$, Henry D. Pfister$^{\ddagger}$, Krishna Narayanan$^{\dagger}$}
+\institute{Texas A\&M University$^{\dagger}$, Duke University$^{\ddagger}$}
+
+\begin{document}
+\begin{frame}
+\begin{columns}[t]
+  % First Column
+  \begin{column}{\onecolwid}
+
+    \vspace{0.25cm}  
+    % Introduction
+    \begin{block}{\Large Write-Once Memory}
+      \begin{itemize}
+      \item\vspace{\itemspace}  In flash memory, changing a cell from 1 to 0 is easy. 0 to 1 requires rewriting whole block
+      \item\vspace{\itemspace}  Write-once memory(WOM) models such storage system
+      \item\vspace{\itemspace}   Given $n$ memory units with some given state $\{0,1\}^n$, store a message $\in \{1,2,...2^{nR}\}$
+      \item\vspace{\itemspace}  \textcolor{blue}{$0 \longrightarrow 1$ is allowed}. \textcolor{red}{$1 \longrightarrow 0$ is forbidden}
+      \item\vspace{\itemspace}  Referred to as rate-$R$ WOM code
+      \end{itemize}
+    \end{block}
+
+    % Spatially-coupled Ensemble
+    \vspace{2cm}
+    \begin{block}{\Large Capacity Region}
+%      \resizebox{26cm}{17cm}{
+%        \input{./Figures/protograph_spatially_coupled_ldpc}
+%      }
+      \begin{itemize}
+      \item \vspace{\itemspace} In 1985, Heegard gave the capacity for $t$-write system with no read or write errors.
+      \item \vspace{\itemspace} For the 2-write system it is 
+            \begin{align*}
+        & \Big{\{} (R_1,R_2) \mid 0 \leq R_1 <  h(\delta) , \,\,0 \leq R_2 < 1-\delta \Big{\}} 
+      \end{align*}
+      \item \vspace{\itemspace} WOM with read errors - Message is decoded from a noisy version of the stored vector $Y=X+\text{Ber}(p)$.
+      \item \vspace{\itemspace} Capacity region is not known.
+      \end{itemize}
+    \end{block}
+
+    % Main Theorems
+    \vspace{2cm}
+    \begin{alertblock}{\Large Main Result}
+        \begin{itemize} 
+        \item Objective is to construct low complexity encoding and decoding schemes that achieve the capacity region of WOM system.
+        \item \vspace{\itemspace} Focus mainly on 2-write WOM system
+        \begin{itemize}
+			\item \vspace{\itemspace} We achieve the capacity of the 2-write noiseless WOM system.
+			\item \vspace{\itemspace} For WOM system with read errors, achievable rate region is 
+			    \begin{align*}
+    		      R_1 &< h(\delta) - h(p), & R_2 &< 1 - \delta - h(p) .
+	        \end{align*}
+        \end{itemize}        
+      \item \vspace{\itemspace}Extension to multi-write WOM system seems possible with BPGD.
+      \end{itemize}
+    \end{alertblock}
+
+    % Preliminaries & Notation
+    \vspace{2cm}
+    \begin{block}{\Large Compound LDGM/LDPC Codes}
+    \begin{center}
+      \scalebox{2}{\input{Figures/compound_code}}
+    \end{center}
+        \begin{itemize}
+    \item  $(n,m-k-k')$ code .
+    \item Message constraints \vspace{-0.2cm}
+      \begin{align*}
+        u_1\oplus u_2 \oplus u_5&=s_1, &  u_1\oplus u_3 \oplus u_6&=0
+      \end{align*}
+    \item Codeword $(x_1,\cdots,x_9)$: \vspace{-0.2cm}
+      \begin{align*}
+        x_1 &= u_1 \oplus u_4, & x_2 &= u_1\oplus u_3 \cdots
+      \end{align*}
+    \item Parametrized by $s^k$: $\mathcal{C}(s^k)$
+    \item\vspace{\itemspace} A natural coset decomposition: $\mathcal{C}=\bigcup_{s^k \in \{0,1\}^k} \mathcal{C}(s^k)$
+%    \item\vspace{\itemspace} Rate of code $\mathcal{C}$ is $\frac{m-k'}{n}$
+        \item\vspace{\itemspace} ``Good" source code under \textcolor{blue}{optimal encoding}
+     \begin{itemize}
+     \item $\exists$ a code of rate $R=1-h(\delta)+\varepsilon$ 
+     \item Encodes $\mathsf{Ber}(\tfrac{1}{2})$ source with an average Hamming \textcolor{blue}{distortion at most $\delta$}
+     \end{itemize}
+     
+       \item\vspace{\itemspace}  ``Good'' channel code under \textcolor{blue}{optimal decoding}
+    \begin{itemize}
+    \item $\exists$ a code of rate $R=1-h(p)-\varepsilon$
+    \item When used for channel coding on $\mathsf{BSC}(p)$, message est. with \textcolor{blue}{error probability at most $\varepsilon$}
+    \end{itemize}            
+    \end{itemize}
+  \end{block}
+  \end{column}
+
+  % Second Column
+  \begin{column}{\twocolwid}
+    \vspace{0.25cm}
+    \begin{block}{Coding scheme for 2-write: First write}
+
+    \begin{itemize}
+    \item With message $s^k$, encode $0^n$ to $x^n$ (Distortion $\approx \delta$). Store $x^n$
+    \item\vspace{\itemspace} Decoder has
+      \small{
+        \begin{align*}
+          y_i&=x_i \oplus \mathsf{Ber}(p) \\
+        \end{align*}
+      }
+    \vspace{-1.25cm}
+    \item \vspace{\itemspace}\textcolor{blue}{Decode $x^n$} using channel code $\mathcal{C}$ and \textcolor{blue}{compute $s^k$}
+          \begin{center}
+		      \scalebox{1.5}{\input{Figures/coding-scheme-first-write-decode}}
+		    \end{center}
+    \item \vspace{\itemspace} $R_1=\tfrac{k}{n}\approx h(\delta)-h(p)$
+    \end{itemize}
+    \end{block}
+
+
+
+    \vspace{2cm}
+\begin{block}{Coding scheme for 2-write: Second write}
+    \begin{itemize}
+	    \item Need to find a \alert{consistent} codeword in $\mathcal{C}(s^k)$
+    \begin{center}
+      \scalebox{1.5}{\input{Figures/coding-scheme-second-write}}
+    \end{center}
+   		 \item Closely related to \textcolor{blue}{Binary Erasure Quantization (BEQ)} ({\footnotesize refer block below})
+   		 \item \vspace{\itemspace}To map to BEQ problem , change $0$'s to $*$
+	     \item \vspace{\itemspace}With message $s^k$, encode seq. to $\mathcal{C}(s^k)$
+        \item \vspace{\itemspace} Decoder has
+      %\small{
+        \begin{align*}
+          y_i&=x_i \oplus \mathsf{Ber}(p) \\
+        \end{align*}
+      %}
+    \vspace{-2.5cm}
+    \item \textcolor{blue}{Decode $x^n$} using channel code $\mathcal{C}$ and \textcolor{blue}{compute $s^k$}
+    \item\vspace{\itemspace} $R_2=\tfrac{k}{n}\approx 1 - \delta - h(p)$
+	\end{itemize}
+\end{block}
+
+    \vspace{2cm}
+ \begin{block}{Binary Erasure Quantization}
+  \begin{itemize}
+  \item Quantize a sequence in $\{0,1,*\}^n$ to $x^n \in \mathcal{C} \subset \{0,1\}^n$
+    \begin{itemize}
+    \item \vspace{\subitemspace}$0$'s and $1$'s should \alert{match exactly}
+    \item \vspace{\subitemspace}$*$'s can be changed to \textcolor{blue}{either $0$ or $1$}
+    \end{itemize}
+    \vspace{0.25cm}
+  \item BEQ is the dual of decoding on binary erasure channel
+    \begin{itemize}
+    \item\vspace{\subitemspace} Martinian and Yedidia'03
+    \item\vspace{\subitemspace} Can quan. all seq. with erasure pattern $e^n \in \{0,1\}^n$ to $\mathcal{C}$ \\ \hspace{3.5cm} $\Updownarrow$ \\ Chan. dec. for $\mathcal{C}^{\perp}$ can correct all vectors with eras. $1^n \oplus e^n$
+    \end{itemize}
+  \item\vspace{\itemspace} Choose a good (dual) code $\mathcal{C}(s^k)$
+  \end{itemize}
+ \end{block}
+
+
+\vspace{2cm}
+\begin{block}{Iterative Erasure Quantization Algorithm}
+  \begin{center}
+    \scalebox{1}{\input{Figures/peeling-encoder}}
+  \end{center}
+  \begin{itemize}
+  \item \alert{Peeling type encoder}
+  \begin{center}
+    \begin{algorithmic}
+      \WHILE{$\exists$ non-erasures in $V$}
+      \IF{$\exists$ non-erased $u \in U$ such that only one of its neighbors $v \in V$ is not erased}
+      \STATE Pair $(u,v)$.
+      \STATE Erase $u$ and $v$.
+      \ELSE
+      \STATE FAIL.
+      \STATE \textbf{break}.
+      \ENDIF
+      \ENDWHILE
+    \end{algorithmic}
+  \end{center}
+\end{itemize}  
+\end{block}
+\end{column}
+ 
+ 
+  % Third Column
+  \begin{column}{\threecolwid}
+
+    \vspace{0.25cm}
+\begin{block}{Spatially-Coupled Compound Codes}
+  \begin{center}
+    \scalebox{1.5}{\input{Figures/spatially_coupled_compound_code}}
+  \end{center}
+ \end{block}
+
+\vspace{2cm}
+\begin{block}{Numerical Results}
+\begin{itemize}
+\item Noiseless WOM
+\vspace{\subitemspace}
+\begin{itemize}
+\item $\delta^{*}=1-R$ is the threshold
+\item $L=30$, Single system length $\approx 30000$
+\end{itemize}
+\vspace{\subitemspace}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+LDGM/LDPC & $\delta^{*}$ & $\delta$ & $\delta$ & $\delta$ \\
+$(d_v,d_c,d'_v,d'_c)$ & & $w=2$ & $w=3$ & $w=4$ \\
+\hline
+%$(3,3,3,6)$  & $0.500$ & $0.477$ & $0.492$ & $0.494$\\
+%$(3,3,4,6)$  & $0.333$ & $0.294$ & $0.324$ & $0.326$\\
+%$(3,3,5,6)$  & $0.167$ & $0.095$ & $0.156$ & $0.158$\\
+$(4,4,3,6)$  & $0.500$ & $0.461$ & $0.491$ & $0.492$\\
+$(4,4,4,6)$  & $0.333$ & $0.278$ & $0.323$ & $0.325$\\
+$(4,4,5,6)$  & $0.167$ & $0.086$ & $0.155$ & $0.159$\\
+$(5,5,3,6)$  & $0.500$ & $0.436$ & $0.488$ & $0.491$\\
+$(5,5,4,6)$  & $0.333$ & $0.260$ & $0.320$ & $0.324$\\
+$(5,5,5,6)$  & $0.167$ & $0.079$ & $0.154$ & $0.159$\\
+\hline  
+\end{tabular}
+\end{center}
+\item \vspace{\itemspace}WOM with Read Errors
+\vspace{\subitemspace}
+\begin{itemize}
+\item $\delta^{*}$ and $p^{*}$ are the achievable thresholds
+\item $L=30$, Single system length $\approx 30000$
+\end{itemize}
+\vspace{\subitemspace}
+  \begin{center}
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+      LDGM/LDPC & $w$ & $(\delta^{*},p^*)$ & $(\delta,p)$ \\
+      $(d_v,d_c,d'_v,d'_c)$ &  &  & \\
+      \hline
+      $(3,3,4,6)$ & $3$ & $(0.333,0.0615)$ & $(0.321,0.0585)$ \\
+      $(3,3,4,8)$ & $3$ & $(0.500,0.0417)$ & $(0.490,0.0387)$ \\
+      $(3,3,6,8)$ & $4$ & $(0.250,0.0724)$ & $(0.239,0.0684)$ \\
+      $(4,4,4,6)$ & $4$ & $(0.333,0.0615)$ & $(0.324,0.0585)$ \\
+      $(4,4,4,8)$ & $4$ & $(0.500,0.0417)$ & $(0.492,0.0387)$ \\
+      $(4,4,6,8)$ & $4$ & $(0.250,0.0724)$ & $(0.241,0.0694)$ \\
+      \hline  
+    \end{tabular}
+  \end{center}
+
+\end{itemize}
+\end{block}
+
+    \setbeamercolor{block alerted title}{fg=black,bg=norange} % Change the alert block title colors
+    \setbeamercolor{block alerted body}{fg=black,bg=white} % Change the alert block body colors
+
+    \vspace{2.5cm}
+\begin{alertblock}{Conclusion}
+        \begin{itemize}
+    \item Spatially-coupled compound codes achieve the capacity of 2-write systems \vspace{0.2cm}
+    \item \vspace{\itemspace}\textcolor{red}{Coupling structure} is crucial 
+      \begin{itemize}
+      \item to achieve optimum thresholds under practical schemes 
+      \item also for the encoding to succeed 
+      \end{itemize}
+    \item \vspace{\itemspace} Will BPGD work for \textcolor{blue}{multi-write systems}?
+    \end{itemize}
+\end{alertblock}
+
+    % Bibliography
+    \vspace{2.5cm}
+    \begin{block}{References}
+
+      \begin{thebibliography}{10}
+	\bibitem{Heegard}
+Heegard, Chris. "On the capacity of permanent memory." \emph{ IEEE Trans. \ Inform \ Theory}, vol.~31, no.~1,pp. ~34-42,1985.
+
+\bibitem{Bruck}
+E.~E.~Gad, Eyal En, Y.~Li, J.~Bruck, "Rewriting flash memories by message passing."in
+\emph{IEEE Int. Symp. Inf. Theory}, June 2015.
+
+		\bibitem{Wainwright-Martinian}
+		Wainwright, Martin J., Elitza Maneva, and E.~Martinian. "Lossy source compression using low-density generator matrix 		codes: Analysis and algorithms." \emph{IEEE Trans. \ Inform \ Theory}, vol.~56, no.~3, pp. 1351-1368, 2010. 
+		\vspace{1cm}
+
+\bibitem{Hsu-Anasta}
+Hsu, Chun-Hao, and A.~Anastasopoulos. "Capacity-achieving codes with bounded graphical complexity and maximum likelihood decoding." \emph{IEEE Trans. \ Inform \ Theory} on vol.~56, no.~3, pp.~992-1006, 2010.
+
+      \bibitem{Martinian03}
+        E.~Martinian and J.~S. Yedidia, "Iterative quantization using codes on graphs." in 
+        \emph{ Proc. Allerton. Conf. Comm., and Comp., } 2003.
+        \vspace{1cm}
+
+ 		\end{thebibliography}
+	  \end{block}
+ 
+  \end{column}
+\end{columns}
+\end{frame}
+\end{document}

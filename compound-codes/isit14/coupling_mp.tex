@@ -1,0 +1,106 @@
+\label{section:coupling_mp}
+In this section, we describe coding schemes for the side-information problems based on spatially-coupled compound LDGM/LDPC codes.
+The encoding and decoding are based on practically implementable, polynomial time message-passing algorithms.
+In essence, we describe new codebooks $\mathcal{SC}$, $\mathcal{SC}(s^k)$, $\mathcal{SC}'$, $\mathcal{SC}'(s^k)$, analogous to $\mathcal{C}$, $\mathcal{C}(s^k)$, $\mathcal{C}'$, $\mathcal{C}'(s^k)$, that appear to be good for rate distortion and/or channel coding when encoding and decoding is done with message-passing algorithms  \cite{Aref-arxiv13}, \cite{Aref-isit12}, \cite{Obata-isit13}, \cite{Sakaniwa-arxiv11}.
+Given that these are good for rate distortion and/or channel coding, the coding scheme for the side-information problems is same as in the previous section.
+We begin with the construction of spatially-coupled compound codes.
+
+\subsection{Spatially-Coupled Compound LDGM/LDPC Codes}
+\begin{figure}[!tb]
+  \centering
+  \setlength\tikzheight{5cm}
+  \setlength\tikzwidth{6cm} 
+  \input{./Figures/protograph_coupled_compound}
+  \vspace{-2.5mm}
+  \caption{Illustration of edge connections in a spatially-coupled compound LDGM/LDPC code.
+    LDPC bit-nodes in the first $w-1$ groups are set to $0$.
+  }
+  \label{figure:protograph_coupled_compound}
+\end{figure}
+For convenience, we assume regular degrees in both LDGM and LDPC components of the compound code.
+The construction can be easily generalized to irregular degrees.
+Suppose $d_c$ and $d_v$ denote the degrees of the check- and bit-nodes, respectively, in the LDGM component.
+Similarly, define $d'_v$ and $d'_c$ for the LDPC component.
+See Fig.~\ref{figure:tanner_graph_compound_code} for an illustration.
+Consider $L+w-1$ groups of LDPC bit-nodes at positions $\mathcal{N}_v=\{1,2,\ldots,L+w-1\}$, $L$ groups of LDGM check-nodes at positions $\mathcal{N}_c=\{1,\ldots,L\}$, $L$ groups of LDPC check-nodes at positions $\mathcal{N}'_c=\{w,2,\ldots,L+w-1\}$.
+See Fig.~\ref{figure:protograph_coupled_compound}.
+
+Choose $N$ large enough so that $N d_v/d_c, N d_v /w$, $N d'_v/d'_c, N d_v'/w \in \mathbb{N}$.
+We first show the coupling structure in the LDGM part.
+At each position $i \in \mathcal{N}_v$, place $N$ LDPC bit-nodes each with $d_v$ edge sockets.
+Similarly, at each position $j \in \mathcal{N}_c$, place $N d_v/d_c$ LDGM check-nodes each with $d_c$ edge sockets.
+At each bit- and check-node group, partition the $N d_v$ edge sockets into $w$ groups using a uniform random permutation, and denote these partitions, respectively, by $\mathcal{N}_{i,k}^v$, $\mathcal{N}^c_{j,k}$ where $1 \leq i \leq L+w-1$, $1 \leq j \leq L$, $1 \leq k \leq w$.
+The coupled LDGM component is constructed by connecting the sockets in $\mathcal{N}^c_{j,k}$ to sockets in $\mathcal{N}^v_{j+k-1,k}$.
+The coupling structure in the LDPC part can be constructed similarly.
+These connections are depicted in Fig.~\ref{figure:protograph_coupled_compound} for $L=6$ and $w=3$.
+
+We note that such a construction leaves some edge sockets of the LDPC bit-nodes at the boundary unconnected.
+We also shorten the LDPC bit-nodes in the first $w-1$ groups to $0$.
+This shortening and the unconnected edge sockets at the boundary are necessary for the spatial-coupling phenomenon to take effect \cite{Kudekar-it11}.
+It is implicit that the LDPC check-nodes at each position in $\mathcal{N}'_c$ are partitioned into two groups $\mathcal{P}_1$ and $\mathcal{P}_2$ so as to have the desired design rate.
+To avoid small error floors when decoding, each LDPC bit-node should have some connections to the checks in $\mathcal{P}_2$.
+The characterization of the codebooks $\mathcal{SC}$, $\mathcal{SC}(s^k)$, $\mathcal{SC}'$, $\mathcal{SC}'(s^k)$ follows implicitly.
+
+\subsection{Message-Passing Algorithms for Encoding}
+\begin{algorithm}[!t]
+\begin{algorithmic}
+  \caption{Belief-Propagation Guided Decimation}
+  \label{algorithm:bpgd}
+  \REQUIRE{Sequence $x^n \in \{0,1\}^n$ to encode, parameters ($T$, $\beta$), graph $G(V,U,C)$.}
+  \STATE Set $m_{i \to a}\!=\!\wh{m}_{a \to i}\!=\!0$ for $i \in V \cup U$, $a \in C$ and $(i,a) \in G$.
+  \STATE Initialize $V_{\mathrm{dec}}$ to be LDPC bit-nodes in first $w-1$ sections.
+  \WHILE{$V_{\mathrm{dec}} \neq V$}
+    \FOR {$t=1$ to $T$}
+      \STATE $m_{i \to a} = (-1)^{x_i} \tanh(\beta)$ for $i \in U$ and $a \in C$.
+      \STATE $m_{i \to a} = (-1)^{u_i} \cdotp \infty$ for $i \in V_{\mathrm{dec}}$ and $a \in C$.
+      \STATE $m_{i \to a} = \sum\limits_{b \in \partial i \setminus \{a\}} \wh{m}_{b \to i}$ for $i \in V \setminus V_{\mathrm{dec}}$ and $a \in C$.
+      \STATE $\wh{m}_{a \to i} = \tanh^{-1} \prod\limits_{j \in \partial a \setminus \{ i \} } \tanh m_{j \to a}$ for $i \in V \setminus V_{\mathrm{dec}}$ and $a \in C$.
+    \ENDFOR
+    \STATE Evaluate $m_{i}=\sum_{a \in \partial i} \wh{m}_{a \to i} $ for all $i \in V\setminus V_{\mathrm{dec}}$.
+    \STATE Set $B$ to be max. of $|m_i|$ when $i$ varies over left-most $w$ sections of $V \setminus V_{\mathrm{dec}}$; denote the resulting bit-node by $i^*$.
+    \IF{$B=0$}
+      \STATE Pick a bit-node $i^*$ uniformly in left-most $w$ sections of $V \setminus V_{\mathrm{dec}}$ and set $u_{i^*}$ to be $0$ or $1$ uniformly randomly.
+    \ELSE
+      \STATE Set $u_{i^*}$ to $0$ or $1$ with prob. $\frac{1+\tanh m_{i^*}}{2}$ or $\frac{1-\tanh m_{i^*}}{2}$.
+    \ENDIF
+    \STATE Set $V_{\mathrm{dec}} = V_{\mathrm{dec}} \cup \{i^*\}$.
+  \ENDWHILE
+  \STATE If $\{u_{i}\}$ fail to satisfy LDPC checks, then \textbf{re-encode}.
+\end{algorithmic}
+\end{algorithm}
+
+Message-passing algorithms for channel coding are now a standard part of the coding theory literature.
+We refer the reader to \cite{RU-2008} for their description.
+It has been recently shown \cite{Obata-isit13}, \cite{Sakaniwa-arxiv11} that SC compound LDGM/LDPC codes are good for channel coding under message-passing.
+As such, $\mathcal{SC}$, $\mathcal{SC}(s^k)$, $\mathcal{SC}'(s^k)$ are good for channel coding under message-passing.
+In the following, we focus exclusively on the message-passing algorithm for rate distortion.
+In particular, we describe a variation of the so-called BPGD algorithm \cite{Aref-arxiv13}, \cite{Aref-isit12}.
+
+Consider an instance of the spatially-coupled compound LDGM/LDPC described above.
+Denote its Tanner graph by $G(V,U,C)$, where $V$ denotes the LDPC bit-nodes, $U$ denotes the LDGM bit-nodes, $C$ denotes the check-nodes (both LDGM and LDPC).
+Place a sequence $x^n \in \{0,1\}^n$ at the top of LDGM bit-nodes as in Fig.~\ref{figure:tanner_graph_compound_code}.
+The message-passing rules here are same as in the channel coding setup by assuming that $x_i$ have come through a BSC channel (parameterized by $\beta$).
+However, every $T$ iterations, an LDPC bit-node is decimated (shortened based on the current LLR).
+This encoding procedure for the codebook $\mathcal{C}(s^k)$ is described in Algorithm \ref{algorithm:bpgd} assuming $s^k = 0^k$.
+For $s^k \neq 0^k$, the update for each check node in $\mathcal{P}_1$ is modified to include the appropriate $s_k$ hard-decision message.
+Also, the decimated sequence $u^n$ may not satisfy all the LDPC check constraints.
+In this case, successive encoding attempts often result in a valid codeword due to the randomization in Algorithm \ref{algorithm:bpgd}.
+In practice, we found that removing double edges and 4-cycles from the code essentially eliminated this problem at moderate block lengths.
+For example, see the results in Table \ref{table:succ_enc}.
+
+One variation in Algorithm \ref{algorithm:bpgd} from \cite{Aref-arxiv13} is the choice of the LDPC bit-node for decimation.
+In \cite{Aref-arxiv13}, bit-node with maximum bias over entire graph is selected, but we restrict the search for maximum biased bit to only left-most $w$ sections of the bits that are not already decimated.
+We observed that this change increases the chances of encoding to a valid codeword.
+\begin{remark}
+  The BPGD algorithm, when applied to the \emph{uncoupled} compound LDGM/LDPC code, always failed to satisfy the LDPC check constraints and the spatial-coupling structure is required to overcome this problem.
+  Thus, spatial coupling in compound codes not only helps to reduce the distortion, but allows the BPGD algorithm to encode to a valid codeword.
+\end{remark}
+It is also possible to create a coupling structure in a circular fashion and decimate the bit-nodes in a fixed section as done in \cite{Aref-isit12}.
+However, this leads to a \emph{wave} of decimations from both ends and will result in a failure to encode to a codeword, as the constraints imposed by the LDPC check-nodes are unlikely to match when the two waves meet.
+From a physics point of view, this is akin to growing a crystal on a torus from a single seed.
+When the two growth interfaces meet, they are very unlikely to mesh nicely and form a pure crystal.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "isit14"
+%%% End: 

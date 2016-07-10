@@ -1,0 +1,41 @@
+\begin{tikzpicture}
+  [node distance=1cm,draw=black,thick, >=stealth']
+
+  \def \reclen {3}
+  \def \linelen {2}
+  \def \recwid {0.75}
+
+  \draw[->] (0,0) -- (0+\linelen,0);
+  \draw (0+\linelen,\recwid) rectangle (0+\linelen+\reclen,-\recwid);
+  \draw[->] (0+\linelen+\reclen,0) -- (0+\linelen+\reclen+\linelen,0);
+  \draw (0+\linelen+\reclen+\linelen,\recwid) rectangle (0+\linelen+\reclen+\linelen+\reclen,-\recwid);
+  \draw[->] (0+\linelen+\reclen+\linelen+\reclen,0) -- (0+\linelen+\reclen+\linelen+\reclen+\linelen,0);
+  \draw (0+\linelen+\reclen+\linelen+\reclen+\linelen,\recwid) rectangle (0+\linelen+\reclen+\linelen+\reclen+\linelen+\reclen,-\recwid);
+
+  \draw[->] (0.5*\linelen,0) -- (0.5*\linelen,-2) -- (1.5*\linelen+\reclen,-2);
+  \draw (1.5*\linelen+\reclen,-2+\recwid) rectangle (2.5*\linelen+2*\reclen,-2-\recwid);
+  \draw[->] (2.5*\linelen+2*\reclen,-2) -- (2*\linelen+2*\reclen+\linelen+0.5*\reclen,-2) -- (2*\linelen+2*\reclen+\linelen+0.5*\reclen,-\recwid);
+
+  \node at (\linelen+0.5*\reclen,0.5*\recwid) {\Large{Encoder}};
+  \node at (\linelen+0.5*\reclen,-0.5*\recwid) {\Large{$\mathcal{C}$}};
+
+  \node at (2*\linelen+1.5*\reclen,0.5*\recwid) {\Large{Channel}};
+  \node at (2*\linelen+1.5*\reclen,-0.5*\recwid) {\Large{Rate $R$}};
+
+  \node at (3*\linelen+2.5*\reclen,0.5*\recwid) {\Large{Decoder}};
+  \node at (3*\linelen+2.5*\reclen,-0.5*\recwid) {\Large{$(Y,Z^n)$}};
+
+  \node at (2*\linelen+1.5*\reclen,-2+0.5*\recwid) {\Large{Side-Information}};
+  \node at (2*\linelen+1.5*\reclen,-2-0.5*\recwid) {\Large{$Z_i=X_i\oplus \mathsf{Ber}(\delta)$}};
+
+  \node at (0.5*\linelen,0.5*\recwid) {\Large{$X^n$}};
+  \node at (1.5*\linelen+\reclen,0.5*\recwid) {\Large{$f(\hat{X}^n)$}};
+  \node at (2.5*\linelen+2*\reclen,0.5*\recwid) {\Large{$Y$}};
+  \node at (3*\linelen+2.25*\reclen,-2+0.5*\recwid) {\Large{$Z^n$}};
+
+\end{tikzpicture}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../talk"
+%%% End: 

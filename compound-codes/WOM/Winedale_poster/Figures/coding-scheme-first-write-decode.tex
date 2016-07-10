@@ -1,0 +1,93 @@
+\begin{tikzpicture}
+  [
+  node distance = 12mm, draw=black, thick, >=stealth',
+  bitnode/.style={circle, inner sep = 0pt, minimum size = 5.5mm, draw=black},
+  bitnodehidden/.style={circle, inner sep = 0pt, minimum size = 5.5mm, draw=white},
+  checknode/.style={rectangle, inner sep = 0pt, minimum size = 4mm, draw=black},
+  checknodehidden/.style={rectangle, inner sep = 0pt, minimum size = 4mm, draw=white},
+  bitnode2/.style={circle, inner sep = 0pt, minimum size = 4mm, draw=black, fill=black!50},
+  bitnode2hidden/.style={circle, inner sep = 0pt, minimum size = 4mm, draw=white, fill=white},
+  ]
+
+
+    
+    \foreach \x in {1,2,...,9} {
+      \node[bitnode2] (bb\x) at (\x-5,3) {};
+    }
+
+    \foreach \x in {1,2,...,9} {
+      \node[checknode] (c\x) at (\x-5,2) {};
+      \draw[thin] (c\x) -- (bb\x);
+    }
+
+    \foreach \x in {1,2,...,6} {
+      \node[bitnode] (b\x) at (1.2*\x-4.2,0) {\tiny $u_{\x}$};
+    }
+
+    \node at (-4.5,2.5) {\tiny $n$};
+    \node at (-3.8,0) {\tiny $m$};
+
+    \draw[thin] (c1) -- (b4);
+    \draw[thin] (c1) -- (b1);
+    \draw[thin] (c2) -- (b1);
+    \draw[thin] (c2) -- (b3);
+    \draw[thin] (c3) -- (b3);
+    \draw[thin] (c3) -- (b2);
+    \draw[thin] (c4) -- (b1);
+    \draw[thin] (c4) -- (b6);
+    \draw[thin] (c5) -- (b2);
+    \draw[thin] (c5) -- (b5);
+    \draw[thin] (c6) -- (b5);
+    \draw[thin] (c6) -- (b6);
+    \draw[thin] (c7) -- (b3);
+    \draw[thin] (c7) -- (b4);
+    \draw[thin] (c8) -- (b5);
+    \draw[thin] (c8) -- (b2);
+    \draw[thin] (c9) -- (b4);
+    \draw[thin] (c9) -- (b6);
+
+
+
+    \foreach \y in {1,2,...,9} {
+      \node at (\y-5,3.5) {\tiny{$y_{\y}$}};
+    }
+
+    \foreach \x in {1,2} {
+      \node[checknodehidden] (cc\x) at (5*\x/3-2.5-5/3,-2) {};
+    }
+
+    \foreach \x in {3,4} {
+      \node[checknode] (cc\x) at (5*\x/3-2.5-5/3,-2) {};
+    }
+
+    \draw[white,thin] (cc1) -- (b2);
+    \draw[white,thin] (cc1) -- (b1);
+    \draw[white,thin] (cc1) -- (b5);
+    \draw[white,thin] (cc2) -- (b6);
+    \draw[white,thin] (cc2) -- (b3);
+    \draw[white,thin] (cc2) -- (b4);
+    \draw[thin] (cc3) -- (b1);
+    \draw[thin] (cc3) -- (b3);
+    \draw[thin] (cc3) -- (b5);
+    \draw[thin] (cc4) -- (b2);
+    \draw[thin] (cc4) -- (b6);
+    \draw[thin] (cc4) -- (b4);
+
+    \node[white] at (5*1/3-2.5-5/3,-2.5) {\tiny $s_1$};
+    \node[white] at (5*2/3-2.5-5/3,-2.5) {\tiny $s_k$};
+    \node at (5*3/3-2.5-5/3,-2.5) {\tiny $0$};
+    \node at (5*4/3-2.5-5/3,-2.5) {\tiny $0$};
+
+    \draw[white,decorate,decoration={brace,amplitude=5pt,mirror}] (-2.8,-2.75) -- (-0.55,-2.75) node [midway,yshift=-0.5cm] {\tiny $\mathcal{P}_1$,  \tiny $|\mathcal{P}_1|=k$};
+    \draw[decorate,decoration={brace,amplitude=5pt,mirror}] (3.33-2.8,-2.75) -- (3.33-0.55,-2.75) node [midway,yshift=-0.5cm]{\tiny $\mathcal{P}_2$, \tiny $|\mathcal{P}_2|=k'$};
+
+    \node at (-3,-4.25) {\tiny{$\frac{m-k-k'}{n}\approx 1 - h(\delta) $}};
+    \node at (3,-4.25) {\tiny{$\frac{m-k'}{n}\approx 1 - h(p)$}};
+    
+
+\end{tikzpicture}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../talk"
+%%% End: 

@@ -1,0 +1,39 @@
+\begin{tikzpicture}
+  [yscale=0.8,node distance=1cm,draw=black,thick, >=stealth']
+
+  \def \reclen {3}
+  \def \linelen {2}
+  \def \recwid {0.75}
+
+  \draw[->] (-1,0) -- (-1+\linelen,0);
+  \draw (0+\linelen-1,\recwid) rectangle (0+\linelen+\reclen-1,-\recwid);
+  \node (sideinfnode) at (0+\linelen+\reclen+\linelen,0) {\Huge{$\oplus$}};
+  \draw[->] (0+\linelen+\reclen-1,0) -- (sideinfnode);
+  \draw[->] (sideinfnode) -- (0+\linelen+\reclen+\linelen+\linelen,0);
+  \node (znlabel) at (0+\linelen+\reclen+\linelen,3*\recwid) {\Large{$Z^n$}};
+  \draw[->] (znlabel) -- (sideinfnode);
+  \draw[->] (sideinfnode) -- (0+\linelen+\reclen+\linelen,-3*\recwid) -- (\linelen+0.5*\reclen-1,-3*\recwid) -- (\linelen+0.5*\reclen-1,-\recwid);
+  \draw (0+\linelen+\reclen+\linelen+\linelen,\recwid) rectangle (0+\linelen+\reclen+\linelen+\linelen+\reclen,-\recwid);
+  \draw[->] (0+\linelen+\reclen+\linelen+\linelen+\reclen,0) -- (0+\linelen+\reclen+\linelen+\linelen+\reclen+0.5*\linelen,0);
+  \draw (0+\linelen+\reclen+\linelen+\reclen+\linelen+0.5*\linelen,\recwid) rectangle (0+\linelen+\reclen+\linelen+\reclen+\linelen+\reclen+1.5*\linelen,-\recwid);
+
+  \node at (\linelen+0.5*\reclen-1,0.5*\recwid) {\Large{Codebook}};
+  \node at (\linelen+0.5*\reclen-1,-0.5*\recwid) {\Large{$\mathcal{C}(n,k)$}};
+
+  \node at (3*\linelen+1.5*\reclen,0.5*\recwid) {\Large{Channel}};
+  \node at (3*\linelen+1.5*\reclen,-0.5*\recwid) {\Large{$W^n \sim \mathsf{Ber}(\delta)$}};
+
+  \node at (4*\linelen+2.5*\reclen,0.5*\recwid) {\Large{Decoder}};
+  \node at (4*\linelen+2.5*\reclen,-0.5*\recwid) {\Large{$Y^n=X^n\oplus Z^n \oplus W^n$}};
+
+  \node at (0.5*\linelen-1,0.65*\recwid) {\Large{$M^k$}};
+  \node at (0.5*\linelen-1,-0.65*\recwid) {\Large{Rate $R$}};
+  \node at (1.5*\linelen+\reclen-0.5,0.5*\recwid) {\Large{$X^n$}};
+  \node at (1.5*\linelen+\reclen-0.5,-0.5*\recwid) {\large{$\mathrm{Weight}\leq p$}};
+
+\end{tikzpicture}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../talk"
+%%% End: 

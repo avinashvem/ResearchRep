@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+  [
+  yscale=1.2,
+  node distance = 12mm, draw=black, thick, >=stealth',
+  bitnode/.style={circle, inner sep = 0pt, minimum size = 5.5mm, draw=black},
+  checknode/.style={rectangle, inner sep = 0pt, minimum size = 4mm, draw=black},
+  bitnode2/.style={circle, inner sep = 0pt, minimum size = 4mm, draw=black, fill=black!50},
+  ]
+
+  \node at (-0.75,0) {\LARGE{$x_i$}};
+  \node[bitnode2] (vv1) at (0,0) {};
+  
+  \draw[->] (vv1) -- node[above,xshift=0.1cm,yshift=0.35cm]{\alert{\Large{$(-1)^{x_i} \tanh \beta$}}} (2,0);
+
+\end{tikzpicture}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../talk"
+%%% End: 
