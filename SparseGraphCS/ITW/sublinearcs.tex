@@ -20,8 +20,9 @@
 \IEEEauthorblockA{Dept. of Elect. \& Comp. Engg., \\
 Texas A\&M University, \\
 College Station, TX, U.S.A\\}
+\thanks{This work was supported by the National Science Foundation under grants CCF-1320924 and EARS-1547447.}
 }
-\date{Feb 20, 2016}
+%\date{Feb 20, 2016}
 
 \maketitle
 \begin{abstract}
@@ -35,7 +36,7 @@ They have proposed two designs - the first design requires $M = O(K \log N)$ mea
 
 In this paper, we show that the bounds on the measurement complexity reported in \cite{li2015subisit,li2015subdraft} can be improved by considering \emph{left and right regular} sparse-graph based sensing matrices. With sub-linear time decoding complexity, we show that only $O\left(K \log \frac{N}{K} \right)$ measurements are required when $K = O(N^\delta)$, for any $0 \leq \delta < 1$.  This matches the information-theoretic lower bound on the number of measurement required for asymptotically-reliable recovery \cite{wainwright2009information}.
 %For sub-linear time decoding complexity, we show that only $O\left(K \log^{1.3} \frac{N}{K} \right)$ are required.
-%Finally, we also provide sharper version of the results in \cite{li2015subdraft}. 
+%Finally, we also provide sharper version of the results in \cite{li2015subdraft}.
 Simulation results show improved performance over those in \cite{li2015subdraft}.
 
 The literature on compressed sensing is vast and it is difficult to provide a comparison with several of the existing results in the literature due to page restriction of this conference submission. Nevertheless, it should be pointed out that the use of left and right regular sensing matrices for compressed sensing has been proposed in \cite{jafarpour2009efficient} and the measurement complexity has been shown to be only $O\left(K \log \frac{N}{K} \right)$. However, the scheme and the decoding algorithm in this paper are different from those in \cite{jafarpour2009efficient} and are based directly on those in \cite{li2015subisit,li2015subdraft}. In particular, unlike in \cite{jafarpour2009efficient}, the sensing matrix in this paper is constructed based on a tensor-product construction and the decoding algorithm is based on identifying singletons and peeling them off.
@@ -50,7 +51,7 @@ where $\mbf{x}$ is an $N$-dimensional vector, $\mbf{A}$ is a known $M \times N$ 
 \mbb{P}_{F}\coleq\Pr(\text{supp}(\widehat{\mbf{x}})\neq \text{supp}(\mbf{x})).
 \end{align*}
 %For this support recovery problem, under noisy settings, Wainwright \cite{wainwright2009information} showed information theoretically that $O\left(K\log(\frac{N}{K})\right)$ number of measurements is necessary and sufficient for asymptotically reliable recovery.
-For the information-theoretic lower bound in \cite{wainwright2009information} to hold, the non-zero elements in $\mbf{x}$ should have a sufficiently large minimum absolute value. In view of this condition, similar to \cite{li2015subisit,li2015subdraft}, 
+For the information-theoretic lower bound in \cite{wainwright2009information} to hold, the non-zero elements in $\mbf{x}$ should have a sufficiently large minimum absolute value. In view of this condition, similar to \cite{li2015subisit,li2015subdraft},
 %we set a minimum absolute value for the non-zero elements and further assume that they are from a discrete set. More precisely for the noisy setting
  we assume that all the non-zero elements of $\mbf{x}$ belong to the set $\{Ae^{i\theta}:A\in\mc{A},\theta\in\Theta\}$ where $\mc{A}\coleq \{A_{\text{min}}+\rho l\}^{L_1}_{l=0},\Theta\coleq\{2\pi l/L_2\}_{l=0}^{L_2}$ for finite but arbitrarily large integers $L_1$ and $L_2$.
 \section{Prior Work }\label{Sec:Review}
@@ -150,12 +151,12 @@ Let \[H = \begin{bmatrix}
 0 & 1 & 1 & 0 & 1 & 0 \\
 1 & 1 & 0 & 1 & 0 & 0 \\
 0 & 0 & 1 & 0 & 1 & 1
-\end{bmatrix} \] denote an adjacency matrix from the ensemble  $\mathcal{G}^6_{\rm reg,reg}\left(4,2,3 \right)$. We choose $P'= \lceil \log_2 r \rceil = 2$ and let $S_{P' \times r}$ be defined as  
+\end{bmatrix} \] denote an adjacency matrix from the ensemble  $\mathcal{G}^6_{\rm reg,reg}\left(4,2,3 \right)$. We choose $P'= \lceil \log_2 r \rceil = 2$ and let $S_{P' \times r}$ be defined as
 \[ S = \begin{bmatrix}
 +1 & -1 & -1\\
 -1 & +1 & -1
 \end{bmatrix} \]
-Then, the measurement matrix $\bf A$ with $M = P'R = 8$ measurements is given by 
+Then, the measurement matrix $\bf A$ with $M = P'R = 8$ measurements is given by
 \[ A = H \boxplus S \ = \begin{bmatrix}
 +1 & \ \ 0 & \ \ 0 & -1 & \ \ 0 & -1\\
 -1 & \ \ 0 & \ \ 0 & +1 & \ \ 0 & -1\\
@@ -315,7 +316,7 @@ In this section we provide the empirical performance of our scheme in the noisy 
 \input{\MyPath//Figures/succ_prb_near_sublinear.tex}
 \end{centering}
 }
-\caption{Probability of Success for our construction (blue curves) with \emph{BinaryNoisy} scheme using convolutional codes(conv) and Golay code with sub-linear time decoding complexity of $O(K\log \frac{N}{K})$.% and BCH codes with near-linear(red) complexity.  
+\caption{Probability of Success for our construction (blue curves) with \emph{BinaryNoisy} scheme using convolutional codes(conv) and Golay code with sub-linear time decoding complexity of $O(K\log \frac{N}{K})$.% and BCH codes with near-linear(red) complexity.
  And we compare the performance with that of \emph{BinaryNoisy} scheme by Li, Pawar and Ramachandran (LPR) (red curve) \cite{li2015subdraft} with sub-linear decoding complexity of $O\left( K \log N\right)$.} %and \emph{F scheme with near-linear complexity of $O\left(N\log N\right)$. }	
 
 \label{Fig:Sims}	

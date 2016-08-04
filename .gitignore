@@ -1,0 +1,4 @@
+*.synctex
+*.aux
+SparseGraphCS/ITW/sublinearcs.blg
+*.log
