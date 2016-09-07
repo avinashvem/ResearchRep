@@ -1,0 +1,347 @@
+\documentclass[10pt]{beamer}
+\mode<presentation>
+{
+\usetheme{CambridgeUS}
+\usecolortheme{dolphin}
+}
+\usepackage{etex}
+\usepackage[english]{babel}
+\usepackage{amstext,amsmath,amsfonts,latexsym,graphicx,amssymb,epsfig,epsf,psfrag}
+\usepackage{tikz,pgf,pgfplots,pgfpages,xcolor,subfigure,pstricks}
+
+\usetikzlibrary{%
+  arrows,%
+  decorations,%decorations
+  shapes.misc,% wg. rounded rectangle
+  shapes.arrows,%
+  shapes.callouts, %
+  shapes,%
+  chains,%
+  matrix,%
+  positioning,% wg. " of "
+  patterns,% slanted lines fill
+  scopes,%
+  petri%
+}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+
+\setbeamertemplate{footline}[frame number]
+\definecolor{purple}{RGB}{255,0,204}
+
+\usecolortheme[RGB={0,100,0}]{structure}
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}[rectangle]
+\setbeamertemplate{itemize subsubitem}{$-$}
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamercolor{block title}{fg=black,bg=blue!35!white}
+\setbeamercolor{block body}{fg=black,bg=blue!15!white}
+
+\input{Avinash.def}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\graphicspath{{../../Figures/}{./Figures/}}
+
+\begin{document}
+\title{\bf Compressed Sensing using Left and Right regular sparse graphs}
+\author{\textbf{Avinash Vem}, Nagaraj Janakiraman, Krishna R. Narayanan} 
+\vspace{10pt}
+\institute{Department of Electrical and Computer Engineering \\ Texas A\&M University}
+
+\titlegraphic{
+\includegraphics[width=0.75in]{TAMULogoBox.pdf}
+}
+
+\date{} % if no date wanted, keep it blank
+\frame{\titlepage}
+
+\begin{frame}
+	\frametitle{Outline}
+	\tableofcontents
+\end{frame}
+
+\section{Introduction}
+\subsection{Compressed Sensing}
+\begin{frame}{Problem Statement}
+\begin{block}{}
+\begin{equation*}
+\mathbf{y=Ax +w}
+\end{equation*}
+\end{block}
+
+\begin{itemize}
+\item $\mbf{x}$ -$N \times 1$ sparse signal
+\item $\mbf{A}$ -$M \times N$ measurement matrix
+\item $\mbf{w}$ -additive noise
+\item $\mbf{y}$ -$M \times 1$ measurement vector
+\item $\text{supp}(\mbf{x})\coleq \{i: x_i\neq 0, i\in [N]\}$
+\item $K=\card{\text{supp}(\mbf{x})}$
+\end{itemize}
+
+\begin{block}{Sparsity}
+ $K\ll N$ 
+\end{block}
+\end{frame}
+%-------------------------------------------------------
+
+\begin{frame}{Support Recovery}
+\begin{itemize}
+\item Decoder: Given $\mbf{y}$ reconstruct the vector $\mbf{x}$ denoted by $\widehat{\mbf{x}}$
+\item Prob. of failure of support recovery $\mbb{P}_{F}\coleq \text{Pr}(\text{supp}(\widehat{\mbf{x}})\neq \text{supp}(\mbf{x}))$
+\item Metrics of interest:
+\begin{itemize}
+\item Sample complexity ($M$)
+\item Decoding complexity
+\item $\mbb{P}_{F}$
+\end{itemize} 
+\end{itemize}
+\vspace{5ex}
+
+\onslide<2->
+\begin{block}{Objective}
+Devise a scheme with minimal num. of measurements $M$ and minimal decoding complexity such that $\mbb{P}_{F}\rightarrow 0$ as $N (\text{and } K) \rightarrow \infty$
+\end{block}
+\end{frame}
+%-------------------------------------------------------
+
+\subsection{Known Limits}
+\begin{frame}
+\begin{block}{Optimal order for Support Recovery [1]}
+\begin{itemize}
+\item In the sub-linear sparsity regime, $K=o(N)$, necessary and sufficient conditions are shown to be:
+\begin{equation*}
+C_1 K\log\left(\frac{N}{K}\right)<M<C_2 K\log\left(\frac{N}{K}\right)
+\end{equation*}
+\item In the linear sparsity regime, $K=\alpha N,$ it was shown that $M=\Theta(N)$ measurements are sufficient for asymptotically reliable recovery. 
+ \end{itemize}
+\end{block}
+\vspace{7ex}
+
+\onslide<2->{
+\begin{itemize}
+\item In [1], the minimum value of the signal space affects the bounds on $M$
+\end{itemize}
+\begin{align*}
+x_i\in\mc{X}&\defeq\{A e^{i\theta}: A\in \mc{A},\theta\in \Omega\}\cup \{0\} ,\\
+\mc{A}&=\{A_{\min}+\rho l\}_{l=0}^{L_1}, \Omega =\left\lbrace 2\pi l/L_2\right\rbrace_{l=0}^{L_2}
+\end{align*}
+}
+
+[1] Information Theoretic Limits of Support Recovery- Wainwright-2007
+\end{frame}
+
+\subsection{Main Result}
+\begin{frame}{Main result}
+
+\begin{block}{Optimal Sample and Decoding Complexities}
+In the sub-linear sparsity regime, for a given SNR of $\frac{A^{2}_{\text{min}}}{\sigma^{2}}$, our scheme has 
+\begin{itemize}
+\item Sample complexity of $M=c_1 K\log (\frac{c_2 N}{K})$
+\item Decoding complexity of $O\left(K\log(\frac{N}{K})\right)$ 
+\item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$
+\end{itemize} 
+where the constants $c_{1}$ and $c_{2}$ are dependent on SNR and desired rate of decay of $\mbb{P}_{\text{F}}$.
+\end{block}
+\end{frame}
+
+\subsection{Prior Work}
+\begin{frame}
+asfasfc
+\end{frame}
+
+\section{Framework}
+\subsection{Sensing Matrix}
+\begin{frame}{Graphical Representation}
+$(N,\ell,r,W)$ ensemble. $\ell N=rM_1$
+\begin{figure}
+\scalebox{1.3}{\input{../../Figures/TannerGraph.tex}}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Matrix Representation}
+$(N,\ell,r,W)$ ensemble. 
+\begin{itemize}
+\item $\mbf{H}$ be the adjacency matrix (binning operation)- $M_1 \times N$
+\item $\mbf{S}$ be the generator matrix at each bin - $P \times r$
+\end{itemize}
+\begin{align*}
+\mbf{\tilde{y}=H(x)}&= 
+\begin{bmatrix}
+   \tilde{\mbf{ y}}_{1} \\
+   \tilde{ \mbf{y}}_{2} \\
+    \vdots \\
+   \tilde{\mbf{y}}_{M_1}
+\end{bmatrix}
+,\text{dim}(\tilde{\mbf{y}}_{i} )=r \times 1,
+\\
+\vspace{10pt}
+\mbf{y}&= 
+\begin{bmatrix}
+   \mbf{ y}_{1}\\
+    \mbf{y}_{2}  \\
+    \vdots \\
+    \mbf{y}_{M_1}
+\end{bmatrix}
+, \text{where } \mbf{y}_i= \mbf{S \tilde{y}}_{i}, \text{dim} (\mbf{y}_i)=P \times 1   
+\end{align*}
+\begin{itemize}
+\item We define a tensor operation such that 
+\begin{equation*}
+\mbf{y=(S\boxplus H)  x}
+\end{equation*}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Tensor Operation}
+\begin{itemize}
+\item Sensing matrix $\mbf{A}_{M_{1}P\times N}= S_{P\times r}\boxplus H_{M_{1}\times N}$ where
+\vspace{2ex}
+\onslide<2->
+\item $\forall i\in [1:M_1]$, define a $P\times N$ matrix
+\begin{equation*}
+\mbf{S}_i=\mbf{h}_i \boxtimes \mbf{S}\defeq [\mbf{0},\ldots,\mbf{0},\mbf{s}_1,\mbf{0},\ldots,\mbf{s}_2,\ldots,\mbf{0},\mbf{s}_r,\mbf{0}]
+\end{equation*}
+where the $r$ columns are placed in the $r$ non-zero indices of $\mbf{h}_i$.
+\vspace{2ex}
+\item $S\boxplus H=\begin{bmatrix}
+\mbf{S}_1\\
+\mbf{S}_2\\
+\vdots\\
+\mbf{S}_{M_1}
+\end{bmatrix}
+$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\[\mbf{H} = \begin{bmatrix}
+1 & 0 & 0 & 1 & 0 & 1    \\
+0 & 1 & 1 & 0 & 1 & 0 \\
+1 & 1 & 0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 & 1 & 1
+\end{bmatrix} \] and 
+\[ \mbf{S} = \begin{bmatrix}
++1 & -1 & -1\\
+-1 & +1 & -1
+\end{bmatrix}. \]
+Sensing matrix $\bf A$ with $M = 8$: 
+\[ \mbf{A = H \boxplus S} \ = \begin{bmatrix}
++1 & \ \ 0 & \ \ 0 & -1 & \ \ 0 & -1\\
+-1 & \ \ 0 & \ \ 0 & +1 & \ \ 0 & -1\\
+\ \ 0 & +1 & -1 & \ \ 0 & -1 & \ \ 0\\
+\ \ 0 & -1 & +1 & \ \ 0 & -1 & \ \ 0\\
++1 & -1 & \ \ 0 & -1 & \ \ 0 &\ \ 0\\
+-1 & +1 & \ \ 0 & -1 & \ \ 0 &\ \ 0\\
+\ \ 0 & \ \ 0 & +1 & \ \ 0 & -1 & -1\\
+\ \ 0 & \ \ 0 & -1 & \ \ 0 & +1 & -1
+\end{bmatrix}
+ \]
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{figure}
+\scalebox{3}{\input{../../Figures/TannerMatrixExample}}
+\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+\subsection{Decoding}
+\begin{frame}{Bin Decoding}
+At each bin, input to the decoder is 
+\begin{equation*}
+ \mbf{y}_i=\sum_{j=1}^{r}x_{\mbf{h}_{i}^{j}}\mbf{s}_j+\mbf{w}_i
+\end{equation*}
+\begin{itemize}
+\item Zero-ton: Is it just noise?
+\begin{equation*}
+\widehat{\mc{H}}_i=\mc{H}_{Z}, ~~\text{if } \frac{1}{P}\norm{\mbf{y}_i}^2\leq (1+\gamma)\sigma^2
+\end{equation*}
+\item Singleton: If a single variable is non-zero?
+\begin{align*}
+\alpha_{k}&=\frac{\mbf{s}_k^{\dagger}\mbf{y}_i}{\norm{\mbf{s}_k}^2}\\
+\hat{k}&=\arg \min_{k}~~ \norm{\mbf{y}_i-\alpha_{k}s_k}\\
+\hat{x}[\hat{k}]&=\arg \min_{x\in\mc{X}} \norm{x-\alpha_{\hat{k}}}
+\end{align*}
+\item Multi-ton: More than one non-zero variable?
+\begin{equation*}
+\widehat{\mc{H}}_i=\mc{H}_{S}(\hat{k},\hat{x}[\hat{k}]), ~~\text{if } \frac{1}{P}\norm{\mbf{y}_{i}-\hat{x}[\hat{k}]\mbf{s}_{\hat{k}}}^2\leq (1+\gamma)\sigma^2
+\end{equation*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Peeling Decoding}
+\begin{algorithmic}
+\While {$\exists i\in[M_1]: \mc{H}_i=\mc{H}_Z ~\text{or } \mc{H}_S $, }
+\If {$\mc{H}_i=\mc{H}_Z$}
+    \State Remove the bin $i$, assign $0$ to all the variables connected
+\ElsIf {$\mc{H}_i=\mc{H}_S(k,x[k])$}
+       \State Assign $x[k]$ to $k^{\text{th}}$ variable in bin $i$, subtract $x[k]$ from connected bins\\
+                         \hspace{6ex} Remove the bin and all the variables connected
+\EndIf
+\EndWhile
+\end{algorithmic}
+\end{frame}
+
+\section{Analysis}
+\begin{frame}{Oracle based Peeling Decoder}
+\begin{itemize}
+\item Assume the hypothesis detection in each bin is correct
+\item Equivalence to peeling decoder on pruned graph- all zero variables are removed
+\end{itemize}
+\begin{block}{Equivalence to $(N,l,r)$ LDPC on BEC($\epsilon=\frac{K}{N}$)}
+If $\text{supp}(\mbf{x})=\{i:y_i=\mc{E}\}$, then $P^{(i)}_{\text{BEC}}(\mbf{y})=P^{(i)}_{\text{SR}}(\mbf{z})$  for $\mbf{z=Hx}$.
+\end{block}
+\onslide<2->
+\begin{itemize}
+\item Choose $M_1=\eta K$ thus $r=\frac{\ell N}{\eta K}$
+\end{itemize}
+\vspace{1ex}
+\begin{block}{DE for Peeling decoder on LDPC -BEC channel}
+Fractional number of degree one checks remaining
+\begin{equation*}
+\tilde{R}_1(y)=r\epsilon y^{l-1}[y-1+(1-\epsilon y^{l-1})^{r-1}]
+\end{equation*}
+where $\epsilon=\frac{K}{N}$ and $r=\frac{\ell N}{\eta K}$
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Peeling threshold}
+$\eta^{\text{Th}}$ is defined to be the minimum value of $\eta$ for which there is no non-zero solution for the equation:
+\begin{align*}
+y&=\lim_{\frac{N}{K}\rightarrow\infty}1-\left(1-\frac{Ky^{l-1}}{N}\right)^{\frac{lN}{\eta K}}\\
+  &=1-e^{\frac{-ly^{l-1}}{\eta}}
+\end{align*}
+in the range $y\in [0,1]$.
+\end{block}
+\begin{block}{}
+For $M_1>\eta^{\text{BP}}K$ bin nodes, the peeling decoder will be successful with probability $1-O(\frac{1}{K^{l-2}})$
+\end{block}
+$\eta^{\text{BP}}$ is referred to as belief propagation threshold and is a function of just $\ell,r$.
+\end{frame}
+
+\begin{frame}{Analysis of Bin Decoding}
+abc
+\end{frame}
+
+\section{Simulation Results}
+\begin{frame}
+saegv
+\end{frame}
+
+
+\end{document}
