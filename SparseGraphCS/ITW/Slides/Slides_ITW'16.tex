@@ -150,7 +150,7 @@ In the sub-linear sparsity regime, for a given SNR of $\frac{A^{2}_{\text{min}}}
 \item Decoding complexity of $O\left(K\log(\frac{N}{K})\right)$ 
 \item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$
 \end{itemize} 
-where the constants $c_{1}$ and $c_{2}$ are dependent on SNR and desired rate of decay of $\mbb{P}_{\text{F}}$.
+where the constants $c_{1}$ and $c_{2}$ are dependent on SNR, desired rate of decay of $\mbb{P}_{\text{F}}$ and left degree $\ell$.
 \end{block}
 \end{frame}
 
@@ -232,11 +232,14 @@ $
 0 & 1 & 1 & 0 & 1 & 0 \\
 1 & 1 & 0 & 1 & 0 & 0 \\
 0 & 0 & 1 & 0 & 1 & 1
-\end{bmatrix} \] and 
+\end{bmatrix} \] 
+\onslide<2->{
+and 
 \[ \mbf{S} = \begin{bmatrix}
 +1 & -1 & -1\\
 -1 & +1 & -1
-\end{bmatrix}. \]
+\end{bmatrix}. \]}
+\onslide<3->{
 Sensing matrix $\bf A$ with $M = 8$: 
 \[ \mbf{A = H \boxplus S} \ = \begin{bmatrix}
 +1 & \ \ 0 & \ \ 0 & -1 & \ \ 0 & -1\\
@@ -249,11 +252,19 @@ Sensing matrix $\bf A$ with $M = 8$:
 \ \ 0 & \ \ 0 & -1 & \ \ 0 & +1 & -1
 \end{bmatrix}
  \]
+ }
 \end{column}
 \begin{column}{0.48\textwidth}
+\only<1-2>{
 \begin{figure}
 \scalebox{3}{\input{../../Figures/TannerMatrixExample}}
 \end{figure}
+}
+\only<3>{
+\begin{figure}
+\scalebox{3}{\input{../../Figures/SensingGraph}}
+\end{figure}
+}
 \end{column}
 
 \end{columns}
@@ -289,14 +300,16 @@ At each bin, input to the decoder is
 \If {$\mc{H}_i=\mc{H}_Z$}
     \State Remove the bin $i$, assign $0$ to all the variables connected
 \ElsIf {$\mc{H}_i=\mc{H}_S(k,x[k])$}
-       \State Assign $x[k]$ to $k^{\text{th}}$ variable in bin $i$, subtract $x[k]$ from connected bins\\
-                         \hspace{6ex} Remove the bin and all the variables connected
+       \State Assign $x[k]$ to $k^{\text{th}}$ variable in bin $i$\\
+  \hspace{6ex} Subtract $x[k]\mbf{s}_k$ from $\mbf{y}_i$ of connected bins\\
+  \hspace{6ex} Remove the bin and all the variables connected
 \EndIf
 \EndWhile
 \end{algorithmic}
 \end{frame}
 
 \section{Analysis}
+\subsection{Peeling Decoder}
 \begin{frame}{Oracle based Peeling Decoder}
 \begin{itemize}
 \item Assume the hypothesis detection in each bin is correct
@@ -319,25 +332,83 @@ where $\epsilon=\frac{K}{N}$ and $r=\frac{\ell N}{\eta K}$
 \end{block}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{}
 \begin{block}{Peeling threshold}
 $\eta^{\text{Th}}$ is defined to be the minimum value of $\eta$ for which there is no non-zero solution for the equation:
 \begin{align*}
-y&=\lim_{\frac{N}{K}\rightarrow\infty}1-\left(1-\frac{Ky^{l-1}}{N}\right)^{\frac{lN}{\eta K}}\\
-  &=1-e^{\frac{-ly^{l-1}}{\eta}}
+y&=\lim_{\frac{N}{K}\rightarrow\infty}1-\left(1-\frac{Ky^{\ell-1}}{N}\right)^{\frac{\ell N}{\eta K}}\\
+  &=1-e^{\frac{-\ell y^{\ell-1}}{\eta}}
 \end{align*}
 in the range $y\in [0,1]$.
 \end{block}
 \vspace{3ex}
 \onslide<2->
 \begin{block}{Threshold behavior}
-For $M_1>\eta^{\text{BP}}K$ bin nodes, the peeling decoder will be successful with probability $1-O\left(\frac{1}{K^{l-2}}\right)$
+For $M_1>\eta^{\text{BP}}K$ bin nodes, the peeling decoder will be successful with probability $1-O\left(\frac{1}{K^{\ell-2}}\right)$
 \end{block}
 Note that $\eta^{\text{Th}}$ is a function of just $\ell,r$.
 \end{frame}
 
+\subsection{Bin Decoder}
+\begin{frame}{Bin detection matrix}
+\begin{itemize}
+\item Singleton detection is the crucial part of bin decoding:
+\begin{equation*}
+\mbf{y}_i=x_{k}\mbf{s}_k +\mbf{w}_i
+\end{equation*} 
+\item Error correction coding: $\mbf{S}$ be the codebook, where each $\mbf{s}_i$ is a codeword.
+\item Block length =$P$.  $\#$ codewords $\geq \frac{N\ell}{\eta K}$
+\item Choose a code with rate $R(\beta)$ s.t. fractional minimum distance $\beta >e^{-\frac{A_{\text{min}}^{2}}{2\sigma^2}}$
+\item Thus $P=\frac{\lceil {\log_2(\frac{N\ell}{\eta K})}\rceil}{R(\beta)}$.
+\end{itemize} 
+\begin{block}{Sample Complexity}
+ \begin{align*}
+  M&=M_1\times P \\
+   &\geq \left[\frac{\eta^{\text{Th}}}{R\left(e^{-\frac{A_{\text{min}}^{2}}{2\sigma^2}}\right)}\right] K\log\left(\frac{\ell N}{\eta^{\text{Th}} K}\right)
+\end{align*} 
+\end{block}
+\end{frame}
+
+
 \begin{frame}{Analysis of Bin Decoding}
-abc
+\begin{itemize}
+\item Let $\text{E}_{\text{bin}}$ be the event an error was made in overall bin decoding
+\item Union bounding: $\text{E}_{\text{bin}}\leq (\eta K+\ell K)\text{Pr(E)}$
+\end{itemize}
+\begin{block}{Error Probability of a bin - Ramchandran \textit{et al}, 2014}
+$\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(\sqrt{1+2\gamma}-1)^2}+4e^{-c_6 P\left(1-\frac{2\gamma\sigma^2}{A^{2}_{\text{min}}}\right)}+2e^{-P\frac{\left(\beta-\mbb{P}_{e}\right)^2}{2\mbb{P}_{e}(1-\mbb{P}_{e})}}$
+\end{block}
+\vspace{2ex}
+\onslide<2->
+\begin{description}
+    \item[\textbf{Sub-Linear sparsity}]
+\end{description}
+\begin{itemize}
+\item Order optimal sample complexity with precise constants given
+\item $\mbb{P}_{\text{F}}\rightarrow 0$ as $N (\text{and } K)\rightarrow \infty$
+\item Trade-off between the constants in $M$, rate of decay of  $\mbb{P}_{\text{F}}$ and SNR
+\item Optimal decoding complexity of $O\left(K\log\left(\frac{N}{K}\right)\right)$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Implications}
+\begin{block}{Error Probability of a bin - Ramchandran \textit{et al}, 2014}
+$\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(\sqrt{1+2\gamma}-1)^2}+4e^{-c_6 P\left(1-\frac{2\gamma\sigma^2}{A^{2}_{\text{min}}}\right)}+2e^{-P\frac{\left(\beta-\mbb{P}_{e}\right)^2}{2\mbb{P}_{e}(1-\mbb{P}_{e})}}$
+\end{block}
+
+\vspace{2ex}
+\begin{description}
+    \item [\textbf{Linear sparsity: $K=\alpha N$}]
+\end{description}
+\begin{itemize}
+\item Choice of $P=c_{1}\log\left(c_2 \frac{N}{K}\right)$ doesn't work
+\item We choose $P=\log(K)$ and rate $R(\beta)$ as earlier
+\item A sub-code of size $\frac{\ell}{\alpha\eta}$ of the codebook is chosen as $\mbf{S}$
+\item Sample complexity of $\eta^{\text{Th}}K\log K$
+\item Can we do $\Theta(K)$ with practical decoding?
+\end{itemize}
+
 \end{frame}
 
 \section{Simulation Results}
