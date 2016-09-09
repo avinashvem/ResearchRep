@@ -23,7 +23,7 @@ ymajorgrids,
 xtick = {0,2,4,6,8,10,12,14,16},
 xlabel={\Large{SNR (in dB)}},
 ylabel={\Large{Probability of Success}},
-legend style={at={(1.0,0.0012)},anchor=south east,draw=black,fill=white,legend cell align=left,font=\Large}
+legend style={at={(1.0,0.0012)},anchor=south east,draw=black,fill=white,legend cell align=right,font=\Large}
 ]
 
 
@@ -53,17 +53,10 @@ legend style={at={(1.0,0.0012)},anchor=south east,draw=black,fill=white,legend c
 2  0\\
 0	0\\
 };
-\addlegendentry{Sub-linear, conv:M=1200};
+\addlegendentry{conv (n=24): M=1200};
 
 \addplot [color=blue,solid,line width=1.5pt,mark size=6.0pt,mark=triangle,mark options={solid}]
   table[row sep=crcr]{0 0\\
-%  2 0\\
-%  4 0\\
-%  6.1 0.1\\
-%  8.01 0.82\\
-%  10.043  0.96\\
-%  12.0057 0.964\\
-%  14 0.97  0.97\\
 2.342 0\\
 4.356 0\\
 6.365 0\\
@@ -73,7 +66,7 @@ legend style={at={(1.0,0.0012)},anchor=south east,draw=black,fill=white,legend c
 14.324  0.972\\
  16.28 0.96\\
 };
-\addlegendentry{Sub-linear, Golay:M=1300};
+\addlegendentry{Golay: M=1300};
 
 \addplot [color=blue,solid,line width=1.5pt,mark size=6.0pt,mark=star,mark options={solid}]
   table[row sep=crcr]{0 0\\
@@ -88,7 +81,7 @@ legend style={at={(1.0,0.0012)},anchor=south east,draw=black,fill=white,legend c
   10.96 0.99
   13.46 0.985\\
 };
-\addlegendentry{Sub-linear, conv:M=2400};
+\addlegendentry{conv(n=48): M=2400};
 
 \addplot [color=blue,solid,line width=1.5pt,mark size=4.0pt,mark=o,mark options={solid}]
   table[row sep=crcr]{ 16 1\\
@@ -105,7 +98,7 @@ legend style={at={(1.0,0.0012)},anchor=south east,draw=black,fill=white,legend c
   0.73 0.03\\
   0.08 0\\
 };
-\addlegendentry{Sub-linear, conv:M=4800};
+\addlegendentry{conv(n=96): M=4800};
 
 \addplot [color=red,line width=2.0pt,mark size=6.0pt,mark=+,mark options={solid}]
   table[row sep=crcr]{0	0\\
