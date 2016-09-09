@@ -71,8 +71,8 @@
 \end{frame}
 
 \section{Introduction}
-\subsection{Compressed Sensing}
-\begin{frame}{Problem Statement}
+\subsection{Support Recovery}
+\begin{frame}{Compressed Sensing}
 \begin{block}{}
 \begin{equation*}
 \mathbf{y=Ax +w}
@@ -81,11 +81,11 @@
 
 \begin{itemize}
 \item $\mbf{x}$ -$N \times 1$ sparse signal
+\item $\text{supp}(\mbf{x})\coleq \{i: x_i\neq 0, i\in [N]\}$
+\item $K=\card{\text{supp}(\mbf{x})}$
 \item $\mbf{A}$ -$M \times N$ measurement matrix
 \item $\mbf{w}$ -additive noise
 \item $\mbf{y}$ -$M \times 1$ measurement vector
-\item $\text{supp}(\mbf{x})\coleq \{i: x_i\neq 0, i\in [N]\}$
-\item $K=\card{\text{supp}(\mbf{x})}$
 \end{itemize}
 
 \begin{block}{Sparsity}
@@ -94,7 +94,7 @@
 \end{frame}
 %-------------------------------------------------------
 
-\begin{frame}{Support Recovery}
+\begin{frame}{Problem Statement}
 \begin{itemize}
 \item Decoder: Given $\mbf{y}$ reconstruct the vector $\mbf{x}$ denoted by $\widehat{\mbf{x}}$
 \item Prob. of failure of support recovery $\mbb{P}_{F}\coleq \text{Pr}(\text{supp}(\widehat{\mbf{x}})\neq \text{supp}(\mbf{x}))$
@@ -152,11 +152,36 @@ In the sub-linear sparsity regime, for a given SNR of $\frac{A^{2}_{\text{min}}}
 \end{itemize} 
 where the constants $c_{1}$ and $c_{2}$ are dependent on SNR, desired rate of decay of $\mbb{P}_{\text{F}}$ and left degree $\ell$.
 \end{block}
+\onslide<2->
+\begin{block}{Linear Sparsity Regime}
+In the linear sparsity regime our scheme has 
+\begin{itemize}
+\item Sample complexity of $M=c_3 K\log (K)$
+\item Decoding complexity of $O\left(K\log(K)\right)$ 
+\item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$
+\end{itemize} 
+where the constant $c_{3}>1$ is a parameter dependent on left degree $\ell$.
+\end{block}
 \end{frame}
 
 \subsection{Prior Work}
 \begin{frame}
-asfasfc
+\begin{itemize}
+\item Zhang and Pfister, ``Verification Decoding of High-Rate LDPC Codes With Applications in Compressed Sensing", 2008
+\item  Jafarpour, Xu, Hassibi and Calderbank, ``Efficient and robust compressed sensing using optimized expander graphs", 2009
+\begin{itemize}
+\item Sample complexity of $O(K)$ and measurement complexity of $O(N\log(\frac{N}{K}))$ for noiseless setting
+\end{itemize}
+
+\vspace{3ex}
+\onslide<2->
+\item Li, Pedarsani and Ramchandran, ``Sub-linear compressed sensing for support recovery using sparse-graph codes", 2014
+\begin{itemize}
+\item Introduced sparse-graph codes peeling decoder framework to CS
+\item Sample and measurement complexities of $O(K\log N)$ for noisy setting
+\item Sample and measurement complexities of $2K$ and $O(K)$ for noiseless setting
+\end{itemize}
+\end{itemize}
 \end{frame}
 
 \section{Framework}
@@ -295,17 +320,29 @@ At each bin, input to the decoder is
 \end{frame}
 
 \begin{frame}{Peeling Decoding}
+\begin{columns}
+\begin{column}{0.55\textwidth}
 \begin{algorithmic}
 \While {$\exists i\in[M_1]: \mc{H}_i=\mc{H}_Z ~\text{or } \mc{H}_S $, }
 \If {$\mc{H}_i=\mc{H}_Z$}
-    \State Remove the bin $i$, assign $0$ to all the variables connected
-\ElsIf {$\mc{H}_i=\mc{H}_S(k,x[k])$}
-       \State Assign $x[k]$ to $k^{\text{th}}$ variable in bin $i$\\
-  \hspace{6ex} Subtract $x[k]\mbf{s}_k$ from $\mbf{y}_i$ of connected bins\\
-  \hspace{6ex} Remove the bin and all the variables connected
+    \State Remove the bin $i$\\
+   \hspace{2ex} Assign $0$ to all the variables connected
+\ElsIf {$\mc{H}_i=\mc{H}_S(k,x[k])$}   
+   \hspace{4ex} Assign $x[k]$ to $k^{\text{th}}$ variable in bin $i$\\
+  \hspace{2ex} Subtract $x[k]\mbf{s}_k$ from connected $\mbf{y}_i$  \\
+  \hspace{2ex} Remove the bin and all variables connected
 \EndIf
 \EndWhile
 \end{algorithmic}
+\end{column}
+
+\begin{column}{0.45\textwidth}
+\begin{figure}
+\scalebox{5}{\input{../../Figures/PeelingAnimation}}
+\end{figure}
+\end{column}
+
+\end{columns}
 \end{frame}
 
 \section{Analysis}
@@ -346,7 +383,7 @@ in the range $y\in [0,1]$.
 \begin{block}{Threshold behavior}
 For $M_1>\eta^{\text{BP}}K$ bin nodes, the peeling decoder will be successful with probability $1-O\left(\frac{1}{K^{\ell-2}}\right)$
 \end{block}
-Note that $\eta^{\text{Th}}$ is a function of just $\ell,r$.
+Note that $\eta^{\text{Th}}$ is a function of just the left degree $\ell$.
 \end{frame}
 
 \subsection{Bin Decoder}
@@ -358,18 +395,18 @@ Note that $\eta^{\text{Th}}$ is a function of just $\ell,r$.
 \end{equation*} 
 \item Error correction coding: $\mbf{S}$ be the codebook, where each $\mbf{s}_i$ is a codeword.
 \item Block length =$P$.  $\#$ codewords $\geq \frac{N\ell}{\eta K}$
-\item Choose a code with rate $R(\beta)$ s.t. fractional minimum distance $\beta >e^{-\frac{A_{\text{min}}^{2}}{2\sigma^2}}$
+\item Choose a code with rate $R(\beta)$ s.t. fractional minimum distance $\beta >\mbb{P}_{e}\coleq e^{-\frac{A_{\text{min}}^{2}}{2\sigma^2}}$
 \item Thus $P=\frac{\lceil {\log_2(\frac{N\ell}{\eta K})}\rceil}{R(\beta)}$.
 \end{itemize} 
+
 \begin{block}{Sample Complexity}
  \begin{align*}
   M&=M_1\times P \\
-   &\geq \left[\frac{\eta^{\text{Th}}}{R\left(e^{-\frac{A_{\text{min}}^{2}}{2\sigma^2}}\right)}\right] K\log\left(\frac{\ell N}{\eta^{\text{Th}} K}\right)
+   &\geq \left[\frac{\eta^{\text{Th}}}{R(\mbb{P}_{e})}\right] K\log\left(\frac{\ell N}{\eta^{\text{Th}} K}\right)
 \end{align*} 
 \end{block}
 \end{frame}
-
-
+%R(e^{-\frac{A_{\text{min}}^{2}}{2\sigma^2}})
 \begin{frame}{Analysis of Bin Decoding}
 \begin{itemize}
 \item Let $\text{E}_{\text{bin}}$ be the event an error was made in overall bin decoding
@@ -413,8 +450,25 @@ $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(
 
 \section{Simulation Results}
 \begin{frame}
-saegv
+\begin{itemize}
+\item $K=50, N=10^5$. $\mc{X}=\{+1,-1\}$
+\item $\ell=4, \eta =2 (M_1 =2K)$. Note that $\eta^{\text{Th}}(\ell=4)=1.295$
+\item $r=\frac{N\ell}{\eta K}=4000$. $\log_2(r)=12$
+\item $(12,24)$ Golay code and $(12,n)$ convolutional codes for $n=24,48,96$ with QAM form $\mbf{S}$.
+\end{itemize}
+
+\begin{figure}
+\resizebox{0.5\textwidth}{!}{
+\begin{centering}
+\input{../../Figures/succ_prb_Slides}
+\end{centering}
+}
+\end{figure}
+
 \end{frame}
 
+\begin{frame}
+\Large{Questions}
+\end{frame}
 
 \end{document}
