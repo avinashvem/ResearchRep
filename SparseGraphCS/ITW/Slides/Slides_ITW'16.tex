@@ -170,7 +170,7 @@ where the constant $c_{3}>1$ is a parameter dependent on left degree $\ell$.
 \item Zhang and Pfister, ``Verification Decoding of High-Rate LDPC Codes With Applications in Compressed Sensing", 2008
 \item  Jafarpour, Xu, Hassibi and Calderbank, ``Efficient and robust compressed sensing using optimized expander graphs", 2009
 \begin{itemize}
-\item Sample complexity of $O(K)$ and measurement complexity of $O(N\log(\frac{N}{K}))$ for noiseless setting
+\item Sample complexity of $O(K\log N)$ and decoding complexity of $O(K)$ for noiseless setting
 \end{itemize}
 
 \vspace{3ex}
@@ -187,17 +187,18 @@ where the constant $c_{3}>1$ is a parameter dependent on left degree $\ell$.
 \section{Framework}
 \subsection{Sensing Matrix}
 \begin{frame}{Graphical Representation}
-$(N,\ell,r,W)$ ensemble. $\ell N=rM_1$
+$(N,\ell,r,\mbf{S})$ ensemble. $\ell N=rM_1$. 
+\onslide<2->{$\text{dim}(\mbf{S})=P\times r$.}
 \begin{figure}
 \scalebox{1.3}{\input{../../Figures/TannerGraph.tex}}
 \end{figure}
 \end{frame}
 
 \begin{frame}{Matrix Representation}
-$(N,\ell,r,W)$ ensemble. 
+$(N,\ell,r,\mbf{S})$ ensemble. 
 \begin{itemize}
 \item $\mbf{H}$ be the adjacency matrix (binning operation)- $M_1 \times N$
-\item $\mbf{S}$ be the generator matrix at each bin - $P \times r$
+\item $\mbf{S}$ be the bin-detection matrix at each bin - $P \times r$
 \end{itemize}
 \begin{align*}
 \mbf{\tilde{y}=H(x)}&= 
@@ -349,7 +350,7 @@ At each bin, input to the decoder is
 \subsection{Peeling Decoder}
 \begin{frame}{Oracle based Peeling Decoder}
 \begin{itemize}
-\item Assume the hypothesis detection in each bin is correct
+\item Assume the hypothesis detection in each bin decoder is correct
 \item Equivalence to peeling decoder on pruned graph- all zero variables are removed
 \end{itemize}
 \begin{block}{Equivalence to $(N,l,r)$ LDPC on BEC($\epsilon=\frac{K}{N}$)}
@@ -381,7 +382,7 @@ in the range $y\in [0,1]$.
 \vspace{3ex}
 \onslide<2->
 \begin{block}{Threshold behavior}
-For $M_1>\eta^{\text{BP}}K$ bin nodes, the peeling decoder will be successful with probability $1-O\left(\frac{1}{K^{\ell-2}}\right)$
+For $M_1>\eta^{\text{Th}}K$ bin nodes, the peeling decoder will be successful with probability $1-O\left(\frac{1}{K^{\ell-2}}\right)$
 \end{block}
 Note that $\eta^{\text{Th}}$ is a function of just the left degree $\ell$.
 \end{frame}
@@ -412,7 +413,7 @@ Note that $\eta^{\text{Th}}$ is a function of just the left degree $\ell$.
 \item Let $\text{E}_{\text{bin}}$ be the event an error was made in overall bin decoding
 \item Union bounding: $\text{E}_{\text{bin}}\leq (\eta K+\ell K)\text{Pr(E)}$
 \end{itemize}
-\begin{block}{Error Probability of a bin - Ramchandran \textit{et al}, 2014}
+\begin{block}{Error Probability of a bin [LPR-2014]}
 $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(\sqrt{1+2\gamma}-1)^2}+4e^{-c_6 P\left(1-\frac{2\gamma\sigma^2}{A^{2}_{\text{min}}}\right)}+2e^{-P\frac{\left(\beta-\mbb{P}_{e}\right)^2}{2\mbb{P}_{e}(1-\mbb{P}_{e})}}$
 \end{block}
 \vspace{2ex}
@@ -468,7 +469,10 @@ $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(
 \end{frame}
 
 \begin{frame}
-\Large{Questions}
+\begin{centering}
+\hspace{4ex}\LARGE{Questions?}\\
+\vspace{4ex}
+\end{centering}
 \end{frame}
 
 \end{document}

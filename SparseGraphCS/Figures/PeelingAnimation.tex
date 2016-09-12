@@ -336,4 +336,116 @@
 
 %--------------------%^$%^&*(&^%$#%^&*(&^%$#^&*(__________________---------------------------------
 
+\onslide<9>{             
+\foreach \vn in {1,6}{
+ \node[bit] (vn\vn) at (0,-\vn*\gapVN) {};
+}
+
+\foreach \vn in {2,3,4,5}{
+ \node[bituncover] (vn\vn) at (0,-\vn*\gapVN) {};
+}
+
+\foreach \vn in {2,3,4,5}{
+\path (vn\vn) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{0}};
+}
+
+\path (vn1) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$x_{1}$}};
+\path (vn6) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$x_{6}$}};
+
+
+\foreach \cn in {1,...,4}{
+\node[check] (cn\cn) at (\horzgap,-\cn*\gapCN) {};
+}
+
+\draw[line width=0.05mm] (vn6.east)--(cn4.west);
+%\draw[line width=0.05mm] (vn3.east)--(cn4.west);
+\draw[line width=0.05mm] (vn1.east)--(cn4.west);
+
+%\draw[line width=0.05mm] (vn2.east)--(cn3.west);
+%\draw[line width=0.05mm] (vn4.east)--(cn3.west);
+%\draw[line width=0.05mm] (vn5.east)--(cn3.west);
+
+%\draw[line width=0.05mm] (vn2.east)--(cn3.west);
+%\draw[line width=0.05mm] (vn4.east)--(cn3.west);
+%\draw[line width=0.05mm] (vn5.east)--(cn3.west);
+
+\draw[line width=0.05mm] (vn6.east)--(cn2.west);
+%\draw[line width=0.05mm] (vn5.east)--(cn2.west);
+%\draw[line width=0.05mm] (vn3.east)--(cn2.west);
+
+\draw[line width=0.05mm] (vn1.east)--(cn1.west);
+}
+%-----------------------*(&^#@$^&*(^%$^&*(&^--------------------------------------------------------------------
+\onslide<10>{             
+\foreach \vn in {1,6}{
+ \node[bit] (vn\vn) at (0,-\vn*\gapVN) {};
+}
+
+\foreach \vn in {2,3,4,5}{
+ \node[bituncover] (vn\vn) at (0,-\vn*\gapVN) {};
+}
+\foreach \vn in {2,3,4,5}{
+\path (vn\vn) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{0}};
+}
+
+\path (vn1) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$x_{1}$}};
+\path (vn6) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$x_{6}$}};
+
+
+\foreach \cn in {1,...,4}{
+\node[check] (cn\cn) at (\horzgap,-\cn*\gapCN) {};
+}
+
+
+\draw[line width=0.05mm] (vn1.east)--(cn4.west);
+\draw[line width=0.05mm] (vn1.east)--(cn1.west);
+
+\draw[line width=0.05mm, densely dotted] (vn6.east)--(cn4.west);
+\draw[line width=0.05mm, densely dotted] (vn6.east)--(cn2.west);
+}
+%-----------------------*(&^#@$^&*(^%$^&*(&^--------------------------------------------------------------------
+
+\onslide<11>{             
+\foreach \vn in {1}{
+ \node[bit] (vn\vn) at (0,-\vn*\gapVN) {};
+}
+
+\foreach \vn in {2,3,4,5,6}{
+ \node[bituncover] (vn\vn) at (0,-\vn*\gapVN) {};
+}
+\foreach \vn in {2,3,4,5}{
+\path (vn\vn) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{0}};
+}
+
+\path (vn1) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$x_{1}$}};
+\path (vn6) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$x_{6}$}};
+
+
+\foreach \cn in {1,...,4}{
+\node[check] (cn\cn) at (\horzgap,-\cn*\gapCN) {};
+}
+
+
+\draw[line width=0.05mm] (vn1.east)--(cn4.west);
+\draw[line width=0.05mm] (vn1.east)--(cn1.west);
+}
+%-----------------------*(&^#@$^&*(^%$^&*(&^--------------------------------------------------------------------
+\onslide<12>{             
+
+\foreach \vn in {1,...,6}{
+ \node[bituncover] (vn\vn) at (0,-\vn*\gapVN) {};
+}
+\foreach \vn in {2,3,4,5}{
+\path (vn\vn) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{0}};
+}
+
+\path (vn1) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$x_{1}$}};
+\path (vn6) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$x_{6}$}};
+
+
+\foreach \cn in {1,...,4}{
+\node[check] (cn\cn) at (\horzgap,-\cn*\gapCN) {};
+}
+}
+%-----------------------*(&^#@$^&*(^%$^&*(&^--------------------------------------------------------------------
 \end{tikzpicture}
