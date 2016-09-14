@@ -73,24 +73,22 @@
 \section{Introduction}
 \subsection{Support Recovery}
 \begin{frame}{Compressed Sensing}
-\begin{block}{}
+
 \begin{equation*}
 \mathbf{y=Ax +w}
 \end{equation*}
-\end{block}
+
 
 \begin{itemize}
 \item $\mbf{x}$ -$N \times 1$ sparse signal
-\item $\text{supp}(\mbf{x})\coleq \{i: x_i\neq 0, i\in [N]\}$
-\item $K=\card{\text{supp}(\mbf{x})}$
 \item $\mbf{A}$ -$M \times N$ measurement matrix
 \item $\mbf{w}$ -additive noise
 \item $\mbf{y}$ -$M \times 1$ measurement vector
+\onslide<2->
+\item $\text{supp}(\mbf{x})\coleq \{i: x_i\neq 0, i\in [N]\}$
+\item $K=\card{\text{supp}(\mbf{x})}$
+\item Sparsity- $K\ll N$ 
 \end{itemize}
-
-\begin{block}{Sparsity}
- $K\ll N$ 
-\end{block}
 \end{frame}
 %-------------------------------------------------------
 
