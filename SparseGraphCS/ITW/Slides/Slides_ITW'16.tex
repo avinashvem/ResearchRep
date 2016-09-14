@@ -53,7 +53,7 @@
 \graphicspath{{../../Figures/}{./Figures/}}
 
 \begin{document}
-\title{\bf Compressed Sensing using Left and Right regular sparse graphs}
+\title{\bf Compressed Sensing using Left and Right regular sparse-graph codes}
 \author{\textbf{Avinash Vem}, Nagaraj Janakiraman, Krishna R. Narayanan} 
 \vspace{10pt}
 \institute{Department of Electrical and Computer Engineering \\ Texas A\&M University}
@@ -69,6 +69,7 @@
 	\frametitle{Outline}
 	\tableofcontents
 \end{frame}
+%-------------------------------------------#$%^&@#$@#$^%$##$%^%$^%^------------------------------------------------------------
 
 \section{Introduction}
 \subsection{Support Recovery}
@@ -90,7 +91,7 @@
 \item Sparsity- $K\ll N$ 
 \end{itemize}
 \end{frame}
-%-------------------------------------------------------
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 \begin{frame}{Problem Statement}
 \begin{itemize}
@@ -110,7 +111,7 @@
 Devise a scheme with minimal num. of measurements $M$ and minimal decoding complexity such that $\mbb{P}_{F}\rightarrow 0$ as $N (\text{and } K) \rightarrow \infty$
 \end{block}
 \end{frame}
-%-------------------------------------------------------
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 \subsection{Known Limits}
 \begin{frame}
@@ -137,11 +138,12 @@ x_i\in\mc{X}&\defeq\{A e^{i\theta}: A\in \mc{A},\theta\in \Omega\}\cup \{0\} ,\\
 
 [1] Information Theoretic Limits of Support Recovery- Wainwright-2007
 \end{frame}
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 \subsection{Main Result}
 \begin{frame}{Main result}
 
-\begin{block}{Optimal Sample and Decoding Complexities}
+\begin{block}{Sub-linear Sparsity-Optimal Sample and Decoding Complexities}
 In the sub-linear sparsity regime, for a given SNR of $\frac{A^{2}_{\text{min}}}{\sigma^{2}}$, our scheme has 
 \begin{itemize}
 \item Sample complexity of $M=c_1 K\log (\frac{c_2 N}{K})$
@@ -154,13 +156,14 @@ where the constants $c_{1}$ and $c_{2}$ are dependent on SNR, desired rate of de
 \begin{block}{Linear Sparsity Regime}
 In the linear sparsity regime our scheme has 
 \begin{itemize}
-\item Sample complexity of $M=c_3 K\log (K)$
+\item Sample complexity of $M=c_3 K\log K$
 \item Decoding complexity of $O\left(K\log(K)\right)$ 
 \item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$
 \end{itemize} 
 where the constant $c_{3}>1$ is a parameter dependent on left degree $\ell$.
 \end{block}
 \end{frame}
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 \subsection{Prior Work}
 \begin{frame}
@@ -170,10 +173,11 @@ where the constant $c_{3}>1$ is a parameter dependent on left degree $\ell$.
 \begin{itemize}
 \item Sample complexity of $O(K\log N)$ and decoding complexity of $O(K)$ for noiseless setting
 \end{itemize}
+\item Dimakis, Smarandache and Vontobel, ``LDPC codes for Compressed Sensing", 2011
 
 \vspace{3ex}
 \onslide<2->
-\item Li, Pedarsani and Ramchandran, ``Sub-linear compressed sensing for support recovery using sparse-graph codes", 2014
+\item Li, Pedarsani and Ramchandran, ``Sub-linear compressed sensing for support recovery using sparse-graph codes", 2014[LPR14]
 \begin{itemize}
 \item Introduced sparse-graph codes peeling decoder framework to CS
 \item Sample and measurement complexities of $O(K\log N)$ for noisy setting
@@ -181,6 +185,7 @@ where the constant $c_{3}>1$ is a parameter dependent on left degree $\ell$.
 \end{itemize}
 \end{itemize}
 \end{frame}
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 \section{Framework}
 \subsection{Sensing Matrix}
@@ -191,6 +196,7 @@ $(N,\ell,r,\mbf{S})$ ensemble. $\ell N=rM_1$.
 \scalebox{1.3}{\input{../../Figures/TannerGraph.tex}}
 \end{figure}
 \end{frame}
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 \begin{frame}{Matrix Representation}
 $(N,\ell,r,\mbf{S})$ ensemble. 
@@ -225,7 +231,7 @@ $(N,\ell,r,\mbf{S})$ ensemble.
 \end{equation*}
 \end{itemize}
 \end{frame}
-
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 \begin{frame}{Tensor Operation}
 \begin{itemize}
@@ -247,6 +253,7 @@ where the $r$ columns are placed in the $r$ non-zero indices of $\mbf{h}_i$.
 $
 \end{itemize}
 \end{frame}
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 \begin{frame}{Example}
 \begin{columns}
@@ -290,33 +297,34 @@ Sensing matrix $\bf A$ with $M = 8$:
 \end{figure}
 }
 \end{column}
-
 \end{columns}
 \end{frame}
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 \subsection{Decoding}
 \begin{frame}{Bin Decoding}
-At each bin, input to the decoder is 
-\begin{equation*}
- \mbf{y}_i=\sum_{j=1}^{r}x_{\mbf{h}_{i}^{j}}\mbf{s}_j+\mbf{w}_i
-\end{equation*}
+At each bin, input to the decoder is $\mbf{y}_i=\sum_{j=1}^{r}x_{\mbf{h}_{i}^{j}}\mbf{s}_j+\mbf{w}_i$
 \begin{itemize}
+\onslide<2->
 \item Zero-ton: Is it just noise?
 \begin{equation*}
 \widehat{\mc{H}}_i=\mc{H}_{Z}, ~~\text{if } \frac{1}{P}\norm{\mbf{y}_i}^2\leq (1+\gamma)\sigma^2
 \end{equation*}
-\item Singleton: If a single variable is non-zero?
+\onslide<3->
+\item Singleton: If a single variable is non-zero? $\mbf{y}_i=x_j\mbf{s}_j+\mbf{w}_i$
 \begin{align*}
 \alpha_{k}&=\frac{\mbf{s}_k^{\dagger}\mbf{y}_i}{\norm{\mbf{s}_k}^2}\\
 \hat{k}&=\arg \min_{k}~~ \norm{\mbf{y}_i-\alpha_{k}s_k}\\
 \hat{x}[\hat{k}]&=\arg \min_{x\in\mc{X}} \norm{x-\alpha_{\hat{k}}}
 \end{align*}
+\onslide<4->
 \item Multi-ton: More than one non-zero variable?
 \begin{equation*}
 \widehat{\mc{H}}_i=\mc{H}_{S}(\hat{k},\hat{x}[\hat{k}]), ~~\text{if } \frac{1}{P}\norm{\mbf{y}_{i}-\hat{x}[\hat{k}]\mbf{s}_{\hat{k}}}^2\leq (1+\gamma)\sigma^2
 \end{equation*}
 \end{itemize}
 \end{frame}
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 \begin{frame}{Peeling Decoding}
 \begin{columns}
@@ -340,9 +348,10 @@ At each bin, input to the decoder is
 \scalebox{5}{\input{../../Figures/PeelingAnimation}}
 \end{figure}
 \end{column}
-
 \end{columns}
 \end{frame}
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
+
 
 \section{Analysis}
 \subsection{Peeling Decoder}
@@ -367,6 +376,8 @@ Fractional number of degree one checks remaining
 where $\epsilon=\frac{K}{N}$ and $r=\frac{\ell N}{\eta K}$
 \end{block}
 \end{frame}
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
+
 
 \begin{frame}{}
 \begin{block}{Peeling threshold}
@@ -384,6 +395,7 @@ For $M_1>\eta^{\text{Th}}K$ bin nodes, the peeling decoder will be successful wi
 \end{block}
 Note that $\eta^{\text{Th}}$ is a function of just the left degree $\ell$.
 \end{frame}
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_------------------------------------------------------------------
 
 \subsection{Bin Decoder}
 \begin{frame}{Bin detection matrix}
@@ -394,28 +406,30 @@ Note that $\eta^{\text{Th}}$ is a function of just the left degree $\ell$.
 \end{equation*} 
 \item Error correction coding: $\mbf{S}$ be the codebook, where each $\mbf{s}_i$ is a codeword.
 \item Block length =$P$.  $\#$ codewords $\geq \frac{N\ell}{\eta K}$
-\item Choose a code with rate $R(\beta)$ s.t. fractional minimum distance $\beta >\mbb{P}_{e}\coleq e^{-\frac{A_{\text{min}}^{2}}{2\sigma^2}}$
+\item Choose a code with rate $R(\beta)$ s.t. fractional minimum distance $\beta$ s.t. $\frac{\beta}{2} >\mbb{P}_{e}\coleq e^{-\frac{A_{\text{min}}^{2}}{2\sigma^2}}$
 \item Thus $P=\frac{\lceil {\log_2(\frac{N\ell}{\eta K})}\rceil}{R(\beta)}$.
 \end{itemize} 
 
 \begin{block}{Sample Complexity}
  \begin{align*}
   M&=M_1\times P \\
-   &\geq \left[\frac{\eta^{\text{Th}}}{R(\mbb{P}_{e})}\right] K\log\left(\frac{\ell N}{\eta^{\text{Th}} K}\right)
+   &\geq \left[\frac{\eta^{\text{Th}}}{R(2\mbb{P}_{e})}\right] K\log\left(\frac{\ell N}{\eta^{\text{Th}} K}\right)
 \end{align*} 
 \end{block}
 \end{frame}
-%R(e^{-\frac{A_{\text{min}}^{2}}{2\sigma^2}})
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
+
 \begin{frame}{Analysis of Bin Decoding}
 \begin{itemize}
 \item Let $\text{E}_{\text{bin}}$ be the event an error was made in overall bin decoding
 \item Union bounding: $\text{E}_{\text{bin}}\leq (\eta K+\ell K)\text{Pr(E)}$
 \end{itemize}
-\begin{block}{Error Probability of a bin [LPR-2014]}
+\onslide<2->
+\begin{block}{Error Probability of a bin [LPR14]}
 $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(\sqrt{1+2\gamma}-1)^2}+4e^{-c_6 P\left(1-\frac{2\gamma\sigma^2}{A^{2}_{\text{min}}}\right)}+2e^{-P\frac{\left(\beta-\mbb{P}_{e}\right)^2}{2\mbb{P}_{e}(1-\mbb{P}_{e})}}$
 \end{block}
 \vspace{2ex}
-\onslide<2->
+\onslide<3->
 \begin{description}
     \item[\textbf{Sub-Linear sparsity}]
 \end{description}
@@ -425,8 +439,8 @@ $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(
 \item Trade-off between the constants in $M$, rate of decay of  $\mbb{P}_{\text{F}}$ and SNR
 \item Optimal decoding complexity of $O\left(K\log\left(\frac{N}{K}\right)\right)$
 \end{itemize}
-
 \end{frame}
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 \begin{frame}{Implications}
 \begin{block}{Error Probability of a bin - Ramchandran \textit{et al}, 2014}
@@ -439,13 +453,13 @@ $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(
 \end{description}
 \begin{itemize}
 \item Choice of $P=c_{1}\log\left(c_2 \frac{N}{K}\right)$ doesn't work
-\item We choose $P=\log(K)$ and rate $R(\beta)$ as earlier
+\item We choose $P=\log K$ and rate $R(\beta)$ as earlier
 \item A sub-code of size $\frac{\ell}{\alpha\eta}$ of the codebook is chosen as $\mbf{S}$
 \item Sample complexity of $\eta^{\text{Th}}K\log K$
-\item Can we do $\Theta(K)$ with practical decoding?
+\item Can we do $\Theta(K)$ with simple decoding?
 \end{itemize}
-
 \end{frame}
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 \section{Simulation Results}
 \begin{frame}
@@ -463,14 +477,14 @@ $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(
 \end{centering}
 }
 \end{figure}
-
 \end{frame}
+%-------------------------------$%^&*(&^%$#^&---------------------------------------------------------------------------------------
 
-\begin{frame}
-\begin{centering}
-\hspace{4ex}\LARGE{Questions?}\\
-\vspace{4ex}
-\end{centering}
+
+\begin{frame}[c]
+\begin{center}
+\Huge{Questions?}
+\end{center}
 \end{frame}
-
+%-------------------------------$%^&*(&^%$#^&---------------------------------------------------------------------------------------
 \end{document}
