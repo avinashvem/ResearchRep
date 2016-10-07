@@ -1,0 +1,108 @@
+\documentclass[conference,twocolumn]{IEEEtran}
+
+\newcommand*{\MyPath}{../../Tex}
+\input{\MyPath/Preamble.tex}
+\input{\MyPath/Avinash.def}
+\input{\MyPath/Preamble_tikz.tex}
+
+\setlength{\parindent}{20pt}
+\parskip=2pt
+
+\usepackage{scalerel}
+\DeclareMathOperator*{\bigOR}{\scalerel*{\text{$\vee$}}{\sum}}
+\DeclareMathOperator*{\bigORtxt}{\scalerel*{\text{$\vee$}}{\textstyle\sum}}
+
+\begin{document}
+\title{Group Testing using Left and Right regular sparse graphs}
+\author{Avinash Vem, Krishna R. Narayanan\\
+Department of Electrical and Computer Engineering \\
+Texas A\&M University\\
+{\tt\small {\{vemavinash@gmail.com, krn@tamu.edu\}} }}
+
+\maketitle
+\begin{abstract} 
+To be added.
+\end{abstract}
+
+\section{Introduction}
+The problem of Group Testing refers to testing a large population for sick/defective individual people when the fraction of sick people is known to be small. This problem was first introduced to the literature of statistics by Dorfman \cite{dorfman1943detection} during World War II for testing the soldiers for syphilis without having to test each soldier individually. Since then many schemes and algorithms were designed for this problem.
+
+ In \cite{lee2015saffron} Lee, Pedarsani, Ramchandran applied the sparse-graph codes and a simple peeling decoder, which are popular tools in the error control coding community, to the non-adaptive group testing problem. \cite{atia2012boolean,mazumdar2015nonadaptive,lee2015saffron}
+
+\section{Problem Statement}
+Formally, we define the group testing problem as follows. Let $N$ be the total number of items, $K$ be the number of defective items and $m$ be the number of tests for identifying the defective items. For now we consider only the noiseless group testing problem i.e., the result of each test is exactly equal to the boolean OR of all the items participating in the test. \\
+
+Formally, let the support vector $\mathbf{x}\in\{0,1\}^{N}$ denote the list of items with non-zero indices indicating the defective items. A non-adaptive testing scheme of $m$ measurements can be denoted by a matrix $\mbf{A}\in\{0,1\}^{m\times N}$ where each row $\mbf{a}_{i}$ corresponds to a test. The non-zero indices in row $\mbf{a}_i$ correspond to the items that participate in $i^{\text{th}}$ test. With these notations the output corresponding to $\mbf{A}$ can be expressed in matrix form as:
+\begin{align*}
+\mbf{y}=\mbf{A\odot x}
+\end{align*}
+where $\odot$ is the usual matrix multiplication in which the arithmetic multiplications are replaced by the boolean AND operation and the arithmetic additions are replaced by the boolean OR operation.
+
+%Let $\mc{S}$, with size $\card{\mc{S}}=N$, be the set of nodes to be tested and let $\mc{K}$, with size $\card{\mc{K}}=K$, be the set of defective nodes. We define $\mbf{x}$ to be a binary vector of length $N$ corresponding to the $N$ nodes where
+%\[
+%x_i=
+%\begin{cases}
+%1, & i\in\mc{K}\\
+%0, & \text{otherwise}\\
+%\end{cases}
+%\]
+%Any testing scheme of $M$ tests can be described via a binary testing matrix $\mbf{H}$ of size $M\times N$. The non-zero indices of the $\mbf{h}_i$, where $\mbf{H}=[\mbf{h}_1^{T}, \mbf{h}_2^{T},\ldots,\mbf{h}_M^{T}]$, correspond to the nodes participating in $i^{\text{th}}$ test. We denote the output of this testing scheme by a binary vector $\mbf{y}$ of size $M$ where the result of the $i^{\text{th}}$ test $y_i$ can be defined as the logical OR of the Hadamard product of $\mbf{h}_i$ and $\mbf{x}_i$:
+%\begin{align*}
+%y_i=\bigORtxt \mbf{h}_i\circ \mbf{x}=\vee_{j=1}^{n}h_{ij}x_j,
+%\end{align*}
+%where the new operator $\bigORtxt$ is the logical OR of all the elements in the vector and $\circ$ is the Hadamard product of matrices/vectors of identical size.
+%
+
+\section{Testing scheme}
+In \cite{lee2015saffron} Lee, Pedarsani and Ramchandran introduced a framework based on sparse graph codes for non-adaptive group testing problem. We will briefly review the SAFFRON testing scheme, decoder and their main results. The SAFFRON testing scheme consists of two stages: the first stage is based on a left-regular sparse graph code and the second stage is a signature matrix at each bin derived from the first stage. For the first stage consider a bipartite graph with $N$ variable nodes and $M_1$ bin nodes. Each variable node is connected to $l$ bin nodes chosen uniformly at random. All the variable nodes (historically depicted on the left side of the graph) have a degree $l$, hence the left-regular, whereas the bin nodes on the right have a degree ranging from $[1:n]$.\\
+
+ Let $\mbf{T}\in\{0,1\}^{M_1\times N }$ be the adjacency matrix corresponding to the bipartite graph. At universal signature matrix $\mbf{U}\in\{0,1\}^{h\times N}$ is defined corresponding to $h$ tests at each bin. Thus the total number of tests is $M=M_1\times h$. More formally, the overall testing matrix $\mbf{A}\coleq [\mbf{A}_{1}^{T},\ldots,\mbf{A}_{M_{1}}^{T}]^T$ where $\mbf{A}_{i}=\mbf{U}\circ \diag (\mbf{t}_i)$.
+%\begin{align*}
+%\mbf{A}=T\otimes U\defeq\begin{bmatrix}
+%\mbf{t}_1 \circ \mbf{u}_1 \\
+%\mbf{t}_1 \circ \mbf{u}_2 \\
+%\vdots \\
+%\mbf{t}_1 \circ \mbf{u}_h \\
+%\hline
+%\mbf{t}_2 \circ \mbf{u}_1 \\
+%\vdots \\
+%\mbf{t}_2 \circ \mbf{u}_h \\
+%\hline 
+%\vdots \\
+%\hline 
+%\mbf{t}_{M_1} \circ \mbf{u}_1 \\
+%\vdots \\
+%\mbf{t}_{M_1} \circ \mbf{u}_h \\
+%\end{bmatrix}.
+%\end{align*}
+%Similarly the observation vector $\mbf{y}\in\{0,1\}^{M}=\{\mbf{y}^{(1)T},\mbf{y}^{(2)T},\ldots,\mbf{y}^{(M_{1})T}\}^{T}$, where $\mbf{y}^{(i)}\in\{0,1\}^{h\times 1}$, can be written as:
+%\begin{align*}
+%\mbf{y}=T\otimes U\defeq\begin{bmatrix}
+%\mbf{t}_1 \circ \mbf{u}_1 \\
+%\mbf{t}_1 \circ \mbf{u}_2 \\
+%\vdots \\
+%\mbf{t}_1 \circ \mbf{u}_h \\
+%\hline
+%\mbf{t}_2 \circ \mbf{u}_1 \\
+%\vdots \\
+%\mbf{t}_2 \circ \mbf{u}_h \\
+%\hline 
+%\vdots \\
+%\hline 
+%\mbf{t}_{M_1} \circ \mbf{u}_1 \\
+%\vdots \\
+%\mbf{t}_{M_1} \circ \mbf{u}_h \\
+%\end{bmatrix}.
+%\end{align*}
+
+\begin{theorem}
+SAFFRON framework introduced in \cite{lee2015saffron} recovers atleast a $(1-\epsilon)$ fraction of the defective items for arbitrarily-small $\epsilon$ with high probability. The number of tests is $m=6C(\epsilon)K \log_{2}N$ and the computational complexity is $O(K\log N)$.
+\end{theorem}
+Note that the computational complexity is order optimal for both the noiseless and noisy settings as mentioned in \cite{lee2015pedarsani}. Regarding the optimality of the number of tests for the noiseless setting where both $K$ and $N$ scale satisfying $K=o(N)$, it was shown \cite{atia2012boolean} that the number of tests need to be atleast as large as $C K \log (\frac{N}{K})$ for some constant $C$ such that the probability of error approaches zero. As far as we are aware this is the tightest lower bound. In the same work it is shown that $C K \log N$ is the sufficient number of tests. In our work we show that in fact $C(\epsilon) K \log(\frac{N}{K})$ tests is sufficient to recover $(1-\epsilon)$ fraction of the defective items with high probability. More survey needs to be done regarding the lower and upper bounds for the number of tests in noiseless and noisy settings especially under different performance evaluation criteria. For e.g., in \cite{atia2012boolean} the upper bound(achievable) on the minimal number of tests $O(K \log N)$ is when the performance metric considered is the average probability of error that the decoded support set is not exactly equal to the original support set. But for the framework where $\epsilon$-fraction of the defective items are allowed to be missed, only the lower bound on the number of tests required is given. 
+
+\section{Proposed Scheme}
+
+
+\bibliographystyle{ieeetr}
+\bibliography{journal_full,sparseestimation}
+\end{document} 
