@@ -6,18 +6,18 @@
 \input{\MyPath/Preamble_tikz.tex}
 
 \setlength{\parindent}{20pt}
-\parskip=2pt
+\parskip=5pt
 
 \usepackage{scalerel}
 \DeclareMathOperator*{\bigOR}{\scalerel*{\text{$\vee$}}{\sum}}
 \DeclareMathOperator*{\bigORtxt}{\scalerel*{\text{$\vee$}}{\textstyle\sum}}
 
 \begin{document}
-\title{Group Testing using Left and Right regular sparse graphs}
-\author{Avinash Vem, Krishna R. Narayanan\\
+\title{Optimal Group Testing using Left and Right regular sparse-graph codes}
+\author{Avinash Vem, Nagaraj T. Janakiraman, Krishna R. Narayanan\\
 Department of Electrical and Computer Engineering \\
 Texas A\&M University\\
-{\tt\small {\{vemavinash@gmail.com, krn@tamu.edu\}} }}
+{\tt\small {\{vemavinash@gmail.com, tjnagaraj@tamu.edu, krn@tamu.edu\}} }}
 
 \maketitle
 \begin{abstract} 
@@ -30,7 +30,7 @@ The problem of Group Testing refers to testing a large population for sick/defec
  In \cite{lee2015saffron} Lee, Pedarsani, Ramchandran applied the sparse-graph codes and a simple peeling decoder, which are popular tools in the error control coding community, to the non-adaptive group testing problem. \cite{atia2012boolean,mazumdar2015nonadaptive,lee2015saffron}
 
 \section{Problem Statement}
-Formally, we define the group testing problem as follows. Let $N$ be the total number of items, $K$ be the number of defective items and $m$ be the number of tests for identifying the defective items. For now we consider only the noiseless group testing problem i.e., the result of each test is exactly equal to the boolean OR of all the items participating in the test. \\
+Formally, we define the group testing problem as follows. Let $N$ be the total number of items, $K$ be the number of defective items and $m$ be the number of tests for identifying the defective items. For now we consider only the noiseless group testing problem i.e., the result of each test is exactly equal to the boolean OR of all the items participating in the test. 
 
 Formally, let the support vector $\mathbf{x}\in\{0,1\}^{N}$ denote the list of items with non-zero indices indicating the defective items. A non-adaptive testing scheme of $m$ measurements can be denoted by a matrix $\mbf{A}\in\{0,1\}^{m\times N}$ where each row $\mbf{a}_{i}$ corresponds to a test. The non-zero indices in row $\mbf{a}_i$ correspond to the items that participate in $i^{\text{th}}$ test. With these notations the output corresponding to $\mbf{A}$ can be expressed in matrix form as:
 \begin{align*}
@@ -53,10 +53,81 @@ where $\odot$ is the usual matrix multiplication in which the arithmetic multipl
 %where the new operator $\bigORtxt$ is the logical OR of all the elements in the vector and $\circ$ is the Hadamard product of matrices/vectors of identical size.
 %
 
-\section{Testing scheme}
-In \cite{lee2015saffron} Lee, Pedarsani and Ramchandran introduced a framework based on sparse graph codes for non-adaptive group testing problem. We will briefly review the SAFFRON testing scheme, decoder and their main results. The SAFFRON testing scheme consists of two stages: the first stage is based on a left-regular sparse graph code and the second stage is a signature matrix at each bin derived from the first stage. For the first stage consider a bipartite graph with $N$ variable nodes and $M_1$ bin nodes. Each variable node is connected to $l$ bin nodes chosen uniformly at random. All the variable nodes (historically depicted on the left side of the graph) have a degree $l$, hence the left-regular, whereas the bin nodes on the right have a degree ranging from $[1:n]$.\\
+\section{Review: Prior Work}
+In \cite{lee2015saffron} Lee, Pedarsani and Ramchandran introduced a framework based on left-regular sparse graph codes (referred to as SAFFRON) for non-adaptive group testing problem. We will briefly review their SAFFRON testing scheme, decoder and their main results. The SAFFRON testing scheme consists of two stages: the first stage is based on a left-regular sparse graph code which groups the variable nodes into non-disjoint $M_1$ bins where each variable node belongs to exactly $l$ bins. The second stage comprises of producing $h$ testing outputs at each bin where the $h$ different combinations of the pooled variables at the respective bin(from the first stage) are defined according to a universal signature matrix. For the first stage consider a bipartite graph with $N$ variable nodes and $M_1$ bin nodes. Each variable node is connected to $l$ bin nodes chosen uniformly at random from the $M_1$ available bin nodes. All the variable nodes (historically depicted on the left side of the graph) have a degree $l$, hence the left-regular, whereas the degree of a bin node on the right is a random variable ranging from $[1:n]$.
 
- Let $\mbf{T}\in\{0,1\}^{M_1\times N }$ be the adjacency matrix corresponding to the bipartite graph. At universal signature matrix $\mbf{U}\in\{0,1\}^{h\times N}$ is defined corresponding to $h$ tests at each bin. Thus the total number of tests is $M=M_1\times h$. More formally, the overall testing matrix $\mbf{A}\coleq [\mbf{A}_{1}^{T},\ldots,\mbf{A}_{M_{1}}^{T}]^T$ where $\mbf{A}_{i}=\mbf{U}\circ \diag (\mbf{t}_i)$.
+ Let $\mbf{T}\in\{0,1\}^{M_1\times N }$ be the adjacency matrix corresponding to the left-regular bipartite graph i.e., each column corresponding to a variable node has exactly $l$ ones. And let us denote the universal signature matrix defining the $h$ tests at each bin by $\mbf{U}\in\{0,1\}^{h\times N}$. Thus the total number of tests is $M=M_1\times h$. More formally, the overall testing matrix $\mbf{A}\coleq [\mbf{A}_{1}^{T},\ldots,\mbf{A}_{M_{1}}^{T}]^T$ where $\mbf{A}_{i}=\mbf{U}\circ \diag (\mbf{t}_i)$ defines the $h$ tests at $i^{\text{th}}$ bin.
+ 
+ The signature matrix 	$\mbf{U}$ in a more general setting with a free parameter $r$ can be given by
+ \begin{align}
+\label{Eqn:SignatureMatrix}
+\mbf{U_{r}}=\begin{bmatrix}
+\mbf{b}_1  & \mbf{b}_2 &\cdots & \mbf{b}_r \\
+\overline{\mbf{b}}_1 & \overline{\mbf{b}}_2 & \cdots & \overline{\mbf{b}}_r\\
+\mbf{b}_{i_{1}} & \mbf{b}_{i_{2}} & \cdots & \mbf{b}_{i_{r}}\\
+\overline{\mbf{b}}_{i_{1}} & \overline{\mbf{b}}_{i_{2}} & \cdots & \overline{\mbf{b}}_{i_{r}}\\
+\mbf{b}_{j_{1}} & \mbf{b}_{j_{2}} & \cdots & \mbf{b}_{j_{r}}\\
+\overline{\mbf{b}}_{j_{1}} & \overline{\mbf{b}}_{j_{2}} & \cdots & \overline{\mbf{b}}_{j_{r}}
+\end{bmatrix}
+\end{align}  
+where $\mbf{b}_{i}\in\{0,1\}^{\ceil{\log_{2}r}}$ is the binary expansion vector for $i$ and $\overline{\mbf{b}}_{i}$ is the complement of $\mbf{b}_{i}$. $i_1,i_2,\ldots,i_r$ and $j_1,j_2,\ldots,j_r$ are two random permutations of $[1:r]$. For the SAFFRON scheme the parameter is chosen to be $r=N$ thus resulting in $\mbf{U}$ of size $h \times N$ where $h\approx 6\log_{2}N$.
+\begin{definition}
+We define $\mc{G}_l(N,M_1)$ to be the ensemble of left-regular graphs where, for each variable node, the $l$ right node connections are chosen uniformly at random from the $M_1$ right nodes. Now we can define the ensemble of left-regular sparse-graph code based group testing matrices described by the SAFFRON scheme via the ensembles $\mc{G}_l(N,M_1)$ and $\mbf{U}_{N}$.
+\end{definition}
+
+\subsection*{Decoding}
+Before describing the decoding process let us review some terminology. We refer to a bin as a singleton if there is exactly one non-zero variable node connected to the bin. We refer to a bin as a resolvable double-ton if there are exactly two non-zero variable nodes connected to the bin and we know the identity of one of them leaving to the decoder to decode the identity of the other one. And if the bin has more than two non-zero variable nodes attached we refer to it as a multi-ton. First part of the decoder which we refer to as bin decoder will be able to detect and decode the identity of the non-zero variable nodes connected in the bin exactly if the bin is a singleton or a resolvable double-ton. If the bin is a multi-ton the bin decoder will detect it as a multi-ton, i.e., the bin decoder output is not a singleton or a resolvable double-ton, with asymptotically high probability of atleast 1-$O(\frac{1}{N^2})$. For details of the decoder we refer the reader to \cite{lee2015saffron}. The second part of the decoder which is commonly referred to as peeling decoder \cite{li2015subisit}, using the outputs from the bin decoder, uncovers the identities of the non-zero variable nodes (referred to as peeling off from the graph historically) in an iterative manner. 
+
+The overall group testing decoder comprises of these two decoders working in conjunction as follows. In the first and foremost step, given the $M$ tests output, we run the bin decoder on the $M_1$ bins and we are given the set of singletons i.e., the set of decoded non-zero variable nodes denoted as $\mc{D}$. Now in an iterative manner, at each iteration, we consider a variable node from $\mc{D}$ and apply the bin decoder on the bins connected to this variable node and hopefully one of them is a resolvable double-ton thus resulting in us decoding one more non-zero variable node. We will move the said considered variable node in the previous iteration from $\mc{D}$ to a set of peeled off variable nodes $\mc{P}$. And we will place the newly decoded non-zero variable node in the previous iteration, if any, in $\mc{D}$ and continue the next iteration. The deocoder terminates if $\mc{D}$ is empty and the decoder is declared successful if the set $\mc{P}$ equals the set of defective items. 
+\begin{Remark}
+ Note that we are not literally peeling off the decoded nodes from the graph because of the \textit{non-linear} OR operation on the non-zero variable nodes at each bin thus preventing us in subtracting the effect of the non-zero node from the measurements of the bin node unlike in the problems of compressed sensing or LDPC codes on binary erasure channel.
+\end{Remark}
+
+Now we state the series of lemmas and theorems, without proofs, from \cite{lee2015saffron} that enabled the authors Lee, Pedarsani and Ramchandran to show that this left-regular sparse-graph code based scheme with the described peeling decoder solves the group testing problem with $\Omega( K\log N)$ tests and with $O(K\log N)$ computational complexity.
+
+\begin{lemma}[Bin decoder analysis]
+For a signature matrix $\mbf{U}_r$ as described in \eqref{Eqn:SignatureMatrix}, the bin decoder successfully detects and resolves if the bin is either a singleton or a resolvable double-ton. If the bin is a multi-ton the bin decoder declares a wrong non-zero variable node with a probability no greater than $O(\frac{1}{r^2})$.
+\end{lemma}
+
+For the ease of analysis, the error probability performance analysis of the peeling decoder is done independent of the bin decoder i.e., the peeling decoder is analyzed under the assumption that the bin decoder is working accurately which will be referred to as oracle based peeling decoder. To simplify further, a pruned graph is considered where all the zero variable nodes and their respective edges are removed from the graph and a simplified version of peeling decoder which iteratively considers a variable node as decoded perfectly if it is connected to a right-node with degree one or a right-node with degree two where one of the variables connected is already decoded. Anything with more than degree two is untouched by the oracle based peeling decoder. It is easy to verify that the original decoder with accurate bin decoding is equivalent to this simplified peeling decoder on a pruned graph.
+
+\begin{definition}[Pruned graph ensemble]
+We will define the pruned graph ensemble $\tilde{\mc{G}}_l(N,K,M_1)$ as the set of all graphs obtained from removing a random $N-K$ subset of nodes from a graph from the ensemble $\mc{G}_l(N,M_1)$. Note that graphs from the pruned ensemble have $K$ variable nodes. 
+\end{definition}
+
+\begin{lemma}[Pruned graph]
+For the pruned ensemble $\tilde{\mc{G}}_l(N,K,M_1)$, it can be shown that $\rho_{1}=e^{-\lambda}$ and $\rho_{2}=\lambda e^{-\lambda}$ where $\lambda=\frac{Kl}{M_1}$ where $\rho_i$ is the probability that a randomly chosen edge in the graph is connected to a right-node of degree $i$.
+\end{lemma}
+
+\begin{lemma}
+For the pruned graph ensemble $\tilde{\mc{G}}_l(N, K,M_1)$ the oracle-based peeling decoder fails to peel off atleast $(1-\epsilon)$ fraction of the variable nodes with exponentially decaying probability if $M_1=C(\epsilon)K$ where $C(\epsilon)$ for various $\epsilon$ is given in Table. \ref{Table:constantsDE}.
+\end{lemma}
+
+\begin{table}[h]
+\centering
+\label{Table:constantsDE}
+\begin{tabular}{| c | c | c | c | c | c | c | c | c | }
+\hline
+$\epsilon$ & $10^{-3}$ & $10^{-4}$ & $10^{-5}$ & $10^{-6}$ &$ 10^{-7}$ & $10^{-8}$ & $10^{-9}$ & $10^{-10}$ \\ \hline
+$C(\epsilon)$ & 6.13 & 7.88 & 9.63 & 11.36 & 13.10 & 14.84 & 16.57 & 18.30 \\ \hline
+ $l$ & 7 & 9 & 10 & 12 & 14 & 15 & 17 & 19 \\ \hline
+\end{tabular}
+\vspace{1ex}
+\caption{Constants for various error floor values}
+\end{table}
+Combining the lemmas and remarks above, the main result from \cite{lee2015saffron} can be stated as follows.
+\begin{theorem}
+The SAFFRON framework recovers atleast a $(1-\epsilon)$ fraction of the defective items for arbitrarily-small $\epsilon$ with high probability $1-O(\frac{K}{N^2})$. The number of tests is $m=6C(\epsilon)K \log_{2}N$ where $C(\epsilon)$ is given in Table. \ref{Table:constantsDE} and the computational complexity of the decoding is $O(K\log N)$.
+\end{theorem}
+Note that the computational complexity is order optimal for both the noiseless and noisy settings as mentioned in \cite{lee2015saffron}. Regarding the optimality of the number of tests for the noiseless setting where both $K$ and $N$ scale satisfying $K=o(N)$, it was shown \cite{atia2012boolean} that the number of tests need to be atleast as large as $C K \log (\frac{N}{K})$ for some constant $C$ such that the probability of error approaches zero. As far as we are aware this is the tightest lower bound. In the same work it is shown that $C K \log N$ is the sufficient number of tests. In our work we show that in fact $C(\epsilon) K \log(\frac{N}{K})$ tests is sufficient to recover $(1-\epsilon)$ fraction of the defective items with high probability. More survey needs to be done regarding the lower and upper bounds for the number of tests in noiseless and noisy settings especially under different performance evaluation criteria. For e.g., in \cite{atia2012boolean} the upper bound(achievable) on the minimal number of tests $O(K \log N)$ is when the performance metric considered is the average probability of error that the decoded support set is not exactly equal to the original support set. But for the framework where $\epsilon$-fraction of the defective items are allowed to be missed, only the lower bound on the number of tests required is given. 
+
+\section{Proposed Scheme}
+
+\section{Proofs}
+\bibliographystyle{ieeetr}
+\bibliography{journal_full,sparseestimation}
+\end{document} 
+
 %\begin{align*}
 %\mbf{A}=T\otimes U\defeq\begin{bmatrix}
 %\mbf{t}_1 \circ \mbf{u}_1 \\
@@ -94,15 +165,3 @@ In \cite{lee2015saffron} Lee, Pedarsani and Ramchandran introduced a framework b
 %\mbf{t}_{M_1} \circ \mbf{u}_h \\
 %\end{bmatrix}.
 %\end{align*}
-
-\begin{theorem}
-SAFFRON framework introduced in \cite{lee2015saffron} recovers atleast a $(1-\epsilon)$ fraction of the defective items for arbitrarily-small $\epsilon$ with high probability. The number of tests is $m=6C(\epsilon)K \log_{2}N$ and the computational complexity is $O(K\log N)$.
-\end{theorem}
-Note that the computational complexity is order optimal for both the noiseless and noisy settings as mentioned in \cite{lee2015pedarsani}. Regarding the optimality of the number of tests for the noiseless setting where both $K$ and $N$ scale satisfying $K=o(N)$, it was shown \cite{atia2012boolean} that the number of tests need to be atleast as large as $C K \log (\frac{N}{K})$ for some constant $C$ such that the probability of error approaches zero. As far as we are aware this is the tightest lower bound. In the same work it is shown that $C K \log N$ is the sufficient number of tests. In our work we show that in fact $C(\epsilon) K \log(\frac{N}{K})$ tests is sufficient to recover $(1-\epsilon)$ fraction of the defective items with high probability. More survey needs to be done regarding the lower and upper bounds for the number of tests in noiseless and noisy settings especially under different performance evaluation criteria. For e.g., in \cite{atia2012boolean} the upper bound(achievable) on the minimal number of tests $O(K \log N)$ is when the performance metric considered is the average probability of error that the decoded support set is not exactly equal to the original support set. But for the framework where $\epsilon$-fraction of the defective items are allowed to be missed, only the lower bound on the number of tests required is given. 
-
-\section{Proposed Scheme}
-
-
-\bibliographystyle{ieeetr}
-\bibliography{journal_full,sparseestimation}
-\end{document} 
