@@ -1,0 +1,116 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww28520\viewh16300\viewkind0
+\pard\tx50\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs48 \cf0 Slide 1 - Titular Slide\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+The focus of this is talk is on two side-information problems; namely, Wyner-Ziv (which is source coding side-information) and Gelfand-Pinsker (or the channel coding with side-information). \
+The goal of this work is to construct low-complexity coding schemes for these problems via spatial-coupled codes. \
+I will begin by describing these problems.\
+\
+Slide 2 - Source Coding\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+First, let\'92s look at the classical source coding problem in a simple setting. This will help us set notation for its variant with side-information, Wyner-Ziv problem. We have a sequence X^n from a Bernoulli(1/2) source and a binary code C with block length n with k message-bits and which gives a rate k/n. The goal is to encode the source sequence X^n to X^nhat in the codebook in order to minimize the average hamming distortion D between them.\
+\
+Rate-Distortion theory provides the optimal regions for this problem. In particular, it is known that to achieve a distortion D, we need the rate of the codebook to be at least 1-h(D), where h is the binary entropy function. In other words we need a rate of at least 1-h(D) to describe Xn up to distortion D. The picture in the right provides all the possible rates for a given distortion D.\
+\
+Slide 3 - Wyner-Ziv \
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+In the Wyner-Ziv problem, we again have a Bernoulli(1/2) source seq Xn. We encode it to X^nhat and we have a channel of rate R to describe X^nhat. Additionally the decoder has a side-information Z^n about X^n. Now suppose this side-information Z^n is given by x^n plus some bernoulli(delta) noise. Then the Wyner-Ziv theory gives the necessary and sufficient conditions on the required channel rate R. It is given by the lower convex envelope of the the function h(D star delta) - h(D) and the point (delta,0). D star delta is this quantity, which is essentially the eff. channel parameter we see when we cascade BSC(D) and BSC(delta). The picture in the right shows the possible rate regions when delta=0.25. \
+\
+Slide 4 - Gelfand-Pinsker\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+Now lets see the channel coding problem with side-information. Here we have a message M^k and a codebook C with rate R. There is a side-information Z^n which is available only at the encoder. We have a average wt constraint of p on X^n, the transmitted seq. The output at the decoder is given by X^n xor Z^n xor the channel noise W^n from a BSC with parameter delta. The capacity region is given by R<h(p)-h(delta). If we don\'92t have a wt. constraint, i.e. say p=half, then we can erase Z^n completely and this reduces to the classical channel coding problem.\
+\
+Slide 5 - Main Result\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+The main goal of our work is to construct low-complexity coding schemes for the Wyner-Ziv and Gelfand-Pinsker problems. Complexity in terms of encoding and decoding. What I mean by encoding is quantization of an arbitrary sequence to a codeword and by decoding I mean decoding a received vector to a codeword.\
+\
+For this, we build heavily on the existing work and most of the required tools are already available. Martinian et al. showed that if we use compound LDGM/LDPC codes, with optimal encoding/decoding, then the complete rate regions can be achieved. The problem is obviously the complexity of the optimal encoder/decoder. But if we use message-passing algorithms, we observe a non-negligible gap in the achievable rate regions to the complete regions. \
+\
+In the spirit of this session, the remedy is by spatially-coupled codes. Now, the channel coding with spatially-coupled compound codes are well-studied and the threshold saturation is proved at least for erasure channels. Also, encoding with belief-propagation and guided decimation in LDGM codes, is observed to achieve the rate region of the classical source coding problem. Now, encoding with compound LDGM/LDPC codes is, I believe are not studied earlier, and it has a few additional challenges, which I will talk about later.\
+\
+Slide 6 - Compound Codes\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+Now, I will describe the coding schemes for our side-information problems using compound LDGM/LDPC codes, this is by Wainwright and Martinian. Let me briefly introduce the compound LDGM/LDPC codes. \
+\
+The picture here shows the tanner graph of the so-called compound code. n is the block length and the top graph resembles an LDGM code. However, the information nodes u_1,\'85,u_m are required to satisfy additional parity constraints given by the bottom part of the graph, which resembles an LDPC code. Even though there are m message bits it has k+k\'92 constraints giving a msg length of m-k-k\'92. The constraints in LDPC part are divided into two groups P1 and P2\'85\
+\
+The properties of this code that are important are the following. This compound code is a good source code when we encode optimally. I will tell you shortly what I mean by good. Also, the compound code is a good channel code when we do MAP decoding. Some other properties we also use are: LDGM code is a good source code, but however it is not a good channel code since it necessarily exhibits small error floor. \
+\
+Slide 7 - Good Code \
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+Formally, these notions apply for a sequence of codes, although we will loosely apply it to a single code. These notions mean that the rates are close to optimal.\
+\
+Slide 8 - Gelfand-Pinsker Coding Scheme\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+I will describe the coding scheme for the Gelfand-Pinsker problem. In the interest of time I will skip the coding scheme for the Wyner-Ziv problem. First pick a compound code with large block length with these parameters. \
+\
+We have a side information Z^n available only at the encoder. Using the message bits M^k as parities encode the sequence Z^n to some codeword Z^nhat. Since the compound code is a good source code with rate 1-h(p)+eps, the distortion between Z^n and Z^nhat is approximately p. Transmit X^n=Z^n \\xor Z^nhat. Note that this problem has a input weight constraint of p. But this is satisfied since the distortion between Z^n and Z^nhat is p. \
+\
+Decoder does not have access to the message M^k and the output is Z^nhat + noise. But since the compound code is a good channel code and the rate of the code at the decoder is 1-h(delta)+eps, the code is good for a Ber(delta) channel. \
+\
+\
+Slide 9 - Remarks\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+Slide 10 - SC Compound LDGM/LDPC Codes\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+We start with a single system. In the top, we have the LDGM part and LDPC part in the bottom. Although we don\'92t show here, the LDPC checks are partitioned into two groups as required.\
+\
+To construct the spatially-coupled system, place $L$ copies of the single system and couple them as shown.\
+\
+Each system shares its edges with w adjacent systems as shown. We can use a few different variations to construct the spatially-coupled ensemble, but two things are crucial.\
+\
+First thing is we require two independent boundaries. This means we cannot use a circular ensemble although it is efficient in terms of rate-loss. We shorten the bits on only one side to zero. I will tell you why we require independent boundaries.\
+\
+Second thing is towards the far-right of the ensemble, in the LDPC part, bit-nodes should have fewer connections to the checks. This property will be crucial for encoding.\
+\
+We will look at decoding and encoding in the spatially-coupled codes.\
+\
+Slide 11 - Decoding in Compound LDGM/LDPC Codes\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+The message-passing rules for the coupled and uncoupled system are the same once we set up the boundary conditions. So I am only showing a single system for illustration.\
+\
+To do the decoding, we first place the received vector on the LDGM bit-nodes and execute the following rules: Each LDGM bit-node passes the channel LLR; at the LDPC bit-node sum rule and tanh rule at the check-nodes is standard, although we need to account for the check parity s. \
+\
+Threshold saturation with belief propagation for spatially-coupled compound codes has been shown at least for BEC and it is empirically observed for BMS channels. \
+\
+Slide 12 - Encoding in Compound LDGM/LDPC Codes\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+For the encoding we start with an arbitrary sequence and place it on the LDGM bit-nodes. For decoding, we have a received vector which is presumably close to a codeword, but here we begin with an arbitrary sequence; that is a crucial difference. The message-passing rules are the same as in the decoding by assuming that the arbitrary sequence has come from a channel with LLR tanh beta, where beta is the so-called inverse temperature. \
+\
+Now, since the arbitrary sequence may not necessarily be close to a codeword, the message-passing does not converge and so we require a decimation step here. What this means is every few iterations, we force an LDPC bit-node to 0 or 1 depending on its current LLR. \
+\
+Slide 13 - BPGD\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+This slide describes the complete algorithm. We run the algorithm as long as there are active LDPC bit-nodes. A bit-node is active when it is not decimated i.e. it is not set to 0 or 1. Now, while there are active LDPC bit-nodes, run the BP equations for T iterations and evaluate the LLRs for each bit-node. Choose the maximum of these LLRs in left-most $w$ active sections. If this maximum LLR is 0, then set the bit to 0 or 1 uniformly randomly. Otherwise, set it to 0 or 1 with probabilities dictated by the LLR. Once the bit is decimated, remove the bit and update the check parities. \
+\
+Now, when all the LDPC bit-nodes are decimated, they are required to satisfy the LDPC constraints to be a valid codeword. However, this will not be case always. This is where the randomization in the decimation helps. When we restart the encoding, the algorithm will take a different path due to randomization and it will hopefully encode subsequently.\
+\
+Slide 14 - Remarks\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+Now this algorithm will not work for uncoupled systems. It turns out that spatial-coupled structure is crucial. When the decimation proceeds from the left, for it to end gracefully, the LDPC bit-nodes need to have fewer connections to checks. Also the encoding will not work if both boundaries are set to 0. That is why we set one boundary to 0 and decimate from that side. \
+\
+Now, although we picked spatially-coupled codes to have good thresholds, they are also crucial for successful encoding.  \
+\
+Slide 15 - Numerical Example for Encoding\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+Slide 16 - Gelfand-Pinsker Numerical Results\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+Slide 17 - Wyner-Ziv Numerical Results\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+Slide 18 - Conclusion\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+\
+\
+\
+\
+}

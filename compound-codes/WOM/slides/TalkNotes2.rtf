@@ -1,0 +1,121 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww28520\viewh16300\viewkind0
+\pard\tx50\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs48 \cf0 Slide 1 - Titular Slide\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+The focus of this is talk is on write-once memories.\
+This is a joint work with Avinash Vem and Krishna Narayanan, who are at Texas A&M Univ. and Henry Pfister who is at Duke Univ.\
+The goal of this work is to construct sparse graph codes for write-once memories and also spatially couple them to operate close to capacity.\
+We will leverage so-called compound LDGM/LDPC codes for this.\
+I will begin by describing the system.\
+\
+Slide 2 - Write-Once Memories\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+In a typical flash storage system, a cell carries a charge to indicate a stored bit, a higher charge corresponds to a 1 and lower charge to a zero. \
+While raising the charge can be done relatively easily, lowering the charge requires resetting a whole block. \
+Write-Once memories seek to model such storage systems.\
+\
+We consider a binary write-once memory system, where cells can only go from 0 to 1, while the cell is set to 1, it can\'92t go back to zero.\
+\
+Slide 3 - Capacity Region - Noiseless\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+First lets consider the noiseless case, where the k-bit message is represented by an n-bit sequence without errors and can be read without errors.\
+\
+Rivest and Shamir introduced this model and constructed first WOM codes where they require only 3 cells to write two bits in two writes. \
+\
+More surprisingly they show that only about nt/log(t) are required to store n bits for t writes for large t\
+\
+Shortly after, in 1985, Heegard gave the capacity region of the t-write system.\
+\
+For 2-write it is given by this set \
+\
+This is easy to explain: \
+\
+If we restrict the normalized weight of the seq after first write to be delta, then the rate of the first write will be h(delta).\
+After the first write, a fraction 1-delta of the bits are available to store the data. \
+The fact that we can write 1-delta bits without loss of interesting.\
+\
+Slide 4 - Capacity Region - Read Errors\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+Now suppose there are read errors, where the intended seq is written to the system without errors but encounters errors when reading the seq from the system. This model is different from write errors where the intended seq is written with errors.\
+\
+While the capacity region of the system with write errors is known, the system with read errors is not known.\
+\
+We will consider both noiseless systems and systems with read errors. For systems with read errors we will provide achievable rates.\
+\
+Slide 5 - Main Result\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+The goal of this work is to construct low-complexity capacity achieving schemes for write-once memories. When I say low-complexity I mean low-complexity encoding and decoding.\
+\
+We will focus on 2-write systems. For noiseless systems, we can achieve the entire capacity region and for systems with read errors these are the rates we can achieve\
+\
+Whether the spatially-coupled codes under message-passing algorithms can provably achieve these is a different question. Some of these involve rate distortion problems where standard bp algorithms are not sufficient and one requires guided decimation techniques and such algorithms are hard to analyze. Moreover threshold saturation proofs are hard to obtain when errors are involved. In many cases, these are MAP encoding/decoding thresholds which are also empirically observed for spatially-coupled codes under message-passing algorithms. \
+\
+Another thing is even though there are quite a few coding schemes are noiseless systems, literature is very limited on systems with errors. In fact, other than what I am presenting now, I do not know any non-polar based scheme that corrects a constant fraction of errors.\
+\
+Extension to multi-write systems seems possible with belief-propagation guided decimation techniques, but they are not currently working as robustly as desired. I will discuss this point further.\
+\
+We build on several existing works and our own previous work on coding schemes for gelfand-pinsker systems\
+The main idea behind the coding schemes is the use of compound LDGM/LDPC codes.\
+The first write is an instance of Gelfand-Pinsker problem, which I will elaborate. \
+The second write can be reduced to the so-called erasure quantization. This is an observation from the recent work \
+Finally, use spatial coupling and message-passing algorithms. \
+\
+Slide 6 - Compound LDGM/LDPC Codes\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+At the heart of the coding scheme are the so-called compound LDGM/LDPC codes.\
+Let me briefly introduce the compound LDGM/LDPC codes.\
+\
+The picture here shows the tanner graph of the so-called compound code. n is the block length and the top graph resembles an LDGM code. However, the information nodes u_1,\'85,u_m are required to satisfy additional parity constraints given by the bottom part of the graph, which resembles an LDPC code. Even though there are m message bits it has k+k\'92 constraints giving a msg length of m-k-k\'92. The constraints in LDPC part are divided into two groups P1 and P2\'85\
+\
+The properties of this code that are important are the following. This compound code is a good source code when we encode optimally. I will tell you shortly what I mean by good. Also, the compound code is a good channel code when we do MAP decoding. Some other properties we also use are: LDGM code is a good source code, but however it is not a good channel code since it necessarily exhibits small error floor. \
+\
+\
+Slide 7 - Good Code \
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+Formally, these notions apply for a sequence of codes, although we will loosely apply it to a single code. These notions mean that the rates are close to optimal.\
+\
+Slide 8 - First Write\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+I will describe the coding scheme for the Gelfand-Pinsker problem. First pick a compound code with large block length with these parameters. \
+\
+We have a side information Z^n available only at the encoder. Using the message bits M^k as parities encode the sequence Z^n to some codeword Z^nhat. Since the compound code is a good source code with rate 1-h(p)+eps, the distortion between Z^n and Z^nhat is approximately p. Transmit X^n=Z^n \\xor Z^nhat. Note that this problem has a input weight constraint of p. But this is satisfied since the distortion between Z^n and Z^nhat is p. \
+\
+Decoder does not have access to the message M^k and the output is Z^nhat + noise. But since the compound code is a good channel code and the rate of the code at the decoder is 1-h(delta)+eps, the code is good for a Ber(delta) channel. \
+\
+\
+\
+\
+\
+Slide 13 - SC Compound LDGM/LDPC Codes\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+We start with a single system. In the top, we have the LDGM part and LDPC part in the bottom. Although we don\'92t show here, the LDPC checks are partitioned into two groups as required.\
+\
+To construct the spatially-coupled system, place $L$ copies of the single system and couple them as shown.\
+\
+Each system shares its edges with w adjacent systems as shown. We can use a few different variations to construct the spatially-coupled ensemble, but two things are crucial.\
+\
+First thing is we require two independent boundaries. This means we cannot use a circular ensemble although it is efficient in terms of rate-loss. We shorten the bits on only one side to zero. I will tell you why we require independent boundaries.\
+\
+Second thing is towards the far-right of the ensemble, in the LDPC part, bit-nodes should have fewer connections to the checks. This property will be crucial for encoding.\
+\
+Slide 14 - Decoding in Compound LDGM/LDPC Codes\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+The message-passing rules for the coupled and uncoupled system are the same once we set up the boundary conditions. So I am only showing a single system for illustration.\
+\
+To do the decoding, we first place the received vector on the LDGM bit-nodes and execute the following rules: Each LDGM bit-node passes the channel LLR; at the LDPC bit-node sum rule and tanh rule at the check-nodes is standard, although we need to account for the check parity s. \
+\
+Threshold saturation with belief propagation for spatially-coupled compound codes has been shown at least for BEC and it is empirically observed for BMS channels. \
+\
+\
+\
+}
