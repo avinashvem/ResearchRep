@@ -1,4 +1,1 @@
-*.synctex
-*.aux
-SparseGraphCS/ITW/sublinearcs.blg
-*.log
+*/.DS_Store
