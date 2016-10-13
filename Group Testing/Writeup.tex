@@ -55,65 +55,73 @@ where $\odot$ is the usual matrix multiplication in which the arithmetic multipl
 
 \section{Review: Prior Work}
 \label{Sec:PriorWork}
-In \cite{lee2015saffron} Lee, Pedarsani and Ramchandran introduced a framework based on left-regular sparse graph codes (referred to as SAFFRON) for non-adaptive group testing problem. We will briefly review their SAFFRON testing scheme, decoder and their main results. The SAFFRON testing scheme consists of two stages: the first stage is based on a left-regular sparse graph code which groups the variable nodes into non-disjoint $M_1$ bins where each variable node belongs to exactly $l$ bins. The second stage comprises of producing $h$ testing outputs at each bin where the $h$ different combinations of the pooled variables at the respective bin(from the first stage) are defined according to a universal signature matrix. For the first stage consider a bipartite graph with $N$ variable nodes and $M_1$ bin nodes. Each variable node is connected to $l$ bin nodes chosen uniformly at random from the $M_1$ available bin nodes. All the variable nodes (historically depicted on the left side of the graph) have a degree $l$, hence the left-regular, whereas the degree of a bin node on the right is a random variable ranging from $[1:n]$.
+In \cite{lee2015saffron} Lee, Pedarsani and Ramchandran introduced a framework, referred to as SAFFRON, based on left-regular sparse graph codes for non-adaptive group testing problem. We will briefly review their SAFFRON testing scheme, decoder and their main results. The SAFFRON testing scheme consists of two stages: the first stage is based on a left-regular sparse graph code which groups the variable nodes into non-disjoint $M_1$ bins where each variable node belongs to exactly $l$ bins. The second stage comprises of producing $h$ testing outputs at each bin where the $h$ different combinations of the pooled variables at the respective bin(from the first stage) are defined according to a universal signature matrix. For the first stage consider a bipartite graph with $N$ variable nodes and $M_1$ bin nodes. Each variable node is connected to $l$ bin nodes chosen uniformly at random from the $M_1$ available bin nodes. All the variable nodes (historically depicted on the left side of the graph) have a degree $l$, hence the left-regular, whereas the degree of a bin node on the right is a random variable ranging from $[1:n]$.
 
 \begin{definition}[Left-regular sparse graph ensemble]
 We define $\mc{G}_l(N,M_1)$ to be the ensemble of left-regular graphs where, for each variable node, the $l$ right node connections are chosen uniformly at random from the $M_1$ right nodes.
 \end{definition}
 
- Let $\mbf{T}_{G}\in\{0,1\}^{M_1\times N }$ be the adjacency matrix corresponding to a graph $G\in\mc{G}_l(N,M_1)$ i.e., each column in $\mbf{T}_{G}$ corresponding to a variable node has exactly $l$ ones. And let us denote the universal signature matrix defining the $h$ tests at each bin by $\mbf{U}\in\{0,1\}^{h\times N}$. Thus the total number of tests is $M=M_1\times h$. More formally, the overall testing matrix $\mbf{A}\coleq [\mbf{A}_{1}^{T},\ldots,\mbf{A}_{M_{1}}^{T}]^T$ where $\mbf{A}_{i}=\mbf{U}\circ \diag (\mbf{t}_i)$ defines the $h$ tests at $i^{\text{th}}$ bin.
+ Let $\mbf{T}_{G}\in\{0,1\}^{M_1\times N }$ be the adjacency matrix corresponding to a graph $G\in\mc{G}_l(N,M_1)$ i.e., each column in $\mbf{T}_{G}$ corresponding to a variable node has exactly $l$ ones. Let $\mbf{T}_{G}=[\mbf{t}^{T}_1,\mbf{t}^{T}_{2},\dots, \mbf{t}^{T}_{M_1}]^{T}$. And let us denote the universal signature matrix defining the $h$ tests at each bin by $\mbf{U}\in\{0,1\}^{h\times N}$. Then the overall testing matrix $\mbf{A}\coleq [\mbf{A}_{1}^{T},\ldots,\mbf{A}_{M_{1}}^{T}]^T$ where $\mbf{A}_{i}=\mbf{U} \diag (\mbf{t}_i)$ defines the $h$ tests at $i^{\text{th}}$ bin. Thus the total number of tests is $M=M_1\times h$.
+
+%\begin{definition}[SAFFRON testing scheme]
+%\label{Def:Saffron}
+%The ensemble of testing matrices for SAFFRON scheme can be defined as $\mc{G}_l(N,M_1)\times \mbf{U}_{N,2}$ where a graph $G$ is chosen from $\mc{G}_{l,r}(N,M_1)$, a signature matrix $\mbf{U}$ is chosen from $\mbf{U}_{r,p}$ and the testing matrix is defined as $\mbf{A}\coleq [\mbf{A}_{1}^{T},\ldots,\mbf{A}_{M_{1}}^{T}]^T$ where $\mbf{A}_{i}=\mbf{U} \diag (\mbf{t}_i)$ defines the $h$ tests at $i^{\text{th}}$ bin. Note that the total number of tests for this testing scheme is $6 M_1\log N$ .
+%\end{definition}
  
- The signature matrix 	$\mbf{U}$ in a more general setting with a free parameter $r$ can be given by
+ 
+ The signature matrix 	$\mbf{U}$ in a more general setting with parameters $r$ and $p$ can be given by
  \begin{align}
 \label{Eqn:SignatureMatrix}
-\mbf{U_{r}}=\begin{bmatrix}
+\mbf{U}_{r,p}=\begin{bmatrix}
 \mbf{b}_1  & \mbf{b}_2 &\cdots & \mbf{b}_r \\
 \overline{\mbf{b}}_1 & \overline{\mbf{b}}_2 & \cdots & \overline{\mbf{b}}_r\\
-\mbf{b}_{i_{1}} & \mbf{b}_{i_{2}} & \cdots & \mbf{b}_{i_{r}}\\
-\overline{\mbf{b}}_{i_{1}} & \overline{\mbf{b}}_{i_{2}} & \cdots & \overline{\mbf{b}}_{i_{r}}\\
-\mbf{b}_{j_{1}} & \mbf{b}_{j_{2}} & \cdots & \mbf{b}_{j_{r}}\\
-\overline{\mbf{b}}_{j_{1}} & \overline{\mbf{b}}_{j_{2}} & \cdots & \overline{\mbf{b}}_{j_{r}}
+\mbf{b}_{\pi^{1}_{1}} & \mbf{b}_{\pi^{1}_{2}} & \cdots & \mbf{b}_{\pi^{1}_{r}}\\
+\overline{\mbf{b}}_{\pi^{1}_{1}} & \overline{\mbf{b}}_{\pi^{1}_{2}} & \cdots & \overline{\mbf{b}}_{\pi^{1}_{r}}\\
+\cdots &  &\vdots \\
+\mbf{b}_{\pi^{p}_{1}} & \mbf{b}_{\pi^{p}_{2}} & \cdots & \mbf{b}_{\pi^{p}_{r}}\\
+\overline{\mbf{b}}_{\pi^{p}_{1}} & \overline{\mbf{b}}_{\pi^{p}_{2}} & \cdots & \overline{\mbf{b}}_{\pi^{p}_{r}}
 \end{bmatrix}
 \end{align}  
-where $\mbf{b}_{i}\in\{0,1\}^{\ceil{\log_{2}r}}$ is the binary expansion vector for $i$ and $\overline{\mbf{b}}_{i}$ is the complement of $\mbf{b}_{i}$. $i_1,i_2,\ldots,i_r$ and $j_1,j_2,\ldots,j_r$ are two random permutations of $[1:r]$. For the SAFFRON scheme the parameter is chosen to be $r=N$ thus resulting in $\mbf{U}$ of size $h \times N$ where $h\approx 6\log_{2}N$.
+where $\mbf{b}_{i}\in\{0,1\}^{\ceil{\log_{2}r}}$ is the binary expansion vector for $i$ and $\overline{\mbf{b}}_{i}$ is the complement of $\mbf{b}_{i}$. $\mbf{\pi}^{k}=[\pi^{k}_1,\pi^{k}_2,\ldots,\pi^{k}_r]$ denotes a permutation chosen at random from symmetric group $S_{n}$.  $\mbf{U}_{r,p}$ will be referred to either as the ensemble of matrices generated over the choices of the permutations $\pi^{k}$ for$k\in[1:p]$ or as a matrix picked uniformly at the random from the said ensemble. The reference should be clear from the context. For the SAFFRON scheme the parameters were chosen to be $r=N$ and $p=2$ thus resulting in a $\mbf{U}$ of size $h \times N$ where $h=6\log_{2}N$. 
 
-Now we can define the ensemble of left-regular sparse-graph code based group testing matrices described by the SAFFRON scheme via the ensembles $\mc{G}_l(N,M_1)$ and $\mbf{U}_{N}$.
+%Now we shall define the ensemble of left-regular sparse graph code based group testing matrices described by the SAFFRON scheme via the ensembles $\mc{G}_l(N,M_1)$ and $\mbf{U}_{N,2}$.
+
 \subsection*{Decoding}
-Before describing the decoding process let us review some terminology. We refer to a bin as a singleton if there is exactly one non-zero variable node connected to the bin. We refer to a bin as a resolvable double-ton if there are exactly two non-zero variable nodes connected to the bin and we know the identity of one of them leaving to the decoder to decode the identity of the other one. And if the bin has more than two non-zero variable nodes attached we refer to it as a multi-ton. First part of the decoder which we refer to as bin decoder will be able to detect and decode the identity of the non-zero variable nodes connected in the bin exactly if the bin is a singleton or a resolvable double-ton. If the bin is a multi-ton the bin decoder will detect it as a multi-ton, i.e., the bin decoder output is not a singleton or a resolvable double-ton, with asymptotically high probability of atleast 1-$O(\frac{1}{N^2})$. For details of the decoder we refer the reader to \cite{lee2015saffron}. The second part of the decoder which is commonly referred to as peeling decoder \cite{li2015subisit}, using the outputs from the bin decoder, uncovers the identities of the non-zero variable nodes (referred to as peeling off from the graph historically) in an iterative manner. 
+Before describing the decoding process let us review some terminology. A bin is referred to as a singleton if there is exactly one non-zero variable node connected to the bin. It is referred to as a resolvable double-ton if there are exactly two non-zero variable nodes connected to the bin and we know the identity of one of them leaving to the decoder to decode the identity of the other one. And if the bin has more than two non-zero variable nodes attached we refer to it as a multi-ton. First part of the decoder which we refer to as bin decoder will be able to detect and decode the identity of the non-zero variable nodes connected in the bin exactly if the bin is a singleton or a resolvable double-ton. If the bin is a multi-ton the bin decoder will detect it as a multi-ton, i.e., the bin decoder output is not a singleton or a resolvable double-ton. The second part of the decoder which is commonly referred to as peeling decoder \cite{li2015subisit}, using the outputs from the bin decoder, uncovers the identities of the non-zero variable nodes (referred to as peeling off from the graph historically) in an iterative manner. For details of the decoder we refer the reader to \cite{lee2015saffron}.
 
 The overall group testing decoder comprises of these two decoders working in conjunction as follows. In the first and foremost step, given the $M$ tests output, we run the bin decoder on the $M_1$ bins and we are given the set of singletons i.e., the set of decoded non-zero variable nodes denoted as $\mc{D}$. Now in an iterative manner, at each iteration, we consider a variable node from $\mc{D}$ and apply the bin decoder on the bins connected to this variable node and hopefully one of them is a resolvable double-ton thus resulting in us decoding one more non-zero variable node. We will move the said considered variable node in the previous iteration from $\mc{D}$ to a set of peeled off variable nodes $\mc{P}$. And we will place the newly decoded non-zero variable node in the previous iteration, if any, in $\mc{D}$ and continue the next iteration. The deocoder terminates if $\mc{D}$ is empty and the decoder is declared successful if the set $\mc{P}$ equals the set of defective items. 
 \begin{Remark}
  Note that we are not literally peeling off the decoded nodes from the graph because of the \textit{non-linear} OR operation on the non-zero variable nodes at each bin thus preventing us in subtracting the effect of the non-zero node from the measurements of the bin node unlike in the problems of compressed sensing or LDPC codes on binary erasure channel.
 \end{Remark}
 
-Now we state the series of lemmas and theorems, without proofs, from \cite{lee2015saffron} that enabled the authors Lee, Pedarsani and Ramchandran to show that this left-regular sparse-graph code based scheme with the described peeling decoder solves the group testing problem with $\Omega( K\log N)$ tests and with $O(K\log N)$ computational complexity.
+Now we state the series of lemmas and theorems, without proofs, from \cite{lee2015saffron} that enabled the authors Lee, Pedarsani and Ramchandran to show that this left-regular sparse-graph code based scheme with the described peeling decoder solves the group testing problem with $\Omega( K\log N)$ tests and $O(K\log N)$ computational complexity.
 
 \begin{lemma}[Bin decoder analysis]
-For a signature matrix $\mbf{U}_r$ as described in \eqref{Eqn:SignatureMatrix}, the bin decoder successfully detects and resolves if the bin is either a singleton or a resolvable double-ton. If the bin is a multi-ton the bin decoder declares a wrong non-zero variable node with a probability no greater than $O(\frac{1}{r^2})$.
+For a signature matrix $\mbf{U}_{r,p}$ as described in \eqref{Eqn:SignatureMatrix}, the bin decoder successfully detects and resolves if the bin is either a singleton or a resolvable double-ton. If the bin is a multi-ton the bin decoder declares a wrong non-zero variable node with a probability no greater than $\frac{1}{r^p}$.
 \end{lemma}
 
-For the ease of analysis, the error probability performance analysis of the peeling decoder is done independent of the bin decoder i.e., the peeling decoder is analyzed under the assumption that the bin decoder is working accurately which will be referred to as oracle based peeling decoder. To simplify further, a pruned graph is considered where all the zero variable nodes and their respective edges are removed from the graph and a simplified version of peeling decoder which iteratively considers a variable node as decoded perfectly if it is connected to a right-node with degree one or a right-node with degree two where one of the variables connected is already decoded. Anything with more than degree two is untouched by the oracle based peeling decoder. It is easy to verify that the original decoder with accurate bin decoding is equivalent to this simplified peeling decoder on a pruned graph.
+For the ease of analysis, the error probability performance analysis of the peeling decoder is done independent of the bin decoder i.e., the peeling decoder is analyzed under the assumption that the bin decoder is working accurately which will be referred to as oracle based peeling decoder. To simplify further, a pruned graph is considered where all the zero variable nodes and their respective edges are removed from the graph. And we consider a simplified version of peeling decoder which iteratively decodes a variable node if it is connected to a right-node with degree one or a right-node with degree two with the other variable node being already decoded. Any right node with more than degree two is untouched by the oracle based peeling decoder. It is easy to verify that the original decoder with accurate bin decoding is equivalent to this simplified peeling decoder on a pruned graph.
 
 \begin{definition}[Pruned graph ensemble]
 We will define the pruned graph ensemble $\tilde{\mc{G}}_l(N,K,M_1)$ as the set of all graphs obtained from removing a random $N-K$ subset of variable nodes from a graph from the ensemble $\mc{G}_l(N,M_1)$. Note that graphs from the pruned ensemble have $K$ variable nodes. 
 \end{definition}
 
-Before we analyze the pruned graph ensemble let us define the right-node degree distribution (d.d) as $R(x)=\sum_{i}R_i x^i$ where $R_i$ is the probability that a randomly chosen right-node has degree $i$. Now similarly the edge d.d $\rho(x)=\sum_{i}\rho_ix^{i-1}$ is defined where $\rho_i$ is the probability that a randomly chosen edge in the graph is connected to a right-node of degree $i$. Note that the left-degree distribution is regular even for the pruned graph case and hence we don't specifically mention it.
+Before we analyze the pruned graph ensemble let us define the right-node degree distribution (d.d) of a graph(ensemble) as $R(x)=\sum_{i}R_i x^i$ where $R_i$ is the probability that a right-node has degree $i$. Now similarly the edge d.d $\rho(x)=\sum_{i}\rho_ix^{i-1}$ is defined where $\rho_i$ is the probability that a random edge in the graph is connected to a right-node of degree $i$. Note that the left-degree distribution is regular even for the pruned graph case and hence we don't specifically mention it.
 
 \begin{lemma}[Edge d.d of Pruned graph]
-For the pruned ensemble $\tilde{\mc{G}}_l(N,K,M_1)$, it can be shown in the limit $K,N\rightarrow\infty$ that $\rho_{1}=e^{-\lambda}$ and $\rho_{2}=\lambda e^{-\lambda}$ where $\lambda=\frac{l}{C}$ if $M_1=CK$ for a constant $C$. 
+For the pruned ensemble $\tilde{\mc{G}}_l(N,K,M_1)$, it can be shown in the limit $K,N\rightarrow\infty$ that $\rho_{1}=e^{-\lambda}$ and $\rho_{2}=\lambda e^{-\lambda}$ where $\lambda=l/c_1$ if $M_1=c_1K$ for some constant $c_1$. 
 \end{lemma}
 
 \begin{lemma}
 \label{Lem:PeelingAnalysisLeftRegular}
-For the pruned graph ensemble $\tilde{\mc{G}}_l(N, K,M_1)$ the oracle-based peeling decoder fails to peel off atleast $(1-\epsilon)$ fraction of the variable nodes with exponentially decaying probability if $M_1=C(\epsilon)K$ where $C(\epsilon)$ for various $\epsilon$ is given in Table. \ref{Table:constantsDE}.
+For the pruned graph ensemble $\tilde{\mc{G}}_l(N, K,M_1)$ the oracle-based peeling decoder fails to peel off atleast $(1-\epsilon)$ fraction of the variable nodes with exponentially decaying probability if $M_1\geq c_1(\epsilon)K$ where $c_1(\epsilon)$ for various $\epsilon$ is given in Table. \ref{Table:constantsDE}.
 \end{lemma}
 \begin{proof}
 Instead of reworking the whole proof here from \cite{lee2015saffron}, we will list the main steps involved in the proof which we will use further along. If we let $p_j$ be the probability that a random defective item is not identified at iteration $j$, in the limit $N \text{ and } K\rightarrow \infty$. We can write density evolution (DE) equation relating $p_{j+1}$ to $p_{j}$ as 
 \begin{align*}
 p_{j+1}=\left[1-(\rho_1+\rho_2(1-p_j))\right]^{l-1}.
 \end{align*}
-For this DE, we can see that $0$ is not a fixed point and hence $p_j\nrightarrow 0$ as $j\rightarrow\infty$. Therefore numerically optimizing the values of $C$ and $l$ such that $\lim_{j\rightarrow\infty}p_j\leq \epsilon$ gives us the optimal values for $C(\epsilon)$ and $l$ given in Table. \ref{Table:constantsDE}.
+For this DE, we can see that $0$ is not a fixed point and hence $p_j\nrightarrow 0$ as $j\rightarrow\infty$. Therefore numerically optimizing the values of $c_1$ and $l$ such that $\lim_{j\rightarrow\infty}p_j\leq \epsilon$ gives us the optimal values for $c_1(\epsilon)$ and $l$ given in Table. \ref{Table:constantsDE}.
 \end{proof}
 
 \begin{table}[t]
@@ -122,7 +130,7 @@ For this DE, we can see that $0$ is not a fixed point and hence $p_j\nrightarrow
 \begin{tabular}{| c | c | c | c | c | c | c | c | }
 \hline
 $\epsilon$ & $10^{-3}$ & $10^{-4}$ & $10^{-5}$ & $10^{-6}$ &$ 10^{-7}$ & $10^{-8}$ & $10^{-9}$ \\ \hline
-$C(\epsilon)$ & 6.13 & 7.88 & 9.63 & 11.36 & 13.10 & 14.84 & 16.57 \\ \hline
+$c_1(\epsilon)$ & 6.13 & 7.88 & 9.63 & 11.36 & 13.10 & 14.84 & 16.57 \\ \hline
  $l$ & 7 & 9 & 10 & 12 & 14 & 15 & 17 \\ \hline
 \end{tabular}
 \vspace{1ex}
@@ -130,7 +138,7 @@ $C(\epsilon)$ & 6.13 & 7.88 & 9.63 & 11.36 & 13.10 & 14.84 & 16.57 \\ \hline
 \end{table}
 Combining the lemmas and remarks above, the main result from \cite{lee2015saffron} can be summarized as follows.
 \begin{theorem}
-The SAFFRON framework recovers atleast a $(1-\epsilon)$ fraction of the defective items for arbitrarily-small $\epsilon$ with high probability $1-O(\frac{K}{N^2})$. The number of tests is $m=6C(\epsilon)K \log_{2}N$ where $C(\epsilon)$ is given in Table. \ref{Table:constantsDE} and the computational complexity of the decoding is $O(K\log N)$.
+The SAFFRON framework recovers atleast a $(1-\epsilon)$ fraction of the defective items for arbitrarily-small $\epsilon$ with high probability $1-O(\frac{K}{N^2})$. The number of tests is $m=6c_1(\epsilon)K \log_{2}N$ where $c_1(\epsilon)$ is given in Table. \ref{Table:constantsDE} and the computational complexity of the decoding is $O(K\log N)$.
 \end{theorem}
 Note that the computational complexity is order optimal for both the noiseless and noisy settings as mentioned in \cite{lee2015saffron}. Regarding the optimality of the number of tests for the noiseless setting where both $K$ and $N$ scale satisfying $K=o(N)$, it was shown \cite{atia2012boolean} that the number of tests need to be atleast as large as $C K \log (\frac{N}{K})$ for some constant $C$ such that the probability of error approaches zero. As far as we are aware this is the tightest lower bound. In the same work it is shown that $C K \log N$ is the sufficient number of tests. In our work we show that in fact $C(\epsilon) K \log(\frac{N}{K})$ tests is sufficient to recover $(1-\epsilon)$ fraction of the defective items with high probability. More survey needs to be done regarding the lower and upper bounds for the number of tests in noiseless and noisy settings especially under different performance evaluation criteria. For e.g., in \cite{atia2012boolean} the upper bound(achievable) on the minimal number of tests $O(K \log N)$ is when the performance metric considered is the average probability of error that the decoded support set is not exactly equal to the original support set. But for the framework where $\epsilon$-fraction of the defective items are allowed to be missed, only the lower bound on the number of tests required is given. 
 
@@ -141,16 +149,16 @@ The main difference between the SAFFRON scheme and our scheme is that we use a l
 We define $\mc{G}_{l,r}(N,M_1)$ to be the ensemble of left-and-right-regular graphs where the $Nl$ edge connections from the left and $M_1r(=Nl)$ edge connections from the right are paired up according to a permutation $\pi_{Nl}$ chosen at random. 
 \end{definition}
 
- Let $\mbf{T}_{G}\in\{0,1\}^{M_1\times N }$ be the adjacency matrix corresponding to a graph $G\in\mc{G}_{l,r}(N,M_1)$ i.e., each column in $\mbf{T}_{G}$ corresponding to a variable node has exactly $l$ ones and each row corresponding to a bin node has exactly $r$ ones. And let the universal signature matrix be $\mbf{U}_{r}\in\{0,1\}^{h \times r}$. Thus the total number of tests is $M=M_1\times h$ where $h=6\log r$. Then the overall testing matrix $\mbf{A}\coleq [\mbf{A}_{1}^{T},\ldots,\mbf{A}_{M_{1}}^{T}]^T$ where $\mbf{A}_{i}$ defining the $h$ tests at $i^{\text{th}}$ bin is given by
-
+ Let $\mbf{T}_{G}\in\{0,1\}^{M_1\times N }$ be the adjacency matrix corresponding to a graph $G\in\mc{G}_{l,r}(N,M_1)$ i.e., each column in $\mbf{T}_{G}$ corresponding to a variable node has exactly $l$ ones and each row corresponding to a bin node has exactly $r$ ones. And let the universal signature matrix be $\mbf{U}\in\{0,1\}^{h \times r}$ chosen from the $\mbf{U}_{r,p}$ ensemble. Then the overall testing matrix $\mbf{A}\coleq [\mbf{A}_{1}^{T},\ldots,\mbf{A}_{M_{1}}^{T}]^T$ where $\mbf{A}_{i}$ defining the $h$ tests at $i^{\text{th}}$ bin is given by
  \begin{align}
  \mbf{A}_i&=[\mbf{0},\ldots,\mbf{0},\mbf{u}_1, \mbf{0},\ldots, \mbf{u}_2,\mbf{0}, \ldots, \mbf{u}_{r}],\quad \text{where}\label{Eqn:TestingMatrixDefn}\\
 \mbf{t}_i &= [0,\ldots,0,\hspace{0.6ex}1,\hspace{0.9ex} 0, \ldots,\hspace{0.6ex}1,\hspace{0.9ex}0, \ldots, \hspace{0.9ex}1].\nonumber
  \end{align}
-Note that $\mbf{A}_i$ is defined by placing the $r$ columns of $\mbf{U}_r$ at the $r$ non-zero indices of $\mbf{t}_i$ and the remaining are zero columns. 
+Note that $\mbf{A}_i$ is defined by placing the $r$ columns of $\mbf{U}$ at the $r$ non-zero indices of $\mbf{t}_i$ and the remaining are padded with zero columns. We can see that the total number of tests for this scheme is $M=M_1\times h$ where $h=(2p+2)\log r$.
+
 \begin{definition}[Regular SAFFRON]
 \label{Def:RegSaffron}
-We define the ensemble of testing matrices for our scheme to be $\mc{G}_{l,r}(N,M_1)\times \mbf{U}_r$ where a graph $G$ is chosen from $\mc{G}_{l,r}(N,M_1)$, a signature matrix is chosen from $\mbf{U}_r$ and the testing matrix is defined as given in Eq. \eqref{Eqn:TestingMatrixDefn}. Note that the total number of tests for this testing scheme is $6M_1\log r$ where $r=\frac{Nl}{M_1}$.
+We define the ensemble of testing matrices for our scheme to be $\mc{G}_{l,r}(N,M_1)\times \mbf{U}_{r,p}$ where a graph $G$ is chosen from $\mc{G}_{l,r}(N,M_1)$, a signature matrix $\mbf{U}$ is chosen from $\mbf{U}_{r,p}$ and the testing matrix is defined as given in Eq. \eqref{Eqn:TestingMatrixDefn}. Note that the total number of tests for this testing scheme is $(2p+2)M_1\log r$ where $r=\frac{Nl}{M_1}$.
 \end{definition}
 
 For the regulr SAFFRON testing ensemble defined in Def. \ref{Def:RegSaffron}, we employ the same peeling based decoder described in Sec.~\ref{Sec:PriorWork}. 
@@ -158,17 +166,20 @@ For the regulr SAFFRON testing ensemble defined in Def. \ref{Def:RegSaffron}, we
 Now we consider the performance analysis of the regular SAFFRON scheme under the peeling based decoder. Similar to the SAFFRON scheme we will analyze the peeling decoder and the bin decoder separately and use union bound to bound the total error probability. As we have already  mentioned the analysis of just the peeling decoder can be carried out by considering a simplified peeling decoder on a pruned graph with only the non-zero variable nodes remaining. 
 
 \begin{definition}[Pruned graph ensemble]
-We will define the pruned graph ensemble $\tilde{\mc{G}}_{l,r}(N,K,M_1)$ as the set of all graphs obtained from removing a random $N-K$ subset of variable nodes from a graph from the ensemble $\mc{G}_{l,r}(N,M_1)$. Note that graphs from the pruned ensemble have $K$ variable nodes with a degree $l$ whereas the right degree is not regular anymore. 
+We will define the pruned graph ensemble $\tilde{\mc{G}}_{l,r}(N,K,M_1)$ as the set of all graphs obtained from removing a random $N-K$ subset of variable nodes from a graph from the ensemble $\mc{G}_{l,r}(N,M_1)$.
 \end{definition}
 
+Note that graphs from the pruned ensemble have $K$ variable nodes with a degree $l$ whereas the right degree is not regular anymore. 
 
 \begin{lemma}[Edge d.d of pruned graph]
 \label{Lem:EdgeDDPrunedGraph}
-For the pruned graph ensemble $\tilde{\mc{G}}_{l,r}(N,K,M_1)$ it can be shown in the limit $K,N\rightarrow\infty$ that edge d.d coefficients $\rho_{1}=e^{-\lambda}$ and $\rho_{2}=\lambda e^{-\lambda}$ where $\lambda=\frac{l}{C}$ for $M_1=CK$ for a constant $C$. Note that even if our initial ensemble is left-and-right-regular the pruned graph has asymptotically same degree distribution as in the SAFFRON scheme where the initial graph is from left-regular ensemble.
+For the pruned graph ensemble $\tilde{\mc{G}}_{l,r}(N,K,M_1)$ it can be shown in the limit $K,N\rightarrow\infty$ that edge d.d coefficients $\rho_{1}=e^{-\lambda}$ and $\rho_{2}=\lambda e^{-\lambda}$ where $\lambda=l/c_1$ for the choice of $M_1=c_1K$, $c_1$ being some constant.
 \end{lemma}
 
+We provide the proof in Sec. XX. Note that even if our initial ensemble is left-and-right-regular the pruned graph has asymptotically same degree distribution as in the SAFFRON scheme where the initial graph is from left-regular ensemble.
+
 \begin{lemma}
-For the pruned graph ensemble $\tilde{\mc{G}}_{l,r}(N, K,M_1)$ the oracle-based peeling decoder fails to peel off atleast $(1-\epsilon)$ fraction of the variable nodes with exponentially decaying probability for $M_1=C(\epsilon)K$ where $C(\epsilon)$ for various $\epsilon$ is given in Table. \ref{Table:constantsDE}.
+For the pruned graph ensemble $\tilde{\mc{G}}_{l,r}(N, K,M_1)$ the oracle-based peeling decoder fails to peel off atleast $(1-\epsilon)$ fraction of the variable nodes with exponentially decaying probability for $M_1=c_1(\epsilon)K$ where $c_1(\epsilon)$ for various $\epsilon$ is given in Table. \ref{Table:constantsDE}.
 \end{lemma}
 
 \begin{proof}
@@ -176,8 +187,11 @@ From Lemma. \ref{Lem:EdgeDDPrunedGraph} we know that the edge degree distributio
 \end{proof}
 
 \begin{theorem}
-The regular SAFFRON framework we proposed based on left-and-right-regular sparse graphs recovers atleast a $(1-\epsilon)$ fraction of the defective items for arbitrarily-small $\epsilon$ with high probability $1-O(\frac{K}{N^2})$. The number of tests is $m=6C(\epsilon)K \log_{2}\frac{N}{K}$ where $C(\epsilon)$ is given in Table. \ref{Table:constantsDE} and the computational complexity of the decoding is $O(K\log \frac{N}{K})$.
+Let $p\in\Z$ such that $K$ and $N$ scale as $K\in o(N^{\frac{p}{p+1}})$. For $m=(2p+2)C(\epsilon)K \log_{2}\frac{N}{K}$, the regular SAFFRON framework we proposed based on left-and-right-regular sparse graphs asymptotically recovers atleast a $(1-\epsilon)$ fraction of the defective items for arbitrarily-small $\epsilon$ with high probability $1-O(\frac{K^{p+1}}{N^p})$. Note that computational complexity of the decoding scheme is $O(K\log \frac{N}{K})$. The constant $C(\epsilon)$ is given in Table. \ref{Table:constantsDE}.
 \end{theorem}
+\begin{proof}
+
+\end{proof}
 
 \begin{proof}[Proof of Lem. \ref{Lem:EdgeDDPrunedGraph}]
 We will first derive $R(x)$ for the pruned graph ensemble and then use the relation\cite{richardson2008modern} $\rho(x)=\frac{R'(x)}{R'(1)}$ to derive the edge d.d . Note that all the check nodes have a uniform degree $r$ before pruning. When pruning we are removing a $N-K$ subset of variable nodes at random i.e., asymptotically this is equivalent to removing each edge from the graph with a probability $1-\epsilon$ where $\epsilon\coleq \frac{K}{N}$. Under this process the right-node d.d can be written as
