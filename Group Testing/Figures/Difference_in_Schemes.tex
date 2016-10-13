@@ -1,0 +1,153 @@
+\begin{tikzpicture}
+\def\horzgap{40pt}; %Horizontal gap between nodes/levels
+\def \gapVN{21pt}; %vertical gap between nodes
+\def \gapCN{	29pt}; %Horizontal gap between nodes
+
+\def \textoffs{9pt}; %Offset for writing r\leq N above cn4
+\def\nodewidth{8pt};
+\def\nodewidthsm{5pt}
+\def\edgewidth{2pt};
+\def\ext{12pt};
+\def\moveX {20pt};
+\def\moveYa{4pt}
+\def\moveYb{12pt}
+\def\arcradius{0.6*\ext}
+
+\def\xmovement{4*\horzgap}
+
+\def \n {8};
+\def\ldeg{3};
+\def \m {4};
+\def\rdeg{6};
+\def\langle{40};%120 degrees/3
+\def\langle{20};%120 degrees/6
+
+\tikzstyle{check} = [rectangle, draw,  inner sep=0mm, fill=black,minimum height=\nodewidth,minimum width=\nodewidth]
+\tikzstyle{checksm} = [rectangle, draw, inner sep=0mm, fill=black,minimum height=\nodewidthsm, minimum width=\nodewidthsm]
+
+\tikzstyle{bit} = [circle, draw, inner sep=0mm, fill=black, minimum size=\nodewidth]
+\tikzstyle{bitsm} = [circle, draw, inner sep=0mm,fill=red, minimum size=\nodewidthsm]
+\tikzstyle{edgesock} = [circle, inner sep=0mm, minimum size=\edgewidth,draw, fill=white]     
+
+                          
+\foreach \vn in {2,3,6,7}{
+ \node[bit] (vn\vn) at (0,\vn*\gapVN) {};
+\path (vn\vn) ++(20:\ext)node (evA\vn) [edgesock] {};
+\path (vn\vn) ++(0:\ext) node (evB\vn) [edgesock] {};
+\path (vn\vn) ++(-20:\ext) node (evC\vn) [edgesock] {};
+
+  \draw (vn\vn) -- (evA\vn.west); 
+  \draw (vn\vn) -- (evB\vn.west); 
+  \draw (vn\vn) -- (evC\vn.west); 
+}
+\draw[->,thin] (vn7)++(-60:\arcradius) arc (-60:60:\arcradius)node[above]{\tiny{$l$}};
+
+\path (vn3)--node(vndots) {\Large{$\vdots$}} (vn6);
+\node[left =-0.2*\nodewidth of vndots](){\tiny{$N$ vars}};
+
+\foreach \cn in {2,4}{
+\node[check] (cn\cn) at (\horzgap,0.2in+\cn*\gapCN) {};
+
+\path (cn\cn) ++(150:\ext) node (ecA\cn) [edgesock] {};
+\path (cn\cn) ++(170:\ext) node (ecB\cn) [edgesock] {};
+\path (cn\cn) ++(190:\ext) node (ecC\cn) [edgesock] {};
+\path (cn\cn) ++(210:\ext) node (ecD\cn) [edgesock] {};
+
+  \draw (cn\cn) -- (ecA\cn.east); 
+  \draw (cn\cn) -- (ecB\cn);  
+  \draw (cn\cn) -- (ecC\cn); 
+    \draw (cn\cn) -- (ecD\cn); 
+}
+
+\draw[->,thin] (cn4)++(240:\arcradius) arc (240:120:\arcradius);
+\path(cn4)++(2pt,\textoffs)node(){\tiny{$r\leq N$}};
+\path (cn2)--node(cndots) {\Large{$\vdots$}} (cn4);
+\node [right=0.01*\nodewidth of cndots]{\tiny{$c_1K$ bins}};
+
+\node[draw,minimum width=\horzgap-1.5*\ext,minimum height=6.5*\gapVN](perm) at (0.5*\horzgap,4.5*\gapVN){\Large{$\pi$}};
+
+\foreach \cn in {2,4}{
+\path (cn\cn) ++(\moveX,\moveYb) node (bitnA\cn) [bitsm] {};
+\path (cn\cn) ++(\moveX,\moveYa) node (bitnB\cn) [bitsm] {};
+\path (cn\cn) ++(\moveX,-\moveYa) node (bitnC\cn) [bitsm] {};
+\path (cn\cn) ++(\moveX,-\moveYb) node (bitnD\cn) [bitsm] {};
+
+\path (bitnB\cn) ++(\moveX,0) node (checknB\cn) [checksm] {};
+\path (bitnC\cn) ++(\moveX,0) node (checknC\cn) [checksm] {};
+
+\draw (bitnA\cn.east)--(checknB\cn.west);
+\draw (bitnC\cn.east)--(checknB\cn.west);
+\draw (bitnB\cn.east)--(checknC\cn.west);
+\draw (bitnD\cn.east)--(checknC\cn.west);
+\path(bitnD\cn)++(0.6*\moveX,-0.3*\moveX) node(){\tiny{$\mathbf{U}\in\{0,1\}^{c\log N \times N }$}};
+}
+
+\path (checknC2)++(2*\textoffs,0.5*\moveYa)node{\tiny{$\log N$ tests}};
+\node [below left=3*\nodewidth and 2*\nodewidth of bitnD2,anchor=west]{\tiny{$M=\Omega(K\log N)$} };
+
+
+
+
+
+
+
+
+
+
+
+\foreach \vn in {2,3,6,7}{
+ \node[bit] (Bvn\vn) at (\xmovement,\vn*\gapVN) {};
+\path (Bvn\vn) ++(20:\ext)node (BevA\vn) [edgesock] {};
+\path (Bvn\vn) ++(0:\ext) node (BevB\vn) [edgesock] {};
+\path (Bvn\vn) ++(-20:\ext) node (BevC\vn) [edgesock] {};
+
+  \draw (Bvn\vn) -- (BevA\vn.west); 
+  \draw (Bvn\vn) -- (BevB\vn.west); 
+  \draw (Bvn\vn) -- (BevC\vn.west); 
+}
+\draw[->,thin] (Bvn7)++(-60:\arcradius) arc (-60:60:\arcradius)node[above]{\tiny{$l$}};
+
+\path (Bvn3)--node(Bvndots) {\Large{$\vdots$}} (Bvn6);
+\node[left =-0.2*\nodewidth of Bvndots](){\tiny{$N$ vars}};
+
+\foreach \cn in {2,4}{
+\node[check] (Bcn\cn) at (\xmovement+\horzgap,0.2in+\cn*\gapCN) {};
+
+\path (Bcn\cn) ++(150:\ext) node (BecA\cn) [edgesock] {};
+\path (Bcn\cn) ++(170:\ext) node (BecB\cn) [edgesock] {};
+\path (Bcn\cn) ++(190:\ext) node (BecC\cn) [edgesock] {};
+\path (Bcn\cn) ++(210:\ext) node (BecD\cn) [edgesock] {};
+
+  \draw (Bcn\cn) -- (BecA\cn.east); 
+  \draw (Bcn\cn) -- (BecB\cn);  
+  \draw (Bcn\cn) -- (BecC\cn); 
+  \draw (Bcn\cn) -- (BecD\cn); 
+}
+
+\draw[->,thin] (Bcn4)++(240:\arcradius) arc (240:120:\arcradius);
+\draw[->,densely dotted](Bcn4)++(140:\arcradius)--++(12pt,20pt)node[](){\tiny{$r=\frac{Nl}{c_1K}$}};
+\path (Bcn2)--node(Bcndots) {\Large{$\vdots$}} (Bcn4);
+\node [right=0.01*\nodewidth of Bcndots]{\tiny{$c_1K$ bins}};
+
+\node[draw,minimum width=\horzgap-1.5*\ext,minimum height=6.5*\gapVN](Bperm) at (\xmovement+0.5*\horzgap,4.5*\gapVN){\Large{$\pi$}};
+
+\foreach \cn in {2,4}{
+\path (Bcn\cn) ++(\moveX,\moveYb) node (BbitnA\cn) [bitsm] {};
+\path (Bcn\cn) ++(\moveX,\moveYa) node (BbitnB\cn) [bitsm] {};
+\path (Bcn\cn) ++(\moveX,-\moveYa) node (BbitnC\cn) [bitsm] {};
+\path (Bcn\cn) ++(\moveX,-\moveYb) node (BbitnD\cn) [bitsm] {};
+
+\path (BbitnB\cn) ++(\moveX,0) node (BchecknB\cn) [checksm] {};
+\path (BbitnC\cn) ++(\moveX,0) node (BchecknC\cn) [checksm] {};
+
+\draw (BbitnA\cn.east)--(BchecknB\cn.west);
+\draw (BbitnC\cn.east)--(BchecknB\cn.west);
+\draw (BbitnB\cn.east)--(BchecknC\cn.west);
+\draw (BbitnD\cn.east)--(BchecknC\cn.west);
+\path(BbitnD\cn)++(0.6*\moveX,-0.3*\moveX) node(){\tiny{$\mathbf{U}\in\{0,1\}^{c\log r\times r}$}};
+}
+
+\path (BchecknC2)++(2*\textoffs,0.5*\moveYa)node{\tiny{$\log r$ tests}};
+\node [below left=3*\nodewidth and 2*\nodewidth of BbitnD2,anchor=west]{\tiny{$M=\Omega(K \log \frac{Nl}{c_1K})$} };
+
+\end{tikzpicture}

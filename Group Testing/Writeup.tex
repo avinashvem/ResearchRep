@@ -97,6 +97,7 @@ The overall group testing decoder comprises of these two decoders working in con
 Now we state the series of lemmas and theorems, without proofs, from \cite{lee2015saffron} that enabled the authors Lee, Pedarsani and Ramchandran to show that this left-regular sparse-graph code based scheme with the described peeling decoder solves the group testing problem with $\Omega( K\log N)$ tests and $O(K\log N)$ computational complexity.
 
 \begin{lemma}[Bin decoder analysis]
+\label{Lem:BinDecoderAnalysis}
 For a signature matrix $\mbf{U}_{r,p}$ as described in \eqref{Eqn:SignatureMatrix}, the bin decoder successfully detects and resolves if the bin is either a singleton or a resolvable double-ton. If the bin is a multi-ton the bin decoder declares a wrong non-zero variable node with a probability no greater than $\frac{1}{r^p}$.
 \end{lemma}
 
@@ -156,12 +157,17 @@ We define $\mc{G}_{l,r}(N,M_1)$ to be the ensemble of left-and-right-regular gra
  \end{align}
 Note that $\mbf{A}_i$ is defined by placing the $r$ columns of $\mbf{U}$ at the $r$ non-zero indices of $\mbf{t}_i$ and the remaining are padded with zero columns. We can see that the total number of tests for this scheme is $M=M_1\times h$ where $h=(2p+2)\log r$.
 
+\begin{figure*}[t!]
+\centering \scalebox{1}{\input{./Figures/Difference_in_Schemes.tex}}
+\caption{Illustration of the main differences between SAFFRON \cite{lee2015saffron} on the left and our regular-SAFFRON scheme on the right. In both the schemes the peeling decoder on sparse graph requires $\Omega(K)$ bins. But for the bin decoder part, in SAFFRON scheme the right degree is a random variable with a maximum value of $N$ and thus requires $\Omega(\log N)$ tests at each bin. Whereas our scheme based on right-regular sparse graph has a constant right degree of $\Omega(\frac{N}{K})$ and thus requires only $\Omega(\log \frac{N}{K})$ tests at each bin. Thus we can improve the number of tests from $\Omega (K\log N)$ to order optimal $\Omega(K\log \frac{N}{K})$.}
+\end{figure*}
+
 \begin{definition}[Regular SAFFRON]
 \label{Def:RegSaffron}
 We define the ensemble of testing matrices for our scheme to be $\mc{G}_{l,r}(N,M_1)\times \mbf{U}_{r,p}$ where a graph $G$ is chosen from $\mc{G}_{l,r}(N,M_1)$, a signature matrix $\mbf{U}$ is chosen from $\mbf{U}_{r,p}$ and the testing matrix is defined as given in Eq. \eqref{Eqn:TestingMatrixDefn}. Note that the total number of tests for this testing scheme is $(2p+2)M_1\log r$ where $r=\frac{Nl}{M_1}$.
 \end{definition}
 
-For the regulr SAFFRON testing ensemble defined in Def. \ref{Def:RegSaffron}, we employ the same peeling based decoder described in Sec.~\ref{Sec:PriorWork}. 
+For the regular SAFFRON testing ensemble defined in Def. \ref{Def:RegSaffron}, we employ the same peeling based decoder described in Sec.~\ref{Sec:PriorWork}. 
 
 Now we consider the performance analysis of the regular SAFFRON scheme under the peeling based decoder. Similar to the SAFFRON scheme we will analyze the peeling decoder and the bin decoder separately and use union bound to bound the total error probability. As we have already  mentioned the analysis of just the peeling decoder can be carried out by considering a simplified peeling decoder on a pruned graph with only the non-zero variable nodes remaining. 
 
@@ -179,18 +185,26 @@ For the pruned graph ensemble $\tilde{\mc{G}}_{l,r}(N,K,M_1)$ it can be shown in
 We provide the proof in Sec. XX. Note that even if our initial ensemble is left-and-right-regular the pruned graph has asymptotically same degree distribution as in the SAFFRON scheme where the initial graph is from left-regular ensemble.
 
 \begin{lemma}
+\label{Lem:PeelingRegularAnalysis}
 For the pruned graph ensemble $\tilde{\mc{G}}_{l,r}(N, K,M_1)$ the oracle-based peeling decoder fails to peel off atleast $(1-\epsilon)$ fraction of the variable nodes with exponentially decaying probability for $M_1=c_1(\epsilon)K$ where $c_1(\epsilon)$ for various $\epsilon$ is given in Table. \ref{Table:constantsDE}.
 \end{lemma}
+
 
 \begin{proof}
 From Lemma. \ref{Lem:EdgeDDPrunedGraph} we know that the edge degree distribution coefficients $\rho_1$ and $\rho_2$ are identical to that of the SAFFRON scheme and hence the same DE equations can be used here. Therefore the exact same proof as the proof of Lemma. \ref{Lem:PeelingAnalysisLeftRegular} can be employed here.
 \end{proof}
 
 \begin{theorem}
-Let $p\in\Z$ such that $K$ and $N$ scale as $K\in o(N^{\frac{p}{p+1}})$. For $m=(2p+2)C(\epsilon)K \log_{2}\frac{N}{K}$, the regular SAFFRON framework we proposed based on left-and-right-regular sparse graphs asymptotically recovers atleast a $(1-\epsilon)$ fraction of the defective items for arbitrarily-small $\epsilon$ with high probability $1-O(\frac{K^{p+1}}{N^p})$. Note that computational complexity of the decoding scheme is $O(K\log \frac{N}{K})$. The constant $C(\epsilon)$ is given in Table. \ref{Table:constantsDE}.
+Let $p\in\Z$ such that $K$ and $N$ scale as $K\in o(N^{\frac{p}{p+1}})$. For $M=(2p+2)c_1(\epsilon)K \log_{2}\frac{N}{K}$, the regular SAFFRON framework we proposed, asymptotically, recovers atleast a $(1-\epsilon)$ fraction of the defective items for arbitrarily-small $\epsilon$ with high probability $1-O\left(\frac{K^{p+1}}{N^p}\right)$. Note that computational complexity of the decoding scheme is $O(K\log \frac{N}{K})$. The constant $c_1(\epsilon)$ is given in Table. \ref{Table:constantsDE}.
 \end{theorem}
 \begin{proof}
-
+It remains to be shown that the total probability of error decays asymptotically in $K$ and $N$. Let $E_1$ be the event of oracle-based peeling decoder terminating without recovering atleast $(1-\epsilon)K$ variable nodes. Let $E_2$ be the event of the bin decoder making an error during the entirety of the peeling process and $E_{\tx{bin}}$ be the event of one instance of bin decoder making an error. The total probability of error $\tx{Pr}_e$ can be upper bounded by 
+\begin{align*}
+\tx{Pr}_e &\leq \tx{Pr}(E_1)+ \tx{Pr}(E_2)\\
+               &\leq \tx{Pr}(E_1)+ Kl\tx{Pr}(E_{\tx{bin}})\\
+               &\in O\left(\frac{K^{p+1}}{N^p}\right)
+\end{align*}
+where the second inequality is due to the union bound over a maximum of $Kl$ instances of bin decoding. The third line is due to the fact that $\tx{Pr}(E_1)$ is exponentially decaying in $K$ (see Lemma. \ref{Lem:PeelingRegularAnalysis}) and $\tx{Pr}(E_{\tx{bin}})=(\frac{c_1K}{Nl})^p$ (see Lemma. \ref{Lem:BinDecoderAnalysis} and Def. \ref{Def:RegSaffron})
 \end{proof}
 
 \begin{proof}[Proof of Lem. \ref{Lem:EdgeDDPrunedGraph}]
@@ -211,6 +225,7 @@ Thus we can compute that $\rho_1=(1-\epsilon)^{r-1}$ and $\rho_2=(r-1)\epsilon(1
 \end{align*}
 Similarly we can show $\lim_{K,N\rightarrow \infty}\rho_2=\lambda e^{-\lambda}$.
 \end{proof}
+
 
 \section{Proofs}
 \bibliographystyle{ieeetr}
