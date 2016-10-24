@@ -105,7 +105,7 @@ For the ease of analysis, the error probability performance analysis of the peel
 
 \begin{definition}[Pruned graph ensemble]
 We will define the pruned graph ensemble $\tilde{\mc{G}}_l(N,K,M_1)$ as the set of all graphs obtained from removing a random $N-K$ subset of variable nodes from a graph from the ensemble $\mc{G}_l(N,M_1)$. Note that graphs from the pruned ensemble have $K$ variable nodes. 
-\end{definition}
+\end{definition}	
 
 Before we analyze the pruned graph ensemble let us define the right-node degree distribution (d.d) of a graph(ensemble) as $R(x)=\sum_{i}R_i x^i$ where $R_i$ is the probability that a right-node has degree $i$. Now similarly the edge d.d $\rho(x)=\sum_{i}\rho_ix^{i-1}$ is defined where $\rho_i$ is the probability that a random edge in the graph is connected to a right-node of degree $i$. Note that the left-degree distribution is regular even for the pruned graph case and hence we don't specifically mention it.
 
@@ -182,7 +182,7 @@ Note that graphs from the pruned ensemble have $K$ variable nodes with a degree 
 For the pruned graph ensemble $\tilde{\mc{G}}_{l,r}(N,K,M_1)$ it can be shown in the limit $K,N\rightarrow\infty$ that edge d.d coefficients $\rho_{1}=e^{-\lambda}$ and $\rho_{2}=\lambda e^{-\lambda}$ where $\lambda=l/c_1$ for the choice of $M_1=c_1K$, $c_1$ being some constant.
 \end{lemma}
 
-We provide the proof in Sec. XX. Note that even if our initial ensemble is left-and-right-regular the pruned graph has asymptotically same degree distribution as in the SAFFRON scheme where the initial graph is from left-regular ensemble.
+Note that even if our initial ensemble is left-and-right-regular the pruned graph has asymptotically same degree distribution as in the SAFFRON scheme where the initial graph is from left-regular ensemble.
 
 \begin{lemma}
 \label{Lem:PeelingRegularAnalysis}
@@ -226,8 +226,11 @@ Thus we can compute that $\rho_1=(1-\epsilon)^{r-1}$ and $\rho_2=(r-1)\epsilon(1
 Similarly we can show $\lim_{K,N\rightarrow \infty}\rho_2=\lambda e^{-\lambda}$.
 \end{proof}
 
+\begin{figure}
+\scalebox{1}{\input{./Figures/noiseless_Kannan.tex}}
+\caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for various left degrees $l\in\{3,5,7\}$. For a given $l$ the bin detection size is fixed and we vary the number of bins. The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
+\end{figure}
 
-\section{Proofs}
 \bibliographystyle{ieeetr}
 \bibliography{journal_full,sparseestimation}
 \end{document} 
