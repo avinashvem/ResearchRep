@@ -227,48 +227,66 @@ Similarly we can show $\lim_{K,N\rightarrow \infty}\rho_2=\lambda e^{-\lambda}$.
 \end{proof}
 
 \begin{figure}
-\scalebox{1}{\input{./Figures/noiseless_Kannan.tex}}
+\label{Fig:SimulationNoiseless}
+\begin{center}
+\resizebox{\columnwidth}{!}{\input{./Figures/noiseless_Kannan.tex}}
 \caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for various left degrees $l\in\{3,5,7\}$. For a given $l$ the bin detection size is fixed and we vary the number of bins. The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
+\end{center}
 \end{figure}
+
+\section{Robust Group Testing}
+In this section we extend our scheme to the group testing problem where the test results can be noisy. To be formal, the signal model looks like
+\begin{align*}
+\mbf{y=A}\odot \mbf{x+w},
+\end{align*}
+where the addition is over binary field and $\mbf{w}\in\{0,1\}^N$ is an i.i.d noise vector distributed according to Bernoulli distribution with parameter $0<q<\frac{1}{2}$.
+
+\subsection*{Testing Scheme}
+In \cite{lee2015saffron} for the robust group testing problem, the signature matrix used for noiseless group testing problem is modified using a error control coding such that it can handle singletons and resolvable doubletons in the presence of noise. The binning operation as definied by the bipartite graph is exactly identical to that of noiseless case. We state the modification to the signature matrix and new bin detection decoding scheme as given in \cite{lee2015saffron} for the sake of completeness and then state the performance bounds for our scheme for the noisy group testing problem.
+
+Let $\mc{C}_n$ be a binary error-correcting code with the following definition:
+\begin{itemize}
+\item Let the encoder and decoder functions be $f:\{0,1\}^{n}\rightarrow \{0,1\}^{\frac{n}{R}}$ and $g:\{0,1\}^{\frac{n}{R}}\rightarrow \{0,1\}^{n}$ respectively where $R$ is the rate of the code.
+\end{itemize}
+We can use any error-correcting code but for ease of analysis and tight upper bound for the number of tests we will use spatially-coupled LDPC codes which are known to be capacity achieving \cite{kumar2014threshold,kudekar2013spatially}.For spatially-coupled LDPC codes, being capacity achieving is equivalent to: 
+\begin{itemize}
+\item There exists a sequence of codes $\{\mc{C}_n\}$ with the rate of each code being $R$ satisfying 
+\begin{align}
+\label{Eqn:ProbErrorCoding}
+R<1-H(q)-\delta=1+q\log_2 q+(1-q)\log_2(1-q)-\delta
+\end{align}
+%where $H(q)=-q\log_2 q-(1-q)\log_2(1-q)$, 
+for any arbitrary small constant $\delta$ such that the probability of error $\text{Pr}\left(g(\mbf{x+w})\neq \mbf{x}\right)<2^{\kappa n}$ for some $\kappa >0$.
+\end{itemize} 
+The modified signature matrix $\mbf{U}'_{r,p}$ can be described via $\mbf{U}_{r, p}$ given in Eq. \eqref{Eqn:SignatureMatrix}, and encoding function $f$ for a code $\mc{C}_{\log_2 r}$ as follows:
+ \begin{align}
+\label{Eqn:SignatureMatrixModified}
+\mbf{U}_{r,p}'\coleq\begin{bmatrix}
+f(\mbf{b}_1)  & f(\mbf{b}_2) &\cdots & f(\mbf{b}_r) \\
+\overline{f(\mbf{b}_1)} & \overline{f(\mbf{b}_2)} & \cdots & \overline{f(\mbf{b}_r)}\\
+f(\mbf{b}_{\pi^{1}_{1}}) & f(\mbf{b}_{\pi^{1}_{2}}) & \cdots & f(\mbf{b}_{\pi^{1}_{r}})\\
+\overline{f(\mbf{b}_{\pi^{1}_{1}})} & \overline{f(\mbf{b}_{\pi^{1}_{2}})} & \cdots & \overline{f(\mbf{b}_{\pi^{1}_{r}})}\\
+\cdots &  &\vdots \\
+f(\mbf{b}_{\pi^{p}_{1}}) & f(\mbf{b}_{\pi^{p}_{2}}) & \cdots & f(\mbf{b}_{\pi^{p}_{r}})\\
+\overline{f(\mbf{b}_{\pi^{p}_{1}})} & \overline{f(\mbf{b}_{\pi^{p}_{2}})} & \cdots & \overline{f(\mbf{b}_{\pi^{p}_{r}})}\\
+\end{bmatrix}
+\end{align}  
+Then the overall testing matrix $\mbf{A}$ is defined in identical fashion to the definition in Sec. \ref{Sec:PriorWork} for the case of noiseless case except that $\mbf{U}$ will be replaced by $\mbf{U'}$. Formally it can be defined as $\mbf{A}\coleq [\mbf{A}_{1}^{T},\ldots,\mbf{A}_{M_{1}}^{T}]^T$ where $\mbf{A}_{i}=\mbf{U'} \diag (\mbf{t}_i)$ where the binary vectors $\mbf{t}_i$ are defined in Sec. \ref{Sec:PriorWork}. 
+
+\subsection*{Decoding}
+Describe error-control coding in one para using function $g$.
+
+
+\subsection*{Results}
+\begin{lemma}[Robust Bin Decoder Analysis]
+For a signature matrix $\mbf{U'}_{r,p}$ as described in \eqref{Eqn:SignatureMatrixModified}, the robust bin decoder misses a singleton with probability no greater than $\frac{3}{r^{\kappa}}$. The robust bin decoder wrongly declares a singleton with probability no greater than $\frac{1}{r^{p\kappa}}$.
+\end{lemma}
+The fraction of missed singeltons will be compensated by using $M(1+\frac{3}{r^{\kappa}})$ instead of $M$ such that the total number of singletons decoded will be $M(1+\frac{3}{r^{\kappa}})(1-\frac{3}{r^{\kappa}})\approx M$.
+
+\begin{theorem}
+Let $p\in\Z$ such that $K$ and $N$ scale as $K\in o\left(N^{\frac{p\kappa}{p\kappa+1}}\right)$ where $\kappa>0$ is defined in Eq. \eqref{Eqn:ProbErrorCoding}. For $M=2(p+1)\beta(q)c_1(\epsilon)K \log_{2}\frac{N}{K}$, the robust regular SAFFRON framework we proposed, asymptotically, recovers atleast a $(1-\epsilon)$ fraction of the defective items for arbitrarily-small $\epsilon$ with high probability $1-O\left(\frac{K^{p\kappa+1}}{N^{p\kappa}}\right)$. Here $\beta(q)=\frac{1}{R}>\frac{1}{1-H(q)-\delta}$ for an arbitrary small constant $\delta$ and the constants $c_1(\epsilon)$ are given in Table. \ref{Table:constantsDE}. Note that computational complexity of the decoding scheme is $O(K\log \frac{N}{K})$.
+\end{theorem}
 
 \bibliographystyle{ieeetr}
 \bibliography{journal_full,sparseestimation}
 \end{document} 
-
-%\begin{align*}
-%\mbf{A}=T\otimes U\defeq\begin{bmatrix}
-%\mbf{t}_1 \circ \mbf{u}_1 \\
-%\mbf{t}_1 \circ \mbf{u}_2 \\
-%\vdots \\
-%\mbf{t}_1 \circ \mbf{u}_h \\
-%\hline
-%\mbf{t}_2 \circ \mbf{u}_1 \\
-%\vdots \\
-%\mbf{t}_2 \circ \mbf{u}_h \\
-%\hline 
-%\vdots \\
-%\hline 
-%\mbf{t}_{M_1} \circ \mbf{u}_1 \\
-%\vdots \\
-%\mbf{t}_{M_1} \circ \mbf{u}_h \\
-%\end{bmatrix}.
-%\end{align*}
-%Similarly the observation vector $\mbf{y}\in\{0,1\}^{M}=\{\mbf{y}^{(1)T},\mbf{y}^{(2)T},\ldots,\mbf{y}^{(M_{1})T}\}^{T}$, where $\mbf{y}^{(i)}\in\{0,1\}^{h\times 1}$, can be written as:
-%\begin{align*}
-%\mbf{y}=T\otimes U\defeq\begin{bmatrix}
-%\mbf{t}_1 \circ \mbf{u}_1 \\
-%\mbf{t}_1 \circ \mbf{u}_2 \\
-%\vdots \\
-%\mbf{t}_1 \circ \mbf{u}_h \\
-%\hline
-%\mbf{t}_2 \circ \mbf{u}_1 \\
-%\vdots \\
-%\mbf{t}_2 \circ \mbf{u}_h \\
-%\hline 
-%\vdots \\
-%\hline 
-%\mbf{t}_{M_1} \circ \mbf{u}_1 \\
-%\vdots \\
-%\mbf{t}_{M_1} \circ \mbf{u}_h \\
-%\end{bmatrix}.
-%\end{align*}

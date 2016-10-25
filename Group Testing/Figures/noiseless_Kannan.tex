@@ -10,8 +10,8 @@
 \begin{tikzpicture}
 
 \begin{axis}[%
-width=3.512521981627297in,
-height=2.551690441819773in,
+width=3.02in,
+height=2.55in,
 scale only axis,
 xmin=20,
 xmax=700,
@@ -44,6 +44,24 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 672	0.0003\\
 };
 \addlegendentry{$l=3$};
+
+\addplot [color=blue,solid,line width=2pt,mark=square,mark options={solid}]
+  table[row sep=crcr]{96	0.94\\
+144	0.68\\
+192	0.32\\
+240	0.11\\
+288	0.036\\
+336	0.015\\
+384	0.005\\
+432	0.0024\\
+480	0.0011\\
+528	0.00055\\
+576	0.0004\\
+624	0.00025\\
+672	0.0001\\
+};
+\addlegendentry{$l=5$};
+
 
 \addplot [color=blue,dashed,mark=square,mark options={solid},line width=1pt]
   table[row sep=crcr]{96	0.98\\
@@ -78,23 +96,6 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 672	0.0002\\
 };
 \addlegendentry{$l=9$};
-
-\addplot [color=blue,solid,line width=2pt,mark=square,mark options={solid}]
-  table[row sep=crcr]{96	0.94\\
-144	0.68\\
-192	0.32\\
-240	0.11\\
-288	0.036\\
-336	0.015\\
-384	0.005\\
-432	0.0024\\
-480	0.0011\\
-528	0.00055\\
-576	0.0004\\
-624	0.00025\\
-672	0.0001\\
-};
-\addlegendentry{$l=5$};
 
 \addplot [color=red,solid, line width=1pt,mark=star]
   table[row sep=crcr]{
@@ -135,10 +136,16 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
     50.700      9.16e-1   \\
 100.800     7.33e-1   \\
 148.500     1.93e-1   \\
-201.000     2.07e-2   \\
-249.000     5.22e-3   \\
+201.000     2.07e-2  \\
+249.000     5.22e-3  \\
 300.000     1.60e-3\\
 351.000     2.51e-4\\
+405.000     8.60e-5\\
+450.900     4.90e-5\\
+500.580     1.90e-5 \\
+550.800     1.20e-5\\
+602.100 	  1.40e-5\\
+675.000     6.00e-6\\
 %   72.000    0.946226\\
 % 132.000    0.327190\\
 % 198.000    0.036304 \\
@@ -147,10 +154,10 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 % 270.000    0.003021\\
 % 300.000    0.001460\\
 % 360.000    0.000479\\
- 378.000    0.000157\\
- 453.600    0.000048\\
- 540.000    0.000013\\
- 604.800    0.000003\\
+% 378.000    0.000157\\
+% 453.600    0.000048\\
+% 540.000    0.000013\\
+% 604.800    0.000003\\
  };
 \addlegendentry{$l=5$, Regular};
 
