@@ -23,7 +23,7 @@
 \tikzstyle{check} = [rectangle, draw,line width=0.05mm,  inner sep=0mm, fill=black, minimum height=\nodewidthA, minimum width=\nodewidthA]
 \tikzstyle{checksm} = [rectangle, draw, line width=0.05mm, inner sep=0mm, fill=blue,minimum height=\edgewidth,minimum width=\edgewidth]
 
-\tikzstyle{bit} = [circle, draw,line width=0.05mm, inner sep=0mm, fill=red, minimum size=\nodewidthA]
+\tikzstyle{bit} = [circle, draw,line width=0.05mm, inner sep=0mm, fill=ProcessBlue, minimum size=\nodewidthA]
 \tikzstyle{bitsm} = [circle, draw, very thin, inner sep=0mm,fill=red, minimum size=\edgewidth]
 \tikzstyle{edgesock} = [circle, inner sep=0mm, minimum size=\edgewidth,draw, fill=white]     
 
@@ -32,6 +32,8 @@
  \node[bit] (vn\vn) at (0,\vn*\gapVN) {};
 }
 
+\node[anchor=east,above left](vn3text) at (vn3.west) {\fsize{N var. nodes}};
+
 \foreach \cn in {1,...,4}{
 \node[check] (cn\cn) at (\horzgap,\cn*\gapCN) {};
 }
@@ -39,6 +41,10 @@
 \node at (0.5*\horzgap,0){\fsize{$K$-sparse CS/GT}};
 \node[anchor=west,above right](cn2text) at (cn2.east) {\fsize{Identify and decode}};
 \path (cn2text) ++(0,-2*\nodewidth) node() {\fsize{a $1$-sparse CS/GT?}};
+
+%\node[anchor=west,above right](cn3text) at (cn3.east) {\fsize{bins}};
+%\path (cn2text) ++(0,-2*\nodewidth) node() {\fsize{a $1$-sparse CS/GT?}};
+
 
 \draw[line width=\linewidth] (vn6.east)--(cn4.west);
 \draw[line width=\linewidth] (vn3.east)--(cn4.west);

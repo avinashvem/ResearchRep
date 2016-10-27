@@ -12,7 +12,7 @@
 \def\fsize{\small};
 
 \tikzstyle{check} = [rectangle, draw,line width=0.2mm,  inner sep=0mm, fill=black, minimum height=\nodewidthA, minimum width=\nodewidthA]
-\tikzstyle{bit} = [circle, draw, line width=0.2mm, inner sep=0mm, fill=jblue, minimum size=\nodewidthA]
+\tikzstyle{bit} = [circle, draw, line width=0.2mm, inner sep=0mm, fill=ProcessBlue, minimum size=\nodewidthA]
 \tikzstyle{bituncover} = [circle, draw=none, line width=0.2mm, inner sep=0mm, fill=gray, minimum size=\nodewidthA]
 
 \tikzstyle{edgesock} = [circle, inner sep=0mm, minimum size=\edgewidth,draw, fill=white]     
@@ -63,8 +63,8 @@
 \node[anchor=west,right](cn2text) at (cn2.east){\fsize{$x_1\mathbf{c}_1+x_6\mathbf{c}_6$}};
 \node[below] at (cn2text.south) {\fsize{$+\mathbf{w_{2}}$}};
 \node[anchor=west,right] at (cn3.east) {\fsize{0+$\mathbf{w_{3}}$}};
-\node[anchor=west,right](cn4text) at (cn4.east) {\fsize{$x_1\mathbf{c}_1+x_3\mathbf{c}_3+$}};
-\node[anchor=north, below] at (cn4text.south) {\fsize{$x_6\mathbf{c}_6+\mathbf{w_{4}}$}};
+\node[anchor=west,right](cn4text) at (cn4.east) {\fsize{$x_1\mathbf{c}_1+x_3\mathbf{c}_3$}};
+\node[anchor=north, below] at (cn4text.south) {\fsize{$+x_6\mathbf{c}_6+\mathbf{w_{4}}$}};
 %-----------------------*(&^#@$^&*(^%$^&*(&^--------------------------------------------------------------------
 
 \end{tikzpicture}

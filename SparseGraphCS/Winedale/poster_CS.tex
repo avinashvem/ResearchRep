@@ -92,7 +92,7 @@ Metric of interest:
  \end{block}
 
  
-    \begin{block}{\Large Known Bounds}
+    \begin{block}{\Large Known Bounds for CS}
 	\begin{itemize}
 	\item In 2007, Wainwright gave information theoretic limits for compressed sensing: support recovery
 	 \item For sub-linear sparsity, $K=o(N)$, $M=\Theta\left( K\log(\frac{N}{K	})\right)$
@@ -108,8 +108,8 @@ Metric of interest:
 			\begin{itemize}
 			\itemsep10pt
 				\item Sample complexity of $M=c_1$ \textcolor{red}{$K\log (\frac{c_2 N}{K})$}
-				\item Decoding complexity of $O\left(K\log(\frac{N}{K})\right)$ 
-				\item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$
+				\item Decoding complexity of \textcolor{red}{$O\left(K\log(\frac{N}{K})\right)$} 
+				\item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$ and $N$
 			\end{itemize} 
 %where the constants $c_{1}$ and $c_{2}$ are dependent on SNR, desired rate of decay of $\mbb{P}_{\text{F}}$ and left degree $\ell$.\\
 \vspace{\paraskip}    
@@ -118,8 +118,8 @@ Metric of interest:
 		\begin{itemize}
 		\itemsep10pt
 			\item Sample complexity of $M=c_3 K\log K$
-			\item Decoding complexity of $O\left(K\log(K)\right)$ 
-			\item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$
+			\item Decoding complexity of \textcolor{red}{$O\left(K\log(\frac{N}{K})\right)$}
+			\item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$ and $N$
 		\end{itemize} 
 %where the constant $c_{3}>1$ is dependent on left degree $\ell$.
     \end{alertblock}
@@ -140,7 +140,7 @@ Metric of interest:
 			\itemsep10pt
 				\item Number of tests  $M=2(p+1)c(\epsilon)$ \textcolor{red}{$K\log_2 (\frac{c_1N}{K})$}
 				\item Decoding complexity of $O\left(K\log(\frac{N}{K})\right)$ 
-				\item $\mbb{P}_{m}\leq \epsilon$ asymptotically in $K$
+				\item $\mbb{P}_{m}\leq \epsilon$ asymptotically in $K$ and $N$
 				\item e.g. for $\epsilon=10^{-5}$, $c(\epsilon)=9.63$
 			\end{itemize}
     	\end{alertblock}
@@ -154,7 +154,7 @@ Metric of interest:
     \begin{block}{\Large Idea: Divide-and-Conquer}
     \begin{itemize}
 		\item Original problem is $K$-sparse CS/GT  
-    	\item Divide $N$ nodes into random (non-disjoint) bins
+    	\item Divide $N$ nodes into non-disjoint bins
 	    \item Can you solve for 1-sparse CS/GT at a bin?
     \end{itemize}
 
@@ -171,7 +171,7 @@ Metric of interest:
 	    \item $N$ Variable(left) nodes: $x_i$. Each node has (left) degree: $\ell$
 	    \item Bin(right) nodes: Choose $M_1=cK$ bins (sub problems)
 	    \item  Each bin has (right) degree $r$. Gives $r=\frac{N\ell}{cK}$
-	    \item Connections between $N\ell$ edges on each side at random
+	    \item Connections between $N\ell$ edges on each side are \textcolor{red}{random}
     \end{itemize}
     \end{block}  
 \vspace{\blockskip}
@@ -190,7 +190,7 @@ Metric of interest:
 		    \item  From channel coding, dim($\mbf{c}_j$)>$\frac{\log r}{C_{\text{Sh}}}\approx \Theta(\log \frac{N}{K})$ 
 %   		    \item $x\in\mathcal{X}\coleq\{Ae^{j\theta}: A\in \mc{A},\theta\in \Theta\}$ be a large but finite set
            \item After decoding index $k$, need to decode the value of $x_{ik}$
-		    \item Let $x\in\mathcal{X}\coleq\{\pm A: A\in \mc{A}\}$ be a discrete and finite set
+		    \item Let $x\in\mathcal{X}\coleq\{\pm A: A\in \mc{A}\}$ be a \textcolor{red}{discrete and finite set}
 		    \item We decode $\hat{x}_{ik}\in\mathcal{X}$ to be the value that best fits $\mbf{y}_i\mbf{c}_{k}^{\dagger}/||\mbf{c}_{k}||^{2}$
 		    %$\frac{\mbf{y}_i\mbf{c}_{k}^{\dagger}}{||\mbf{c}_{k}||^{2}}$
     	\end{itemize}
@@ -200,9 +200,9 @@ Metric of interest:
 
  \begin{block}{\Large Reconstruction via Peeling}
     \begin{itemize}
-	   \item Assume we can conquer the 1-sparse sub-problem
-	   \item If a \textcolor{red}{singleton} bin is found is found, decode it
-	   \item \textcolor{red}{Peel off} the variable node decoded from other bins
+	   \item Assume we can conquer the 1-sparse CS/GT at a bin
+	   \item If a singleton bin is found, decode the index and the value
+	   \item \textcolor{red}{Peel off} the decoded variable node value from other bins
    \end{itemize}
     
        \begin{figure}
@@ -219,7 +219,7 @@ Metric of interest:
 \vspace{\paraskip}	 
 	 \begin{itemize}
 	   \item Continue peeling iteratively until no new singletons are found
-	   \item $\exists$ threshold $c_*$ such that for $M_1>c_*K$ bins, all nodes are recovered asymptotically
+	   \item $\exists$ threshold $c_*$ such that for $M_1>c_*K$ bins, \textcolor{blue}{peeling decoder} recovers all nodes w.h.p asymptotically
     \end{itemize}
     \end{block}  
  \end{column}
@@ -262,7 +262,7 @@ Metric of interest:
 				    \end{bmatrix}
 		        \end{equation*}
 		      \item bins with more than 2 non-zero variables (\textcolor{red}{multi-ton}) are unusable due to \textcolor{red}{\textit{OR}}
-		      \item For $M_1>c(\epsilon)K$ bins, just using singletons and double-tons, \textcolor{blue}{peeling like iterative} decoder recovers $1-\epsilon$ fraction of nodes asymptotically
+		      \item For $M_1>c(\epsilon)K$ bins, just using singletons and double-tons, \textcolor{blue}{peeling like iterative} decoder recovers $1-\epsilon$ fraction of nodes w.h.p asymptotically
     	\end{itemize}
     \end{block}      
 \vspace{\blockskip}    
@@ -278,16 +278,16 @@ Metric of interest:
 	    \textbf{Compressed Sensing:} We propose a scheme that has
 			\begin{itemize}
 			\itemsep10pt
-				\item \textcolor{red}{order optimal} sample complexity of $O(\textcolor{blue}{K\log (\frac{N}{K})})$
-				\item \textcolor{red}{sub-linear} optimal decoding complexity: $O(\textcolor{blue}{K\log (\frac{N}{K})})$
+				\item \textcolor{red}{order optimal} sample complexity of \textcolor{blue}{$O(K\log (\frac{N}{K}))$}
+				\item \textcolor{red}{sub-linear} optimal decoding complexity: \textcolor{blue}{$O(K\log (\frac{N}{K}))$}
 			\end{itemize} 
 \vspace{\paraskip}    
   
    \textbf{Group testing:} We propose a scheme that achieves
 		\begin{itemize}
 		\itemsep10pt
-			\item \textcolor{red}{order optimal} testing complexity: $O(\textcolor{blue}{K\log (\frac{N}{K})})$
-			\item \textcolor{red}{sub-linear} optimal decoding complexity: $O(\textcolor{blue}{K\log (\frac{N}{K})})$
+			\item \textcolor{red}{order optimal} testing complexity: \textcolor{blue}{$O(K\log (\frac{N}{K}))$}
+			\item \textcolor{red}{sub-linear} optimal decoding complexity: \textcolor{blue}{$O(K\log (\frac{N}{K}))$}
 		\end{itemize} 
 %where the constant $c_{3}>1$ is dependent on left degree $\ell$.
     \end{alertblock}
