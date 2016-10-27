@@ -1,10 +1,7 @@
 \documentclass[final]{beamer}
 \usepackage[orientation=portrait, scale=1.24,10pt]{beamerposter}
 
-\usepackage{exscale} % Use after theme to display integrals properly
-\usepackage{xpatch}
-\usepackage{subcaption}
-%\usepackage{enumitem}
+\input{preamble.tex}
 
 \newlength{\columnheight}
 \newlength{\onecolwid}
@@ -25,7 +22,7 @@
 \setlength{\subitemspace}{0.1cm}
 \setlength{\blockskip}{2cm}
 \setlength{\paraskip}{1cm}
-\setlength{\negativeskip}{-3cm}
+\setlength{\negativeskip}{-6cm}
 \usetheme{confposter}
 
 
@@ -46,7 +43,7 @@
 
 \input{Avinash.def}
 
-\title{Sub-linear time Compressed Sensing and Group Testing via sparse-graph codes}
+\title{Sub-linear Time Compressed Sensing and Group Testing via Left-and-Right-Regular Sparse-Graph Codes}
 \author{\textbf{Avinash Vem}, Nagaraj T. Janakiraman, Krishna R. Narayanan}
 \institute{ECE Dept.,Texas A\&M University}
 
@@ -86,7 +83,7 @@ Metric of interest:
 	
 Metric of interest:   
     \begin{itemize}
- 		\item Prob. of missing defective item: $\mbb{P}_{m}\coleq \text{Pr}(\hat{x}_i=0, x_i=1)$
+ 		\item Prob. of miss: $\mbb{P}_{m}\coleq \text{Pr}(\hat{x}_i=0, x_i=1)$
 	\end{itemize}     
 	
  \end{block}
@@ -94,13 +91,10 @@ Metric of interest:
  
     \begin{block}{\Large Known Bounds for CS}
 	\begin{itemize}
-	\item In 2007, Wainwright gave information theoretic limits for compressed sensing: support recovery
-	 \item For sub-linear sparsity, $K=o(N)$, $M=\Theta\left( K\log(\frac{N}{K	})\right)$
-%		\begin{equation*}
-%		M=\Theta\left( K\log(N/K)\right)
-%		\end{equation*}
-		is shown to be necessary and sufficient.
-	  \item In the linear sparse regime, $K=\alpha N$, it was shown that $M=\Theta(N)$ measurements are sufficient. \cite{Wainwright}
+%	\item In 2007, Wainwright gave information theoretic limits for compressed sensing: support recovery
+	 \item For sub-linear sparsity, $K=o(N)$, $M=\Theta\left( K\log(\frac{N}{K	})\right)$ is shown to be necessary and sufficient.
+	  \item In the linear sparse regime, $K=\alpha N$, it was shown that $M=\Theta(N)$ measurements are sufficient. 
+	  \item In \cite{li2015subisit}, Li \textit{et al} using left-regular sparse graph codes proposed a scheme that achieves \textcolor{red}{$O(K\log N)$} sample and decoding complexity
 	 \end{itemize}
 	 
    \begin{alertblock}{\Large Main Result (CS)} 
@@ -111,7 +105,6 @@ Metric of interest:
 				\item Decoding complexity of \textcolor{red}{$O\left(K\log(\frac{N}{K})\right)$} 
 				\item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$ and $N$
 			\end{itemize} 
-%where the constants $c_{1}$ and $c_{2}$ are dependent on SNR, desired rate of decay of $\mbb{P}_{\text{F}}$ and left degree $\ell$.\\
 \vspace{\paraskip}    
   
    \textbf{Linear sparsity: }Our scheme has 
@@ -121,7 +114,6 @@ Metric of interest:
 			\item Decoding complexity of \textcolor{red}{$O\left(K\log(\frac{N}{K})\right)$}
 			\item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$ and $N$
 		\end{itemize} 
-%where the constant $c_{3}>1$ is dependent on left degree $\ell$.
     \end{alertblock}
  \end{block}
   \vspace{\blockskip}   
@@ -140,7 +132,7 @@ Metric of interest:
 			\itemsep10pt
 				\item Number of tests  $M=2(p+1)c(\epsilon)$ \textcolor{red}{$K\log_2 (\frac{c_1N}{K})$}
 				\item Decoding complexity of $O\left(K\log(\frac{N}{K})\right)$ 
-				\item $\mbb{P}_{m}\leq \epsilon$ asymptotically in $K$ and $N$
+				\item $\mbb{P}_{m}\leq \epsilon$ w.h.p. asymptotically in $K$ and $N$
 				\item e.g. for $\epsilon=10^{-5}$, $c(\epsilon)=9.63$
 			\end{itemize}
     	\end{alertblock}
@@ -178,11 +170,11 @@ Metric of interest:
 
     \begin{block}{\Large Conquer: 1-sparse CS}
 	    \begin{itemize}
-    		\item At each bin, use code words of error control code $\mathcal{C}$:
+    		\item At each bin, use code words of an error control code $\mathcal{C}$:
 		    	\begin{equation*}
 				    \mbf{y}_i=x_{i1}\mbf{c}_1 +x_{i2}\mbf{c}_{2}+\ldots x_{ir}\mbf{c}_{r}+\mbf{w}_i
 			    \end{equation*}
-    		\item If it is 1-sparse, only one $x_{ik}\neq 0$, (call it \textcolor{red}{singleton}):
+    		\item If it is 1-sparse i.e. only one $x_{ik}\neq 0$: (call it \textcolor{red}{singleton}):
 		        \begin{equation*}
 				    \mbf{y}_i=x_{ik}\mbf{c}_k +\mbf{w}_i
 		        \end{equation*}
@@ -262,19 +254,23 @@ Metric of interest:
 				    \end{bmatrix}
 		        \end{equation*}
 		      \item bins with more than 2 non-zero variables (\textcolor{red}{multi-ton}) are unusable due to \textcolor{red}{\textit{OR}}
-		      \item For $M_1>c(\epsilon)K$ bins, just using singletons and double-tons, \textcolor{blue}{peeling like iterative} decoder recovers $1-\epsilon$ fraction of nodes w.h.p asymptotically
+		      \item For $M_1>c(\epsilon)K$ bins, just using singletons and double-tons, \textcolor{blue}{peeling like iterative} decoder recovers ($1-\epsilon$) fraction of non-zero nodes w.h.p asymptotically
     	\end{itemize}
     \end{block}      
-\vspace{\blockskip}    
+%\vspace{\blockskip}    
 
-%      \begin{block}{\Large Numerical Results}
-%    
-%      \end{block}  
+      \begin{block}{\Large Numerical Results}
+		   \begin{figure}
+     		  \centering
+   			\scalebox{1.2}{\input{../../GroupTesting/Figures/noiseless_Kannan}}   
+\caption{Monte Carlo simulations for $K=100, N=2^{16}$. For a given $\ell$ the bin detection size is fixed and we vary the number of bins. The plots in blue indicate the scheme in \cite{lee2015saffron} and the plots in red indicate our scheme based on left-and-right-regular bipartite graphs for various left degrees $\ell\in\{3,5,7\}$.}
+			\end{figure}    
+      \end{block}  
       
     \setbeamercolor{block alerted title}{fg=black,bg=norange} % Change the alert block title colors
     \setbeamercolor{block alerted body}{fg=black,bg=white} % Change the alert block body colors
 
-         \begin{alertblock}{\Large Conlusions} 
+         \begin{alertblock}{\Large Conclusions} 
 	    \textbf{Compressed Sensing:} We propose a scheme that has
 			\begin{itemize}
 			\itemsep10pt
@@ -289,16 +285,15 @@ Metric of interest:
 			\item \textcolor{red}{order optimal} testing complexity: \textcolor{blue}{$O(K\log (\frac{N}{K}))$}
 			\item \textcolor{red}{sub-linear} optimal decoding complexity: \textcolor{blue}{$O(K\log (\frac{N}{K}))$}
 		\end{itemize} 
-%where the constant $c_{3}>1$ is dependent on left degree $\ell$.
     \end{alertblock}
-\vspace{\blockskip}    
+\vspace{-\paraskip}    
 
     % Bibliography
     \vspace{2.5cm}
     \begin{block}{References}
       \begin{thebibliography}{10}
-	\bibitem{Wainwright}
-M. Wainwright, ``Information-Theoretic Limits on Sparsity Recovery in the High-Dimensional and Noisy Setting.'' \emph{IEEE Trans. \ Inform \ Theory}, vol.~55, no.~12, pp.~5728-5741, 2009.
+%	\bibitem{Wainwright}
+%M. Wainwright, ``Information-Theoretic Limits on Sparsity Recovery in the High-Dimensional and Noisy Setting.'' \emph{IEEE Trans. \ Inform \ Theory}, vol.~55, no.~12, pp.~5728-5741, 2009.
 
 \bibitem{lee2015saffron}
 K. Lee, R. Pedarsani, and K. Ramchandran, ``Saffron: A fast, efficient, and robust framework for group testing based on sparse-graph codes'', arXiv preprint, arXiv:1508.04485, 2015.
@@ -306,6 +301,9 @@ K. Lee, R. Pedarsani, and K. Ramchandran, ``Saffron: A fast, efficient, and robu
 \bibitem{li2015subisit}
 X. Li, S. Pawar, and K. Ramchandran, ``Sub-linear time compressed sensing using sparse-graph codes'', in \emph{Proc. Int. Symp. Inform. Theory},
   pp.~1645-1649, 2015.
+  
+\bibitem{vemsublinear}
+A. Vem, N. Janakiraman, and K. Narayanan,``Sub-linear time compressed sensing for support recovery using left and right regular sparse-graph codes'', in \emph{Proc. Inform. Theory. Workshop}, pp.~429-433, 2016.
  \end{thebibliography}
 	  \end{block}
 
