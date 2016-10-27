@@ -1,0 +1,64 @@
+\begin{tikzpicture}
+\def\horzgap{1.25in}; %Horizontal gap between nodes/levels
+\def \gapVN{0.75in}; %vertical gap between nodes
+\def \gapCN{1.0in}; %Horizontal gap between nodes
+
+
+
+\def \textoffs{0.6in}; %Offset for writing text above a node
+\def\nodewidth{0.25in};
+\def\nodewidthA{0.25in};
+\def \edgewidth{0.1in};
+\def\ext{1.0in};
+\def\linewidth{0.2mm}
+
+\def \n {8};
+\def\ldeg{3};
+\def \m {4};
+\def\rdeg{6};
+\def\langle{40};%120 degrees/3
+\def\langle{20};%120 degrees/6
+\def\fsize{\small};
+
+\tikzstyle{check} = [rectangle, draw,line width=0.05mm,  inner sep=0mm, fill=black, minimum height=\nodewidthA, minimum width=\nodewidthA]
+\tikzstyle{checksm} = [rectangle, draw, line width=0.05mm, inner sep=0mm, fill=blue,minimum height=\edgewidth,minimum width=\edgewidth]
+
+\tikzstyle{bit} = [circle, draw,line width=0.05mm, inner sep=0mm, fill=red, minimum size=\nodewidthA]
+\tikzstyle{bitsm} = [circle, draw, very thin, inner sep=0mm,fill=red, minimum size=\edgewidth]
+\tikzstyle{edgesock} = [circle, inner sep=0mm, minimum size=\edgewidth,draw, fill=white]     
+
+                          
+\foreach \vn in {1,...,6}{
+ \node[bit] (vn\vn) at (0,\vn*\gapVN) {};
+}
+
+\foreach \cn in {1,...,4}{
+\node[check] (cn\cn) at (\horzgap,\cn*\gapCN) {};
+}
+
+\node at (0.5*\horzgap,0){\fsize{$K$-sparse CS/GT}};
+\node[anchor=west,above right](cn2text) at (cn2.east) {\fsize{Identify and decode}};
+\path (cn2text) ++(0,-2*\nodewidth) node() {\fsize{a $1$-sparse CS/GT?}};
+
+\draw[line width=\linewidth] (vn6.east)--(cn4.west);
+\draw[line width=\linewidth] (vn3.east)--(cn4.west);
+\draw[line width=\linewidth] (vn1.east)--(cn4.west);
+
+\draw[line width=\linewidth] (vn2.east)--(cn3.west);
+\draw[line width=\linewidth] (vn4.east)--(cn3.west);
+\draw[line width=\linewidth] (vn5.east)--(cn3.west);
+
+\draw[line width=\linewidth] (vn2.east)--(cn3.west);
+\draw[line width=\linewidth] (vn4.east)--(cn3.west);
+\draw[line width=\linewidth] (vn5.east)--(cn3.west);
+
+\draw[line width=\linewidth] (vn6.east)--(cn2.west);
+\draw[line width=\linewidth] (vn5.east)--(cn2.west);
+\draw[line width=\linewidth] (vn3.east)--(cn2.west);
+
+\draw[line width=\linewidth] (vn1.east)--(cn1.west);
+\draw[line width=\linewidth] (vn2.east)--(cn1.west);
+\draw[line width=\linewidth] (vn4.east)--(cn1.west);
+\end{tikzpicture}
+
+%

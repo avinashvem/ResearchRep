@@ -1,0 +1,316 @@
+\documentclass[final]{beamer}
+\usepackage[orientation=portrait, scale=1.24,10pt]{beamerposter}
+
+\usepackage{exscale} % Use after theme to display integrals properly
+\usepackage{xpatch}
+\usepackage{subcaption}
+%\usepackage{enumitem}
+
+\newlength{\columnheight}
+\newlength{\onecolwid}
+\newlength{\twocolwid}
+\newlength{\threecolwid}
+\newlength{\halfcolwid}
+\newlength{\subitemspace}
+\newlength{\blockskip}
+\newlength{\paraskip}
+\newlength{\negativeskip}
+
+\setlength{\columnheight}{105cm}
+\setlength{\onecolwid}{0.32\paperwidth}
+\setlength{\twocolwid}{0.32\paperwidth}
+\setlength{\threecolwid}{0.32\paperwidth}
+\setlength{\halfcolwid}{0.12\paperwidth}
+\setlength{\topmargin}{0.5in}
+\setlength{\subitemspace}{0.1cm}
+\setlength{\blockskip}{2cm}
+\setlength{\paraskip}{1cm}
+\setlength{\negativeskip}{-3cm}
+\usetheme{confposter}
+
+
+\xpatchcmd{\itemize}
+  {\def\makelabel}
+  {\setlength{\itemsep}{7mm}\def\makelabel}
+  {}
+  {}
+  
+\definecolor{jblue}{rgb}{0,0.2,0.8}
+
+\setbeamercolor{block title}{fg=ngreen,bg=white}
+\setbeamercolor{block body}{fg=black,bg=white}
+\setbeamercolor{block alerted title}{fg=white,bg=dblue!70}
+\setbeamercolor{block alerted body}{fg=black,bg=dblue!10}
+
+\setbeamertemplate{itemize items}[ball]
+
+\input{Avinash.def}
+
+\title{Sub-linear time Compressed Sensing and Group Testing via sparse-graph codes}
+\author{\textbf{Avinash Vem}, Nagaraj T. Janakiraman, Krishna R. Narayanan}
+\institute{ECE Dept.,Texas A\&M University}
+
+\begin{document}
+\begin{frame}
+\begin{columns}[t]
+  % First Column
+  \begin{column}{\onecolwid}
+\vspace{\negativeskip}
+    % Introduction
+  \begin{block}{\Large Compressed Sensing(CS)}
+Recover a sparse signal $\mbf{x}$ from $\mbf{y}$:  $~\mathbf{y=Ax +w}$
+	 \begin{itemize}
+		\item $\mbf{x}$ -$N \times 1$ sparse signal
+		\item $\mbf{A}$ -$M \times N$ measurement matrix
+		\item $\mbf{w}$ -additive Gaussian noise
+		\item $\mbf{y}$ -$M \times 1$ measurement vector
+		\item $\card{\{i: x_i\neq 0\}}=K. ~~ K<<N$
+	\end{itemize}
+	\vspace{\paraskip}
+
+Metric of interest:
+		\begin{itemize}
+			\item Prob. of failure of support recovery $\mbb{P}_{F}\coleq \text{Pr}(\text{supp}(\hat{\mbf{x}})\neq \text{supp}(\mbf{x}))$
+		\end{itemize}     
+    \end{block}
+\vspace{\blockskip}    
+
+\begin{block}{\Large Group Testing(GT)}
+	Recover a sparse signal $\mbf{x}$ from $\mbf{y}$:  $~\mathbf{y=A\odot x}$
+	 \begin{itemize}
+		\item $\mbf{x, y, A}$ are binary vectors/matrix respectively
+		\item $\odot$: Matrix multiplication with \textbf{``binary} OR'' instead of addition
+		\item $\mbf{y}$- $M \times 1$ measurement vector
+	\end{itemize}
+	\vspace{\paraskip}
+	
+Metric of interest:   
+    \begin{itemize}
+ 		\item Prob. of missing defective item: $\mbb{P}_{m}\coleq \text{Pr}(\hat{x}_i=0, x_i=1)$
+	\end{itemize}     
+	
+ \end{block}
+
+ 
+    \begin{block}{\Large Known Bounds}
+	\begin{itemize}
+	\item In 2007, Wainwright gave information theoretic limits for compressed sensing: support recovery
+	 \item For sub-linear sparsity, $K=o(N)$, $M=\Theta\left( K\log(\frac{N}{K	})\right)$
+%		\begin{equation*}
+%		M=\Theta\left( K\log(N/K)\right)
+%		\end{equation*}
+		is shown to be necessary and sufficient.
+	  \item In the linear sparse regime, $K=\alpha N$, it was shown that $M=\Theta(N)$ measurements are sufficient. \cite{Wainwright}
+	 \end{itemize}
+	 
+   \begin{alertblock}{\Large Main Result (CS)} 
+	    \textbf{Sub-linear sparsity: }For a given SNR, our scheme has 
+			\begin{itemize}
+			\itemsep10pt
+				\item Sample complexity of $M=c_1$ \textcolor{red}{$K\log (\frac{c_2 N}{K})$}
+				\item Decoding complexity of $O\left(K\log(\frac{N}{K})\right)$ 
+				\item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$
+			\end{itemize} 
+%where the constants $c_{1}$ and $c_{2}$ are dependent on SNR, desired rate of decay of $\mbb{P}_{\text{F}}$ and left degree $\ell$.\\
+\vspace{\paraskip}    
+  
+   \textbf{Linear sparsity: }Our scheme has 
+		\begin{itemize}
+		\itemsep10pt
+			\item Sample complexity of $M=c_3 K\log K$
+			\item Decoding complexity of $O\left(K\log(K)\right)$ 
+			\item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$
+		\end{itemize} 
+%where the constant $c_{3}>1$ is dependent on left degree $\ell$.
+    \end{alertblock}
+ \end{block}
+  \vspace{\blockskip}   
+    
+    \begin{block}{\Large Bounds for Group Testing}
+		\begin{itemize}
+			 \item We assume all the $\binom{N}{K}$ $K$-sparse sets are equi-probable
+			 \item At least $\log_2 \binom{N}{K}$ tests are necessary
+			 \item For large $K$ and $N$, $\log_2 \binom{N}{K}\approx K\log_2(\frac{N}{K})$
+	 \end{itemize}
+	 
+	 
+   \begin{alertblock}{\Large Main Result (GT)} 
+	    \textbf{Sub-linear sparsity: }Let $K\in o(N^{\frac{p}{p+1}})$, for some $p\in\mathbb{Z}$
+			\begin{itemize}
+			\itemsep10pt
+				\item Number of tests  $M=2(p+1)c(\epsilon)$ \textcolor{red}{$K\log_2 (\frac{c_1N}{K})$}
+				\item Decoding complexity of $O\left(K\log(\frac{N}{K})\right)$ 
+				\item $\mbb{P}_{m}\leq \epsilon$ asymptotically in $K$
+				\item e.g. for $\epsilon=10^{-5}$, $c(\epsilon)=9.63$
+			\end{itemize}
+    	\end{alertblock}
+	 \end{block}
+  \end{column}
+
+  % Second Column
+  \begin{column}{\twocolwid}
+    \vspace{\negativeskip}
+
+    \begin{block}{\Large Idea: Divide-and-Conquer}
+    \begin{itemize}
+		\item Original problem is $K$-sparse CS/GT  
+    	\item Divide $N$ nodes into random (non-disjoint) bins
+	    \item Can you solve for 1-sparse CS/GT at a bin?
+    \end{itemize}
+
+    \begin{figure}
+       \center
+		\scalebox{1.3}{\input{../Figures/TannerMatrixExamplePoster}}
+	\end{figure}
+
+    \end{block}
+    \vspace{\blockskip}
+
+    \begin{block}{\Large Divide: ($\ell,r$) Bipartite Graph}
+    \begin{itemize}
+	    \item $N$ Variable(left) nodes: $x_i$. Each node has (left) degree: $\ell$
+	    \item Bin(right) nodes: Choose $M_1=cK$ bins (sub problems)
+	    \item  Each bin has (right) degree $r$. Gives $r=\frac{N\ell}{cK}$
+	    \item Connections between $N\ell$ edges on each side at random
+    \end{itemize}
+    \end{block}  
+\vspace{\blockskip}
+
+    \begin{block}{\Large Conquer: 1-sparse CS}
+	    \begin{itemize}
+    		\item At each bin, use code words of error control code $\mathcal{C}$:
+		    	\begin{equation*}
+				    \mbf{y}_i=x_{i1}\mbf{c}_1 +x_{i2}\mbf{c}_{2}+\ldots x_{ir}\mbf{c}_{r}+\mbf{w}_i
+			    \end{equation*}
+    		\item If it is 1-sparse, only one $x_{ik}\neq 0$, (call it \textcolor{red}{singleton}):
+		        \begin{equation*}
+				    \mbf{y}_i=x_{ik}\mbf{c}_k +\mbf{w}_i
+		        \end{equation*}
+		    \item A \textcolor{red}{channel coding problem} if sign($x_{ik}$) is known
+		    \item  From channel coding, dim($\mbf{c}_j$)>$\frac{\log r}{C_{\text{Sh}}}\approx \Theta(\log \frac{N}{K})$ 
+%   		    \item $x\in\mathcal{X}\coleq\{Ae^{j\theta}: A\in \mc{A},\theta\in \Theta\}$ be a large but finite set
+           \item After decoding index $k$, need to decode the value of $x_{ik}$
+		    \item Let $x\in\mathcal{X}\coleq\{\pm A: A\in \mc{A}\}$ be a discrete and finite set
+		    \item We decode $\hat{x}_{ik}\in\mathcal{X}$ to be the value that best fits $\mbf{y}_i\mbf{c}_{k}^{\dagger}/||\mbf{c}_{k}||^{2}$
+		    %$\frac{\mbf{y}_i\mbf{c}_{k}^{\dagger}}{||\mbf{c}_{k}||^{2}}$
+    	\end{itemize}
+    \end{block}      
+\vspace{\blockskip}
+
+
+ \begin{block}{\Large Reconstruction via Peeling}
+    \begin{itemize}
+	   \item Assume we can conquer the 1-sparse sub-problem
+	   \item If a \textcolor{red}{singleton} bin is found is found, decode it
+	   \item \textcolor{red}{Peel off} the variable node decoded from other bins
+   \end{itemize}
+    
+       \begin{figure}
+	       \centering
+	       \begin{subfigure}{.5\textwidth}
+			  \centering
+   			\scalebox{1.1}{\input{../Figures/PeelingAnimation_Poster}}
+		   \end{subfigure}%
+		  \begin{subfigure}{.5	\textwidth}
+		  \centering
+		  \scalebox{1.1}{\input{../Figures/PeelingAnimation_Poster2}}
+			\end{subfigure}	
+		\end{figure}
+\vspace{\paraskip}	 
+	 \begin{itemize}
+	   \item Continue peeling iteratively until no new singletons are found
+	   \item $\exists$ threshold $c_*$ such that for $M_1>c_*K$ bins, all nodes are recovered asymptotically
+    \end{itemize}
+    \end{block}  
+ \end{column}
+
+  % Third Column
+  \begin{column}{\threecolwid}
+      \vspace{\negativeskip}
+    \begin{block}{\Large Conquer: 1 and 2-sparse GT}
+	    \begin{itemize}
+ 	        \item Let $\mbf{b}_k$ be the binary expansion of $k$; $\overline{\mbf{b}}_k$ it's complement
+    		\item At each bin, test result vector would be:
+		    	\begin{equation*}
+				    \mbf{y}_i=x_{i1}\begin{bmatrix}
+				    \mbf{b}_1\\
+				    \overline{\mbf{b}}_1
+				    \end{bmatrix}  \lor x_{i2}\begin{bmatrix}
+				    \mbf{b}_2\\
+				    \overline{\mbf{b}}_2
+				    \end{bmatrix}\lor \ldots \lor x_{ir}\begin{bmatrix}
+				    \mbf{b}_r\\
+				    \overline{\mbf{b}}_r
+				    \end{bmatrix}
+			    \end{equation*}
+    		\item If it is 1-sparse i.e. only one $x_{ij}=1$, trivial to decode $j$:
+		        \begin{equation*}
+				    \mbf{y}_i=\begin{bmatrix}
+				    \mbf{b}_k\\
+				    \overline{\mbf{b}}_k
+				    \end{bmatrix}
+		        \end{equation*}
+			\item \textcolor{red}{Non-linear OR} operation poses problem in peeling; can't remove a decoded variable node from connected bins
+			\item If a bin is 2-sparse i.e. $x_{ij}, x_{ik}=1$ and an index $j$ is known: refer to as \textcolor{red}{resolvable double-ton}
+		        \begin{equation*}
+				    \mbf{y}_i=\begin{bmatrix}
+				    \mbf{b}_j\\
+				    \overline{\mbf{b}}_j
+				    \end{bmatrix} \lor \begin{bmatrix}
+				    \mbf{b}_k\\
+				    \overline{\mbf{b}}_k
+				    \end{bmatrix}
+		        \end{equation*}
+		      \item bins with more than 2 non-zero variables (\textcolor{red}{multi-ton}) are unusable due to \textcolor{red}{\textit{OR}}
+		      \item For $M_1>c(\epsilon)K$ bins, just using singletons and double-tons, \textcolor{blue}{peeling like iterative} decoder recovers $1-\epsilon$ fraction of nodes asymptotically
+    	\end{itemize}
+    \end{block}      
+\vspace{\blockskip}    
+
+%      \begin{block}{\Large Numerical Results}
+%    
+%      \end{block}  
+      
+    \setbeamercolor{block alerted title}{fg=black,bg=norange} % Change the alert block title colors
+    \setbeamercolor{block alerted body}{fg=black,bg=white} % Change the alert block body colors
+
+         \begin{alertblock}{\Large Conlusions} 
+	    \textbf{Compressed Sensing:} We propose a scheme that has
+			\begin{itemize}
+			\itemsep10pt
+				\item \textcolor{red}{order optimal} sample complexity of $O(\textcolor{blue}{K\log (\frac{N}{K})})$
+				\item \textcolor{red}{sub-linear} optimal decoding complexity: $O(\textcolor{blue}{K\log (\frac{N}{K})})$
+			\end{itemize} 
+\vspace{\paraskip}    
+  
+   \textbf{Group testing:} We propose a scheme that achieves
+		\begin{itemize}
+		\itemsep10pt
+			\item \textcolor{red}{order optimal} testing complexity: $O(\textcolor{blue}{K\log (\frac{N}{K})})$
+			\item \textcolor{red}{sub-linear} optimal decoding complexity: $O(\textcolor{blue}{K\log (\frac{N}{K})})$
+		\end{itemize} 
+%where the constant $c_{3}>1$ is dependent on left degree $\ell$.
+    \end{alertblock}
+\vspace{\blockskip}    
+
+    % Bibliography
+    \vspace{2.5cm}
+    \begin{block}{References}
+      \begin{thebibliography}{10}
+	\bibitem{Wainwright}
+M. Wainwright, ``Information-Theoretic Limits on Sparsity Recovery in the High-Dimensional and Noisy Setting.'' \emph{IEEE Trans. \ Inform \ Theory}, vol.~55, no.~12, pp.~5728-5741, 2009.
+
+\bibitem{lee2015saffron}
+K. Lee, R. Pedarsani, and K. Ramchandran, ``Saffron: A fast, efficient, and robust framework for group testing based on sparse-graph codes'', arXiv preprint, arXiv:1508.04485, 2015.
+
+\bibitem{li2015subisit}
+X. Li, S. Pawar, and K. Ramchandran, ``Sub-linear time compressed sensing using sparse-graph codes'', in \emph{Proc. Int. Symp. Inform. Theory},
+  pp.~1645-1649, 2015.
+ \end{thebibliography}
+	  \end{block}
+
+  \end{column}
+  
+\end{columns}
+\end{frame}
+\end{document}
