@@ -8,10 +8,11 @@
 % where you can also make suggestions and rate matlab2tikz.
 % 
 \begin{tikzpicture}
+\def\fsize{\small}
 
 \begin{axis}[%
-width=3.02in,
-height=2.55in,
+width=6.0in,
+height=5.0in,
 scale only axis,
 xmin=20,
 xmax=700,
@@ -23,9 +24,9 @@ ymax=1,
 yminorticks=true,
 ymajorgrids,
 yminorgrids,
-xlabel={\normalsize{$M/K$}},
-ylabel={\normalsize{Fraction of unidentified defectives}},
-legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell align=left}
+xlabel={\fsize{$M/K$}},
+ylabel={\fsize{Fraction of unidentified defectives}},
+legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell align=left,font=\fsize}
 %legend style={at={(0.9708913043478261,0.9523840102467775)},anchor=north east,draw=black,fill=white,legend cell align=left}
 ]
 \addplot [color=blue,solid,mark=square,mark options={solid},line width=1pt]
