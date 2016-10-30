@@ -1,0 +1,56 @@
+\documentclass[journal,11pt,onecolumn]{IEEEtran}  % Comment this line out if you need a4paper
+%\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+%\IEEEoverridecommandlockouts                              % This command is only needed if you want to use the \thanks command
+%\overrideIEEEmargins                                            % Needed to meet printer requirements.
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+% The following packages can be found on http:\\www.ctan.org
+\usepackage{graphics} % for pdf, bitmapped graphics files
+\usepackage{epsfig} % for postscript graphics files
+\usepackage{mathptmx} % assumes new font selection scheme installed
+%\usepackage{times} % assumes new font selection scheme installed
+\usepackage{amsmath} % assumes amsmath package installed
+\usepackage{amssymb}  % assumes amsmath package installed
+\usepackage{amsthm}
+\renewcommand{\baselinestretch}{1.0}
+\setlength{\parindent}{20pt}
+
+\newcommand{\coleq}{\mathrel{\mathop:}=}
+\newcommand{\mbf}[1]{\mathbf{#1}}
+
+
+\input{preamble}
+
+\title{\LARGE \bf
+Pattern Matching in Sub-Linear Time Using a Sparse Fourier Transform Approach
+}
+\author{Nagaraj T. Janakiraman, Avinash Vem, Krishna R. Narayanan \\
+{Department of Electrical \& Comp. Engg., Texas A\&M University, College Station, TX, U.S.A}
+}
+
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+We consider the problem of querying a string (or, a database) of length $N$ bits to determine all the locations where a substring (query) of length $M$ appears either exactly or is within a Hamming distance of $K$ from the query. We assume that sketches of the original signal can be computed off line and stored. Using the sparse Fourier transform computation based approach introduced by Pawar and Ramchandran, we show that all such matches can be determined with high probability in sub-linear time. Specifically, if the number of matches is $L=N^\lambda$ and $M = N^\mu$, as $N \rightarrow \infty$, we show that the locations can be determined with a probability that approaches 1, with a computational complexity that is only $O\left(\max \left(\frac{N}{M} \log N, M L \log N \right) \right) = O\left(N^{\max(1-\mu,\mu+\lambda)} \log N \right)$ for $K \leq \frac{2}{3}M$. Further, the number of Fourier transform coefficients that need to be computed, stored and accessed, i.e., the sketching complexity of this algorithm is only $O\left( N^{\max(\mu,1-\mu)}\right)$. Several extensions of the main theme are also discussed.
+\end{abstract}
+
+\input{Problem_statement}
+\input{Notations}
+\input{AlgorithmDescription}
+\input{Performance_Analysis}
+\input{Complexity_Analysis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{ieeetr}
+\bibliography{../bib/journal_abbr,../bib/sparseestimation}
+\end{document}1

@@ -1,0 +1,275 @@
+\section{Performance Analysis}
+In this section, we will analyze the overall probability of error involved in finding the correct position of match. This can be done by analyzing the following three error events and then using a union bound to bound the total probability of error.
+
+\begin{itemize}
+	\item $\mathcal{E}_1$: Event that a bin is wrongly classified  (Bin Classification)
+	\item $\mathcal{E}_2$: Event that a position is wrongly identified  (Position Identification)
+	\item $\mathcal{E}_3$: Event that the peeling process fails (Graph Analysis)
+\end{itemize}
+
+Let us analyze the three events independently. Let $\underline{Z}_{j} = (Z_{j}[1], Z_{j}[1], \cdots Z_{j}[B])$ denote the observation at bin $j$. 
+
+\begin{lemma} \label{lem1}For a sufficiently large M, let $\underline{X}= (X_1, X_2, \cdots, X_M)$ and $\underline{Y}= (Y_1, Y_2, \cdots, Y_M)$ be two iid Bernoulli $p=0.5$ random sequences. Then,the correlation between $X$ and $Y$, defined by $\rho = \sum_{i=1}^{M} X_iY_i$ follows a Gaussian distribution with mean zero and variance M.
+\end{lemma}
+
+\begin{proof}
+	\[
+	\begin{array}{ll}
+	E(\rho) &= E (\sum_{i=1}^{M} X_iY_i) =  \sum_{i=1}^{M} E (X_i)(Y_i) = 0  \\
+	Var(\rho) &= E(\rho^2)-(E(\rho))^2 \\
+	E(\rho^2) &= E ((\sum_{i=1}^{M} X_iY_i)^2) = E(\sum_{i=1}^{M} (X_iY_i)^2) + 2E(\sum_{i \neq j}X_iY_iX_jY_j) \\
+	&= E(\sum_{i=1}^{M} (X_iY_i)^2) = \sum_{i=1}^{M} E( (X_iY_i)^2) = M \\
+	\end{array}
+	\]
+\end{proof}
+
+
+\subsection{Bin Classification}
+ 
+{\bf Approximate Pattern Matching: } 
+ 
+ The bin-$i$ is classified as zero-ton, single-ton or a multi-ton if the first observation, $Z_{i}[1]$, i.e., the observation corresponding to the zero shift, satisfies a threshold constraint. 
+
+The value of first observation from each bin is a sum of $N^\alpha$ co-efficients from the correlation vector that are hashed into it. This can be modeled as a random variable given by
+
+
+	
+\[
+Z_{i}[1] = \left\{
+\begin{array}{ll}
+\ \ n \sim \mathcal{N}(0,N^\alpha M) , \ \ \text{if it is zero-ton} \\
+\ M-K + n  \sim \mathcal{N}(M - K,N^\alpha M) , \ \ \text{if it is a single-ton}\\
+\ 2(M-K) + n  \sim \mathcal{N}(2(M - K),N^\alpha M) , \ \ \text{if it is a double-ton}
+\end{array}
+\right. 
+\]
+
+
+Here, $n = \sum_k n_k$ refers to the random variable that captures the sum of $N^\alpha$ random variables $n_k$, where $n_k \sim \mathcal{N}(0,M)$ points to the correlation of two iid Bernoulli random vectors of length $M$ that do not match(Lemma ~\ref{lem1}). If the sequences match, the correlation value becomes $M$.  
+
+Also notice that, we approximate a multi-ton with a double-ton, since a double-ton has a smaller mean of all the multi-tons, and hence becomes the worst case scenario for the probability of error analysis.
+
+
+If we set the threshold at $(M-K)/2$, we can detect a zero-ton in each bin with error probability $Pe_{z}$ given by
+
+\[ 
+Pe_{z} \ = Pr(Z_i[1]> \frac{M-K}{2}) =\ Q \left ( \sqrt{\frac{(M-K)^2}{4 M N^{\alpha}}} \right ) \\
+           = \ Q \left ( \sqrt{\frac{M^2(1-\eta)^2}{4 M N^{\alpha}}} \right ) \leq e^{- \frac{(1-\eta)^2N^{\mu-\alpha}}{8}}
+\]
+
+Similarly, a singe-ton can be be classified as a zero-ton or a multi-ton(double-ton) with error probability, $Pe_{s}$, given by
+
+\[ 
+\begin{array}{ll}
+ Pe_{s} \  &= \   Pr( Z_i[1] < \frac{M-K}{2}) \  + \ Pr( Z_i[1] > \frac{3M-K}{2}) \\
+          &= \   Q \left ( \sqrt{\frac{M^2(1-\eta)^2}{4 M N^{\alpha}}}\right) \ + \ Q \left ( \sqrt{\frac{M^2(1-2\eta)^2}{4 M N^{\alpha}}} \right ) \leq 2 e^{- \frac{(1-2\eta)^2N^{\mu-\alpha}}{8}}
+\end{array}
+\]
+
+Also, a multi-ton (approximated to double-ton) can be classified as a singleton with error probability $Pe_{m}$, given by
+
+\[ 
+Pe_{m} \ = \ Pr( Z_i[1] < \frac{3M-K}{2}) = \  Q \left ( \sqrt{\frac{M^2(1-2\eta)^2}{4 M N^{\alpha}}} \right ) \leq e^{- \frac{(1-2\eta)^2N^{\mu-\alpha}}{8}}
+\]
+
+So the overall probability of error in bin-detection, $Pe_{bin}$, including the bins across all stages and blocks, is given by
+
+\[
+\begin{array}{ll}
+Pe_{bin} & \ \leq \   \underset{\text{ \# of blocks} }{\underbrace{N^{\gamma}}} \
+\underset{\text{\# of bins} } {\underbrace{N^{1-\gamma-\alpha}}} \
+\underset{\text{\# of stages} }
+{\underbrace{\frac{1-\gamma}{\alpha}}} \  
+\underset{\text{error per bin}}
+{\underbrace{Pe_{z}+Pe_{s}+Pe_{m}}} \ = \ \frac{1-\gamma }{\alpha} \ N^{1-\alpha} \  e^{- \frac{(1-2\eta)^2N^{\mu-\alpha}}{8}} \\
+& \ =  \ e^{\log \frac{1-\gamma }{\alpha} \ + \ \log N^{1-\alpha} \  - \ \frac{(1-2\eta)^2N^{\mu-\alpha}}{8}} 
+\end{array}
+\] 
+
+To make the error probability arbitrarily small, we impose the following condition on the exponent of $Pe_{total}$.
+
+\[\begin{array}{ll}
+ \log \frac{1-\gamma }{\alpha} \ + \ \log N^{1-\alpha} \  - \ \frac{(1-2\eta)^2N^{\mu-\alpha}}{8} < 0 \\
+\implies \frac{(1-2\eta)^2N^{\mu-\alpha}}{8} >   \log \frac{1-\gamma }{\alpha} \ + \ \log N^{1-\alpha}\\
+\implies \mu-\alpha > 8 (\frac{\log (\log(\frac{1-\gamma}{\alpha}))}{\log N}\ + \ \frac{\log (\log(N)) + \log (1- \alpha)}{\log N} )
+\end{array}
+\]
+
+As $N \rightarrow \infty$, the right hand side approaches 0. Hence the condition reduces to 
+\[ \alpha < \mu \]
+
+
+\subsection{Position Identification}
+{\bf Exact Matching:}
+
+\[
+\mathbf{Z_i} = \begin{bmatrix}
+\mathbf{s_1}       & \cdots   & \mathbf{s_p} &\cdots \ &\mathbf{s_A}
+\end{bmatrix} \times
+    \begin{bmatrix}
+n_1 \\
+\vdots \\
+R_{XY}[p]\\
+\vdots\\
+n_j \\
+\vdots\\
+n_{A}\\
+\end{bmatrix}
+\]
+
+
+where $n_j \sim \mathcal{N}(0,M)$, $j \neq p$.
+
+\[\begin{array}{ll}
+Z_i[1] \ &= \ R_{XY}[p] + \sum_{j \neq p}n_j \\
+         &= \ R_{XY}[p] + n 
+\end{array}
+\]
+where $n \sim \mathcal{N}(0,(N^\alpha-1)M)$. We can find the value of $R_{XY}[p]$ with probability of error $Pe_s \leq 2 e^{- \frac{(1-2\eta)^2N^{\mu-\alpha}}{8}}$.
+
+Given that we know $R_{XY}[p]$, 
+
+\[ \mathbf{Z_i} \ = \ R_{XY}[p] ~ \mathbf{s_p}+ \sum_{j \neq p}n_j \mathbf{s_j} \\
+\]
+
+The estimated position $p'$ is given by
+
+\[ p' = \underset{l}{\argmax}\ \bf s^T_l ~ Z_i\]
+
+Let us consider two cases:
+
+{\textit{Case 1:} $p' = p$}
+ \[
+ \begin{array}{ll}
+ c_1 \ &= \ \mathbf{s^T_{p'}} ~\mathbf{Z_i} \ = \ R_{XY}[p] {\bf ~s^T_{p'}~ s_p}+ \sum_{j \neq p}n_j {\bf ~s^T_{p'}~ s_j}\\
+       &\leq B ~ M +  \sum_{j \neq p} 2 n_j ~ \sqrt{B\log(5N^{\alpha})}  
+ \end{array} 
+  \]
+  
+{\textit{Case 2:} $p' \neq p$}
+\[
+\begin{array}{ll}
+c_2 \ &= \ \mathbf{s^T_{p'}} ~\mathbf{Z_i}\ = \ R_{XY}[p]  {\bf ~s^T_{p'}~ s_p}+ \sum_{j \neq p',p}n_j{\bf ~s^T_{p'}~ s_j} \ + \ n_{p'} {\bf ~s^T_{p'}~ s_p} \\
+&\leq 2M ~ \sqrt{B\log(5N^{\alpha})} + \sum_{j \neq p',p} \ 2n_j ~ \sqrt{B\log(5N^{\alpha})} \ + \ n_{p'} B
+\end{array} 
+\]
+
+\[
+\begin{array}{ll}
+c_1 - c_2 \ &=  \ R_{XY}[p](B - {\bf ~s^T_{p'}~ s_p}) \ - \ n_{p'}(B - {\bf ~s^T_{p'}~ s_p'}) ~ + ~ \sum_{j \neq p',p}n_j ({\bf ~s^T_{p}~ s_j} - {\bf ~s^T_{p'}~ s_j})   \\
+&\leq R_{XY}[p] (B-\mu_{max})  \ - \ n_{p'}(B - \mu_{max}) ~ + ~ \sum_{j \neq p',p}n_j \mu_{max} \\
+\end{array} 
+\]
+
+
+Notice that $c_1$ and $c_2$ are both Gaussian random variables given by
+
+\[ \begin{array}{ll}
+c_1 &\sim  \mathcal{N}(BM,4N^\alpha M B \log(5N)) \\
+c_2 &\sim  \mathcal{N}(2M \sqrt{B\log(5N)}, M~B^2 + 4N^\alpha M B \log(5N))\\
+c_1 - c_2 &\sim  \mathcal{N}(R_{XY}[p](B-\mu_{max}),M((B-\mu_{max})^2 + (N^{\alpha}-2)\mu_{max}^2)
+\end{array}\]
+
+The probability that event $\mathcal{E}_2$ happens, given that $\mathcal{E}_1$ doesn't happen is given by
+\[ P(\mathcal{E}_2 / \bar{\mathcal{E}}_1 ) = Pr(c_2 > c_1) \]
+
+%If $c_1$ and $c_2$ are independent, then 
+
+%\[c1-c2 \sim \mathcal{N}(M(B-2\sqrt{B\log5n})\ ,\ 8MBN^\alpha\log5N +  B^2 ) \]
+
+\[ P(\mathcal{E}_2 / \bar{\mathcal{E}}_1 ) \leq Q \left( \sqrt{\frac{R_{XY}^{2}[p](B-\mu_{max})^2}{M(B-\mu_{max})^2 + M(N^{\alpha}-2)\mu_{max}^2)}} \right) \]
+	
+	where $\mu_{max} = 2\sqrt{B \log 5 N^{\alpha}} $. If $B = O(\log 5 N^{\alpha})$, then the above equation reduces to
+
+\[ P(\mathcal{E}_2 / \bar{\mathcal{E}}_1 ) \leq Q \left( \sqrt{\frac{M}{1 + 4 ~ (N^{\alpha}-2)}} \right) \]
+
+If $\mu > \alpha$, the error vanishes.
+
+
+{\bf Approximate Matching:}
+
+
+\[
+\mathbf{Z_i} = \begin{bmatrix}
+\mathbf{s_1}       & \cdots   & \mathbf{s_p} &\cdots \ &\mathbf{s_A}
+\end{bmatrix} \times
+\begin{bmatrix}
+n_1 \\
+\vdots \\
+R_{XY}[p]\\
+\vdots\\
+n_j \\
+\vdots\\
+n_{A}\\
+\end{bmatrix}
+\]
+
+
+where $n_j \sim \mathcal{N}(0,M)$, $j \neq p$.
+
+\[\begin{array}{ll}
+Z_i[1] \ &= \ R_{XY}[p] + \sum_{j \neq p}n_j \\
+&= \ R_{XY}[p] + n 
+\end{array}
+\]
+where $n \sim \mathcal{N}(0,(N^\alpha-1)M)$. Once we identify a Singleton with probability of error $Pe_s \leq 2 e^{- \frac{(1-2\eta)^2N^{\mu-\alpha}}{8}}$, we can fix the value of $R_{XY}[p] = M(1-\eta/2)$ since we are only interested in finding the positions and not the exact value of correlations. 
+
+Now that we know $R_{XY}[p]$, 
+
+\[ \mathbf{Z_i} \ = \ R_{XY}[p] ~ \mathbf{s_p}+ \sum_{j \neq p}n_j \mathbf{s_j} \\
+\]
+
+The estimated position $p'$ is given by
+
+\[ p' = \underset{l}{\argmax}\ \bf s^T_l ~ Z_i\]
+
+Also, let $p_1$ be the position of the previously peeled node from this check-node. There can only be at most one peeled edge as we restrict our peeling process to a doubleton and do not consider other multi-tons.
+ 
+Let us consider two cases:
+
+{\textit{Case 1:} $p' = p$}
+\[
+\begin{array}{ll}
+c_1 \ &= \ \mathbf{s^T_{p'}} ~\mathbf{Z_i} \ = \ R_{XY}[p] {\bf ~s^T_{p'}~ s_p}\ + \ \sum_{j \neq p,p_1}n_j {\bf ~s^T_{p'}~ s_j} \ \pm \  \frac{\eta M}{2} {\bf ~s^T_{p'} ~ s_{p_1}} \\
+&\leq B ~ (M-\eta M/2) +  \sum_{j \neq p} 2 n_j ~ \mu_{max} \pm \frac{\eta M}{2} \mu_{max}
+\end{array} 
+\]
+
+{\textit{Case 2:} $p' \neq p$}
+\[
+\begin{array}{ll}
+c_2 \ &= \ \mathbf{s^T_{p'}} ~\mathbf{Z_i}\ = \ R_{XY}[p]  {\bf ~s^T_{p'}~ s_p}+ \sum_{j \neq p',p,p_1}n_j{\bf ~s^T_{p'}~ s_j} \ + \ n_{p'} {\bf ~s^T_{p'}~ s_p} \ \pm \ \frac{\eta M}{2} {\bf ~s^T_{p'}~ s_{p_1}}\\
+&\leq (M-\eta M/2) ~ \mu_{max} + \sum_{j \neq p',p} \ 2n_j ~ \mu_{max} \ + \ n_{p'} B \pm \frac{\eta M}{2} \mu_{max}
+\end{array} 
+\]
+
+\[
+\begin{array}{ll}
+c_1 - c_2 \ &=  \ R_{XY}[p](B - {\bf ~s^T_{p'}~ s_p}) \ - \ n_{p'}(B - {\bf ~s^T_{p'}~ s_p'}) ~ + ~ \sum_{j \neq p',p,p_1}n_j ({\bf ~s^T_{p}~ s_j} - {\bf ~s^T_{p'}~ s_j})  \pm \  \eta M {\bf ~s^T_{p'} ~ s_{p_1}}  \\
+&\leq (M-\eta M/2)(B-\mu_{max})  \ - \ n_{p'}(B - \mu_{max}) ~ + ~ \sum_{j \neq p',p}n_j \mu_{max} \pm \eta M \mu_{max}\\
+\end{array} 
+\]
+
+
+Notice that $c_1$ and $c_2$ are both Gaussian random variables given by
+
+\[ \begin{array}{ll}
+c_1 &\sim  \mathcal{N}(B ~ (M-\eta M/2) \pm \frac{\eta M}{2} \mu_{max} \ , \ 4N^\alpha M B \log(5N)) \\
+c_2 &\sim  \mathcal{N}(2M \sqrt{B\log(5N)}\ , \ M~B^2 + 4N^\alpha M B \log(5N))\\
+c_1 - c_2 &\sim  \mathcal{N}((M-\eta M/2)(B-\mu_{max}) \pm \eta M \mu_{max} \ , \ M((B-\mu_{max})^2 + (N^{\alpha}-2)\mu_{max}^2)
+\end{array}\]
+
+The probability that event $\mathcal{E}_2$ happens, given that $\mathcal{E}_1$ doesn't happen is given by
+\[ P(\mathcal{E}_2 / \bar{\mathcal{E}}_1 ) = Pr(c_2 > c_1) \]
+
+%If $c_1$ and $c_2$ are independent, then 
+
+%\[c1-c2 \sim \mathcal{N}(M(B-2\sqrt{B\log5n})\ ,\ 8MBN^\alpha\log5N +  B^2 ) \]
+
+\[ P(\mathcal{E}_2 / \bar{\mathcal{E}}_1 ) \leq Q \left( \sqrt{\frac{((M-\eta M/2)(B-\mu_{max}) \pm \eta M \mu_{max})^2}{M(B-\mu_{max})^2 + M(N^{\alpha}-2)\mu_{max}^2)}} \right) \]
+
+where $\mu_{max} = 2\sqrt{B \log 5 N^{\alpha}} $. If $B = O(\log 5 N^{\alpha})$, then the above equation reduces to
+
+\[ P(\mathcal{E}_2 / \bar{\mathcal{E}}_1 ) \leq Q \left( \sqrt{\frac{M(1-3\eta/2)^2}{1 + 4~ (N^{\alpha}-2)}} \right) \]
+
+If $\mu > \alpha$, the error vanishes.

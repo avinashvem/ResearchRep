@@ -1,0 +1,131 @@
+
+%\usepackage{amsmath,amssymb,amsthm}
+%\usepackage{stmaryrd}
+\usepackage{amsmath,amssymb}
+\usepackage{enumerate}
+\usepackage{stfloats}
+\usepackage{algorithm,algorithmic}
+
+%\usepackage{tikz}
+%\usetikzlibrary{arrows,shapes,chains,matrix,positioning,scopes,patterns}
+\usepackage{pgfplots}
+\usepgflibrary{shapes}
+%\pgfplotsset{compat=1.6}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{corollary}[theorem]{Corollary}
+
+%Added by Santosh Emmadi
+%\thoeremstyle{nonum}
+%\newtheorem*{problem*}{Problem}
+%\theoremstyle{remark}
+%\newtheorem{note}[theorem]{\upshape\bfseries{Note}}
+%\theoremstyle{definition}
+%\newtheorem{mapping}{}
+
+%\newtheorem*{theorem*}{Theorem}
+%\newtheorem*{lemma*}{Lemma}
+%\newtheorem*{proposition*}{Proposition}
+%\newtheorem*{definition*}{Definition}
+%\newtheorem*{example*}{Example}
+%\newtheorem*{remark*}{Remark}
+%\newtheorem*{corollary*}{Corollary}
+
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\h}{\texttt{h}}
+\newcommand{\hbp}{\h^{\mathrm{BP}}}
+\newcommand{\hmap}{\h^{\mathrm{MAP}}}
+\newcommand{\hstab}{\h^{\mathrm{stab}}}
+\newcommand{\harea}{\h^{A}}
+
+\newcommand{\expt}{\mathbb{E}}
+\newcommand{\indicator}[1]{\mathbbm{1}_{\left\{ {#1} \right\} }}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+
+\newcommand{\mb}[1]{\mathbf{#1}}
+\newcommand{\mbb}[1]{\mathbb{#1}}
+\newcommand{\mr}[1]{\mathrm{#1}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\ms}[1]{\mathsf{#1}}
+\newcommand{\mf}[1]{\mathfrak{#1}}
+
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+\newcommand{\mse}{\mathsf{e}}
+\newcommand{\msx}{\mathsf{x}}
+\newcommand{\msxvn}{\tilde{\mathsf{x}}}
+\newcommand{\msy}{\mathsf{y}}
+\newcommand{\msz}{\mathsf{z}}
+\newcommand{\msa}{\mathsf{a}}
+\newcommand{\msb}{\mathsf{b}}
+\newcommand{\msc}{\mathsf{c}}
+\newcommand{\msbx}{\underline{\mathsf{x}}}
+\newcommand{\msby}{\underline{\mathsf{y}}}
+\newcommand{\msbxvn}{\tilde{\underline{\mathsf{x}}}}
+\newcommand{\msbz}{\underline{\mathsf{z}}}
+\newcommand{\msba}{\underline{\mathsf{a}}}
+\newcommand{\msbb}{\underline{\mathsf{b}}}
+\newcommand{\msbc}{\underline{\mathsf{c}}}
+
+\newcommand{\bv}{\underline{b}}
+\newcommand{\xv}{\underline{x}}
+\newcommand{\yv}{\underline{y}}
+\newcommand{\zv}{\underline{z}}
+
+\newcommand{\Xv}{\underline{X}}
+\newcommand{\Yv}{\underline{Y}}
+\newcommand{\Zv}{\underline{Z}}
+\newcommand{\RXYv}{\underline{R_{XY}}}
+
+\newcommand{\wh}{\widehat}
+\newcommand{\bop}{\ast}
+\newcommand{\vnop}{\varoast}
+\newcommand{\disth}{d_{\mathrm{H}}}
+\newcommand{\cnop}{\boxast}
+\newcommand{\diff}[1]{d#1}
+\newcommand{\deri}[1]{\mathrm{d}_{ #1 }\hspace{0.05cm}}
+\newcommand{\dderi}[1]{\mathrm{d}_{ #1 }^2\hspace{0.05cm}}
+\newcommand{\bvert}[1]{\,\Big{\vert}_{ #1  }}
+\newcommand{\degr}{\succ}
+\newcommand{\degreq}{\succeq}
+\newcommand{\upgr}{\prec}
+\newcommand{\upgreq}{\preceq}
+\newcommand{\extR}{\overline{\mathbb{R}}}
+
+\newcommand{\des}{\mathsf{T}_\mathrm{s}}
+\newcommand{\dec}{\mathsf{T}_\mathrm{c}}
+\newcommand{\pots}{U_\mathrm{s}}
+\newcommand{\potc}{U_\mathrm{c}}
+\newcommand{\shft}{\mathsf{S}}
+
+\newcommand{\vnunit}{\Delta_0}
+\newcommand{\cnunit}{\Delta_\infty}
+
+\newcommand{\ent}[1]{ \mathrm{H} \left( #1 \right) }
+
+\newcommand{\meass}{\mathcal{M}}
+\newcommand{\probs}{\mathcal{X}}
+\newcommand{\dpros}{\mathcal{X}_{\mathrm{d}}}
+\newcommand{\chend}{N_{w}}
+
+\newcommand{\minf}{\mathsf{a}_{0}}
+\newcommand{\minfb}{\underline{\minf}}
+
+\DeclareMathOperator*{\argmin}{\,arg\ min}
+\DeclareMathOperator*{\argmax}{\,arg\ max}
+
+\newlength\tikzwidth
+\newlength\tikzheight
+
+\textfloatsep=0.05in
+
+%%% Local Variables:
+%%% mode: plain-tex
+%%% TeX-master: "isit14"
+%%% End:
