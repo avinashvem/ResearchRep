@@ -30,7 +30,11 @@ where $\mathcal{F}_{N}\{ \cdot \}$ and $\mathcal{F}_{N}^{-1}\{ \cdot \}$ refers 
  \begin{equation}
  \label{eqn:sampling_sets}\mathcal{S}_{i,j} = \{s_j,\ s_j + f_i,\ s_j + 2f_i,\ \cdots s_j + \lfloor{\frac{N}{f_i} }\rfloor f_i \}
  \end{equation}
+<<<<<<< HEAD
    where $s_j$'s and $f_i$'s are constants chosen based on the requirements from Robust Sparse Inverse Fourier Transform (RSIDFT) framework described in Section~\ref{sec:RSIDFT}.
+=======
+   where, $s_j$'s and $f_i$'s are constants chosen based on the requirements from Robust Sparse Inverse Fourier Transform (RSIDFT) framework described in Section~\ref{sec:RSIDFT}.
+>>>>>>> 486e7fe781182eb610090bb932ca245208a82f2a
 
  As evident from Equation~\ref{eqn:Rxy_fourier}, our algorithm for computing $R_{XY}$ consists of three stages:
 
@@ -104,7 +108,9 @@ where $\mathcal{F}_{N}\{ \cdot \}$ and $\mathcal{F}_{N}^{-1}\{ \cdot \}$ refers 
 			 \end{array}
 			 \] 
 			   
-			 \item \textit{Position Identification :} Given that a check-node is classified as a Single-ton, we need to identify the position of the non-zero coefficient  hashed into it. This is done by correlating the observation vector $\underline{z^{b}_{i,p_i}}$ with each column of $S = [\underline{s_1} \ \underline{s_2} \cdots \underline{s_A}]$ and then picking the column index, $p'$ that produced the maximum value.
+			 \item \textit{Position Identification :} Given that a check-node is classified as a Single-ton, we need to identify the position of the non-zero coefficient  hashed into it. This is done by correlating the observation vector $\underline{z^{b}_{i,p_i}}$ with each column $\underline{g_l}$ of  $G = [\underline{g_1} \ \underline{g_2} \cdots \underline{g_A}]$, where $\underline{g_l} =\begin{bmatrix}
+			 w_1^{l}, ~ w_2^{l}, ~ \cdots\, ~ w_B^{l}
+			 \end{bmatrix}^{T}$ with $w_k = e^{j \frac{2\pi s_k}{N}}$,  and then picking the column index  $p'$ that produced the maximum value.
 			 \[ p' = \underset{l}{\argmax}\  \underline{s^T_l} ~ \underline{z^{b}_{i,p_i}}\]
 			 
 			 \item \textit{Peeling Process: } Although the main idea behind the peeling process is same for Exact Matching and the Approximate Matching scenarios, there is some minor differences in their implementation. The main idea here is to find the Singletons and then remove its contribution from other check-nodes where the bit-node corresponding to this Singleton participates.
