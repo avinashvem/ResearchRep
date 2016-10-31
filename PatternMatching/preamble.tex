@@ -1,16 +1,20 @@
 
 %\usepackage{amsmath,amssymb,amsthm}
 %\usepackage{stmaryrd}
-\usepackage{amsmath,amssymb}
+\usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
 \usepackage{stfloats}
 \usepackage{algorithm,algorithmic}
 
-%\usepackage{tikz}
-%\usetikzlibrary{arrows,shapes,chains,matrix,positioning,scopes,patterns}
+\usepackage{graphics} % for pdf, bitmapped graphics files
+\usepackage{epsfig} % for postscript graphics files
+\usepackage{mathptmx} % assumes new font selection scheme installed
+\usepackage{mathrsfs}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,chains,matrix,positioning,scopes,patterns}
 \usepackage{pgfplots}
 \usepgflibrary{shapes}
-%\pgfplotsset{compat=1.6}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
@@ -19,22 +23,6 @@
 \newtheorem{example}[theorem]{Example}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{corollary}[theorem]{Corollary}
-
-%Added by Santosh Emmadi
-%\thoeremstyle{nonum}
-%\newtheorem*{problem*}{Problem}
-%\theoremstyle{remark}
-%\newtheorem{note}[theorem]{\upshape\bfseries{Note}}
-%\theoremstyle{definition}
-%\newtheorem{mapping}{}
-
-%\newtheorem*{theorem*}{Theorem}
-%\newtheorem*{lemma*}{Lemma}
-%\newtheorem*{proposition*}{Proposition}
-%\newtheorem*{definition*}{Definition}
-%\newtheorem*{example*}{Example}
-%\newtheorem*{remark*}{Remark}
-%\newtheorem*{corollary*}{Corollary}
 
 \renewcommand{\epsilon}{\varepsilon}
 
@@ -73,12 +61,13 @@
 \newcommand{\msbb}{\underline{\mathsf{b}}}
 \newcommand{\msbc}{\underline{\mathsf{c}}}
 
-\newcommand{\bv}{\underline{b}}
-\newcommand{\xv}{\underline{x}}
-\newcommand{\yv}{\underline{y}}
-\newcommand{\zv}{\underline{z}}
+\newcommand{\bv}{\underline{\mathrm{b}}}
+\newcommand{\xv}{\underline{\mathrm{x}}}
+\newcommand{\yv}{\underline{\mathrm{y}}}
+\newcommand{\zv}{\underline{\mathrm{z}}}
+\newcommand{\rv}{\underline{\mathrm{r}}}
 
-\newcommand{\Xv}{\underline{X}}
+\newcommand{\Xv}{\underline{\mathrm{X}}}
 \newcommand{\Yv}{\underline{Y}}
 \newcommand{\Zv}{\underline{Z}}
 \newcommand{\RXYv}{\underline{R_{XY}}}
@@ -124,6 +113,9 @@
 \newlength\tikzheight
 
 \textfloatsep=0.05in
+
+\newcommand{\coleq}{\mathrel{\mathop:}=}
+\newcommand{\defeq}{\triangleq}
 
 %%% Local Variables:
 %%% mode: plain-tex

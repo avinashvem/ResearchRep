@@ -2,23 +2,10 @@
 %\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
 %\IEEEoverridecommandlockouts                              % This command is only needed if you want to use the \thanks command
 %\overrideIEEEmargins                                            % Needed to meet printer requirements.
-
-% See the \addtolength command later in the file to balance the column lengths
-% on the last page of the document
-
-% The following packages can be found on http:\\www.ctan.org
-\usepackage{graphics} % for pdf, bitmapped graphics files
-\usepackage{epsfig} % for postscript graphics files
-\usepackage{mathptmx} % assumes new font selection scheme installed
-%\usepackage{times} % assumes new font selection scheme installed
-\usepackage{amsmath} % assumes amsmath package installed
-\usepackage{amssymb}  % assumes amsmath package installed
-\usepackage{amsthm}
 \renewcommand{\baselinestretch}{1.0}
-\setlength{\parindent}{20pt}
 
-\newcommand{\coleq}{\mathrel{\mathop:}=}
-\newcommand{\mbf}[1]{\mathbf{#1}}
+\setlength{\parindent}{20pt}
+\parskip=5pt
 
 
 \input{preamble}
@@ -26,8 +13,10 @@
 \title{\LARGE \bf
 Pattern Matching in Sub-Linear Time Using a Sparse Fourier Transform Approach
 }
-\author{Nagaraj T. Janakiraman, Avinash Vem, Krishna R. Narayanan \\
-{Department of Electrical \& Comp. Engg., Texas A\&M University, College Station, TX, U.S.A}
+\author{\IEEEauthorblockN{Nagaraj T. Janakiraman, Avinash Vem, Krishna R. Narayanan \\}
+\IEEEauthorblockA{Department of Electrical \& Comp. Engg., Texas A\&M University, College Station, TX, U.S.A\\}
+\{tjnagaraj,vemvinash,krn\}@tamu.edu\\
+\thanks{This work was supported by the National Science Foundation under grants}
 }
 
 
@@ -46,11 +35,11 @@ We consider the problem of querying a string (or, a database) of length $N$ bits
 
 \input{Problem_statement}
 \input{Notations}
-\input{AlgorithmDescription}
+\input{AlgorithmDescription}	  
 \input{Performance_Analysis}
 \input{Complexity_Analysis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{ieeetr}
 \bibliography{../bib/journal_abbr,../bib/sparseestimation}
-\end{document}1
+\end{document}

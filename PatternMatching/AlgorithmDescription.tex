@@ -1,32 +1,29 @@
 \section{Description Of The Algorithm}
 %Introduce the system model by explaining the FFAST (dual problem - IFFT) architecture and then describe the decoding algorithm - peeling (multiple matches case) and Product code approach (only one exact match case).      
-In this section we propose an algorithm, with sample and time complexity that is sub-linear in $N$, to find the locations $\underline{\tau} = (\tau_1, \tau_2, \cdots \tau_L)$ in the string $\underline{x}$, where the string (query) $\underline{y}$ matches. This is achieved by computing the cross-correlation of $\xv$ and $\underline{y}$, $R_{XY}$ and finding the positions where there is a significant peak.
+In this section we describe our algorithm, with sample and time complexities that are sub-linear in $N$, to find the locations $\underline{\tau} = (\tau_1, \tau_2, \cdots \tau_L)$ in the string $\xv$, where the string (query) $\yv$ matches. This is achieved by computing the cross-correlation $\rv$ of $\xv$ and $\yv$, defined in Eqn.~\eqref{Eqn:DefCrossCorrelation}, and finding the positions where there is a significant peak. 
+%To reiterate we define the cross-correlation $\rv = [r[0], r[1], \cdots, r[N]] $ of $\xv$ and $\yv$ as
+%
+%\begin{equation}\label{eqn:Rxy_def}
+%r[m] \ =  \ \sum_{i=1}^{N} x[m+i] ~ y[i], \ 0 \leq m \leq N   
+%\end{equation}
 
-The cross-correlation $\RXYv = [R_{XY}[0], R_{XY}[1], \cdots, R_{XY}[N]] $ of $\xv$ and $\yv$ is defined as
-
-\begin{equation}\label{eqn:Rxy_def}
-R_{XY}[m] \ =  \ \sum_{i=1}^{N} x[m+i] ~ y[i], \ 0 \leq m \leq N   
-\end{equation}
-
-The main idea here is that $\RXYv$ is sparse (upto some noise) with dominant peaks at $L$ positions ($\tau$) where the strings match, and noise components at $N-L$ positions where the strings do not match.
-
+The main idea here is that $\RXYv$ is sparse (upto some noise) with dominant peaks at $L$ positions ($\tau$) where the strings match, and noise components at $N-L$ positions where the strings do not match. Consider the case of exact matching,
 \begin{equation} \label{eqn:RXY_sparse}
-R_{XY}[m] \ = \left\{
+r[m] \ = \left\{
 \begin{array}{ll}
-  & v_m , \ \ \  \text{if} \ m \in \mathcal{T} \\
+  &M , \ \ \  \text{if} \ m \in \mathcal{T} \\
   & n_m , \ \ \ m \in [N]-\mathcal{T}
 \end{array} 
 \right.  
 \end{equation}
-where, $ \mathcal{T}:=\{\tau_1, \tau_2, \cdots, \tau_L\}$, $M-K \leq v_m \leq M $ is the signal component and $n_m$ is the noise component that is induced due to correlation of two i.i.d. sequence of random variables each taking values from $\mathcal{A} := \{+1,-1\}$.
-
-The $\RXYv$ can also be computed as shown below.  
- 
+where, $ \mathcal{T}:=\{\tau_1, \tau_2, \cdots, \tau_L\}$,
+% $M-K \leq v_m \leq M $ is the signal component and
+ $n_m$ is the noise component that is induced due to correlation of two i.i.d. sequence of random variables each taking values from $\mathcal{A} := \{+1,-1\}$. The $\rv$ can also be computed as shown below:
 \begin{equation}\label{eqn:Rxy_fourier}
-  \RXYv = \underset{\text{ \RNum{3} } } {\mathcal{F}^{-1}} \ \{ \underset{\text{ \RNum{1} } }{  \mathcal{F}\{\xv\}}  \odot \ \underset{\text{ \RNum{2} } }{ \mathcal{F}\{\yv'\}}  \} 
-\end{equation}
- 
-where $\mathcal{F}\{ . \}$ and $\mathcal{F}^{-1}\{ . \}$ refers to $N$-point discrete Fourier transform and its inverse respectively, $\odot$ is the point-wise multiplication operation and ${ y'[n]} = { y^{*}[-n]}$. 
+  \rv = \underset{\text{ \RNum{3} } } {\mathcal{F}_{N}^{-1}} \ \{ \underset{\text{ \RNum{1} } }{  \mathcal{F}_{N}\{\xv\}}  \odot \ \underset{\text{ \RNum{2} } }{ \mathcal{F}_{N}\{\yv'\}}  \} 
+\end{equation} 
+where $\mathcal{F}_{N}\{ \cdot \}$ and $\mathcal{F}_{N}^{-1}\{ \cdot \}$ refers to $N$-point discrete Fourier transform and its inverse respectively, $\odot$ is the point-wise multiplication operation and ${ y'[n]} = { y^{*}[-n]}$. 
+
 
  We exploit this property of sparsity to compute $\RXYv$ by using only a subset of samples from $\Xv = \mathcal{F}\{\xv\} $ and $\Yv' = \mathcal{F}\{\yv'\} $, each sampled at positions $l \in \mathcal{S}$, where $\mathcal{S} = \mathcal{S}_{1,1} \cup \mathcal{S}_{1,2} \cup \cdots \cup \mathcal{S}_{i,j} \cup  \mathcal{S}_{d,B} \subset \{ 0,1,\cdots ,N-1 \}$ and $\mathcal{S}_{i,j}$, $1 \leq i \leq d $ and  $1 \leq j \leq B $ are disjoint sets of size $|\mathcal{S}_{i,j}| \approxeq N^{1-\alpha}$ with periodic sample points from $[N]$ given by 
  
@@ -126,7 +123,3 @@ where $\mathcal{F}\{ . \}$ and $\mathcal{F}^{-1}\{ . \}$ refers to $N$-point dis
 	 
 \end{enumerate}	
 	 
-	  
-	 
-	 
-
