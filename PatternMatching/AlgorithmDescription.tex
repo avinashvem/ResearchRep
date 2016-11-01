@@ -53,7 +53,7 @@ where $n_i\coleq \lfloor{\frac{N}{f_i} }\rfloor$ to obtain $\Rv^{s}_{i,j}=\Rv[\m
 	 r^{s}_{i,B}[p_i]
 	 \end{bmatrix}  
 \]
-In Fig. we represent the relation between $\rv$ and $\tilde{\rv}^{b}\coleq[\rv^{b}_{1,1},\rv^{b}_{1,2},\ldots,\rv^{b}_{1,n_1},\ldots, \rv^{b}_{2,1},\ldots,\rv^{b}_{2,n_2},\ldots, \rv^{b}_{B,1},\ldots,\rv^{b}_{B,n_B}]$, aliased versions of the cross-correlation vector $\rv$ concatenated together, via a Tanner graph. We refer to $\tilde{\rv}^{b}$ as sensing signal. The nodes on the left, which we refer to as {\it variable nodes}, represent the $N$ elements of vector $\rv$. And similarly the nodes on the right, which we refer to as {\it bin nodes}, represent the $\sum_{i\leq B} n_i$ sub-sensing signals. We will now describe the decoding algorithm which takes the sensing signal $\tilde{\rv}^b$ as input and estimates the $L$-sparse $\rv$.	 
+In \textcolor{blue}{Fig.} we represent the relation between $\rv$ and $\tilde{\rv}^{b}\coleq[\rv^{b}_{1,1},\rv^{b}_{1,2},\ldots,\rv^{b}_{1,n_1},\ldots, \rv^{b}_{2,1},\ldots,\rv^{b}_{2,n_2},\ldots, \rv^{b}_{B,1},\ldots,\rv^{b}_{B,n_B}]$, aliased versions of the cross-correlation vector $\rv$ concatenated together, via a Tanner graph. We refer to $\tilde{\rv}^{b}$ as sensing signal. The nodes on the left, which we refer to as {\it variable nodes}, represent the $N$ elements of vector $\rv$. And similarly the nodes on the right, which we refer to as {\it bin nodes}, represent the $\sum_{i\leq B} n_i$ sub-sensing signals. We will now describe the decoding algorithm which takes the sensing signal $\tilde{\rv}^b$ as input and estimates the $L$-sparse $\rv$.	 
 
 \subsection{Decoder}		
 	\textcolor[rgb]{0,0.3,0.7}{Maybe remove Each coefficient of $\rv^{b}_{i,p_i}$ is a bin that has $N^{\alpha}$ coefficients from $\RXYv$ hashed into it. This can be seen using a Tanner graph with $\RXYv$ as the left nodes (bit nodes) and the aliased coefficients $\rv^{b}_{i,p_i}$ as the right nodes (check-nodes).} Observe from the Tanner graph that the degree of each bit node is $d$ and that of each bin node is approximately $N^{\alpha}$. 
@@ -87,10 +87,32 @@ where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{(1-3\eta/2)}{2},\frac{(1-\eta/2)3}{2}
 \begin{align*}
  p' = \underset{l}{\argmax}\  \underline{s}^T_l ~ \rv^{b}_{ij}
 \end{align*} 
+Given that a check-node is classified as a Single-ton, we need to identify the position of the non-zero coefficient  hashed into it. This is done by correlating the observation vector $\underline{z^{b}_{i,p_i}}$ with each column $\underline{g_l}$ of  $G = [\underline{g_1} \ \underline{g_2} \cdots \underline{g_A}]$, where $\underline{g_l} =\begin{bmatrix}
+			 w_1^{l}, ~ w_2^{l}, ~ \cdots\, ~ w_B^{l}
+			 \end{bmatrix}^{T}$ with $w_k = e^{j \frac{2\pi s_k}{N}}$,  and then picking the column index  $p'$ that produced the maximum value.
+\[ p' = \underset{l}{\argmax}\  \underline{s^T_l} ~ \underline{z^{b}_{i,p_i}}\]
 			 
-			 \item \textit{Peeling Process: } Although the idea behind the peeling process is same for Exact Matching and the Approximate Matching scenarios, there are some minor differences in their implementation. The main idea here in peeling is to find a singleton and remove their contribution from the bin nodes connected to this variable node.
+			 \item \textit{Peeling Process: } Although the idea behind the peeling process is same for Exact Matching and the Approximate Matching scenarios, there are some minor differences in their implementation. The main idea in this peeling based decoder is to find a singleton bin, identify the variable node connected to the bin and remove it's contribution from all the bin nodes connected to this variable node.\\
 
-{\bf Exact Matching:} Here we remove the identified Singleton's contribution from all the check-nodes it participates in.			  
+\begin{algorithm}
+\caption{Peeling based recovery algorithm}
+\label{Algo:decoder}
+\begin{algorithmic}
+\While {$\exists i\in[M_1]: \mc{H}_i=\mc{H}_Z ~\text{or } \mc{H}_S $, }
+\If {$\mc{H}_i=\mc{H}_Z$}
+    \State Remove the bin $i$\\
+   \hspace{2ex} Assign $0$ to all the variables connected
+\ElsIf {$\mc{H}_i=\mc{H}_S(k,x[k])$}   
+   \hspace{4ex} Assign $x[k]$ to $k^{\text{th}}$ variable in bin $i$\\
+  \hspace{2ex} Subtract $x[k]\mb{s}_k$ from connected $\mb{y}_i$  \\
+  \hspace{2ex} Remove the bin and all variables connected
+\EndIf
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+
+{\bf Exact Matching:} Here we remove the identified Singleton's contribution from all the check-nodes it participates in.			  \\
 {\bf Approximate Matching:} Here we only remove the identified singleton's contribution from a double-ton and do not alter multi-tons whose $degree > 2$.
 \end{itemize} 
 		 
@@ -108,7 +130,7 @@ where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{(1-3\eta/2)}{2},\frac{(1-\eta/2)3}{2}
 	 We assume that the sketch of $\xv$, \ $ \Xv[l] = \mathcal{F}\{\xv\}$ is precomputed at positions $l \in \mathcal{S}$ and stored in a database.  
 	\item[\RNum{2}] \textit{Computing the sketch of $\yv$}:
 	 For every new query $\yv$, $ \Yv'[l]$ is computed at $l \in \mathcal{S}$. Naively, the FFT algorithm can be used to compute this with $O(N \log N)$ complexity. Since only a subset $\mathcal{S}$ of samples from $\Yv'$ is needed, this can be done by using a folding technique described below. 
-	  The idea behind this folding technique is to induce aliasing in $\yv'$ and then taking a smaller point Fourier Transform to compute the sub-sampled version $\Yv'$. Aliasing is induced by folding the signal $\yv'$ into blocks of length $N^{1-\alpha}$ and adding them. The desired subsampling patterns in frequency domain are induced by multiplying $\yv'$ with suitable exponentials. Let us denote the aliased versions of $\yv'$ by $\underline{y^{a}_{i,j}}'$. Then, $\underline{y^{a}_{i,j}}'$ is given by
+	  The idea behind this folding technique is to induce aliasing in $\yv'$ and then taking a smaller point Fourier Transform to compute the sub-sampled version $\Yv'$. Aliasing is induced by folding the signal $\yv'$ into blocks of length $N^{1-\alpha}$ and adding them. The desired sub-sampling patterns in frequency domain are induced by multiplying $\yv'$ with suitable exponentials. Let us denote the aliased versions of $\yv'$ by $\underline{y^{a}_{i,j}}'$. Then, $\underline{y^{a}_{i,j}}'$ is given by
 	  \begin{equation}
 	  	{y^{a}_{i,j}}'[p] = \sum \limits_{m = 0}^{\lfloor{\frac{N}{f_i}}\rfloor} y'[p + mf_i] e^{j \frac{2 \pi s_j}{N} } 
 	  \end{equation}
