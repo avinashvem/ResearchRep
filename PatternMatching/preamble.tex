@@ -4,12 +4,18 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
 \usepackage{stfloats}
-\usepackage{algorithm,algorithmic}
+
 
 \usepackage{graphics} % for pdf, bitmapped graphics files
 \usepackage{epsfig} % for postscript graphics files
 \usepackage{mathptmx} % assumes new font selection scheme installed
 \usepackage{mathrsfs}
+
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
 
 \usepackage{tikz}
 \usetikzlibrary{arrows,shapes,chains,matrix,positioning,scopes,patterns}
@@ -70,7 +76,8 @@
 \newcommand{\Xv}{\underline{\mathrm{X}}}
 \newcommand{\Yv}{\underline{Y}}
 \newcommand{\Zv}{\underline{Z}}
-\newcommand{\RXYv}{\underline{R_{XY}}}
+\newcommand{\Rv}{\underline{\mathrm{R}}}
+\newcommand{\RXYv}{\underline{\mathrm{R}_{XY}}}
 
 \newcommand{\wh}{\widehat}
 \newcommand{\bop}{\ast}
