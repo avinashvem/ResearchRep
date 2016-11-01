@@ -9,7 +9,10 @@
 \usepackage{graphics} % for pdf, bitmapped graphics files
 \usepackage{epsfig} % for postscript graphics files
 \usepackage{mathptmx} % assumes new font selection scheme installed
-\usepackage{mathrsfs}
+\usepackage[mathscr]{euscript}
+%\usepackage{unicode-math}
+%\setmathfont{XITS Math}
+%\setmathfont[version=setB,StylisticSet=1]{XITS Math}
 
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
@@ -47,6 +50,7 @@
 \newcommand{\mr}[1]{\mathrm{#1}}
 \newcommand{\mc}[1]{\mathcal{#1}}
 \newcommand{\ms}[1]{\mathsf{#1}}
+\newcommand{\msc}[1]{\mathscr{#1}}
 \newcommand{\mf}[1]{\mathfrak{#1}}
 
 \newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
@@ -58,7 +62,6 @@
 \newcommand{\msz}{\mathsf{z}}
 \newcommand{\msa}{\mathsf{a}}
 \newcommand{\msb}{\mathsf{b}}
-\newcommand{\msc}{\mathsf{c}}
 \newcommand{\msbx}{\underline{\mathsf{x}}}
 \newcommand{\msby}{\underline{\mathsf{y}}}
 \newcommand{\msbxvn}{\tilde{\underline{\mathsf{x}}}}
