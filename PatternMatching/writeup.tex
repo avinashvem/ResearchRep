@@ -2,13 +2,11 @@
 %\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
 %\IEEEoverridecommandlockouts                              % This command is only needed if you want to use the \thanks command
 %\overrideIEEEmargins                                            % Needed to meet printer requirements.
-\renewcommand{\baselinestretch}{1.0}
+\input{preamble}
 
+\renewcommand{\baselinestretch}{1.0}
 \setlength{\parindent}{20pt}
 \parskip=5pt
-
-
-\input{preamble}
 
 \title{\LARGE \bf
 Pattern Matching in Sub-Linear Time Using a Sparse Fourier Transform Approach
@@ -18,15 +16,10 @@ Pattern Matching in Sub-Linear Time Using a Sparse Fourier Transform Approach
 \{tjnagaraj,vemvinash,krn\}@tamu.edu\\
 \thanks{This work was supported by the National Science Foundation under grants}
 }
-
-
-
 \begin{document}
-
 \maketitle
 \thispagestyle{empty}
 \pagestyle{empty}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
@@ -35,7 +28,7 @@ We consider the problem of querying a string (or, a database) of length $N$ bits
 
 \input{Problem_statement}
 \input{Notations}
-\input{AlgorithmDescription}	  
+\input{AlgorithmDescription}  
 \input{Performance_Analysis}
 \input{Complexity_Analysis}
 
