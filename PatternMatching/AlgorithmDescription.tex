@@ -17,7 +17,17 @@ where, $ \mathcal{T}:=\{\tau_1, \tau_2, \cdots, \tau_L\}$,
 \begin{equation}\label{eqn:Rxy_fourier}
   \rv = \underset{\text{ \RNum{1} } } {\mathcal{F}_{N}^{-1}} \ \{ \underset{\text{ \RNum{2} } }{  \mathcal{F}_{N}\{\xv\}}  \odot \ \underset{\text{ \RNum{3} } }{ \mathcal{F}_{N}\{\yv'\}}  \} 
 \end{equation} 
-where $\mathcal{F}_{N}\{ \cdot \}$ and $\mathcal{F}_{N}^{-1}\{ \cdot \}$ refers to $N$-point discrete Fourier transform and its inverse respectively, $\odot$ is the point-wise multiplication operation and ${ y'[n]} = { y^{*}[-n]}$.  As evident from Equation~\ref{eqn:Rxy_fourier}, our algorithm for computing $R_{XY}$ consists of three stages:
+where $\mathcal{F}_{N}\{ \cdot \}$ and $\mathcal{F}_{N}^{-1}\{ \cdot \}$ refers to $N$-point discrete Fourier transform and its inverse respectively, $\odot$ is the point-wise multiplication operation and ${ y'[n]} = { y^{*}[-n]}$. Fig.~\ref{fig:notional} presents a notional diagram of our Algorithm.
+
+ As evident from Equation~\ref{eqn:Rxy_fourier}, our algorithm for computing $R_{XY}$ consists of three stages:
+
+\begin{figure}[h!]
+	\begin{center}
+		\includegraphics[height=3cm]{Figures/notional_diag} 
+	\end{center}	   
+	\caption{}\label{fig:notional}
+	\vspace{5 pt}
+\end{figure}
 
 \begin{enumerate}
 \item[\RNum{1}] \textit{Computing sparse $\mathcal{F}^{-1}$}:	
@@ -53,10 +63,21 @@ where $n_i\coleq \lfloor{\frac{N}{f_i} }\rfloor$ to obtain $\Rv^{s}_{i,j}=\Rv[\m
 	 r^{s}_{i,B}[p_i]
 	 \end{bmatrix}  
 \]
-In \textcolor{blue}{Fig.} we represent the relation between $\rv$ and $\tilde{\rv}^{b}\coleq[\rv^{b}_{1,1},\rv^{b}_{1,2},\ldots,\rv^{b}_{1,n_1},\ldots, \rv^{b}_{2,1},\ldots,\rv^{b}_{2,n_2},\ldots, \rv^{b}_{B,1},\ldots,\rv^{b}_{B,n_B}]$, aliased versions of the cross-correlation vector $\rv$ concatenated together, via a Tanner graph. We refer to $\tilde{\rv}^{b}$ as sensing signal. The nodes on the left, which we refer to as {\it variable nodes}, represent the $N$ elements of vector $\rv$. And similarly the nodes on the right, which we refer to as {\it bin nodes}, represent the $\sum_{i\leq B} n_i$ sub-sensing signals. We will now describe the decoding algorithm which takes the sensing signal $\tilde{\rv}^b$ as input and estimates the $L$-sparse $\rv$.	 
+
+\begin{figure}[h!]
+	\begin{center}
+		\includegraphics[height=7cm]{Figures/Factorgraph} 
+	\end{center}	   
+	\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $d=2$, $B=2$, $N=6$, $f_1 = 2$ and $f_2=3$. The variable nodes (colored gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (uncolored white boxes) represent the binned observation vector $\rv_{i,p_i}^b$. Figure also illustrates the relationship between $\rv_{i,p_i}^b$ and $\rv$.}\label{fig:factorgraph}
+	\vspace{5 pt}
+\end{figure}
+
+In Fig.~\ref{fig:factorgraph} we represent the relation between $\rv$ and $\tilde{\rv}^{b}\coleq[\rv^{b}_{1,1},\rv^{b}_{1,2},\ldots,\rv^{b}_{1,n_1},\ldots, \rv^{b}_{2,1},\ldots,\rv^{b}_{2,n_2},\ldots, \rv^{b}_{B,1},\ldots,\rv^{b}_{B,n_B}]$, aliased versions of the cross-correlation vector $\rv$ concatenated together, via a Tanner graph. We refer to $\tilde{\rv}^{b}$ as sensing signal. The nodes on the left, which we refer to as {\it variable nodes}, represent the $N$ elements of vector $\rv$. And similarly the nodes on the right, which we refer to as {\it bin nodes}, represent the $\sum_{i\leq B} n_i$ sub-sensing signals. We will now describe the decoding algorithm which takes the sensing signal $\tilde{\rv}^b$ as input and estimates the $L$-sparse $\rv$.	 
 
 \subsection{Decoder}		
-	\textcolor[rgb]{0,0.3,0.7}{Maybe remove Each coefficient of $\rv^{b}_{i,p_i}$ is a bin that has $N^{\alpha}$ coefficients from $\RXYv$ hashed into it. This can be seen using a Tanner graph with $\RXYv$ as the left nodes (bit nodes) and the aliased coefficients $\rv^{b}_{i,p_i}$ as the right nodes (check-nodes).} Observe from the Tanner graph that the degree of each bit node is $d$ and that of each bin node is approximately $N^{\alpha}$. 
+	%\textcolor[rgb]{0,0.3,0.7}{Maybe remove Each coefficient of $\rv^{b}_{i,p_i}$ is a bin that has $N^{\alpha}$ coefficients from $\RXYv$ hashed into it. This can be seen using a Tanner graph with $\RXYv$ as the left nodes (bit nodes) and the aliased coefficients $\rv^{b}_{i,p_i}$ as the right nodes (check-nodes).}
+	
+	Observe from the Tanner graph that the degree of each bit node is $d$ and that of each bin node is approximately $N^{\alpha}$. 
 We refer to a bin node as {\it zero-ton} (or $\mc{H}_z$) if the number of variable nodes with significant amplitude connected to the bin node is zero. The {\it singleton ($\mc{H}_s$), double-ton ($\mathcal{H}_d$) and multi-ton ($\mc{H}_m$)} bin nodes are defined similarly where the number of significant variable nodes connected are one, two and greater than two, respectively. The peeling decoder has the following three steps in the decoding process.\\
 
 \begin{itemize}
