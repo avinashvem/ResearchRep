@@ -56,7 +56,7 @@ Consider the RSIDFT framework shown in Figure~\ref{fig:rsidft}. The framework co
 \end{align}
 where $n_i\coleq \frac{N}{f_i}$ to obtain $\Rv^{s}_{i,j}=\Rv[\mc{S}_{i,j}]$. The sub-sampling operation is followed by a $n_i$-point IDFT in each branch of stage $i$ to obtain $ \rv^{s}_{i,j}$. Notice that $ \rv^{s}_{i,j}$ is an aliased version of $\rv$ due to the property that sub-sampling in Fourier domain is equivalent to aliasing in time domain.\\
 
-	 Let $\rv^{b}_{i,k}$ be the  vector of observations that is formed by combining all $k^{\text{th}}$ coefficients of $\rv^{s}_{i,k}$ (belonging to stage $i$) together as a vector, where $1 \leq k\leq n_i$, i.e.
+	 Let $\rv^{b}_{i,k}$ be the  vector of observations that is formed by combining all $k^{\text{th}}$ coefficients of $\rv^{s}_{i,k}$ (belonging to stage $i$) together as a vector, where $k\in [0:n_i-1]$, i.e.
 \[
 	  \rv^{b}_{i,k} = \begin{bmatrix}
 	 r^{s}_{i,1}[k] \\
@@ -69,14 +69,14 @@ where $n_i\coleq \frac{N}{f_i}$ to obtain $\Rv^{s}_{i,j}=\Rv[\mc{S}_{i,j}]$. The
 More formally we can write the relationship between the the observation vectors $\rv^b_{i,j}$ at bin $(i,j)$ and sparse vector to be estimated $\rv$ as:
 \begin{align}
 \label{Eqn:Generator Equation}
-\rv^b_{i,k}=[\underline{w}^{k},\underline{w}^{k+n_i},\ldots, \underline{w}^{k+(f_i-1)n_i}]
+\rv^b_{i,k}=\left[\underline{w}^{k},\underline{w}^{k+n_i},\ldots, \underline{w}^{k+(f_i-1)n_i}\right]
 \begin{bmatrix}
 	 r[k+(0)n_i] \\
 	 r[k+(1)n_i] \\
 	 \vdots\\
 	 r[k+(f_i-1)n_i]
 \end{bmatrix}
-\text{ where } ~  \underline{w}^{k}=
+\qquad \text{ where }   \underline{w}^{k}=
 \begin{bmatrix}
 e^{\frac{j2\pi ks_1}{N}}\\
 e^{\frac{j2\pi ks_2}{N}}\\
@@ -93,7 +93,9 @@ e^{\frac{j2\pi ks_B}{N}}
 	\vspace{5 pt}
 \end{figure}
 
-In Fig.~\ref{fig:factorgraph} we represent the relation between $\rv$ and $\tilde{\rv}^{b}\coleq[\rv^{b}_{1,1},\rv^{b}_{1,2},\ldots,\rv^{b}_{1,n_1},\ldots, \rv^{b}_{2,1},\ldots,\rv^{b}_{2,n_2},\ldots, \rv^{b}_{B,1},\ldots,\rv^{b}_{B,n_B}]$, aliased versions of the cross-correlation vector $\rv$ concatenated together via an example using Tanner graph. We refer to $\tilde{\rv}^{b}$ as sensing signal. The nodes on the left, which we refer to as {\it variable nodes}, represent the $N$ elements of vector $\rv$. And similarly the nodes on the right, which we refer to as {\it bin nodes}, represent the $\sum_{i\leq B} n_i$ sub-sensing signals. We will now describe the decoding algorithm which takes the sensing signal $\tilde{\rv}^b$ as input and estimates the $L$-sparse $\rv$.	 
+In Fig.~\ref{fig:factorgraph} we represent the relation between $\rv$ and $\tilde{\rv}^{b}\coleq[\rv^{b}_{1,1},\rv^{b}_{1,2},\ldots,\rv^{b}_{1,n_1},\ldots, \rv^{b}_{2,1},\ldots,\rv^{b}_{2,n_2},\ldots, \rv^{b}_{B,1},\ldots,\rv^{b}_{B,n_B}]$
+%, aliased versions of the cross-correlation vector $\rv$ concatenated together
+via an example using Tanner graph. We refer to $\tilde{\rv}^{b}$ as sensing signal. The nodes on the left, which we refer to as {\it variable nodes}, represent the $N$ elements of vector $\rv$. And similarly the nodes on the right, which we refer to as {\it bin nodes}, represent the $\sum_{i\leq B} n_i$ sub-sensing signals. We will now describe the decoding algorithm which takes the sensing signal $\tilde{\rv}^b$ as input and estimates the $L$-sparse $\rv$.	 
 
 \subsection{Decoder}		
 	%\textcolor[rgb]{0,0.3,0.7}{Maybe remove Each coefficient of $\rv^{b}_{i,p_i}$ is a bin that has $N^{\alpha}$ coefficients from $\RXYv$ hashed into it. This can be seen using a Tanner graph with $\RXYv$ as the left nodes (bit nodes) and the aliased coefficients $\rv^{b}_{i,p_i}$ as the right nodes (check-nodes).}
@@ -130,11 +132,13 @@ where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{(1-3\eta/2)}{2},\frac{(1-\eta/2)3}{2}
 			   
 %\item \textbf{Singleton decoding}:
 \subsubsection{Singleton decoding}
- If a bin node $(i,j)$ is classified as a singleton, we need to identify the position of the significant non-zero variable node connected to it. This is done by correlating the observation vector $\rv^{b}_{i,j}$ with each column $\underline{g}_l$ of  $G = [\underline{g}_1 \ \underline{g}_2 \cdots \underline{g}_{n_i}]$, where $\underline{g}_l =\begin{bmatrix}
-			 e^{j \frac{2\pi l s_1}{N}}, ~ e^{j \frac{2\pi l s_2}{N}}, ~ \cdots\, ~ e^{j \frac{2\pi l s_B}{N}}
-			 \end{bmatrix}^{T}$ and then picking the column index $\hat{k}$ that produced the maximum correlation value.
+ If a bin node $(i,j)$ is classified as a singleton, we need to identify the position of the significant non-zero variable node connected to it. This is done by correlating the observation vector $\rv^{b}_{i,j}$ with each column of  $\mb{W}_{i,j} \coleq [\underline{w}^{j},\underline{w}^{j+n_i},\ldots,   \underline{w}^{j+(f_i-1)n_i}]$
+ %, where $\underline{g}_l =\begin{bmatrix}
+	%		 e^{j \frac{2\pi l s_1}{N}}, ~ e^{j \frac{2\pi l s_2}{N}}, ~ \cdots\, ~ e^{j \frac{2\pi l s_B}{N}}
+		%	 \end{bmatrix}^{T}$
+and choose the index that maximizes the correlation value.
 \begin{align*}
- \hat{k} = \underset{l}{\argmax}\  \underline{g}^T_l ~ \rv^{b}_{i,j}
+ \hat{k} = \underset{k\in\{j+l n_i\}}{\argmax}\  \underline{w}^{k} ~ \rv^{b}_{i,j}
 \end{align*}
  The value of the variable node connected to  the singleton bin  is estimated as follows:\\
  \textit{Exact Matching}: 
@@ -144,10 +148,13 @@ where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{(1-3\eta/2)}{2},\frac{(1-\eta/2)3}{2}
  $$
  \hat{r}[\hat{k}]=\frac{M-K}{2},
  $$
- where $K$ is defined earlier in the problem statement. Note that though the actual value of $x[k]\in\{M-K,\ldots,M-1,M\}$ and the estimate $ \hat{r}[\hat{k}]=\frac{M-K}{2}$ is only approximate, this would suffice for our purposes. If a bin $(i,j)$ is classified as singleton, we denote the singleton decoder output of bin $(i,j)$ as $(\hat{k},\hat{r}[\hat{k}])=${\it SINGLETON-DEC}$(i,j)$.\\ % $\msc{H}_{i,j}$.% as $\msc{H}_s(\hat{k},\hat{r}[\hat{k}])$.\\
+ where $K$ is defined earlier in the problem statement. Note that though the actual value of $x[k]\in\{M-K,\ldots,M-1,M\}$ and our estimate $ \hat{r}[\hat{k}]=\frac{M-K}{2}$ is only a loose approximate, this would suffice for our purposes as we are mainly interested in recovering only the positions of matches. \\
+ %If a bin $(i,j)$ is classified as singleton, we denote the singleton decoder output of bin $(i,j)$ as $(\hat{k},\hat{r}[\hat{k}])=${\it SINGLETON-DEC}$(i,j)$.\\ % $\msc{H}_{i,j}$.% as $\msc{H}_s(\hat{k},\hat{r}[\hat{k}])$.\\
 			 
+
 %\item \textit{Peeling Process: }
 \subsubsection{Peeling Process} The main idea behind the peeling based decoder is to find a singleton bin, identify the significant variable node connected to the bin, decode it's value and remove it's contribution from all the bin nodes connected to that variable node. Although the main idea is similar for exact matching and the approximate matching scenarios, there are some subtle differences in their implementation.\\
+
 {\it Exact Matching}: In the case of exact matching, we remove the decoded variable node's contribution from all the bin nodes it is connected to.\\
 {\it Approximate Matching}: In this case we remove the decoded variable node's contribution only from singleton and double-ton bins and do not alter the bins which are classified to be multi-tons with degree more than two.\\
 
@@ -162,7 +169,7 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 \vspace{\gap}
 \While {$\exists~ i,j:\widehat{\msc{H}}_{i,j}= \msc{H}_s$,}
 \vspace{\gap}
-  \State $(\hat{k},\hat{r}[\hat{k}])=${\bf Singleton-Decoder}$(i,j)$.%{$()\widehat{\msc{H}}_{i,j}=\msc{H}_s(\hat{k},\hat{r}[\hat{k}])$}   
+  \State $(\hat{k},\hat{r}[\hat{k}])=${\bf Singleton-Decoder}$(\rv^b_{i,j})$
 \vspace{\gap}
   \State Assign $\hat{r}[\hat{k}]$ to $\hat{k}^{\text{th}}$ variable in bin $(i,j)$
 \vspace{\gap}
@@ -174,8 +181,6 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 	   \vspace{\gap}
 	   \State Recompute $\widehat{\msc{H}}_{i_0,j_0}$
       \EndFor
-%  \State Remove the bin and all variables connected
-%\EndIf
 \EndWhile
 \end{algorithmic}
 \end{algorithm}
@@ -184,25 +189,20 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 \caption{Singleton-Decoder}
 \label{Algo:SingletonDecoder}
 \begin{algorithmic}
-\State Compute $\widehat{\msc{H}}_{i,j}$ for $i\in[B], j\in[n_i]$. See Eqn. \eqref{Eqn:BinClassifExact} \& \eqref{Eqn:BinClassifApprox}
+\State{\bf Input:} $\rv^b_{i,j}$
 \vspace{\gap}
-\While {$\exists~ i,j:\widehat{\msc{H}}_{i,j}= \msc{H}_s$,}
+\State{\bf Output:} $(\hat{k},\hat{r}[\hat{k}])$
 \vspace{\gap}
-  \State $(\hat{k},\hat{r}[\hat{k}])=${\bf Singleton-Decoder}$(i,j)$.%{$()\widehat{\msc{H}}_{i,j}=\msc{H}_s(\hat{k},\hat{r}[\hat{k}])$}   
+\State Estimate singleton index to be $ \hat{k} = \underset{k\in\{j+l n_i\}}{\argmax}\  \underline{w}^{k} ~ \rv^{b}_{i,j}$
 \vspace{\gap}
-  \State Assign $\hat{r}[\hat{k}]$ to $\hat{k}^{\text{th}}$ variable in bin $(i,j)$
-\vspace{\gap}
-  \For{$(i_0,j_0)\in\msc{N}(\hat{k})$}
-\vspace{\gap}
-	   \State $\rv^{b}_{i_0,j_0}\gets\rv^{b}_{i_0,j_0}-\hat{r}[\hat{k}]\mb{g}_{\hat{k}}$   \hspace{45.5ex} {\it Exact Matching}
-	   \vspace{\gap}
-	   \State $\rv^{b}_{i_0,j_0}\gets\rv^{b}_{i_0,j_0}-\hat{r}[\hat{k}]\mb{g}_{\hat{k}}$   \hspace{10ex} only if $\widehat{\msc{H}}_{i_0,j_0}=\msc{H}_s$ or $\msc{H}_d$ \hspace{10ex} {\it Approximate Matching}
-	   \vspace{\gap}
-	   \State Recompute $\widehat{\msc{H}}_{i_0,j_0}$
-      \EndFor
-%  \State Remove the bin and all variables connected
-%\EndIf
-\EndWhile
+  \State Estimate the value to be:$$ \hat{r}[\hat{k}]=
+   \begin{cases}
+   M & \text{ Exact Matching case}\\
+  \frac{M-K}{2} & \text{ Approximate Matching case}
+  \end{cases}
+  $$
+%  \vspace{\gap}
+%  \State\hspace{23ex}           $\hat{r}[\hat{k}]=$ \hspace{10ex} Approximate Matching case
 \end{algorithmic}
 \end{algorithm}
 
@@ -227,3 +227,4 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 	  where $n_i=\frac{N}{f_i}$. Taking $n_i$-point DFT of $\yv'_{i,j}$ produces $\Yv'[\mc{S}_{i,j}]$ i.e. $\Yv'$ sampled only at $\mathcal{S}_{i,j}$ indices which is what we need in branch $(i,j)$. To obtain all the samples in $\mathcal{S}$ required for the RSDIFT framework, the \textit{folding} technique needs to be carried out for each $(i,j)$, for $i\in[d],j\in[B]$, a total of $\approx dB~~ N^{1-\alpha}$-point DFTs.
 \end{enumerate}
 %The idea behind this folding technique is to induce aliasing in $\yv'$ and then taking a smaller point Fourier Transform to compute the sub-sampled version $\Yv'$. Aliasing is induced by folding the signal $\yv'$ into blocks of length $N^{1-\alpha}$ and adding them. The desired sub-sampling patterns in frequency domain are induced by multiplying $\yv'$ with suitable exponentials. Let us denote the aliased versions of $\yv'$ by $\yv_{i,j}'$. Then, $\yv_{i,j}'$ is given by
+
