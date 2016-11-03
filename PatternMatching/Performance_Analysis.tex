@@ -1,4 +1,15 @@
 \section{Performance Analysis}
+
+\begin{lemma}[Chernoff Bound for bounded random variables]
+\label{Lem:Chernoff}
+Let $X_1, X_2,\ldots, X_n$ be random variables such that $X_i \in\{-1, +1\}$ for all $i$ and $E[X_i]=\mu$ for all $i$. Then for any $\delta>0$:
+\begin{align*}
+\mbb{P}\left[(\sum X_i-\mu\geq \delta\right]\leq e^{-\frac{n\delta^2}{2}}
+\end{align*}
+\end{lemma}
+
+
+
 In this section, we will analyze the overall probability of error involved in finding the correct position of match. This can be done by analyzing the following three error events and then using a union bound to bound the total probability of error.
 
 \begin{itemize}
@@ -8,6 +19,51 @@ In this section, we will analyze the overall probability of error involved in fi
 \end{itemize}
 
 Let us analyze the three events independently. Let $\underline{Z}_{j} = (Z_{j}[1], Z_{j}[1], \cdots Z_{j}[B])$ denote the observation at bin $j$. 
+
+\begin{lemma}
+\label{Lem:CorrelationCoefficient}
+Let us consider $r[\tau_i],r[\tau_j]$ where $\tau_i,\tau_j \notin \{\tau_1,\ldots, \tau_L\}$ are not one of the matching positions. Then $\mbb{P}[x[\tau_i+k]y[k]=+1]$ with probability 1/2 and $\mbb{E}[x[\tau_i+k]y[k]]=0$. In fact we can show that $\{x[\tau_i+k]y[k],k\in[M]\}$ are independent but we won't be needing the independence.
+\end{lemma}
+
+\subsection{\bf Bin Classification}
+\subsubsection*{Exact Matching}
+\begin{lemma}
+The probability of bin classification error at any bin $(i,j)$ can be upper bounded by
+\end{lemma}
+
+\begin{proof}
+\begin{align*}
+\mbb{P}[\mc{E}_1]&=\mbb{P}[\msc{H}_z]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~+
+						\quad \mbb{P}[\msc{H}_s]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~+
+						\quad\mbb{P}[\msc{H}_d]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
+				&\leq \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~+
+						\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~+
+						\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
+    			&\leq  e^{-} ~+~e^{-..}~+~ e^{-...}						
+						\end{align*}
+						where the inequalities in the last step are due to Lemmas.  x, y \& z.
+\end{proof}
+
+\begin{lemma}[zero-ton]
+Given that the bin $(i,j)$ is a zero-ton, the classification error can be bounded by
+\begin{align*}
+e^{-...}
+\end{align*}
+\end{lemma}
+\begin{proof}
+
+\end{proof}
+
+\begin{lemma}
+\end{lemma}
+
+\begin{lemma}
+\end{lemma}
+
+\subsubsection*{Approximate Pattern Matching}
+
+
+
 
 \begin{lemma} \label{lem1}For a sufficiently large M, let $\underline{X}= (X_1, X_2, \cdots, X_M)$ and $\underline{Y}= (Y_1, Y_2, \cdots, Y_M)$ be two iid Bernoulli $p=0.5$ random sequences. Then,the correlation between $X$ and $Y$, defined by $\rho = \sum_{i=1}^{M} X_iY_i$ follows a Gaussian distribution with mean zero and variance M.
 \end{lemma}
@@ -24,9 +80,6 @@ Let us analyze the three events independently. Let $\underline{Z}_{j} = (Z_{j}[1
 \end{proof}
 
 
-\subsection{Bin Classification}
- 
-{\bf Approximate Pattern Matching: } 
  
  The bin-$i$ is classified as zero-ton, single-ton or a multi-ton if the first observation, $Z_{i}[1]$, i.e., the observation corresponding to the zero shift, satisfies a threshold constraint. 
 
