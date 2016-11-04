@@ -106,18 +106,18 @@ We refer to a bin node as {\it zero-ton} (or $\msc{H}_z$) if the number of varia
 %\begin{itemize}
 %\itemsep4pt
 %\item \textbf{Bin Classification}:
-\subsubsection{Bin Classification} In this step a bin node is classified as a zero-ton or a singleton or a multi-ton. At bin $(i,j)$ the classification is done based on  comparing the first observation $r^{b}_{i,j}[1]$, which corresponds to zero shift, with a predefined threshold. The threshold is set differently for exact matching and approximate matching cases. Let the value of $r^{b}_{i,j}[1]$ be $z$, then the classification rules can be written as follows:\\
-{\it Exact Matching:} 
-\begin{align}
-\label{Eqn:BinClassifExact}
-\widehat{\msc{H}}_{i,j}=
-\begin{cases}
-\msc{H}_z &  		z/M < 0.5 \\
-\msc{H}_s &	 0.5 \leq z/M \leq 1.5 \\ 
-\msc{H}_d \text{ or } \msc{H}_m  &       z/M > 1.5
-\end{cases}
-\end{align}
-\textit{Approximate Matching}: 
+\subsubsection{Bin Classification} In this step a bin node is classified as a zero-ton or a singleton or a multi-ton. At bin $(i,j)$ the classification is done based on  comparing the first observation $r^{b}_{i,j}[1]$, which corresponds to zero shift, with a predefined threshold. Let the value of $r^{b}_{i,j}[1]$ be $z$, then the classification rules can be written as follows:\\
+%{\it Exact Matching:} 
+%\begin{align}
+%\label{Eqn:BinClassifExact}
+%\widehat{\msc{H}}_{i,j}=
+%\begin{cases}
+%\msc{H}_z &  		z/M < 0.5 \\
+%\msc{H}_s &	 0.5 \leq z/M \leq 1.5 \\ 
+%\msc{H}_d \text{ or } \msc{H}_m  &       z/M > 1.5
+%\end{cases}
+%\end{align}
+%\textit{Approximate Matching}: 
 \begin{align}
 \label{Eqn:BinClassifApprox}
 \widehat{\msc{H}}_{i,j}=
@@ -128,27 +128,23 @@ We refer to a bin node as {\it zero-ton} (or $\msc{H}_z$) if the number of varia
 \msc{H}_m &      z/M > \gamma_3\\
 \end{cases}
 \end{align}
-where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{(1-3\eta/2)}{2},\frac{(1-\eta/2)3}{2},\frac{(5-3\eta)}{2})$.
+where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{1-2\eta}{2},\frac{3-4\eta}{2},\frac{5-6\eta}{2})$. Note that for the case of exact matching $\eta=0$.
 			   
 %\item \textbf{Singleton decoding}:
 \subsubsection{Singleton decoding}
- If a bin node $(i,j)$ is classified as a singleton, we need to identify the position of the significant non-zero variable node connected to it. This is done by correlating the observation vector $\rv^{b}_{i,j}$ with each column of  $\mb{W}_{i,j} \coleq [\underline{w}^{j},\underline{w}^{j+n_i},\ldots,   \underline{w}^{j+(f_i-1)n_i}]$
- %, where $\underline{g}_l =\begin{bmatrix}
-	%		 e^{j \frac{2\pi l s_1}{N}}, ~ e^{j \frac{2\pi l s_2}{N}}, ~ \cdots\, ~ e^{j \frac{2\pi l s_B}{N}}
-		%	 \end{bmatrix}^{T}$
-and choose the index that maximizes the correlation value.
+ If a bin node $(i,j)$ is classified as a singleton, we need to identify the position of the significant non-zero variable node connected to it. This is done by correlating the observation vector $\rv^{b}_{i,j}$ with each column of  $\mb{W}_{i,j} \coleq [\underline{w}^{j},\underline{w}^{j+n_i},\ldots,   \underline{w}^{j+(f_i-1)n_i}]$ and choose the index that maximizes the correlation value.
 \begin{align*}
  \hat{k} = \underset{k\in\{j+l n_i\}}{\argmax}\  \underline{w}^{k} ~ \rv^{b}_{i,j}
 \end{align*}
  The value of the variable node connected to  the singleton bin  is estimated as follows:\\
- \textit{Exact Matching}: 
- $$\hat{r}[\hat{k}]=M\\
+% \textit{Exact Matching}: 
+% $$\hat{r}[\hat{k}]=M\\
+% $$
+% \textit{Approximate Matching}: 
  $$
- \textit{Approximate Matching}: 
+ \hat{r}[\hat{k}]=M(1-\eta).
  $$
- \hat{r}[\hat{k}]=\frac{M-K}{2},
- $$
- where $K$ is defined earlier in the problem statement. Note that though the actual value of $x[k]\in\{M-K,\ldots,M-1,M\}$ and our estimate $ \hat{r}[\hat{k}]=\frac{M-K}{2}$ is only a loose approximate, this would suffice for our purposes as we are mainly interested in recovering only the positions of matches. \\
+ Note that for the case of exact matching we know the value to be exactly equal to $M$ which is our estimate in the case of exact matching ($\eta=0)$. But in the case of approximate matching the actual value of $x[k]\in\{M(1-2\eta),\ldots,M-1,M\}$ and our estimate $ \hat{r}[\hat{k}]=M(1-\eta)$, the mid-point of the range, is only a loose approximate, this would suffice for our purposes as we are mainly interested in recovering only the positions of matches i.e. the indices of the sparse coefficients in $\rv$ nit their values. \\
  %If a bin $(i,j)$ is classified as singleton, we denote the singleton decoder output of bin $(i,j)$ as $(\hat{k},\hat{r}[\hat{k}])=${\it SINGLETON-DEC}$(i,j)$.\\ % $\msc{H}_{i,j}$.% as $\msc{H}_s(\hat{k},\hat{r}[\hat{k}])$.\\
 			 
 
