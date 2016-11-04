@@ -1,0 +1,95 @@
+\appendices
+\section{Bin Classification Errors}
+
+\begin{lemma}[zero-ton]
+\label{Lem:ZerotonClassif}
+Given that the bin $(i,j)$ is a zero-ton, the classification error can be bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_1|\msc{H}_z]\leq e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}
+\end{align*}
+\end{lemma}
+\begin{proof}
+The above expression can be derived by observing that a bin is not classified as zero-ton if $\frac{Z[1]}{M}\geq\frac{1-2\eta}{2}$. Let us denote the probability of this event as $p_{z1}$ which can be bounded as:
+\begin{align*}
+p_{z1}=&\mbb{P}\left[\frac{Z[1]}{Mf_i}\geq\frac{1-2\eta}{2f_i}\right]\\
+&\leq e^{-\frac{Mf_i(1-2\eta)^2}{8f_i^{2}}}\\
+&\approx e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}
+\end{align*} 
+where the second bound is due to Eqn. \eqref{Eqn:BinCombination} and Lemma.~\ref{Lem:Chernoff}. The approximation in the third line is from our design that all the $f_i$ are chosen such that $f_i\approx N^{\alpha}$ and $M=N^{\mu}.$
+\end{proof}
+
+\begin{lemma}[singleton]
+\label{Lem:SingletonClassif}
+Given that the bin $(i,j)$ is a singleton, the classification error can be bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_1|\msc{H}_s]\leq 2e^{-\frac{N^{\mu-\alpha}(1-4\eta)^2}{16}}
+\end{align*}
+\end{lemma}
+\begin{proof}
+We observe that a bin is not classified as singleton if $\frac{Z[1]}{M}\leq\frac{1-2\eta}{2}$ or $\frac{Z[1]}{M}\geq\frac{3-4\eta}{2}$. Let us denote the probability of the two events as $p_{s1}$ and $p_{s2}$ respectively which can be bounded as:
+\begin{align*}
+p_{s1}&=\mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{f_{i}-2}\sum\limits_{k=0}^{M-1} n_{l,k}\leq\frac{1-2\eta}{2}-\frac{M_1}{M}\right]\\
+&\leq \mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{f_{i}-2}\sum\limits_{k=0}^{M-1} n_{l,k}\leq-\frac{1-2\eta}{2}\right]\\
+&\leq e^{-\frac{Mf_i(1-2\eta)^2}{16f_i^{2}}}\\
+&\approx e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{16}}
+\end{align*} 
+where we used  {\it lower tail} of Lemma \ref{Lem:Chernoff} and $f_i\approx N^{\alpha}$ and the lower bound on $\frac{M_1•}{M}\geq (1-2\eta)$. Similarly $p_{s2}$ can be upper bounded by:
+% $p_{s2|\leq e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{16}}$
+\begin{align*}
+p_{s2}&=\mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{f_{i}-2}\sum\limits_{k=0}^{M-1} n_{l,k}\geq\frac{3-4\eta}{2}-\frac{M_1}{M}\right]\\
+&\leq \mbb{P}\left[\frac{1}{Mf_i}\sum\limits_{\ell=0}^{f_{i}-2}\sum\limits_{k=0}^{M-1} n_{l,k}\geq-\frac{1-4\eta}{2f_i}\right]\\
+&\approx e^{-\frac{N^{\mu-\alpha}(1-4\eta)^2}{8}}
+\end{align*} 
+Thus the overall probability of error for classifying a singleton can be obtained by combining $p_{s1}$ and $p_{s2}$.
+\end{proof}
+
+\begin{lemma}[double-ton]
+\label{Lem:DoubletonClassif}
+Given that the bin $(i,j)$ is a double-ton, the classification error can be bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_1|\msc{H}_d]\leq 2e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}
+\end{align*}
+\end{lemma}
+\begin{proof}
+We observe that a bin is not classified as double-ton if $\frac{Z[1]}{M}\leq\frac{3-4\eta}{2}$ or $\frac{Z[1]}{M}\geq\frac{5-6\eta}{2}$. Let us denote the probability of these two events as $p_{d1}$ and $p_{d2}$ respectively which can be bounded similar to Lemma ~\ref{Lem:SingletonClassif}.
+\begin{align*}
+p_{d1}&=\mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{f_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}\leq\frac{3-4\eta}{2}-\frac{M_1+M_2}{M}\right]\\
+&\leq \mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{f_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}\leq-\frac{1-4\eta}{2}\right]\\
+&\leq e^{-\frac{M(f_i-2)(1-4\eta)^2}{16(f_i-2)^{2}}}\\
+&\approx e^{-\frac{N^{\mu-\alpha}(1-4\eta)^2}{16}}.
+\end{align*} 
+Similarly $p_{d2}$ can be bounded as 
+\begin{align*}
+p_{d2}&=\mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{f_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}\geq\frac{5-6\eta}{2}-\frac{M_1+M_2}{M}\right]\\
+&\leq \mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{f_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}\geq\frac{1-6\eta}{2}\right]\\
+&\leq e^{-\frac{M(f_i-2)(1-6\eta)^2}{8(f_i-2)^{2}}}\\
+&\approx e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{8}}
+\end{align*} 
+where we use the lower bounds $M_1,M_2\leq M$.
+\end{proof}
+
+\begin{lemma}[multi-ton]
+\label{Lem:MultitonClassif}
+Given that the bin $(i,j)$ is a multi-ton, the classification error can be bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_1|\msc{H}_m]\leq e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}
+\end{align*}
+\end{lemma}
+\begin{proof}
+We observe that a bin is not classified as multi-ton if $\frac{Z[1]}{M}\leq\frac{5-6\eta}{2}$. Let us denote the probability of this event as $p_{m1}$ which can be bounded as:
+\begin{align*}
+p_{m1}&=\mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{f_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}\leq\frac{5-6\eta}{2}-\frac{M_m}{M}\right]\\
+&\leq \mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{f_{i}-m}\sum\limits_{k=0}^{M-1} n_{l,k}\leq-\frac{1-6\eta}{2}\right]\\
+&\leq e^{-\frac{M(f_i-m)(1-4\eta)^2}{16(f_i-m)^{2}}}\\
+&\leq e^{-\frac{M(1-6\eta)^2}{16 f_i}}\\
+ &\approx e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}.
+\end{align*} 
+\end{proof}
+
+\section{Test Appendix}
+
+\begin{lemma}
+\end{lemma}
+
+\begin{lemma}
+\end{lemma}
