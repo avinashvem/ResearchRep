@@ -1,13 +1,13 @@
 \section{Performance Analysis}
-
+\def\vgap{2pt}
 \begin{lemma}[Chernoff Bound for bounded random variables]
 \label{Lem:Chernoff}
-Let $X_1, X_2,\ldots, X_n$ be random variables such that $X_i \in\{-1, +1\}$ for all $i$ and $E[X_i]=\mu$ for all $i$. Then for any $\delta>0$:
+Let $X_1, X_2,\ldots, X_n$ be a sequence of independent random variables such that $X_i \in\{-1, +1\}$ for all $i$ and $E[X_i]=\mu$ for all $i$. Then for any $\delta>0$:
 \begin{align*}
-\mbb{P}\left[(\sum X_i-\mu\geq \delta\right]\leq e^{-\frac{n\delta^2}{2}}
+\text{\textbf{Upper Tail}}: &\mbb{P}\left[\sum X_i-\mu\geq \delta\right]\leq e^{-\frac{n\delta^2}{2}}\\
+\textbf{Lower Tail}: &\mbb{P}\left[\sum X_i-\mu\leq -\delta\right]\leq e^{-\frac{n\delta^2}{4}}
 \end{align*}
 \end{lemma}
-
 
 
 In this section, we will analyze the overall probability of error involved in finding the correct position of match. This can be done by analyzing the following three error events and then using a union bound to bound the total probability of error.
@@ -20,13 +20,24 @@ In this section, we will analyze the overall probability of error involved in fi
 
 Let us analyze the three events independently. Let $\underline{Z}_{j} = (Z_{j}[1], Z_{j}[1], \cdots Z_{j}[B])$ denote the observation at bin $j$. 
 
-\begin{lemma}
+\begin{remark}
 \label{Lem:CorrelationCoefficient}
-Let us consider $r[\tau_i],r[\tau_j]$ where $\tau_i,\tau_j \notin \{\tau_1,\ldots, \tau_L\}$ are not one of the matching positions. Then $\mbb{P}[x[\tau_i+k]y[k]=+1]$ with probability 1/2 and $\mbb{E}[x[\tau_i+k]y[k]]=0$. In fact we can show that $\{x[\tau_i+k]y[k],k\in[M]\}$ are independent but we won't be needing the independence.
-\end{lemma}
+Let us consider $r[\theta_1],\ldots ,r[\theta_{f_i}]$ where $\theta_i \notin \{\tau_1,\ldots, \tau_L\}$ are not one of the matching positions. Then we can show that $\mbb{P}[x[\theta_i+k]y[k]=+1]$ with probability 1/2 and $\mbb{E}[x[\theta_i+k]y[k]]=0$. We also need to show that  the set of random variables  $\{x[\theta_i+k]y[k]: i\in\{1,2,\ldots f_i\},k\in[M]\}$ are independent. I was able to show this for the case of $M=3$. I don't see a simple way of extending this to the case of general $M$.
+\end{remark}
 
 \subsection{\bf Bin Classification}
-\subsubsection*{Exact Matching}
+We employ classification rules based only on the first element of the measurement vector at bin $(i,j)$ which can be given by
+\begin{align}
+Z[1]=\begin{cases}
+\sum\limits_{\ell=0}^{f_{i}-1}\sum\limits_{k=0}^{M-1} n_{l,k}  & ~~\text{ if } ~~ \msc{H}=\msc{H}_z\label{Eqn:BinCombination}\\
+\vspace{\vgap}
+M_1+\sum\limits_{\ell=0}^{f_{i}-2}\sum\limits_{k=0}^{M-1} n_{l,k}  & ~~\text{ if } ~~ \msc{H}=\msc{H}_s\\
+\vspace{\vgap}
+M_1+M_2+\sum\limits_{\ell=0}^{f_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}  & ~~\text{ if } ~~ \msc{H}=\msc{H}_d\\
+\end{cases}
+\end{align}
+where $n_{l,k}=x[\theta_{\ell}+k]y[k]$ and $\theta_{\ell}\notin\{\tau_1,\tau_2,\ldots,\tau_L\}$. Also for the case of exact matching $M_1=M_2=M$ whereas in the case of approximate matching the values of $M_1,M_2\in[M(1-2\eta):M]$.
+
 \begin{lemma}
 The probability of bin classification error at any bin $(i,j)$ can be upper bounded by
 \end{lemma}
@@ -39,120 +50,13 @@ The probability of bin classification error at any bin $(i,j)$ can be upper boun
 				&\leq \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~+
 						\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~+
 						\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
-    			&\leq  e^{-} ~+~e^{-..}~+~ e^{-...}						
+    			&\leq  e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}+2e^{-\frac{N^{\mu-\alpha}(1-4\eta)^2}{16}}+ 2e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}+e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}\\
+    			&\leq 6e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}\\
 						\end{align*}
-						where the inequalities in the last step are due to Lemmas.  x, y \& z.
+						where the inequalities in the third line are due to Lemmas \ref{Lem:ZerotonClassif}, \ref{Lem:SingletonClassif}, \ref{Lem:DoubletonClassif} and \ref{Lem:MultitonClassif} respectively.
 \end{proof}
 
-\begin{lemma}[zero-ton]
-Given that the bin $(i,j)$ is a zero-ton, the classification error can be bounded by
-\begin{align*}
-e^{-...}
-\end{align*}
-\end{lemma}
-\begin{proof}
-
-\end{proof}
-
-\begin{lemma}
-\end{lemma}
-
-\begin{lemma}
-\end{lemma}
-
-\subsubsection*{Approximate Pattern Matching}
-
-
-
-
-\begin{lemma} \label{lem1}For a sufficiently large M, let $\underline{X}= (X_1, X_2, \cdots, X_M)$ and $\underline{Y}= (Y_1, Y_2, \cdots, Y_M)$ be two iid Bernoulli $p=0.5$ random sequences. Then,the correlation between $X$ and $Y$, defined by $\rho = \sum_{i=1}^{M} X_iY_i$ follows a Gaussian distribution with mean zero and variance M.
-\end{lemma}
-
-\begin{proof}
-	\[
-	\begin{array}{ll}
-	E(\rho) &= E (\sum_{i=1}^{M} X_iY_i) =  \sum_{i=1}^{M} E (X_i)(Y_i) = 0  \\
-	Var(\rho) &= E(\rho^2)-(E(\rho))^2 \\
-	E(\rho^2) &= E ((\sum_{i=1}^{M} X_iY_i)^2) = E(\sum_{i=1}^{M} (X_iY_i)^2) + 2E(\sum_{i \neq j}X_iY_iX_jY_j) \\
-	&= E(\sum_{i=1}^{M} (X_iY_i)^2) = \sum_{i=1}^{M} E( (X_iY_i)^2) = M \\
-	\end{array}
-	\]
-\end{proof}
-
-
- 
- The bin-$i$ is classified as zero-ton, single-ton or a multi-ton if the first observation, $Z_{i}[1]$, i.e., the observation corresponding to the zero shift, satisfies a threshold constraint. 
-
-The value of first observation from each bin is a sum of $N^\alpha$ co-efficients from the correlation vector that are hashed into it. This can be modeled as a random variable given by
-
-
-	
-\[
-Z_{i}[1] = \left\{
-\begin{array}{ll}
-\ \ n \sim \mathcal{N}(0,N^\alpha M) , \ \ \text{if it is zero-ton} \\
-\ M-K + n  \sim \mathcal{N}(M - K,N^\alpha M) , \ \ \text{if it is a single-ton}\\
-\ 2(M-K) + n  \sim \mathcal{N}(2(M - K),N^\alpha M) , \ \ \text{if it is a double-ton}
-\end{array}
-\right. 
-\]
-
-
-Here, $n = \sum_k n_k$ refers to the random variable that captures the sum of $N^\alpha$ random variables $n_k$, where $n_k \sim \mathcal{N}(0,M)$ points to the correlation of two iid Bernoulli random vectors of length $M$ that do not match(Lemma ~\ref{lem1}). If the sequences match, the correlation value becomes $M$.  
-
-Also notice that, we approximate a multi-ton with a double-ton, since a double-ton has a smaller mean of all the multi-tons, and hence becomes the worst case scenario for the probability of error analysis.
-
-
-If we set the threshold at $(M-K)/2$, we can detect a zero-ton in each bin with error probability $Pe_{z}$ given by
-
-\[ 
-Pe_{z} \ = Pr(Z_i[1]> \frac{M-K}{2}) =\ Q \left ( \sqrt{\frac{(M-K)^2}{4 M N^{\alpha}}} \right ) \\
-           = \ Q \left ( \sqrt{\frac{M^2(1-\eta)^2}{4 M N^{\alpha}}} \right ) \leq e^{- \frac{(1-\eta)^2N^{\mu-\alpha}}{8}}
-\]
-
-Similarly, a singe-ton can be be classified as a zero-ton or a multi-ton(double-ton) with error probability, $Pe_{s}$, given by
-
-\[ 
-\begin{array}{ll}
- Pe_{s} \  &= \   Pr( Z_i[1] < \frac{M-K}{2}) \  + \ Pr( Z_i[1] > \frac{3M-K}{2}) \\
-          &= \   Q \left ( \sqrt{\frac{M^2(1-\eta)^2}{4 M N^{\alpha}}}\right) \ + \ Q \left ( \sqrt{\frac{M^2(1-2\eta)^2}{4 M N^{\alpha}}} \right ) \leq 2 e^{- \frac{(1-2\eta)^2N^{\mu-\alpha}}{8}}
-\end{array}
-\]
-
-Also, a multi-ton (approximated to double-ton) can be classified as a singleton with error probability $Pe_{m}$, given by
-
-\[ 
-Pe_{m} \ = \ Pr( Z_i[1] < \frac{3M-K}{2}) = \  Q \left ( \sqrt{\frac{M^2(1-2\eta)^2}{4 M N^{\alpha}}} \right ) \leq e^{- \frac{(1-2\eta)^2N^{\mu-\alpha}}{8}}
-\]
-
-So the overall probability of error in bin-detection, $Pe_{bin}$, including the bins across all stages and blocks, is given by
-
-\[
-\begin{array}{ll}
-Pe_{bin} & \ \leq \   \underset{\text{ \# of blocks} }{\underbrace{N^{\gamma}}} \
-\underset{\text{\# of bins} } {\underbrace{N^{1-\gamma-\alpha}}} \
-\underset{\text{\# of stages} }
-{\underbrace{\frac{1-\gamma}{\alpha}}} \  
-\underset{\text{error per bin}}
-{\underbrace{Pe_{z}+Pe_{s}+Pe_{m}}} \ = \ \frac{1-\gamma }{\alpha} \ N^{1-\alpha} \  e^{- \frac{(1-2\eta)^2N^{\mu-\alpha}}{8}} \\
-& \ =  \ e^{\log \frac{1-\gamma }{\alpha} \ + \ \log N^{1-\alpha} \  - \ \frac{(1-2\eta)^2N^{\mu-\alpha}}{8}} 
-\end{array}
-\] 
-
-To make the error probability arbitrarily small, we impose the following condition on the exponent of $Pe_{total}$.
-
-\[\begin{array}{ll}
- \log \frac{1-\gamma }{\alpha} \ + \ \log N^{1-\alpha} \  - \ \frac{(1-2\eta)^2N^{\mu-\alpha}}{8} < 0 \\
-\implies \frac{(1-2\eta)^2N^{\mu-\alpha}}{8} >   \log \frac{1-\gamma }{\alpha} \ + \ \log N^{1-\alpha}\\
-\implies \mu-\alpha > 8 (\frac{\log (\log(\frac{1-\gamma}{\alpha}))}{\log N}\ + \ \frac{\log (\log(N)) + \log (1- \alpha)}{\log N} )
-\end{array}
-\]
-
-As $N \rightarrow \infty$, the right hand side approaches 0. Hence the condition reduces to 
-\[ \alpha < \mu \]
-
-
-\subsection{Position Identification}
+\subsection{\bf Position Identification}
 {\bf Exact Matching:}
 
 \[

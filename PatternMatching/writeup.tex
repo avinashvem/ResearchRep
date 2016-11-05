@@ -2,6 +2,7 @@
 %\documentclass[a4paper, 10pt, conference]{ieeeconf}        % Use this line for a4 paper
 %\IEEEoverridecommandlockouts                               % This command is only needed if you want to use the \thanks command
 %\overrideIEEEmargins                                       % Needed to meet printer requirements.
+
 \input{preamble}
 
 \renewcommand{\baselinestretch}{1.0}
@@ -13,7 +14,7 @@ Pattern Matching in Sub-Linear Time Using a Sparse Fourier Transform Approach
 }
 \author{\IEEEauthorblockN{Nagaraj T. Janakiraman, Avinash Vem, Krishna R. Narayanan \\}
 \IEEEauthorblockA{Department of Electrical \& Comp. Engg., Texas A\&M University, College Station, TX, U.S.A\\}
-\{tjnagaraj,vemvinash,krn\}@tamu.edu\\
+\{tjnagaraj,vemavinash,krn\}@tamu.edu\\
 \thanks{This work was supported by the National Science Foundation under grants}
 }
 \begin{document}
@@ -25,14 +26,14 @@ Pattern Matching in Sub-Linear Time Using a Sparse Fourier Transform Approach
 \begin{abstract}
 We consider the problem of querying a string (or, a database) of length $N$ bits to determine all the locations where a substring (query) of length $M$ appears either exactly or is within a Hamming distance of $K$ from the query. We assume that sketches of the original signal can be computed off line and stored. Using the sparse Fourier transform computation based approach introduced by Pawar and Ramchandran, we show that all such matches can be determined with high probability in sub-linear time. Specifically, if the number of matches is $L=N^\lambda$ and $M = N^\mu$, as $N \rightarrow \infty$, we show that the locations can be determined with a probability that approaches 1, with a computational complexity that is only $O\left(\max \left(\frac{N}{M} \log N, M L \log N \right) \right) = O\left(N^{\max(1-\mu,\mu+\lambda)} \log N \right)$ for $K \leq \frac{2}{3}M$. Further, the number of Fourier transform coefficients that need to be computed, stored and accessed, i.e., the sketching complexity of this algorithm is only $O\left( N^{\max(\mu,1-\mu)}\right)$. Several extensions of the main theme are also discussed.
 \end{abstract}
-
 \input{Problem_statement}
 \input{Notations}
 \input{AlgorithmDescription}
 \input{Performance_Analysis}
 \input{Complexity_Analysis}
+\input{Appendices}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{ieeetr}
 \bibliography{../bib/journal_abbr,../bib/sparseestimation}
-\end{document} 
+\end{document}
