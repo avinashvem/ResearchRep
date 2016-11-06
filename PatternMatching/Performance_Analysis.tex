@@ -9,37 +9,26 @@ Let $X_1, X_2,\ldots, X_n$ be a sequence of independent random variables such th
 \end{align*}
 \end{lemma}
 
-
-In this section, we will analyze the overall probability of error involved in finding the correct position of match. This can be done by analyzing the following three error events and then using a union bound to bound the total probability of error.
-
-\begin{itemize}
-	\item $\mathcal{E}_1$: Event that a bin is wrongly classified  (Bin Classification)
-	\item $\mathcal{E}_2$: Event that a position is wrongly identified  (Position Identification)
-	\item $\mathcal{E}_3$: Event that the peeling process fails (Graph Analysis)
-\end{itemize}
-
-Let us analyze the three events independently. Let $\underline{Z}_{j} = (Z_{j}[1], Z_{j}[1], \cdots Z_{j}[B])$ denote the observation at bin $j$. 
-
 \begin{remark}
 \label{Lem:CorrelationCoefficient}
 Let us consider $r[\theta_1],\ldots ,r[\theta_{f_i}]$ where $\theta_i \notin \{\tau_1,\ldots, \tau_L\}$ are not one of the matching positions. Then we can show that $\mbb{P}[x[\theta_i+k]y[k]=+1]$ with probability 1/2 and $\mbb{E}[x[\theta_i+k]y[k]]=0$. We also need to show that  the set of random variables  $\{x[\theta_i+k]y[k]: i\in\{1,2,\ldots f_i\},k\in[M]\}$ are independent. I was able to show this for the case of $M=3$. I don't see a simple way of extending this to the case of general $M$.
 \end{remark}
 
-\subsection{\bf Bin Classification}
-We employ classification rules based only on the first element of the measurement vector at bin $(i,j)$ which can be given by
-\begin{align}
-Z[1]=\begin{cases}
-\sum\limits_{\ell=0}^{f_{i}-1}\sum\limits_{k=0}^{M-1} n_{l,k}  & ~~\text{ if } ~~ \msc{H}=\msc{H}_z\label{Eqn:BinCombination}\\
-\vspace{\vgap}
-M_1+\sum\limits_{\ell=0}^{f_{i}-2}\sum\limits_{k=0}^{M-1} n_{l,k}  & ~~\text{ if } ~~ \msc{H}=\msc{H}_s\\
-\vspace{\vgap}
-M_1+M_2+\sum\limits_{\ell=0}^{f_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}  & ~~\text{ if } ~~ \msc{H}=\msc{H}_d\\
-\end{cases}
-\end{align}
-where $n_{l,k}=x[\theta_{\ell}+k]y[k]$ and $\theta_{\ell}\notin\{\tau_1,\tau_2,\ldots,\tau_L\}$. Also for the case of exact matching $M_1=M_2=M$ whereas in the case of approximate matching the values of $M_1,M_2\in[M(1-2\eta):M]$.
 
+In this section, we will analyze the overall probability of error involved in finding the correct position of match. This can be done by analyzing the following three error events independently and then using a union bound to bound the total probability of error.
+
+\begin{itemize}
+	\item $\mathcal{E}_1${-\it Bin Classification}: Event that a bin is wrongly classified
+	\item $\mathcal{E}_2${-\it Position Identification}: Event that a position is wrongly identified given the bin is correctly identified as a singleton  
+	\item $\mathcal{E}_3${-\it Peeling Process} : Event that the peeling process fails to recover the $L$ significant correlation coefficients
+\end{itemize}
+
+\subsection{\bf Bin Classification}
 \begin{lemma}
 The probability of bin classification error at any bin $(i,j)$ can be upper bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_1]\leq 6e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}
+\end{align*}
 \end{lemma}
 
 \begin{proof}
@@ -57,35 +46,52 @@ The probability of bin classification error at any bin $(i,j)$ can be upper boun
 \end{proof}
 
 \subsection{\bf Position Identification}
-{\bf Exact Matching:}
+We will analyze the singleton identification in two separate cases:
+\begin{itemize}
+\item $\mc{E}_{21}$: Event where the position is identified incorrectly when the bin is classified  correctly a singleton
+\item $\mc{E}_{22}$: In the case of approximate matching, event where the position is identified incorrectly when the bin is originally a double-ton and one of the non-zero variable nodes has already been peeled off
+\end{itemize} 
+\begin{lemma}
+The probability of error in identifying the position of a singleton at any bin $(i,j)$ can be upper bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_{21}]\leq ... %6e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}
+\end{align*}
+\end{lemma}
+
+\begin{lemma}
+The probability of error in identifying the position of the second non-zero variable node at a double-ton at any bin $(i,j)$ can be upper bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_{22}]\leq ... %6e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}
+\end{align*}
+\end{lemma}
+
+{\bf $\mc{E}_{21}$:}
 
 \[
-\mathbf{Z_i} = \begin{bmatrix}
-\mathbf{s_1}       & \cdots   & \mathbf{s_p} &\cdots \ &\mathbf{s_A}
+\mathbf{Z_{i,j}} = \begin{bmatrix}
+\underline{w}^{j_{1}},\underline{w}^{j_2}, & \cdots   & \underline{w}^{j_p}, &\cdots \ &\underline{w}^{j_{f_i}}
 \end{bmatrix} \times
     \begin{bmatrix}
-n_1 \\
+n_{1} \\
 \vdots \\
-R_{XY}[p]\\
+r[j_k]\\
 \vdots\\
-n_j \\
+n_{j} \\
 \vdots\\
-n_{A}\\
+n_{f_i}\\
 \end{bmatrix}
 \]
+where for convenience we use a simpler indexing notation $j_k=j+(k-1)\frac{N}{f_i}$ and $n_{l}=\sum\limits_{k=0}^{M-1}x[\theta_{\ell}+k]y[k]$ as defined in Eq. \eqref{Eqn:BinCombination}.
 
-
-where $n_j \sim \mathcal{N}(0,M)$, $j \neq p$.
-
-\[\begin{array}{ll}
-Z_i[1] \ &= \ R_{XY}[p] + \sum_{j \neq p}n_j \\
-         &= \ R_{XY}[p] + n 
-\end{array}
-\]
-where $n \sim \mathcal{N}(0,(N^\alpha-1)M)$. We can find the value of $R_{XY}[p]$ with probability of error $Pe_s \leq 2 e^{- \frac{(1-2\eta)^2N^{\mu-\alpha}}{8}}$.
-
-Given that we know $R_{XY}[p]$, 
-
+%\[\begin{array}{ll}
+%Z_i[1] \ &= \ R_{XY}[p] + \sum_{j \neq p}n_j \\
+%         &= \ R_{XY}[p] + n 
+%\end{array}
+%\]
+%where $n \sim \mathcal{N}(0,(N^\alpha-1)M)$. We can find the value of $R_{XY}[p]$ with probability of error $Pe_s \leq 2 e^{- \frac{(1-2\eta)^2N^{\mu-\alpha}}{8}}$.
+%
+%Given that we know $R_{XY}[p]$, 
+%
 \[ \mathbf{Z_i} \ = \ R_{XY}[p] ~ \mathbf{s_p}+ \sum_{j \neq p}n_j \mathbf{s_j} \\
 \]
 

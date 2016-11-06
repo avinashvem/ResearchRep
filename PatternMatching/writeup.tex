@@ -1,8 +1,6 @@
-\documentclass[journal,11pt,onecolumn]{IEEEtran}            % Comment this line out if you need a4paper
-%\documentclass[a4paper, 10pt, conference]{ieeeconf}        % Use this line for a4 paper
-%\IEEEoverridecommandlockouts                               % This command is only needed if you want to use the \thanks command
-%\overrideIEEEmargins                                       % Needed to meet printer requirements.
-
+\documentclass[journal,11pt,onecolumn]{IEEEtran}  % Comment this line out if you need a4paper
+%\IEEEoverridecommandlockouts                              % This command is only needed if you want to use the \thanks command
+%\overrideIEEEmargins                                            % Needed to meet printer requirements.
 \input{preamble}
 
 \renewcommand{\baselinestretch}{1.0}
@@ -28,8 +26,208 @@ We consider the problem of querying a string (or, a database) of length $N$ bits
 \end{abstract}
 \input{Problem_statement}
 \input{Notations}
-\input{AlgorithmDescription}
-\input{Performance_Analysis}
+\input{AlgorithmDescription}  
+%\input{Performance_Analysis}
+\section{Performance Analysis}
+\def\vgap{2pt}
+\begin{lemma}[Chernoff Bound for bounded random variables]
+\label{Lem:Chernoff}
+Let $X_1, X_2,\ldots, X_n$ be a sequence of independent random variables such that $X_i \in\{-1, +1\}$ for all $i$ and $E[X_i]=\mu$ for all $i$. Then for any $\delta>0$:
+\begin{align*}
+\text{\textbf{Upper Tail}}: &\mbb{P}\left[\frac{1}{n}\sum \left(X_i-\mu\right)\geq \delta\right]\leq e^{-\frac{n\delta^2}{2}}\\
+\textbf{Lower Tail}: &\mbb{P}\left[\frac{1}{n}\sum \left(X_i-\mu\right)\leq -\delta\right]\leq e^{-\frac{n\delta^2}{4}}
+\end{align*}
+\end{lemma}
+
+\begin{lemma}[Variant of Hoeffding Bound]
+\label{Lem:Chernoff2}
+Let $X_1, X_2,\ldots, X_n$ be a sequence of independent random variables such that $X_i \in[a_i, b_i]$ and $E[X_i]=\mu$ for all $i$. Then for any $\delta>0$:
+\begin{align*}
+\text{\textbf{Upper Tail}}: &\mbb{P}\left[\sum \left(X_i-\mu\right)\geq \delta\right]\leq \exp\left\lbrace-\frac{2\delta^2}{\sum(b_i-a_i)^2}\right\rbrace
+\end{align*}
+\end{lemma}
+
+\begin{remark}
+\label{Lem:CorrelationCoefficient}
+Let us consider $r[\theta_1],\ldots ,r[\theta_{f_i}]$ where $\theta_i \notin \{\tau_1,\ldots, \tau_L\}$ are not one of the matching positions. Then we can show that $\mbb{P}[x[\theta_i+k]y[k]=+1]$ with probability 1/2 and $\mbb{E}[x[\theta_i+k]y[k]]=0$. We also need to show that  the set of random variables  $\{x[\theta_i+k]y[k]: i\in\{1,2,\ldots f_i\},k\in[M]\}$ are independent. I was able to show this for the case of $M=3$. I don't see a simple way of extending this to the case of general $M$.
+\end{remark}
+
+
+In this section, we will analyze the overall probability of error involved in finding the correct position of match. This can be done by analyzing the following three error events independently and then using a union bound to bound the total probability of error.
+
+\begin{itemize}
+	\item $\mathcal{E}_1${-\it Bin Classification}: Event that a bin is wrongly classified
+	\item $\mathcal{E}_2${-\it Position Identification}: Event that a position is wrongly identified given the bin is correctly identified as a singleton  
+	\item $\mathcal{E}_3${-\it Peeling Process} : Event that the peeling process fails to recover the $L$ significant correlation coefficients
+\end{itemize}
+
+\subsection{\bf Bin Classification}
+\begin{lemma}
+The probability of bin classification error at any bin $(i,j)$ can be upper bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_1]\leq 6e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+\begin{align*}
+\mbb{P}[\mc{E}_1]&=\mbb{P}[\msc{H}_z]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~+
+						\quad \mbb{P}[\msc{H}_s]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~+
+						\quad\mbb{P}[\msc{H}_d]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
+				&\leq \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~+
+						\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~+
+						\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
+    			&\leq  e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}+2e^{-\frac{N^{\mu-\alpha}(1-4\eta)^2}{16}}+ 2e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}+e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}\\
+    			&\leq 6e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}\\
+						\end{align*}
+						where the inequalities in the third line are due to Lemmas \ref{Lem:ZerotonClassif}, \ref{Lem:SingletonClassif}, \ref{Lem:DoubletonClassif} and \ref{Lem:MultitonClassif} respectively.
+\end{proof}
+
+\subsection{\bf Position Identification}
+We will analyze the singleton identification in two separate cases:
+\begin{itemize}
+\item $\mc{E}_{21}$: Event where the position is identified incorrectly when the bin is classified  correctly a singleton
+\item $\mc{E}_{22}$: In the case of approximate matching, event where the position is identified incorrectly when the bin is originally a double-ton and one of the non-zero variable nodes has already been peeled off
+\end{itemize} 
+\begin{lemma}
+The probability of error in identifying the position of a singleton at any bin $(i,j)$ can be upper bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_{21}]\leq \exp\left\lbrace-\frac{N^{\mu-\alpha}(1-2\eta)^2(c_1^2-1)}{8(c_1^2+1)}\right\rbrace
+\end{align*}
+\end{lemma}
+
+\begin{lemma}
+The probability of error in identifying the position of the second non-zero variable node at a double-ton at any bin $(i,j)$ can be upper bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_{22}]\leq ... %6e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}
+\end{align*}
+\end{lemma}
+
+{\bf $\mc{E}_{21}$:}
+
+\begin{align*}
+\underline{z}_{i,j} &= \begin{bmatrix}
+\wv_{j_{1}},\wv_{j_2}, & \cdots   & \wv_{j_p}, &\cdots \ &\wv_{j_{f_i}}
+\end{bmatrix} \times
+    \begin{bmatrix}
+n_{1} \\
+\vdots \\
+r[j_p]\\
+\vdots\\
+n_{j} \\
+\vdots\\
+n_{f_i}\\
+\end{bmatrix}
+&= r[j_p] ~ \wv_{j_p}+ \sum_{k \neq p}n_k \wv_{j_k} \\
+\end{align*}
+where for convenience we use a simpler notation $j_k=j+(k-1)\frac{N}{f_i}, \wv_{j_k}=\wv^{j_k}$ as defined in Eq. and $n_{l}=\sum\limits_{k=0}^{M-1}x[\theta_{\ell}+k]y[k]$ as defined in Eq. \eqref{Eqn:BinCombination}.
+
+The estimated position $\hat{p}$ is given by
+\begin{align}
+\label{Eqn:SingletonBinCombination}
+ \hat{p}= \underset{l}{\argmax}~~ \frac{\wv_{j_l}^{\dagger}\underline{z}_{i,j}}{B}
+\end{align}
+ where $\dagger$ denotes the conjugate transpose of the vector. Also note that $|| \wv_{j_k}||=B$ for any $j$ and $k$.  From Eq. \eqref{Eqn:SingletonBinCombination} we observe that the position is wrongly identified when $\exists p'$ such that
+\begin{align*}
+&r[j_p] + \frac{1}{B}\sum_{k \neq p} n_k 	\wv_{j_p}^{\dagger}\wv_{j_k} \leq \frac{r[j_p]}{B} ~ \wv_{j_{p'}}^{\dagger}\wv_{j_p}+ n_{p'}+\frac{1}{B}\sum_{k \neq p,p'}n_k\wv_{j_{p'}}^{\dagger} \wv_{j_k} \\
+&\leftrightarrow \sum_{k \neq p,p'}\alpha_k n_k+\beta_k n_{p'}\geq  r[j_p]\left(1-\frac{\wv_{j_{p'}}^{\dagger}\wv_{j_p}}{B}\right)\geq M(1-2\eta)(1-\mu_{\text{max}})
+\end{align*}
+where $\alpha_k$ and $\beta$ are constants and can be shown to be in the range $\alpha_k\in[-2\mu_\text{max},2\mu_\text{max}]$ and $\beta\in[1-\mu_\text{max},1+\mu_\text{max}]$. Now using the bound given Chernoff Lemma in Lem.~\ref{Lem:Chernoff2} we obtain
+\begin{align*}
+\mbb{P}[\mc{E}_{21}]&\leq \exp\left\lbrace-\frac{2M(1-2\eta)^2(1-\mu_{\text{max}})^2}{16f_i\mu^2_{\max}+4(1+\mu_{\max})^2}\right\rbrace\\
+&\leq\exp\left\lbrace-\frac{2M(1-2\eta)^2(1-\mu_{\text{max}})^2}{16(f_i\mu^2_{\max}+1)}\right\rbrace\\
+&\leq\exp\left\lbrace-\frac{2M(1-2\eta)^2(c_1-1)^2}{16(f_i+c_1^2)}\right\rbrace\\
+&\approx\exp\left\lbrace-\frac{N^{\mu-\alpha}(1-2\eta)^2(c_1^2-1)}{8(c_1^2+1)}\right\rbrace\\
+\end{align*}
+where for the choice of $B=4c_1^2\log 5N$, $\mu_{\max}\leq 2\sqrt{\frac{\log 5N}{B}}\leq 1/c_1$.
+
+{\bf Approximate Matching:}
+\[
+\mathbf{Z_i} = \begin{bmatrix}
+\mathbf{s_1}       & \cdots   & \mathbf{s_p} &\cdots \ &\mathbf{s_A}
+\end{bmatrix} \times
+\begin{bmatrix}
+n_1 \\
+\vdots \\
+R_{XY}[p]\\
+\vdots\\
+n_j \\
+\vdots\\
+n_{A}\\
+\end{bmatrix}
+\]
+
+
+where $n_j \sim \mathcal{N}(0,M)$, $j \neq p$.
+
+\[\begin{array}{ll}
+Z_i[1] \ &= \ R_{XY}[p] + \sum_{j \neq p}n_j \\
+&= \ R_{XY}[p] + n 
+\end{array}
+\]
+where $n \sim \mathcal{N}(0,(N^\alpha-1)M)$. Once we identify a Singleton with probability of error $Pe_s \leq 2 e^{- \frac{(1-2\eta)^2N^{\mu-\alpha}}{8}}$, we can fix the value of $R_{XY}[p] = M(1-\eta/2)$ since we are only interested in finding the positions and not the exact value of correlations. 
+
+Now that we know $R_{XY}[p]$, 
+
+\[ \mathbf{Z_i} \ = \ R_{XY}[p] ~ \mathbf{s_p}+ \sum_{j \neq p}n_j \mathbf{s_j} \\
+\]
+
+%The estimated position $p'$ is given by
+%
+%\begin{align*}
+% p' = \underset{l}{\argmax}~~ \wv^{\dagger} \underline{z}_{i,j}
+% \end{align*}
+
+Also, let $p_1$ be the position of the previously peeled node from this check-node. There can only be at most one peeled edge as we restrict our peeling process to a doubleton and do not consider other multi-tons.
+ 
+Let us consider two cases:
+
+{\textit{Case 1:} $p' = p$}
+\[
+\begin{array}{ll}
+c_1 \ &= \ \mathbf{s^T_{p'}} ~\mathbf{Z_i} \ = \ R_{XY}[p] {\bf ~s^T_{p'}~ s_p}\ + \ \sum_{j \neq p,p_1}n_j {\bf ~s^T_{p'}~ s_j} \ \pm \  \frac{\eta M}{2} {\bf ~s^T_{p'} ~ s_{p_1}} \\
+&\leq B ~ (M-\eta M/2) +  \sum_{j \neq p} 2 n_j ~ \mu_{max} \pm \frac{\eta M}{2} \mu_{max}
+\end{array} 
+\]
+
+{\textit{Case 2:} $p' \neq p$}
+\[
+\begin{array}{ll}
+c_2 \ &= \ \mathbf{s^T_{p'}} ~\mathbf{Z_i}\ = \ R_{XY}[p]  {\bf ~s^T_{p'}~ s_p}+ \sum_{j \neq p',p,p_1}n_j{\bf ~s^T_{p'}~ s_j} \ + \ n_{p'} {\bf ~s^T_{p'}~ s_p} \ \pm \ \frac{\eta M}{2} {\bf ~s^T_{p'}~ s_{p_1}}\\
+&\leq (M-\eta M/2) ~ \mu_{max} + \sum_{j \neq p',p} \ 2n_j ~ \mu_{max} \ + \ n_{p'} B \pm \frac{\eta M}{2} \mu_{max}
+\end{array} 
+\]
+
+\[
+\begin{array}{ll}
+c_1 - c_2 \ &=  \ R_{XY}[p](B - {\bf ~s^T_{p'}~ s_p}) \ - \ n_{p'}(B - {\bf ~s^T_{p'}~ s_p'}) ~ + ~ \sum_{j \neq p',p,p_1}n_j ({\bf ~s^T_{p}~ s_j} - {\bf ~s^T_{p'}~ s_j})  \pm \  \eta M {\bf ~s^T_{p'} ~ s_{p_1}}  \\
+&\leq (M-\eta M/2)(B-\mu_{max})  \ - \ n_{p'}(B - \mu_{max}) ~ + ~ \sum_{j \neq p',p}n_j \mu_{max} \pm \eta M \mu_{max}\\
+\end{array} 
+\]
+
+
+Notice that $c_1$ and $c_2$ are both Gaussian random variables given by
+
+\[ \begin{array}{ll}
+c_1 &\sim  \mathcal{N}(B ~ (M-\eta M/2) \pm \frac{\eta M}{2} \mu_{max} \ , \ 4N^\alpha M B \log(5N)) \\
+c_2 &\sim  \mathcal{N}(2M \sqrt{B\log(5N)}\ , \ M~B^2 + 4N^\alpha M B \log(5N))\\
+c_1 - c_2 &\sim  \mathcal{N}((M-\eta M/2)(B-\mu_{max}) \pm \eta M \mu_{max} \ , \ M((B-\mu_{max})^2 + (N^{\alpha}-2)\mu_{max}^2)
+\end{array}\]
+
+The probability that event $\mathcal{E}_2$ happens, given that $\mathcal{E}_1$ doesn't happen is given by
+\[ P(\mathcal{E}_2 / \bar{\mathcal{E}}_1 ) = Pr(c_2 > c_1) \]
+
+%If $c_1$ and $c_2$ are independent, then 
+
+%\[c1-c2 \sim \mathcal{N}(M(B-2\sqrt{B\log5n})\ ,\ 8MBN^\alpha\log5N +  B^2 ) \]
+
+\[ P(\mathcal{E}_2 / \bar{\mathcal{E}}_1 ) \leq Q \left( \sqrt{\frac{((M-\eta M/2)(B-\mu_{max}) \pm \eta M \mu_{max})^2}{M(B-\mu_{max})^2 + M(N^{\alpha}-2)\mu_{max}^2)}} \right) \]
+
+where $\mu_{max} = 2\sqrt{B \log 5 N^{\alpha}} $. If $B = O(\log 5 N^{\alpha})$, then the above equation reduces to
+
+\[ P(\mathcal{E}_2 / \bar{\mathcal{E}}_1 ) \leq Q \left( \sqrt{\frac{M(1-3\eta/2)^2}{1 + 4~ (N^{\alpha}-2)}} \right) \]
+
+If $\mu > \alpha$, the error vanishes.
 \input{Complexity_Analysis}
 \input{Appendices}
 

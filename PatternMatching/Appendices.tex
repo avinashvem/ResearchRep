@@ -1,5 +1,16 @@
 \appendices
 \section{Bin Classification Errors}
+We employ classification rules based only on the first element of the measurement vector at bin $(i,j)$ which can be given by
+\begin{align}
+Z[1]=\begin{cases}
+\sum\limits_{\ell=0}^{f_{i}-1}\sum\limits_{k=0}^{M-1} n_{l,k}  & ~~\text{ if } ~~ \msc{H}=\msc{H}_z\label{Eqn:BinCombination}\\
+\vspace{\vgap}
+M_1+\sum\limits_{\ell=0}^{f_{i}-2}\sum\limits_{k=0}^{M-1} n_{l,k}  & ~~\text{ if } ~~ \msc{H}=\msc{H}_s\\
+\vspace{\vgap}
+M_1+M_2+\sum\limits_{\ell=0}^{f_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}  & ~~\text{ if } ~~ \msc{H}=\msc{H}_d\\
+\end{cases}
+\end{align}
+where $n_{l,k}=x[\theta_{\ell}+k]y[k]$ and $\theta_{\ell}\notin\{\tau_1,\tau_2,\ldots,\tau_L\}$. Also for the case of exact matching $M_1=M_2=M$ whereas in the case of approximate matching the values of $M_1,M_2\in[M(1-2\eta):M]$.
 
 \begin{lemma}[zero-ton]
 \label{Lem:ZerotonClassif}
