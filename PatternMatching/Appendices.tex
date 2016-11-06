@@ -1,4 +1,26 @@
 \appendices
+\begin{lemma}[Chernoff Bound for bounded random variables]
+\label{Lem:Chernoff}
+Let $X_1, X_2,\ldots, X_n$ be a sequence of independent random variables such that $X_i \in\{-1, +1\}$ for all $i$ and $E[X_i]=\mu$ for all $i$. Then for any $\delta>0$:
+\begin{align*}
+\text{\textbf{Upper Tail}}: &\mbb{P}\left[\frac{1}{n}\sum \left(X_i-\mu\right)\geq \delta\right]\leq e^{-\frac{n\delta^2}{2}}\\
+\textbf{Lower Tail}: &\mbb{P}\left[\frac{1}{n}\sum \left(X_i-\mu\right)\leq -\delta\right]\leq e^{-\frac{n\delta^2}{4}}
+\end{align*}
+\end{lemma}
+
+\begin{lemma}[Variant of Hoeffding Bound]
+\label{Lem:Chernoff2}
+Let $X_1, X_2,\ldots, X_n$ be a sequence of independent random variables such that $X_i \in[a_i, b_i]$ and $E[X_i]=\mu$ for all $i$. Then for any $\delta>0$:
+\begin{align*}
+\text{\textbf{Upper Tail}}: &\mbb{P}\left[\sum \left(X_i-\mu\right)\geq \delta\right]\leq \exp\left\lbrace-\frac{2\delta^2}{\sum(b_i-a_i)^2}\right\rbrace
+\end{align*}
+\end{lemma}
+
+\begin{remark}
+\label{Lem:CorrelationCoefficient}
+Let us consider $r[\theta_1],\ldots ,r[\theta_{f_i}]$ where $\theta_i \notin \{\tau_1,\ldots, \tau_L\}$ are not one of the matching positions. Then we can show that $\mbb{P}[x[\theta_i+k]y[k]=+1]$ with probability 1/2 and $\mbb{E}[x[\theta_i+k]y[k]]=0$. We also need to show that  the set of random variables  $\{x[\theta_i+k]y[k]: i\in\{1,2,\ldots f_i\},k\in[M]\}$ are independent. I was able to show this for the case of $M=3$. I don't see a simple way of extending this to the case of general $M$.
+\end{remark}
+
 \section{Bin Classification Errors}
 We employ classification rules based only on the first element of the measurement vector at bin $(i,j)$ which can be given by
 \begin{align}
