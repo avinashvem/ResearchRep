@@ -19,7 +19,7 @@ Let $X_1, X_2,\ldots, X_n$ be a sequence of independent random variables such th
 
 \begin{remark}
 \label{Lem:CorrelationCoefficient}
-Let us consider $r[\theta_1],\ldots ,r[\theta_{f_i}]$ where $\theta_i \notin \{\tau_1,\ldots, \tau_L\}$ are not one of the matching positions. Then we can show that $\mbb{P}[x[\theta_i+k]y[k]=+1]$ with probability 1/2 and $\mbb{E}[x[\theta_i+k]y[k]]=0$. We also need to show that  the set of random variables  $\{x[\theta_i+k]y[k]: i\in\{1,2,\ldots f_i\},k\in[M]\}$ are independent. I was able to show this for the case of $M=3$. I don't see a simple way of extending this to the case of general $M$.
+Let us consider $r[\theta_1],\ldots ,r[\theta_{f_i}]$ where $\theta_i \notin \{\tau_1,\ldots, \tau_L\}$ are not one of the matching positions. Then we can show that $\mbb{P}[x[\theta_i+k]y[k]=+1]$ with probability 1/2 and $\mbb{E}[x[\theta_i+k]y[k]]=0$. We also need to show that  the set of random variables  $\{x[\theta_i+k]y[k]: i\in\{1,2,\ldots f_i\},k\in[M]\}$ are independent to be able to apply Chernoff bounds or Normal distribution approximations. I was able to show this for the case of $M=3$. I don't see a simple way of extending this to the case of general $M$. Note that without independence of these terms from non-matching positions, we can only obtain polynomial decay from Chebyshev inequality that requires only pairwise independence.
 \end{remark}
 
 \section{Bin Classification Errors}
@@ -133,9 +133,10 @@ We will analyze the singleton identification in two separate cases:
 	The mutual incoherence $\mu_{\text{max}}( \mb{W})$ of a matrix $\mb{W} = [\wv_1 ~ \wv_2 ~ \cdots \wv_i \cdots \wv_N ]$ is defined as 
 	
 	\[\mu_{\text{max}}(\mb{W}) \defeq \max \limits_{\forall i \neq j} \frac{|\wv_i^{\dagger} \wv_j |}{||\wv_i || . ||\wv_j ||} \]
-	
 \end{definition}
-\begin{lemma}[Mutual Incoherence Bound for sub-sampled IDFT matrix] \label{lemma:MutualCoherence}
+
+\begin{lemma}[Mutual Incoherence Bound for sub-sampled IDFT matrix  [\cite{pawar2014robust},Proposition~A.1]
+\label{lemma:MutualCoherence}
 	The mutual incoherence $\mu_{\text{max}} (\mb{W_{i,k}})$ of the sensing matrix $\mb{W}_{i,k}$ (defined in Eq.~\ref{Eqn:Sensing Matrix}), with $B$ shifts, is upper bounded by
 	
 	\[ \mu_{\text{max}} < 2\sqrt{\frac{\log(5N)}{B}} \] 
