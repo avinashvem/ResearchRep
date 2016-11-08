@@ -1,11 +1,11 @@
 \section{Performance Analysis}
 \def\vgap{2pt}
-In this section, we will analyze the overall probability of error involved in finding the correct position of match. This can be done by analyzing the following three error events independently and then using a union bound to bound the total probability of error.
+In this section, we will analyze the overall probability of error involved in finding the correct matching positions. This can be done by analyzing the following three error events independently and then using a union bound to bound the total probability of error.
 
 \begin{itemize}
 	\item $\mathcal{E}_1${-\it Bin Classification}: Event that a bin is wrongly classified
-	\item $\mathcal{E}_2${-\it Position Identification}: Event that a position is wrongly identified given the bin is correctly identified as a singleton  
-	\item $\mathcal{E}_3${-\it Peeling Process} : Event that the peeling process fails to recover the $L$ significant correlation coefficients
+	\item $\mathcal{E}_2${-\it Position Identification}: Given a bin is correctly identified as a singleton, event that the position of singleton is identified incorrectly
+	\item $\mathcal{E}_3${-\it Peeling Process}: Given the classification of all the bins and the position identification of singletons in each iteration is accurate, event that the peeling process fails to recover the $L$ significant correlation coefficients
 \end{itemize}
 
 \subsection{\bf Bin Classification}
@@ -28,10 +28,6 @@ The probability of bin classification error at any bin $(i,j)$ can be upper boun
     			&\leq 6e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}\\
 						\end{align*}
 						where the inequalities in the third line are due to Lemmas \ref{Lem:ZerotonClassif}, \ref{Lem:SingletonClassif}, \ref{Lem:DoubletonClassif} and \ref{Lem:MultitonClassif} respectively provided in Appendix \ref{Append:BinClassif}.
-						where the inequalities in the third line are due to Lemmas \ref{Lem:ZerotonClassif}, \ref{Lem:SingletonClassif}, \ref{Lem:DoubletonClassif} and \ref{Lem:MultitonClassif} respectively.\\
-
-\textit{Exact Matching:} Substituting $\eta = 0$ in error bound for approximate matching we get the required result.						
-						
 \end{proof}
 
 \subsection{\bf Position Identification}
@@ -43,9 +39,21 @@ Given that a bin $(i,j)$ is correctly classified as a singleton, the probability
 \end{lemma}
 
 \subsection{\bf Peeling Process}
+To analyze the peeling process alone independently, we refer to a {\it oracle based peeling decoder} which has the accurate classification of all the bins and given a singleton bin at any iteration the oracle based peeling decoder can accurately identify the position of the singleton. In other words, oracle based peeling decoder is the peeling part of our decoding scheme but with the assumption that the bin classification and position identification are carried out without any error.
 \begin{lemma}
-Given that a bin $(i,j)$ is correctly classified as a singleton, the probability of error in identifying the position of the non-zero variable node can be upper bounded by
-\begin{align*}
-\mbb{P}[\mc{E}_2|\overline{\mc{E}}_1]\leq e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}+e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}
-\end{align*}
+[Exact Matching]
+The oracle based peeling decoder in the exact matching case, for $d=3$ and $F=\eta L$ for any $\eta>0,.4073$:
+\begin{itemize}
+\item successfully uncovers all the matching positions with probability at least $1-O(1/dF)$
+\item successfully uncovers all but a vanishingly small fraction, i.e. $o(L)$, of the matching positions with probability at least $1-e^{-\beta \epsilon_1^2k^{1/(4l+1)}}$ for some constants $\beta,\epsilon_1>0$ and $l>0.$
+\end{itemize}
+\end{lemma}
+
+We need to analyze the peeling decode for the approximate matching case separately since the peeling decoder runs the Singleton-Decoder algorithm on a bin only if it was either originally a singleton or originally a double-ton and one of the variable nodes has been peeled off. Note that this is in contrast to the exact matching case where the peeling decoder runs the Singleton-Decoder on a bin irrespective of it's original degree.
+\begin{lemma}
+[Approximate Matching]
+The oracle based peeling decoder in the approximate matching case, for $d=3$ and $F=\eta L$:
+\begin{itemize}
+\item successfully uncovers all but a vanishingly small fraction, i.e. $o(L)$, of the matching positions with probability at least $1-e^{-\beta \epsilon_1^2k^{1/(4l+1)}}$ for some constants $\beta,\epsilon_1>0$ and $l>0.$
+\end{itemize}
 \end{lemma}
