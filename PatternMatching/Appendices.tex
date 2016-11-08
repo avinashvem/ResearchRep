@@ -127,7 +127,24 @@ We will analyze the singleton identification in two separate cases:
 \begin{itemize}
 \item $\mc{E}_{21}$: Event where the position is identified incorrectly when the bin is classified  correctly a singleton
 \item $\mc{E}_{22}$: In the case of approximate matching, event where the position is identified incorrectly when the bin is originally a double-ton and one of the non-zero variable nodes has already been peeled off
-\end{itemize} 
+\end{itemize}
+
+\begin{definition}[Mutual Incoherence]
+	The mutual incoherence $\mu_{\text{max}}( \mb{W})$ of a matrix $\mb{W} = [\wv_1 ~ \wv_2 ~ \cdots \wv_i \cdots \wv_N ]$ is defined as 
+	
+	\[\mu_{\text{max}}(\mb{W}) \defeq \max \limits_{\forall i \neq j} \frac{|\wv_i^{\dagger} \wv_j |}{||\wv_i || . ||\wv_j ||} \]
+	
+\end{definition}
+\begin{lemma}[Mutual Incoherence Bound for sub-sampled IDFT matrix] \label{lemma:MutualCoherence}
+	The mutual incoherence $\mu_{\text{max}} (\mb{W_{i,k}})$ of the sensing matrix $\mb{W}_{i,k}$ (defined in Eq.~\ref{Eqn:Sensing Matrix}), with $B$ shifts, is upper bounded by
+	
+	\[ \mu_{\text{max}} < 2\sqrt{\frac{\log(5N)}{B}} \] 
+	
+\end{lemma}
+\begin{proof}
+	The proof follows similar lines as the proof for Lemma V.3. in \cite{pawar2014robust}.
+\end{proof}
+ 
 \begin{lemma}
 For the choice of $B=4c_1^2\log 5N$, the probability of error in identifying the position of a singleton at any bin $(i,j)$ can be upper bounded by
 \begin{align*}
@@ -136,7 +153,7 @@ For the choice of $B=4c_1^2\log 5N$, the probability of error in identifying the
 \end{lemma}
 \begin{proof}
 	
-	Let $j_p$ be the variable node participating in the singleton $(i,j)$. Then the observation vector $\zv{i,j}$ is given by
+	Let $j_p$ be the variable node participating in the singleton $(i,j)$. Then the observation vector $\zv_{i,j}$ is given by
 	\begin{align*}
 	\underline{z}_{i,j} &= \begin{bmatrix}
 	\wv_{j_{1}},\wv_{j_2}, & \cdots   & \wv_{j_p}, &\cdots \ &\wv_{j_{f_i}}
@@ -171,61 +188,61 @@ For the choice of $B=4c_1^2\log 5N$, the probability of error in identifying the
 	&\leq\exp\left\lbrace-\frac{2M(1-2\eta)^2(c_1-1)^2}{16(f_i+c_1^2)}\right\rbrace\\
 	&\approx\exp\left\lbrace-\frac{N^{\mu-\alpha}(1-2\eta)^2(c_1^2-1)}{8(c_1^2+1)}\right\rbrace\\
 	\end{align*}
-	where for the choice of $B=4c_1^2\log 5N$, $\mu_{\max}\leq 2\sqrt{\frac{\log 5N}{B}}\leq 1/c_1$.
+	The second inequality follows by the definition of  $\mu_{\text{max}} \leq 1$.  We choose $B=4c_1^2\log 5N$, and substituting $\mu_{\max}\leq 2\sqrt{\frac{\log 5N}{B}} = 1/c_1$ (Lemma \ref{lemma:MutualCoherence}) we get the third inequality.
 	
 \end{proof}
 \begin{lemma}
-For the choice of $B=4c_1^2\log 5N$,the probability of error in identifying the position of second non-zero variable node at a double-ton at any bin $(i,j)$, given that the first position identification is correct, can be upper bounded by
-\begin{align*}
-\mbb{P}[\mc{E}_{22}]\leq  \exp\left\lbrace-\frac{N^{\mu - \alpha }~(c_1+1)^2}{8}\right\rbrace
-\end{align*}
+	For the choice of $B=4c_1^2\log 5N$,the probability of error in identifying the position of second non-zero variable node at a double-ton at any bin $(i,j)$, given that the first position identification is correct, can be upper bounded by
+	\begin{align*}
+		\mbb{P}[\mc{E}_{22}]\leq \exp\left\lbrace-\frac{N^{\mu - \alpha} ~ (c_1(1 - 2\eta) - 1)^2}{8(1+ c_1^2)}\right\rbrace
+	\end{align*}
 \end{lemma}
 \begin{proof}
-
-{\bf $\mc{E}_{22}$:}
-
-Let $j_p$ and $j_{\tilde{p}}$ be the two variable nodes participating in the doubleton $(i,j)$. Then the observation vector $\zv{i,j}$ is given by 
-
-\begin{align*}
-\underline{z}_{i,j} &= \begin{bmatrix}
-\wv_{j_{1}},\wv_{j_2}, & \cdots   & \wv_{j_p}, &\cdots \ &\wv_{j_{f_i}}
-\end{bmatrix} \times
-\begin{bmatrix}
-n_{1} \\
-\vdots \\
-r[j_p]\\
-\vdots\\
-n_{j} \\
-\vdots\\
-r[j_{\tilde{p}}]\\
-\vdots\\
-n_{f_i}\\
-\end{bmatrix}\\
-&= r[j_p] ~ \wv_{j_p} + r[j_{\tilde{p}}] ~ \wv_{j_{\tilde{p}}} + \sum_{k \neq p}n_k \wv_{j_k} \\
-\end{align*}
-where for convenience we use a simpler notation $j_k=j+(k-1)\frac{N}{f_i}, \wv_{j_k}=\wv^{j_k}$ as defined in Eq. and $n_{l}=\sum\limits_{k=0}^{M-1}x[\theta_{\ell}+k]y[k]$ as defined in Eq. \eqref{Eqn:BinCombination}.
-
-Let the contribution from $j_{\tilde{p}}$ be peeled off from the doubleton at some iteration, then we get
-\[ \zv_{i,j} = r[j_p] ~ \wv_{j_p} \pm \eta M ~ \wv_{j_{\tilde{p}}} + \sum_{k \neq p}n_k \wv_{j_k}\]
-
-Notice that $\eta M ~ \wv_{j_{\tilde{p}}}$ is an extra error term induced due to peeling off.
-Now the estimated second position $\hat{p}$ is calculated using the Eq. \eqref{Eqn:SingletonBinCombination}. We can observe that the position is wrongly identified when $\exists p'$ such that
-\[ \frac{\wv_{j_p}^{\dagger}\underline{z}_{i,j}}{B} \leq \frac{\wv_{j_{p'}}^{\dagger}\underline{z}_{i,j}}{B}\]
-\begin{align*}
- &\implies r[j_p] + \frac{1}{B}\sum_{k \neq p, \tilde{p}} n_k 	\wv_{j_p}^{\dagger}\wv_{j_k} \pm \frac{\eta M}{B} \wv_{j_p}^{\dagger}\wv_{j_{\tilde{p}}}  \leq \frac{r[j_p]}{B} ~ \wv_{j_{p'}}^{\dagger}\wv_{j_p}+ n_{p'}+\frac{1}{B}\sum_{k \neq p,p',\tilde{p}}n_k\wv_{j_{p'}}^{\dagger} \wv_{j_k} \pm \frac{\eta M}{B} \wv_{j_{p'}}^{\dagger}\wv_{j_{\tilde{p}}}\\
-&\leftrightarrow \sum_{k \neq p,p',\tilde{p}}\alpha_k n_k+ (\beta n_{p'} - M) \geq  r[j_p]\left(1-\frac{\wv_{j_{p'}}^{\dagger}\wv_{j_p}}{B}\right) - \frac{2 \eta M}{B} \wv_{j_{p'}}^{\dagger}\wv_{j_{\tilde{p}}} - M
-\end{align*}
-\[~~~~~~~~~~~~~~~~~~~\geq M(1-2\eta)(1-\mu_{\text{max}}) - M (2\eta \mu_{\text{max}} + 1) = -M(\mu_{\text{max}}+2\eta)                           
-\]
-where $\alpha_k$ and $\beta$ are constants and can be shown to be in the range $\alpha_k\in[-2\mu_\text{max},2\mu_\text{max}]$ and $\beta\in[1-\mu_\text{max},1+\mu_\text{max}]$. Now using the bound given by Chernoff Lemma in Lem.~\ref{Lem:Chernoff2} we obtain
-\begin{align*}
-\mbb{P}[\mc{E}_{22}]&\leq \exp\left\lbrace-\frac{2M(1+\mu_{\text{max}})^2}{16(f_i-3)\mu^2_{\max}+4{\mu_{\max}}^2}\right\rbrace\\
-&\leq\exp\left\lbrace-\frac{2M(1+\mu_{\text{max}})^2}{16 f_i \mu^2_{\max}}\right\rbrace\\
-&\leq\exp\left\lbrace-\frac{M(c_1+1)^2}{8 f_i}\right\rbrace\\
-&\approx\exp\left\lbrace-\frac{N^{\mu - \alpha }~(c_1+1)^2}{8}\right\rbrace\\
-\end{align*}
-where for the choice of $B=4c_1^2\log 5N$, $\mu_{\max}\leq 2\sqrt{\frac{\log 5N}{B}} = 1/c_1$.
-
+	
+	{\bf $\mc{E}_{22}$:}
+	
+	Let $j_p$ and $j_{\tilde{p}}$ be the two variable nodes participating in the doubleton $(i,j)$. Then the observation vector $\zv_{i,j}$ is given by 
+	
+	\begin{align*}
+		\underline{z}_{i,j} &= \begin{bmatrix}
+			\wv_{j_{1}},\wv_{j_2}, & \cdots   & \wv_{j_p}, &\cdots \ &\wv_{j_{f_i}}
+		\end{bmatrix} \times
+		\begin{bmatrix}
+			n_{1} \\
+			\vdots \\
+			r[j_p]\\
+			\vdots\\
+			n_{j} \\
+			\vdots\\
+			r[j_{\tilde{p}}]\\
+			\vdots\\
+			n_{f_i}\\
+		\end{bmatrix}\\
+		&= r[j_p] ~ \wv_{j_p} + r[j_{\tilde{p}}] ~ \wv_{j_{\tilde{p}}} + \sum_{k \neq p}n_k \wv_{j_k} \\
+	\end{align*}
+	
+	Let the contribution from $j_{\tilde{p}}$ be peeled off from the doubleton at some iteration, then we get
+	\[ \zv_{i,j} = r[j_p] ~ \wv_{j_p} + \frac{e_1}{B} ~ \wv_{j_{\tilde{p}}} + \sum_{k \neq p}n_k \wv_{j_k}\]
+	
+	where $e_1 \in[-\eta M, \eta M]$ is an extra error term induced due to peeling off.
+	
+	Now the estimated second position $\hat{p}$ is calculated using Eq. \eqref{Eqn:SingletonBinCombination}. We can observe that the position is wrongly identified when $\exists p'$ such that
+	\[ \frac{\wv_{j_p}^{\dagger}\underline{z}_{i,j}}{B} \leq \frac{\wv_{j_{p'}}^{\dagger}\underline{z}_{i,j}}{B}\]
+	\begin{align*}
+		&\implies r[j_p] + \frac{1}{B}\sum_{k \neq p, \tilde{p}} n_k 	\wv_{j_p}^{\dagger}\wv_{j_k} + \frac{e_1}{B} \wv_{j_p}^{\dagger}\wv_{j_{\tilde{p}}}  \leq \frac{r[j_p]}{B} ~ \wv_{j_{p'}}^{\dagger}\wv_{j_p}+ n_{p'}+\frac{1}{B}\sum_{k \neq p,p',\tilde{p}}n_k\wv_{j_{p'}}^{\dagger} \wv_{j_k} + \frac{e_1}{B} \wv_{j_{p'}}^{\dagger}\wv_{j_{\tilde{p}}}\\
+		&\leftrightarrow \sum_{k \neq p,p',\tilde{p}}\alpha_k n_k+ \beta n_{p'}  \geq  r[j_p]\left(1-\frac{\wv_{j_{p'}}^{\dagger}\wv_{j_p}}{B}\right) - \frac{2 \eta M}{B} \wv_{j_{p'}}^{\dagger}\wv_{j_{\tilde{p}}}
+	\end{align*}
+	\[~~\geq M(1-2\eta)(1-\mu_{\text{max}}) - 2 \eta M \mu_{\text{max}} = M(1 - 2\eta - \mu_{\text{max}})                         
+	\]
+	where $\alpha_k$ and $\beta$ are constants and can be shown to be in the range $\alpha_k\in[-2\mu_\text{max},2\mu_\text{max}]$ and $\beta\in[1-\mu_\text{max},1+\mu_\text{max}]$. Now using the bound given by Chernoff Lemma in Lem.~\ref{Lem:Chernoff2} we obtain
+	\begin{align*}
+		\mbb{P}[\mc{E}_{22}]&\leq \exp\left\lbrace-\frac{2M(1 - 2\eta - \mu_{\text{max}})^2}{16f_i\mu^2_{\max}+4(1+\mu_{\max})^2}\right\rbrace\\
+		&\leq\exp\left\lbrace-\frac{2M(1 - 2\eta - \mu_{\text{max}})^2}{16(f_i\mu^2_{\max}+1)}\right\rbrace\\
+		&\leq\exp\left\lbrace-\frac{M(c_1(1 - 2\eta) - 1)^2}{8(f_i+c_1^2)}\right\rbrace\\
+		&\leq\exp\left\lbrace-\frac{N^{\mu - \alpha} ~ (c_1(1 - 2\eta) - 1)^2}{8(1+ c_1^2)}\right\rbrace\\
+	\end{align*}
+	where for the choice of $B=4c_1^2\log 5N$, $\mu_{\max}\leq 2\sqrt{\frac{\log 5N}{B}} = 1/c_1$.
+	
 \end{proof}
 
 \begin{lemma}
