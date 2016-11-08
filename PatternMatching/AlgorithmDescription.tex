@@ -69,14 +69,18 @@ where $n_i\coleq \frac{N}{f_i}$ to obtain $\Rv^{s}_{i,j}=\Rv[\mc{S}_{i,j}]$. The
 More formally we can write the relationship between the the observation vectors $\rv^b_{i,j}$ at bin $(i,j)$ and sparse vector to be estimated $\rv$ as:
 \begin{align}
 \label{Eqn:Generator Equation}
-\rv^b_{i,k}=\left[\underline{w}^{k},\underline{w}^{k+n_i},\ldots, \underline{w}^{k+(f_i-1)n_i}\right]
+\rv^b_{i,k}= \mb{W}_{i,k}
 \begin{bmatrix}
 	 r[k+(0)n_i] \\
 	 r[k+(1)n_i] \\
 	 \vdots\\
 	 r[k+(f_i-1)n_i]
 \end{bmatrix}
-\qquad \text{ where }   \underline{w}^{k}=
+\end{align}
+
+where we refer to $\mb{W}_{i,k}$ as the sensing matrix at the bin $(i,k)$ and is defined as  
+\begin{align}\label{Eqn:Sensing Matrix}
+ \mb{W}_{i,k} = \left[\underline{w}^{k},\underline{w}^{k+n_i},\ldots, \underline{w}^{k+(f_i-1)n_i}\right] \text{and} ~\underline{w}^{k}=
 \begin{bmatrix}
 e^{\frac{j2\pi ks_1}{N}}\\
 e^{\frac{j2\pi ks_2}{N}}\\
@@ -84,6 +88,7 @@ e^{\frac{j2\pi ks_2}{N}}\\
 e^{\frac{j2\pi ks_B}{N}}
 \end{bmatrix}
 \end{align}
+
 
 \begin{figure}[h!]
 	\begin{center}

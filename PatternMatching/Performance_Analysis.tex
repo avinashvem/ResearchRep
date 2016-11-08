@@ -41,7 +41,24 @@ We will analyze the singleton identification in two separate cases:
 \begin{itemize}
 \item $\mc{E}_{21}$: Event where the position is identified incorrectly when the bin is classified  correctly a singleton
 \item $\mc{E}_{22}$: In the case of approximate matching, event where the position is identified incorrectly when the bin is originally a double-ton and one of the non-zero variable nodes has already been peeled off
-\end{itemize} 
+\end{itemize}
+
+\begin{definition}[Mutual Incoherence]
+	The mutual incoherence $\mu_{\text{max}}( \mb{W})$ of a matrix $\mb{W} = [\wv_1 ~ \wv_2 ~ \cdots \wv_i \cdots \wv_N ]$ is defined as 
+	
+	\[\mu_{\text{max}}(\mb{W}) \defeq \max \limits_{\forall i \neq j} \frac{|\wv_i^{\dagger} \wv_j |}{||\wv_i || . ||\wv_j ||} \]
+		
+\end{definition}
+\begin{lemma}[Mutual Incoherence Bound for sub-sampled IDFT matrix]
+	The mutual incoherence $\mu_{\text{max}} (\mb{W_{i,k}})$ of the sensing matrix $\mb{W}_{i,k}$ (defined in Eq.~\ref{Eqn:Sensing Matrix}), with $B$ shifts, is upper bounded by
+	
+	\[ \mu_{\text{max}} < 2\sqrt{\frac{\log(5N)}{B}} \] 
+	
+\end{lemma}
+\begin{proof}
+	The proof follows similar lines as the proof for Lemma V.3. in \cite{pawar2014robust}.
+\end{proof}
+ 
 \begin{lemma}
 For the choice of $B=4c_1^2\log 5N$, the probability of error in identifying the position of a singleton at any bin $(i,j)$ can be upper bounded by
 \begin{align*}
@@ -85,7 +102,7 @@ For the choice of $B=4c_1^2\log 5N$, the probability of error in identifying the
 	&\leq\exp\left\lbrace-\frac{2M(1-2\eta)^2(c_1-1)^2}{16(f_i+c_1^2)}\right\rbrace\\
 	&\approx\exp\left\lbrace-\frac{N^{\mu-\alpha}(1-2\eta)^2(c_1^2-1)}{8(c_1^2+1)}\right\rbrace\\
 	\end{align*}
-The second inequality follows by the definition of  $\mu_{\text{max}} \leq 1$. We choose $B=4c_1^2\log 5N$, and substituting $\mu_{\max}\leq 2\sqrt{\frac{\log 5N}{B}} = 1/c_1$ we get the third inequality.
+The second inequality follows from the definition of  $\mu_{\text{max}} \leq 1$. We choose $B=4c_1^2\log 5N$, and substituting $\mu_{\max}\leq 2\sqrt{\frac{\log 5N}{B}} = 1/c_1$ we get the third inequality.
 	
 \end{proof}
 \begin{lemma}
