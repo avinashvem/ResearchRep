@@ -39,13 +39,13 @@ Given that a bin $(i,j)$ is correctly classified as a singleton, the probability
 \end{lemma}
 
 \subsection{\bf Peeling Process}
-To analyze the peeling process alone independently, we refer to a {\it oracle based peeling decoder} which has the accurate classification of all the bins and given a singleton bin, at any iteration, can accurately identify the position of the singleton. In other words, oracle based peeling decoder is the peeling part of our decoding scheme but with the assumption that the bin classification and position identification are carried out without any error.
+To analyze the peeling process alone independently, we refer to a {\it oracle based peeling decoder} which has the accurate classification of all the bins and can accurately  identify the position of the singleton given a singleton bin at any iteration. In other words, oracle based peeling decoder is the peeling part of our decoding scheme but with the assumption that the bin classification and position identification are carried out without any error.
 \begin{lemma}
 [Exact Matching]
-The oracle based peeling decoder in the exact matching case, for $d=3$ and $F=\eta L$ for any $\eta>0.4073$:
+For the exact matching case, for $F=\eta N^\alpha$ where $\eta$ is chosen as given in Table. \ref{Table:EtaValues}, the oracle based peeling decoder:
 \begin{itemize}
-\item successfully uncovers all the matching positions with probability at least $1-O(1/dF)$
-\item successfully uncovers all but a vanishingly small fraction, i.e. $o(L)$, of the matching positions with probability at least $1-e^{-\beta \epsilon_1^2k^{1/(4l+1)}}$ for some constants $\beta,\epsilon_1>0$ and $l>0.$
+\item successfully uncovers all the $L$ matching positions if $L<N^{\alpha}$, with probability at least $1-O(1/dF)$
+\item successfully uncovers all but a vanishingly small fraction, i.e. $o(L)$, of the matching positions if $L<N^{\alpha}$, with probability at least $1-e^{-\beta \epsilon_1^2k^{1/(4l+1)}}$ for some constants $\beta,\epsilon_1>0$ and $l>0.$
 \end{itemize}
 \end{lemma}
 \begin{proof}
