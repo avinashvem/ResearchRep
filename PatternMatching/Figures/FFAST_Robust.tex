@@ -1,13 +1,13 @@
 \begin{tikzpicture}
 
  % Downsampling blocks
-\node[draw,align=center,thick,line  width =2pt] at (1.8,4.5) {\Large{$\mathbf{\downarrow} f_2$} };
-\node[draw,align=center,thick,line  width =2pt] at (1.8,5.7) {\Large{$\mathbf{\downarrow} f_2$ }};
-\node[draw,align=center,thick,line  width =2pt] (v6) at (1.8,2.7) {\Large{$\mathbf{\downarrow} f_2$ }};
+\node[draw,align=center,thick,line  width =2pt] at (1.8,4.5) {\Large{$\mathbf{\downarrow} \frac{N}{f_2}$} };
+\node[draw,align=center,thick,line  width =2pt] at (1.8,5.7) {\Large{$\mathbf{\downarrow} \frac{N}{f_2}$ }};
+\node[draw,align=center,thick,line  width =2pt] (v6) at (1.8,2.7) {\Large{$\mathbf{\downarrow} \frac{N}{f_2}$ }};
 
-\node[draw,align=center,thick,line  width =2pt] at (1.8,9.4) {\Large{$\mathbf{\downarrow} f_1$} };
-\node[draw,align=center,thick,line  width =2pt] at (1.8,10.6) {\Large{$\mathbf{\downarrow} f_1$ }};
-\node[draw,align=center,thick,line  width =2pt] at (1.8,7.6) {\Large{$\mathbf{\downarrow} f_1$ }};
+\node[draw,align=center,thick,line  width =2pt] at (1.8,9.4) {\Large{$\mathbf{\downarrow} \frac{N}{f_1}$} };
+\node[draw,align=center,thick,line  width =2pt] at (1.8,10.6) {\Large{$\mathbf{\downarrow} \frac{N}{f_1}$ }};
+\node[draw,align=center,thick,line  width =2pt] at (1.8,7.6) {\Large{$\mathbf{\downarrow} \frac{N}{f_1}$ }};
 
 %  Input lines to the down-sampling block
 
@@ -26,10 +26,10 @@
  \draw[thick,line  width =2pt] (1.3,9.4) -- (0.6,9.4);
  
 
-\node[line  width =2pt] at (-0.6,9.1) {\Huge${\vdots}$};
-\node[line  width =2pt] at (0.2,8.7) {\Huge${\vdots}$};
-\node[line  width =2pt] at (-0.5,4.2) {\Huge${\vdots}$};
-\node[line  width =2pt] at (0.2,3.8) {\Huge${\vdots}$};
+\node[line  width =2pt] at (-0.6,9.1) {\Huge{\vdots}};
+\node[line  width =2pt] at (0.2,8.7) {\Huge{\vdots}};
+\node[line  width =2pt] at (-0.5,4.2) {\Huge{\vdots}};
+\node[line  width =2pt] at (0.2,3.8) {\Huge{\vdots}};
 
  \draw[thick,line  width =2pt] (1.3,10.6) -- (0.6,10.6);
  \draw[thick,line  width =2pt] (-0.6,9.4) -- (-0.6,10.6);
@@ -44,13 +44,13 @@
   
   
   % DFT blocks
-\node[draw,align=center,thick,line  width =2pt] at (5.8,4.5) {\Large{$\tilde{N}/f_2$ IDFT}};
-\node[draw,align=center,thick,line  width =2pt] at (5.8,5.7) {\Large{$\tilde{N}/f_2$ IDFT}};
-\node[draw,align=center,thick,line  width =2pt] at (5.8,2.7) {\Large{$\tilde{N}/f_2$ IDFT}};
+\node[draw,align=center,thick,line  width =2pt] at (5.8,4.5) {\Large{$f_1$ IDFT}};
+\node[draw,align=center,thick,line  width =2pt] at (5.8,5.7) {\Large{$f_2$ IDFT}};
+\node[draw,align=center,thick,line  width =2pt] at (5.8,2.7) {\Large{$f_2$ IDFT}};
 
-\node[draw,align=center,thick,line  width =2pt] at (5.8,9.4) {\Large{$\tilde{N}/f_1$ IDFT}};
-\node[draw,align=center,thick,line  width =2pt] at (5.8,10.6) {\Large{$\tilde{N}/f_1$ IDFT}};
-\node[draw,align=center,thick,line  width =2pt] at (5.8,7.6) {\Large{$\tilde{N}/f_1$ IDFT}};
+\node[draw,align=center,thick,line  width =2pt] at (5.8,9.4) {\Large{$f_1$ IDFT}};
+\node[draw,align=center,thick,line  width =2pt] at (5.8,10.6) {\Large{$f_1$ IDFT}};
+\node[draw,align=center,thick,line  width =2pt] at (5.8,7.6) {\Large{$f_1$ IDFT}};
 % Connectors
  \draw[->,thick,line  width =2pt] (2.35,10.6) -- (4.45,10.6);
  \draw[->,thick,line  width =2pt] (2.35,9.4) -- (4.45,9.4);
@@ -95,25 +95,25 @@
   \node[draw=none,align=center] at (11,9.8) {\Large{$\underline{r}^{b}_{1,2}$}};
   \node[draw=none,align=center] at (11,8.1) {\Large{$\underline{r}^{b}_{1,n_1}$}};
   
-     \node [draw=none] at (11,9) {\Huge${\vdots}$} ;
+     \node [draw=none] at (11,9) {\Huge{\vdots}} ;
    
   \node[draw=none,align=center] at (8,6.1) {\Large{$\underline{r}^{s}_{2,1}$}};
   \node[draw=none,align=center] at (8,4.9) {\Large{$\underline{r}^{s}_{2,2}$}};
   \node[draw=none,align=center] at (8.1,3.2) {\Large{$\underline{r}^{s}_{2,B}$}};
   
-  \node [draw=none] at (11,4) {\Huge${\vdots}$} ;
+  \node [draw=none] at (11,4) {\Huge{\vdots}} ;
   
     \node[draw=none,align=center] at (11,6.1) {\Large{$\underline{r}^{b}_{2,1}$}};
   \node[draw=none,align=center] at (11,4.9) {\Large{$\underline{r}^{b}_{2,2}$}};
   \node[draw=none,align=center] at (11,3.2) {\Large{$\underline{r}^{b}_{2,n_2}$}};
   
-  \node [draw=none] at (-2,4.5) {\Huge${\vdots}$} ;
+  \node [draw=none] at (-2,4.5) {\Huge{\vdots}} ;
   
    \node[draw=none,align=center] at (-1.3,10.2) {\color{red}$Stage ~1$};
   \node[draw=none,align=center] at (-1.3,5.3) {\color{red}$Stage ~2$};
    \node[draw=none,align=center] at (-1.3,0.8) {\color{red}$Stage ~d$};
 \draw [thick,line  width =2pt](-2,2) -- (-2,1.2) -- (-0.1,1.2) ;
- \node[draw=none,align=center] at (1.8,1.2) {\Huge${\ldots}$};
+ \node[draw=none,align=center] at (1.8,1.2) {\Huge{\ldots}};
  
 \draw [thick,line  width =2pt] (11.8,0.2424) rectangle (14,11.8);
 \node (v1) at (7,1.2) {};
@@ -125,7 +125,7 @@
 
 
 \draw  [->,thick,line  width =2pt](v1) edge (v2);
-\node at (8,1.9) {\Huge${\vdots}$};
+\node at (8,1.9) {\Huge{\vdots}};
 \node [text width=3cm, align =center ] at (12.9,6.4) {\Large \bf Peeling \\ Decoder};
 \node (v3) at (13.9,6.4) {};
 \node (v4) at (15.2,6.4) {};

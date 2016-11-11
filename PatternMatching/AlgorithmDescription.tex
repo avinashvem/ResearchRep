@@ -38,7 +38,7 @@ Since $\rv$ is sparse, we use a Robust Sparse Inverse  Discrete Fourier Transfor
 \label{subsec:RSIDFT}	
 	  Let $ \Rv  =  \Xv \odot \Yv'$ be the FFT of the cross-correlation of $\xv$ and $\yv$. We will see in Sec.~\ref{subsec:skteches} how do we compute the required samples of $\Xv$ and $\Yv$ but for this section we will assume that $\Xv$ and $\Yv$ are available and the required samples of $\Rv$ is computed and input to RSIDFT framework. The RSIDFT framework computes the $L$ dominant coefficients of $\rv$ by using only a sub-sampled version of $\Rv$.\\
 	  	  
-Consider the RSIDFT framework shown in Figure~\ref{fig:rsidft}. The framework consists of {\it $d$-stages}, each with a different sub-sampling factor $f_i$ computed as following. Let $N = P_1 \times P_2 \times \cdots P_d$ be the prime factorization of $N$, the length of the signal $\xv$. For a given $\alpha$, we choose distinct $f_i = \prod P_j$, $i \in [d]$ such that $f_i \approxeq N^{\alpha} $. In each stage, there are {\it $B$ branches} with shifts from $\underline{s}\ = [s_1, s_2, \cdots s_B] $, where $s_1 =0$ in the first branch and the rest chosen randomly from $[N^{\alpha}]$. We can also carefully choose the shifts to satisfy mutual coherence property and restricted isometric property described in the analysis section.\\
+Consider the RSIDFT framework shown in Figure~\ref{fig:rsidft}. The framework consists of {\it $d$-stages} with each stage correpsonding to a sub-sampling factor of $\frac{N}{f_i}$. The design scheme for choosing parameters $\{f_1,f_2,\ldots,f_d\}$ for various regimes of $\mu$ such that $f_i | N$ and $f_i=N^{\alpha}+O(1) \forall i$ are given in \ref{subsec:DesignParameters}. In each stage, there are {\it $B$ branches} with shifts from $\underline{s}\ = [s_1, s_2, \cdots s_B] $, where $s_1 =0$ in the first branch and the rest chosen randomly from $[N^{\alpha}]$. We can also carefully choose the shifts to satisfy mutual coherence property and restricted isometric property described in the analysis section.\\
 	   
 	 \begin{figure}[h!]
 	 	\begin{center}
@@ -52,11 +52,11 @@ Consider the RSIDFT framework shown in Figure~\ref{fig:rsidft}. The framework co
 	 Given the input $\Rv$, in branch $j$ of $i^{\text{th}}$ stage or referred to as \textit{branch $(i,j)$} for convenience, RSIDFT sub-samples the signal $\Rv$ at
 \begin{align}
 \label{Eqn:SamplingSets}
-	 \mathcal{S}_{i,j} \coleq \{s_j,\ s_j + f_i,\ s_j + 2f_i,\ \cdots s_j + n_i f_i\},
+	 \mathcal{S}_{i,j} \coleq \{s_j,\ s_j + n_i,\ s_j + 2n_i,\ \cdots s_j + (f_i-1) n_i\},
 \end{align}
-where $n_i\coleq \frac{N}{f_i}$ to obtain $\Rv^{s}_{i,j}=\Rv[\mc{S}_{i,j}]$. The sub-sampling operation is followed by a $n_i$-point IDFT in each branch of stage $i$ to obtain $ \rv^{s}_{i,j}$. Notice that $ \rv^{s}_{i,j}$ is an aliased version of $\rv$ due to the property that sub-sampling in Fourier domain is equivalent to aliasing in time domain.\\
+where $n_i\coleq \frac{N}{f_i}$ to obtain $\Rv^{s}_{i,j}=\Rv[\mc{S}_{i,j}]$. The sub-sampling operation is followed by a $f_i$-point IDFT in each branch of stage $i$ to obtain $ \rv^{s}_{i,j}$. Notice that $ \rv^{s}_{i,j}$ is an aliased version of $\rv$ due to the property that sub-sampling in Fourier domain is equivalent to aliasing in time domain.\\
 
-	 Let $\rv^{b}_{i,k}$ be the  vector of observations that is formed by combining all $k^{\text{th}}$ coefficients of $\rv^{s}_{i,k}$ (belonging to stage $i$) together as a vector, where $k\in [0:n_i-1]$, i.e.
+	 Let $\rv^{b}_{i,k}$ be the  vector of observations that is formed by combining all $k^{\text{th}}$ coefficients of $\rv^{s}_{i,k}$ (belonging to stage $i$) together as a vector, where $k\in [0:f_i-1]$, i.e.
 \[
 	  \rv^{b}_{i,k} = \begin{bmatrix}
 	 r^{s}_{i,1}[k] \\
@@ -71,16 +71,16 @@ More formally we can write the relationship between the the observation vectors 
 	\label{Eqn:Generator Equation}
 	\rv^b_{i,k}= \mb{W}_{i,k} \times
 	\begin{bmatrix}
-		r[k+(0)n_i] \\
-		r[k+(1)n_i] \\
+		r[k+(0)f_i] \\
+		r[k+(1)f_i] \\
 		\vdots\\
-		r[k+(f_i-1)n_i]
+		r[k+(n_i-1)f_i]
 	\end{bmatrix}
 \end{align}
 
-where we refer to $\mb{W}_{i,k}$ as the sensing matrix at bin $(i,k)$ and is defined as  
+where we refer to $\mb{W}_{i,k}$ as the sensing matrix at bin $(i,k)$ and can be defined as  
 \begin{align}\label{Eqn:Sensing Matrix}
-	\mb{W}_{i,k} = \left[\underline{w}^{k},\underline{w}^{k+n_i},\ldots, \underline{w}^{k+(f_i-1)n_i}\right] \text{and} ~\underline{w}^{k}=
+	\mb{W}_{i,k} = \left[\underline{w}^{k},\underline{w}^{k+f_i},\ldots, \underline{w}^{k+(n_i-1)f_i}\right] \text{and} ~\underline{w}^{k}=
 	\begin{bmatrix}
 		e^{\frac{j2\pi ks_1}{N}}\\
 		e^{\frac{j2\pi ks_2}{N}}\\
@@ -207,6 +207,26 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 \end{algorithmic}
 \end{algorithm}
 
+\subsubsection{Choosing $\alpha$ and $f_i$ for various $\mu$}
+\label{subsec:DesignParameters}
+For a given value of $\mu$, we will describe how to choose the parameters $d$ and $f_i$.\\
+{\it Exact Matching}: Find $d\in \mbb{Z}_+$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1})\cup(1-\frac{1}{d-1},1-\frac{1}{d})$\\
+{\it Approximate Matching}: If $\mu\in(\frac{1}{8},\frac{7}{8})$, choose $d=8$. Else find $d\in\mathbb{Z}_+$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1})\cup(1-\frac{1}{d-1},1-\frac{1}{d})$ and $d\geq 8$ \\
+
+\begin{itemize}
+\item Find a factorization for signal length $N=\prod_{i=0}^{d-1} \mcl{P}_i$ such that the set of integers $\{\mcl{P}_0,\mcl{P}_1,\ldots,\mcl{P}_{d-1}\}$ are pairwise co-prime and all the $\mcl{P}_i$ are approximately equal
+\item More precisely, let $\mcl{P}_i=\mathbf{F}+O(1) ~\forall i$ and choose $f_i=N/\mcl{P}_i$
+\item Our choice of design parameters results in $f_i\approx N^{\alpha}$ where $\alpha=1-\frac{1}{d}$.
+\end{itemize} 
+
+
+To summarize our choice of design parameters, both in the exact and approximate matching cases, for any $0<\mu<1$, we choose the down-sampling factors $f_i$ to be approximately equal to $N^{\alpha}$ in all the $d$-stages where $\alpha$ satisfies:
+\begin{equation}
+\label{Eqn:IneqMuAlpha}
+\alpha>\max(\mu,1-\mu)
+\end{equation}
+which is easy to verify.
+
 \subsection{Sketches of $\Xv$ and $\Yv$} 
 \label{subsec:skteches}		 
  As we have already seen in Sec.~\ref{subsec:RSIDFT} the RSDIFT framework requires the values of $\Rv(=\Xv\odot \Yv)$ only at indices $\mc{S}$ or in other words we need $\Xv$ and $\Yv$ only at the indices $\mc{S}$. \\
@@ -227,5 +247,6 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 	  \end{equation}
 	  where $n_i=\frac{N}{f_i}$. Taking $n_i$-point DFT of $\yv'_{i,j}$ produces $\Yv'[\mc{S}_{i,j}]$ i.e. $\Yv'$ sampled only at $\mathcal{S}_{i,j}$ indices which is what we need in branch $(i,j)$. To obtain all the samples in $\mathcal{S}$ required for the RSDIFT framework, the \textit{folding} technique needs to be carried out for each $(i,j)$, for $i\in[d],j\in[B]$, a total of $\approx dB~~ N^{1-\alpha}$-point DFTs.
 \end{enumerate}
-%The idea behind this folding technique is to induce aliasing in $\yv'$ and then taking a smaller point Fourier Transform to compute the sub-sampled version $\Yv'$. Aliasing is induced by folding the signal $\yv'$ into blocks of length $N^{1-\alpha}$ and adding them. The desired sub-sampling patterns in frequency domain are induced by multiplying $\yv'$ with suitable exponentials. Let us denote the aliased versions of $\yv'$ by $\yv_{i,j}'$. Then, $\yv_{i,j}'$ is given by
 
+
+%The idea behind this folding technique is to induce aliasing in $\yv'$ and then taking a smaller point Fourier Transform to compute the sub-sampled version $\Yv'$. Aliasing is induced by folding the signal $\yv'$ into blocks of length $N^{1-\alpha}$ and adding them. The desired sub-sampling patterns in frequency domain are induced by multiplying $\yv'$ with suitable exponentials. Let us denote the aliased versions of $\yv'$ by $\yv_{i,j}'$. Then, $\yv_{i,j}'$ is given by
