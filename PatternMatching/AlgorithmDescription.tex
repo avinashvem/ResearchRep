@@ -210,22 +210,18 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 \subsubsection{Choosing $\alpha$ and $f_i$ for various $\mu$}
 \label{subsec:DesignParameters}
 For a given value of $\mu$, we will describe how to choose the parameters $d$ and $f_i$.\\
-{\it Exact Matching}: Find $d\in \mbb{Z}_+$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1})\cup(1-\frac{1}{d-1},1-\frac{1}{d})$\\
-{\it Approximate Matching}: If $\mu\in(\frac{1}{8},\frac{7}{8})$, choose $d=8$. Else find $d\in\mathbb{Z}_+$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1})\cup(1-\frac{1}{d-1},1-\frac{1}{d})$ and $d\geq 8$ \\
-
+{\it Exact Matching}: Find $d\in \mbb{N}\backslash \{1,2\}$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1}]\cup[1-\frac{1}{d-1},1-\frac{1}{d})$\\
+{\it Approximate Matching}: If $\mu\in(\frac{1}{8},\frac{7}{8})$, choose $d=8$. Else find $d\in\mathbb{N}$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1})\cup(1-\frac{1}{d-1},1-\frac{1}{d})$ and $d\geq 8$ 
 \begin{itemize}
 \item Find a factorization for signal length $N=\prod_{i=0}^{d-1} \mcl{P}_i$ such that the set of integers $\{\mcl{P}_0,\mcl{P}_1,\ldots,\mcl{P}_{d-1}\}$ are pairwise co-prime and all the $\mcl{P}_i$ are approximately equal
 \item More precisely, let $\mcl{P}_i=\mathbf{F}+O(1) ~\forall i$ and choose $f_i=N/\mcl{P}_i$
-\item Our choice of design parameters results in $f_i\approx N^{\alpha}$ where $\alpha=1-\frac{1}{d}$.
+\item Note that our choice of design parameters results in $f_i\approx N^{\alpha}$ where $\alpha=1-\frac{1}{d}$.
 \end{itemize} 
-
-
-To summarize our choice of design parameters, both in the exact and approximate matching cases, for any $0<\mu<1$, we choose the down-sampling factors $f_i$ to be approximately equal to $N^{\alpha}$ in all the $d$-stages where $\alpha$ satisfies:
+To summarize our choice of design parameters: In both the exact and approximate matching cases, for any $0<\mu<1$, we choose the down-sampling factors $f_i$ to be approximately equal to $N^{\alpha}$ in all the $d$-stages where $\alpha=\frac{d-1}{d}$ satisfies:
 \begin{equation}
 \label{Eqn:IneqMuAlpha}
-\alpha>\max(\mu,1-\mu)
+\alpha>\max(\mu,1-\mu).
 \end{equation}
-which is easy to verify.
 
 \subsection{Sketches of $\Xv$ and $\Yv$} 
 \label{subsec:skteches}		 
