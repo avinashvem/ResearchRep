@@ -1,4 +1,5 @@
 \section{Description Of The Algorithm}
+\label{sec:Algo_desc}
 %Introduce the system model by explaining the FFAST (dual problem - IFFT) architecture and then describe the decoding algorithm - peeling (multiple matches case) and Product code approach (only one exact match case).      
 In this section we describe our algorithm, with sample and time complexities that are sub-linear in $N$, to find the locations $\underline{\tau} = (\tau_1, \tau_2, \cdots \tau_L)$ in the string $\xv$, where the string (query) $\yv$ matches. This is achieved by computing the cross-correlation $\rv$ of $\xv$ and $\yv$, defined in Eqn.~\eqref{Eqn:DefCrossCorrelation}, and finding the positions where there is a significant peak. 
 
