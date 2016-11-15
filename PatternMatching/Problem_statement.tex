@@ -20,16 +20,20 @@ Both the exact pattern matching problem and the approximate pattern matching pro
 \section{Our Main Results and Relation to Prior Work}
 \label{sec:mainresults}
 \begin{theorem}
-Assume that a sketch of $\xv$ of size $O(N/M)$ can be computed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M$) problems, our algorithm has
+Assume that a sketch of $\xv$ of size $O(N/M)$ can be computed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M$) problems, with the number of matches $L$ scaling as $O(N^{\lambda})$, our algorithm has
 \begin{itemize}
  \item a sketching function for $\yv$ that computes $O(\max(M,\frac{N}{M})\log N)=O(N^{\max(\mu,1-\mu)}\log N)$ samples
- \item a computational complexity of $O(\max(M,\frac{N}{M})L\log^2 N))=O(N^{\max(\mu,1-\mu)}\log N)$
+ \item a computational complexity of 
+ \begin{itemize}
+ \item  $O(N^{\max(1-\mu,\mu+\lambda)}\log^2 N)$ for $\mu<0.5$
+  \item  $O(N^{\max(\mu,1-\mu+\lambda)}\log^2 N)$ for $\mu>0.5$
+\end{itemize} 
  \item a decoder that recovers all the $L$ matching positions with a failure probability that approaches zero asymptotically 
  \end{itemize}
-Particularly when the number of matches $L<\frac{N}{M}$ and $L< M$ or when we are only interested in finding a constant number of matches $L=O(1)$, which are both very practical conditions for many real world problems, our algorithm has a sub-linear time complexity .
+Particularly when we are interested only in finding a constant number of matches $L=O(1)$ or $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$) which is the extreme case of input string $\xv$ being just the repetition of the query $\yv$, which are both very practical assumptions to make for many real world problems, our algorithm has a {\it sub-linear time complexity}.
 \end{theorem}
 \begin{proof}
-We present the proof in Sec.~\ref{sec:analysis} after we describe our scheme and  decoding algorithm in Sec.~\ref{sec:Algo_desc}.
+We present the error performance analysis of our scheme and the proof of decaying error probability in Sec.~\ref{sec:analysis} after we describe our scheme and  decoding algorithm in Sec.~\ref{sec:Algo_desc}. In Sec.~\ref{Sec:Complexity} we present the sample and complexity analyses.
 \end{proof}
 Our paper is inspired by and builds on two recent works by Hassanieh et al in \cite{hassanieh2012faster} and Pawar and Ramchandran \cite{pawar2014robust}. In \cite{hassanieh2012faster}, Hassanieh et al., considered the correlation function computation problem for a Global Positioning System (GPS) receiver and exploited the fact that the cross-correlation vector $\rv$ is a very sparse signal in the time domain and, hence, the Fourier transform of $\rv$ need not be evaluated at all the $N$ points. In the GPS application, which was the focus of \cite{hassanieh2012faster}, the query $\yv$ corresponds to the received signal from the satellites and, hence, the length of the query was at least $N$. As a result, the computational complexity is still $O(N \log N)$ (still linear in $N$) and the only the constants were improved in relation to the approach of computing the entire Fourier transform. In a later paper by Andoni {\em et al.,} \cite{andoni2013shift}, a sub-linear time algorithm for shift finding in GPS is presented; however, this algorithm is completely combinatorial and eschews algebraic techniques such as FFT-based techniques.
 
