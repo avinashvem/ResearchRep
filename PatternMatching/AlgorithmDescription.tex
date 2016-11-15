@@ -1,14 +1,14 @@
 \section{Description Of The Algorithm}
 \label{sec:Algo_desc}
 %Introduce the system model by explaining the FFAST (dual problem - IFFT) architecture and then describe the decoding algorithm - peeling (multiple matches case) and Product code approach (only one exact match case).      
-In this section we describe our algorithm, with sample and time complexities that are sub-linear in $N$, to find the locations $\underline{\tau} = (\tau_1, \tau_2, \cdots \tau_L)$ in the string $\xv$, where the string (query) $\yv$ matches. This is achieved by computing the cross-correlation $\rv$ of $\xv$ and $\yv$, defined in Eqn.~\eqref{Eqn:DefCrossCorrelation}, and finding the positions where there is a significant peak. 
+In this section, given the input string $\xv$ and the query string $\yv$, we describe our algorithm that finds the matching positions $\vmathcal{T}\coleq \{\tau_1, \tau_2, \cdots \tau_L\}$ with sample and time complexities that are sub-linear in $N$. This is achieved by computing the cross-correlation $\rv$ of $\xv$ and $\yv$, defined in Eqn.~\eqref{Eqn:DefCrossCorrelation}, and finding the positions where there is a significant peak. 
 
-The main idea here is that $\RXYv$ is sparse (upto some noise) with dominant peaks at $L$ positions ($\tau$) where the strings match, and noise components at $N-L$ positions where the strings do not match. Consider the case of exact matching,
+The main idea here is that the correlation vector $\rv$ is sparse (upto some noise) with dominant peaks at $L$ matching positions denoted by $\mc{T}$ and noise components at $N-L$ positions where the strings do not match. Consider the case of exact matching:
 \begin{equation} \label{eqn:RXY_sparse}
 r[m] \ = \left\{
 \begin{array}{ll}
-  &M , \ \ \  \text{if} \ m \in \mathcal{T} \\
-  & n_m , \ \ \ m \in [N]-\mathcal{T}
+  &M,~~  \text{if} \ m \in \mathcal{T} \\
+  & n_m,~~ m \in [N]-\mathcal{T}
 \end{array} 
 \right.  
 \end{equation}
@@ -94,7 +94,7 @@ where we refer to $\mb{W}_{i,k}$ as the sensing matrix at bin $(i,k)$ and can be
 	\begin{center}
 		\includegraphics[height=7cm]{Figures/Factorgraph} 
 	\end{center}	   
-	\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $d=2$, $B=2$, $N=6$, $f_1 = 2$ and $f_2=3$. The variable nodes (colored gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (uncolored white boxes) represent the binned observation vector $\rv_{i,k}^b$. The figure also illustrates the relationship between $\rv_{i,k}^b$ and $\rv$.}\label{fig:factorgraph}
+	\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $d=2$, $B=2$, $N=6$, $f_1 = 2$ and $f_2=3$. The variable nodes (colored gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (uncolored white boxes) represent the binned observation vector $\rv_{i,k}^{b}$. The figure also illustrates the relationship between $\rv_{i,k}^{b}$ and $\rv$.}\label{fig:factorgraph}
 	\vspace{5 pt}
 \end{figure}
 

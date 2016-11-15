@@ -1,42 +1,39 @@
 \section{Notations}
 
 This table below will introduce the notations we use in this paper.
-
+\begin{table}[h!]
+\label{Table:Notations}
+\caption{Parameters and various quantities involved in describing the algorithm}
 \begin{center}
-	
-	\begin{tabular}{|c|c|}
-		
+	\begin{tabular}{|c|c|}		
+		\hline		
+		Symbol				        &  Notational Meaning \\		
 		\hline
-		
-		Symbol     &  Notational Meaning \\
-		
+		$N$           				& Size of the string or database in symbols \\
 		\hline
-		
-		$N$           & Size of the string or database in symbols \\
+		$M = N^{\mu}$       & Length of the query in symbols \\
 		\hline
-		$M = N^{\mu}$           & Length of the query in symbols \\
-		\hline
-        $L = N^\lambda$  &   Number of matches \\
+        $L = N^\lambda$    &   Number of matches \\
         \hline
         $K$             &$\max_{\tau}d_{H}(\xv[\tau:\tau+M-1],\yv)$\\
         \hline
-		$G = N^\gamma$           & Number of blocks \\
+	    $eta$             &$\frac{K}{M}$\\
+		$G = N^\gamma$    & Number of blocks \\
 		\hline
 		$\tilde{N} = N^{1-\gamma}$   & Length of one block \\
 		\hline
-		$A = N^\alpha$      & Sub-sampling parameter \\
+		$f_i = N^\alpha$     & Length of smaller point IDFT at each branch\\
 		\hline
-		$B$       & Number of shifts  \\
+		$n_i = N/f_i$     	   &  Sub-sampling parameter \\
 		\hline
-		$d$           & Number of stages in the FFAST algorithm \\
+		$B$   					    & Number of shifts also referred to as branches  \\
+		\hline
+		$d$           				& Number of stages in the FFAST algorithm \\
 		\hline
 	\end{tabular}
 \end{center}	
-	
-	\vspace{15pt}
-
-
-We denote vectors using the underbar, time domain signals using lowercase letters and the frequency domain signals using uppercase letter. For example $\xv = (x[1],x[2], \cdots x[N] )$ denotes a time domain signal with $i^{th}$ time component denoted by $x[i]$, and $\Xv= \mathcal{F}\xv$ denotes the Fourier coefficients of $\xv$. Matrices are denoted using uppercases letters. We differentiate a signal from a matrix by having a underbar for a signal vector. We denote the set ${0,1,2\cdots, N-1}$ by $[N]$.
+\end{table}	
+We denote signals and vectors using the standard vector notation of arrow over the letter, time domain signals using lowercase letters and the frequency domain signals using uppercase letter. For example $\xv = (x[0], x[1], \ldots, x[N] )$ denotes a time domain signal with $i^{\text{th}}$ time component denoted by $x[i]$, and $\Xv= \mathcal{F}\xv$ denotes the Fourier coefficients of $\xv$. We denote matrices using boldface upper case letters. We denote the set $\{0,1,2\cdots, N-1\}$ by $[N]$. Note that in Table.~\ref{Table:Notations} we suppose the values of $M$ and $L$ to be $N^{\mu}$ and $N^{\lambda}$ respectively but it is not necessary that these parameters have this form. All our results can be extended straight forwardly to any $M$ and $L$ as long as $M=O(N^{\mu})$ and $L=O(N^{\lambda})$.
 	
 	
 
