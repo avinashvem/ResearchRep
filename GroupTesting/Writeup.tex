@@ -1,6 +1,6 @@
 \documentclass[conference,twocolumn]{IEEEtran}
 
-\newcommand*{\MyPath}{../../Tex}
+\newcommand*{\MyPath}{../bib}
 \input{\MyPath/Preamble.tex}
 \input{\MyPath/Avinash.def}
 \input{\MyPath/Preamble_tikz.tex}
@@ -242,13 +242,13 @@ In this section we extend our scheme to the group testing problem where the test
 where the addition is over binary field and $\mbf{w}\in\{0,1\}^N$ is an i.i.d noise vector distributed according to Bernoulli distribution with parameter $0<q<\frac{1}{2}$.
 
 \subsection*{Testing Scheme}
-In \cite{lee2015saffron} for the robust group testing problem, the signature matrix used for noiseless group testing problem is modified using a error control coding such that it can handle singletons and resolvable doubletons in the presence of noise. The binning operation as definied by the bipartite graph is exactly identical to that of noiseless case. We state the modification to the signature matrix and new bin detection decoding scheme as given in \cite{lee2015saffron} for the sake of completeness and then state the performance bounds for our scheme for the noisy group testing problem.
+In \cite{lee2015saffron} for the robust group testing problem, the signature matrix used for noiseless group testing problem is modified using a error control coding such that it can handle singletons and resolvable doubletons in the presence of noise. The binning operation as definied by the bipartite graph is exactly identical to that of noiseless case. We describe the modifications to the signature matrix and the bin detection decoding scheme as given in \cite{lee2015saffron} for the sake of completeness and then state the performance bounds for our scheme for the noisy group testing problem.
 
 Let $\mc{C}_n$ be a binary error-correcting code with the following definition:
 \begin{itemize}
 \item Let the encoder and decoder functions be $f:\{0,1\}^{n}\rightarrow \{0,1\}^{\frac{n}{R}}$ and $g:\{0,1\}^{\frac{n}{R}}\rightarrow \{0,1\}^{n}$ respectively where $R$ is the rate of the code.
 \end{itemize}
-We can use any error-correcting code but for ease of analysis and tight upper bound for the number of tests we will use spatially-coupled LDPC codes which are known to be capacity achieving \cite{kumar2014threshold,kudekar2013spatially}.For spatially-coupled LDPC codes, being capacity achieving is equivalent to: 
+We can use any error-correcting code but for ease of analysis and tight upper bound for the number of tests we will use spatially-coupled LDPC codes which are known to be capacity achieving \cite{kumar2014threshold,kudekar2013spatially}. For spatially-coupled LDPC codes, being capacity achieving is equivalent to: 
 \begin{itemize}
 \item There exists a sequence of codes $\{\mc{C}_n\}$ with the rate of each code being $R$ satisfying 
 \begin{align}
@@ -256,7 +256,7 @@ We can use any error-correcting code but for ease of analysis and tight upper bo
 R<1-H(q)-\delta=1+q\log_2 q+(1-q)\log_2(1-q)-\delta
 \end{align}
 %where $H(q)=-q\log_2 q-(1-q)\log_2(1-q)$, 
-for any arbitrary small constant $\delta$ such that the probability of error $\text{Pr}\left(g(\mbf{x+w})\neq \mbf{x}\right)<2^{\kappa n}$ for some $\kappa >0$.
+for any arbitrary small constant $\delta$ such that the probability of error $\text{Pr}\left(g(\mbf{x+w})\neq \mbf{x}\right)<2^{-\kappa n}$ for some $\kappa >0$.
 \end{itemize} 
 The modified signature matrix $\mbf{U}'_{r,p}$ can be described via $\mbf{U}_{r, p}$ given in Eq. \eqref{Eqn:SignatureMatrix}, and encoding function $f$ for a code $\mc{C}_{\log_2 r}$ as follows:
  \begin{align}
@@ -287,6 +287,16 @@ The fraction of missed singeltons will be compensated by using $M(1+\frac{3}{r^{
 Let $p\in\Z$ such that $K$ and $N$ scale as $K\in o\left(N^{\frac{p\kappa}{p\kappa+1}}\right)$ where $\kappa>0$ is defined in Eq. \eqref{Eqn:ProbErrorCoding}. For $M=2(p+1)\beta(q)c_1(\epsilon)K \log_{2}\frac{N}{K}$, the robust regular SAFFRON framework we proposed, asymptotically, recovers atleast a $(1-\epsilon)$ fraction of the defective items for arbitrarily-small $\epsilon$ with high probability $1-O\left(\frac{K^{p\kappa+1}}{N^{p\kappa}}\right)$. Here $\beta(q)=\frac{1}{R}>\frac{1}{1-H(q)-\delta}$ for an arbitrary small constant $\delta$ and the constants $c_1(\epsilon)$ are given in Table. \ref{Table:constantsDE}. Note that computational complexity of the decoding scheme is $O(K\log \frac{N}{K})$.
 \end{theorem}
 
+\section{Simulation Results}
+
+\begin{figure}
+\label{Fig:SimulationNoisy}
+\begin{center}
+\resizebox{\columnwidth}{!}{\input{./Figures/noisy_Kannan.tex}}
+\caption{MonteCarlo simulations for $K=128, N=2^{32}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for various left degree $l=12$. For a given $l$ we fix the number of bins and we vary the rate of the error control code used. The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
+\end{center}
+\end{figure}
+
 \bibliographystyle{ieeetr}
-\bibliography{journal_full,../Tex/sparseestimation}
+\bibliography{journal_full,\MyPath/sparseestimation}
 \end{document} 
