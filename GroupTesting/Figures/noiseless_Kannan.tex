@@ -8,7 +8,7 @@
 % where you can also make suggestions and rate matlab2tikz.
 % 
 \begin{tikzpicture}
-\def\fsize{\small}
+\def\fsize{\Large}
 
 \begin{axis}[%
 width=6.0in,
@@ -24,11 +24,11 @@ ymax=1,
 yminorticks=true,
 ymajorgrids,
 yminorgrids,
-xlabel={\fsize{$M/K$}},
+xlabel={\fsize{Number of tests per defective item ($M/K$)}},
 ylabel={\fsize{Fraction of unidentified defectives}},
 legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell align=left,font=\fsize}
 ]
-\addplot [color=blue,solid,mark=square,mark options={solid},line width=2pt]
+\addplot [color=blue,solid, mark=square,mark options={solid},line width=1pt]
   table[row sep=crcr]{96	0.8\\
 144	0.4\\
 192	0.16\\
@@ -43,9 +43,9 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 624	0.00055\\
 672	0.0003\\
 };
-\addlegendentry{$l=3$};
+\addlegendentry{$\ell=3$};
 
-\addplot [color=blue,solid,line width=4pt,mark=square,mark options={solid}]
+\addplot [color=blue,solid,line width=2pt,mark=square,mark options={solid}]
   table[row sep=crcr]{96	0.94\\
 144	0.68\\
 192	0.32\\
@@ -60,10 +60,10 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 624	0.00025\\
 672	0.0001\\
 };
-\addlegendentry{$l=5$};
+\addlegendentry{$\ell=5$};
 
 
-\addplot [color=blue,dashed,mark=square,mark options={solid},line width=2pt]
+\addplot [color=blue,dashed,mark=square,mark options={solid},line width=1pt]
   table[row sep=crcr]{96	0.98\\
 144	0.88\\
 192	0.62\\
@@ -78,26 +78,26 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 624	0.00017\\
 672	6e-05\\
 };
-\addlegendentry{$l=7$};
+\addlegendentry{$\ell=7$};
 
-\addplot [color=blue,dashed,line width=4pt,mark=square,mark options={solid}]
-  table[row sep=crcr]{96	0.98\\
-144	0.94\\
-192	0.85\\
-240	0.52\\
-288	0.21\\
-336	0.065\\
-384	0.024\\
-432	0.0095\\
-480	0.0032\\
-528	0.0014\\
-576	0.00055\\
-624	0.00024\\
-672	0.0002\\
-};
-\addlegendentry{$l=9$};
+%\addplot [color=blue,dashed,line width=3pt,mark=square,mark options={solid}]
+%  table[row sep=crcr]{96	0.98\\
+%144	0.94\\
+%192	0.85\\
+%240	0.52\\
+%288	0.21\\
+%336	0.065\\
+%384	0.024\\
+%432	0.0095\\
+%480	0.0032\\
+%528	0.0014\\
+%576	0.00055\\
+%624	0.00024\\
+%672	0.0002\\
+%};
+%\addlegendentry{$l=9$};
 
-\addplot [color=red,solid, line width=2pt,mark=star]
+\addplot [color=red,solid, line width=1pt, mark=star,mark size=4pt]
   table[row sep=crcr]{
 36  0.99261\\
 50.40      8.22e-1 \\
@@ -128,9 +128,9 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 %480.0  0.00021 \\
 %672 0.000076\\
 };
-\addlegendentry{$l=3$, Regular};
+\addlegendentry{$\ell=3$, Regular};
 
-\addplot [color=red, solid, line width=4pt,mark=star,dashed]
+\addplot [color=red, solid, line width=2pt, mark=triangle, mark size=3pt]
   table[row sep=crcr]{
    39.000    0.970769\\
     50.700      9.16e-1   \\
@@ -138,13 +138,13 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 148.500     1.93e-1   \\
 201.000     2.07e-2  \\
 249.000     5.22e-3  \\
-300.000     1.60e-3\\
+300.000     1.450e-3\\
 351.000     2.51e-4\\
-405.000     8.60e-5\\
+%405.000     8.60e-5\\
 450.900     4.90e-5\\
 500.580     1.90e-5 \\
 550.800     1.20e-5\\
-602.100 	  1.40e-5\\
+%602.100 	  1.10e-5\\
 675.000     6.00e-6\\
 %   72.000    0.946226\\
 % 132.000    0.327190\\
@@ -159,9 +159,9 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 % 540.000    0.000013\\
 % 604.800    0.000003\\
  };
-\addlegendentry{$l=5$, Regular};
+\addlegendentry{$\ell=5$, Regular};
 
-\addplot [color=red,solid, line width=2pt,mark=star,dashed]
+\addplot [color=red, dashed, line width=1.0pt,mark=star, mark size=4pt]
   table[row sep=crcr]{
 42.00  0.99      \\
 58.50	0.9995  \\
@@ -169,14 +169,14 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 108.00   0.9142 \\
 151.20  0.5487  \\
 198.00 8.92e-2  \\
-282.00 3.0e-3    \\
+282.00  5.0e-3    \\
 360.00  5.4e-4   \\
 462.00  6.42e-5   \\
 499.50  9.00e-6   \\
 540.00  4.00e-6   \\
 594.00  1.25e-6   \\
 };
-\addlegendentry{$l=7$, Regular};
+\addlegendentry{$\ell=7$, Regular};
 
 \end{axis}
 \end{tikzpicture}%

@@ -8,6 +8,7 @@
 % where you can also make suggestions and rate matlab2tikz.
 % 
 \begin{tikzpicture}
+\def\fsize{\Large}
 
 \begin{axis}[%
 width=6.0in,
@@ -23,6 +24,8 @@ ymax=1,
 yminorticks=true,
 ymajorgrids,
 yminorgrids,
+xlabel={\fsize{Number of tests ($\times 10^5$)}},
+ylabel={\fsize{Fraction of unidentified defectives}},
 legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell align=left}
 ]
 \addplot [color=blue,solid,mark=square,mark options={solid}]
@@ -59,7 +62,7 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
   table[row sep=crcr]{
  1.63     0.1797 \\
  2.44     6.363e-3\\
-3.26     9.168e-4\\ %Needs to be simulated
+3.26     1.170e-4\\ %Needs to be simulated
 4.89     1.186e-5\\
 6.52    2.000e-6\\%Needs to be simulated
 8.15     7e-7\\%Needs to be simulated
@@ -82,7 +85,7 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
    3.26  	3.348e-2\\
    4.89	      3.005e-3\\
    6.52	4.340e-4\\
-   8.15  4.79e-5  \\ %Needs to be verified 
+   8.15  2.6041e-5  \\ %Needs to be verified 
 };
 \addlegendentry{q=0.05, regular};
 

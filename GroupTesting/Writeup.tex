@@ -195,6 +195,7 @@ From Lemma. \ref{Lem:EdgeDDPrunedGraph} we know that the edge degree distributio
 \end{proof}
 
 \begin{theorem}
+\label{Thm:NoiselessMain}
 Let $p\in\Z$ such that $K$ and $N$ scale as $K\in o(N^{\frac{p}{p+1}})$. For $M=(2p+2)c_1(\epsilon)K \log_{2}\frac{N}{K}$, the regular SAFFRON framework we proposed, asymptotically, recovers atleast a $(1-\epsilon)$ fraction of the defective items for arbitrarily-small $\epsilon$ with high probability $1-O\left(\frac{K^{p+1}}{N^p}\right)$. Note that computational complexity of the decoding scheme is $O(K\log \frac{N}{K})$. The constant $c_1(\epsilon)$ is given in Table. \ref{Table:constantsDE}.
 \end{theorem}
 \begin{proof}
@@ -225,14 +226,6 @@ Thus we can compute that $\rho_1=(1-\epsilon)^{r-1}$ and $\rho_2=(r-1)\epsilon(1
 \end{align*}
 Similarly we can show $\lim_{K,N\rightarrow \infty}\rho_2=\lambda e^{-\lambda}$.
 \end{proof}
-
-\begin{figure}
-\label{Fig:SimulationNoiseless}
-\begin{center}
-\resizebox{\columnwidth}{!}{\input{./Figures/noiseless_Kannan.tex}}
-\caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for various left degrees $l\in\{3,5,7\}$. For a given $l$ the bin detection size is fixed and we vary the number of bins. The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
-\end{center}
-\end{figure}
 
 \section{Robust Group Testing}
 In this section we extend our scheme to the group testing problem where the test results can be noisy. To be formal, the signal model looks like
@@ -288,12 +281,30 @@ Let $p\in\Z$ such that $K$ and $N$ scale as $K\in o\left(N^{\frac{p\kappa}{p\kap
 \end{theorem}
 
 \section{Simulation Results}
+In this section we will evaluate the performance of our proposed regular SAFFRON scheme via Monte Carlo simulations and compare it with the results for SAFFRON scheme provided in \cite{lee2015saffron}.
 
-\begin{figure}
+\subsection{Noiseless Group Testing}
+As per Theorem.~\ref{Thm:NoiselessMain} the regular SAFFRON scheme we proposed recovers $(1-\epsilon)$ fraction of defective items with a high probability for $M_1>c_1 K$ where the pairs ($c_1,\ell$) are given for various values of error floors $\epsilon$ in Table.~\ref{Table:constantsDE}. We demonstrate this by simulating the performance for:
+\begin{itemize}
+\item We fix $N=2^{16}$ and $K=100$
+\item In Eqn.~\ref{Eqn:SignatureMatrix} the parameter $p=2$ is chosen i.e. $h=6\log_2 r$
+\item For $\ell\in\{3,5,7\}$ we vary the number of bins $M_1=cK$. 
+\item Hence the total number of tests $M=6cK\log_2 \left(\frac{N\ell}{cK}\right)$
+\end{itemize} 
+\begin{figure}[h]
+\label{Fig:SimulationNoiseless}
+\begin{center}
+\resizebox{\columnwidth}{!}{\input{./Figures/noiseless_Kannan.tex}}
+\caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for various left degrees $\ell\in\{3,5,7\}$. For a given $\ell$ the bin detection size is fixed and we vary the number of bins. The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
+\end{center}
+\end{figure}
+
+\subsection{Noisy Group Testing}
+\begin{figure}[h!]
 \label{Fig:SimulationNoisy}
 \begin{center}
 \resizebox{\columnwidth}{!}{\input{./Figures/noisy_Kannan.tex}}
-\caption{MonteCarlo simulations for $K=128, N=2^{32}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for various left degree $l=12$. For a given $l$ we fix the number of bins and we vary the rate of the error control code used. The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
+\caption{MonteCarlo simulations for $K=128, N=2^{32}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for a left degree $\ell=12$. We fix the number of bins and we vary the rate of the error control code used. The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
 \end{center}
 \end{figure}
 
