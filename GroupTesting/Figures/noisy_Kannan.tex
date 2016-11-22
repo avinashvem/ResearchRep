@@ -18,12 +18,12 @@ xmax=12,
 xmajorgrids,
 xtick = {4,6,8,10,12},
 ymode=log,
-ymin=1e-06,
+ymin=1e-07,
 ymax=1,
 yminorticks=true,
 ymajorgrids,
 yminorgrids,
-legend style={at={(0.170351155044956,0.141495348339839)},anchor=south west,draw=black,fill=white,legend cell align=left}
+legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell align=left}
 ]
 \addplot [color=blue,solid,mark=square,mark options={solid}]
   table[row sep=crcr]{4.1877504	 0.12\\
@@ -56,23 +56,37 @@ legend style={at={(0.170351155044956,0.141495348339839)},anchor=south west,draw=
 \addlegendentry{q=0.05};
 
 \addplot [color=red,solid,line width=1.0pt,mark=square,mark options={solid}]
-  table[row sep=crcr]{1.221 	3.90e-2\\
-   1.628  	1.25e-2\\
-   2.035	8.2e-3\\
-   2.443	5.96e-3\\
-   3.257	2.79e-3  \\
+  table[row sep=crcr]{
+ 1.63     0.1797 \\
+ 2.44     6.363e-3\\
+3.26     9.168e-4\\ %Needs to be simulated
+4.89     1.186e-5\\
+6.52    2.000e-6\\%Needs to be simulated
+8.15     7e-7\\%Needs to be simulated
 };
 \addlegendentry{q=0.03, regular};
 
 
+\addplot [color=red,dashed,line width=2.0pt,mark=square,mark options={solid}]
+  table[row sep=crcr]{
+2.44     5.469e-2\\
+3.26     6.168e-3\\
+4.89     1.250e-4\\
+6.52     8.000e-6\\
+8.15     1.66e-6\\ %Needs to be simulated
+};
+\addlegendentry{q=0.04, regular};
+
 \addplot [color=red,solid,line width=2.0pt,mark=square,mark options={solid}]
-  table[row sep=crcr]{1.221 	8.90e-2\\
-   1.628  	6.25e-2\\
-   2.035	2.2e-2\\
-   2.443	8.96e-3\\
-   3.257	4.79e-3  \\
+  table[row sep=crcr]{2.44 	1.302e-1  \\
+   3.26  	3.348e-2\\
+   4.89	      3.005e-3\\
+   6.52	4.340e-4\\
+   8.15  4.79e-5  \\ %Needs to be verified 
 };
 \addlegendentry{q=0.05, regular};
+
+
 
 \end{axis}
 \end{tikzpicture}
