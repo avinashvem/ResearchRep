@@ -269,6 +269,13 @@ Then the overall testing matrix $\mbf{A}$ is defined in identical fashion to the
 \subsection*{Decoding}
 Describe error-control coding in one para using function $g$.
 
+\begin{figure}[t!]
+\label{Fig:SimulationNoiseless}
+\begin{center}
+\resizebox{\columnwidth}{!}{\input{./Figures/noiseless_Kannan.tex}}
+\caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for various left degrees $\ell\in\{3,5,7\}$. For a given $\ell$ the bin detection size is fixed and we vary the number of bins. The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
+\end{center}
+\end{figure}
 
 \subsection*{Results}
 \begin{lemma}[Robust Bin Decoder Analysis]
@@ -291,13 +298,6 @@ As per Theorem.~\ref{Thm:NoiselessMain} the regular SAFFRON scheme we proposed r
 \item For $\ell\in\{3,5,7\}$ we vary the number of bins $M_1=cK$. 
 \item Hence the total number of tests $M=6cK\log_2 \left(\frac{N\ell}{cK}\right)$
 \end{itemize} 
-\begin{figure}[h]
-\label{Fig:SimulationNoiseless}
-\begin{center}
-\resizebox{\columnwidth}{!}{\input{./Figures/noiseless_Kannan.tex}}
-\caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for various left degrees $\ell\in\{3,5,7\}$. For a given $\ell$ the bin detection size is fixed and we vary the number of bins. The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
-\end{center}
-\end{figure}
 
 \subsection{Noisy Group Testing}
 \begin{figure}[h!]
