@@ -8,11 +8,13 @@
 % where you can also make suggestions and rate matlab2tikz.
 % 
 \begin{tikzpicture}
-\def\fsize{\Large}
+\def\fsize{\normalsize}
+\pgfplotsset{every y tick label/.append style={font=\footnotesize}}
+\pgfplotsset{every y tick label/.append style={font=\small}}
 
 \begin{axis}[%
-width=6.0in,
-height=5.0in,
+width=0.85\columnwidth,
+height=0.8\columnwidth,
 scale only axis,
 xmin=20,
 xmax=700,
@@ -97,7 +99,7 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 %};
 %\addlegendentry{$l=9$};
 
-\addplot [color=red,solid, line width=1pt, mark=star,mark size=4pt]
+\addplot [color=red,solid, line width=1pt, mark=star,mark size=2pt]
   table[row sep=crcr]{
 36  0.99261\\
 50.40      8.22e-1 \\
@@ -130,7 +132,7 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 };
 \addlegendentry{$\ell=3$, Regular};
 
-\addplot [color=red, solid, line width=2pt, mark=triangle, mark size=3pt]
+\addplot [color=red, solid, line width=2pt, mark=triangle, mark size=2pt]
   table[row sep=crcr]{
    39.000    0.970769\\
     50.700      9.16e-1   \\

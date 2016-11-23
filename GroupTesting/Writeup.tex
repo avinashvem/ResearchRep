@@ -228,6 +228,7 @@ Similarly we can show $\lim_{K,N\rightarrow \infty}\rho_2=\lambda e^{-\lambda}$.
 \end{proof}
 
 \section{Robust Group Testing}
+\label{Sec:NoisyGroupTesting}
 In this section we extend our scheme to the group testing problem where the test results can be noisy. To be formal, the signal model looks like
 \begin{align*}
 \mbf{y=A}\odot \mbf{x+w},
@@ -235,7 +236,7 @@ In this section we extend our scheme to the group testing problem where the test
 where the addition is over binary field and $\mbf{w}\in\{0,1\}^N$ is an i.i.d noise vector distributed according to Bernoulli distribution with parameter $0<q<\frac{1}{2}$.
 
 \subsection*{Testing Scheme}
-In \cite{lee2015saffron} for the robust group testing problem, the signature matrix used for noiseless group testing problem is modified using a error control coding such that it can handle singletons and resolvable doubletons in the presence of noise. The binning operation as definied by the bipartite graph is exactly identical to that of noiseless case. We describe the modifications to the signature matrix and the bin detection decoding scheme as given in \cite{lee2015saffron} for the sake of completeness and then state the performance bounds for our scheme for the noisy group testing problem.
+In \cite{lee2015saffron} for the robust group testing problem, the signature matrix used for noiseless group testing problem is modified using a error control coding such that it can handle singletons and resolvable doubletons in the presence of noise. The binning operation as defined by the bipartite graph is exactly identical to that of noiseless case. We describe the modifications to the signature matrix and the bin detection decoding scheme as given in \cite{lee2015saffron} for the sake of completeness and then state the performance bounds for our scheme for the noisy group testing problem.
 
 Let $\mc{C}_n$ be a binary error-correcting code with the following definition:
 \begin{itemize}
@@ -246,10 +247,9 @@ We can use any error-correcting code but for ease of analysis and tight upper bo
 \item There exists a sequence of codes $\{\mc{C}_n\}$ with the rate of each code being $R$ satisfying 
 \begin{align}
 \label{Eqn:ProbErrorCoding}
-R<1-H(q)-\delta=1+q\log_2 q+(1-q)\log_2(1-q)-\delta
+R<1-H(q)-\delta=1+q\log_2 q+ \overline{q}\log_2\overline{q}-\delta
 \end{align}
-%where $H(q)=-q\log_2 q-(1-q)\log_2(1-q)$, 
-for any arbitrary small constant $\delta$ such that the probability of error $\text{Pr}\left(g(\mbf{x+w})\neq \mbf{x}\right)<2^{-\kappa n}$ for some $\kappa >0$.
+for any arbitrary small constant $\delta$ such that the probability of error $\text{Pr}\left(g(\mbf{x+w})\neq \mbf{x}\right)<2^{-\kappa n}$ for some $\kappa >0$. In Eqn.~\ref{Eqn:ProbErrorCoding}, $\overline{q}\coleq 1-q$. 
 \end{itemize} 
 The modified signature matrix $\mbf{U}'_{r,p}$ can be described via $\mbf{U}_{r, p}$ given in Eq. \eqref{Eqn:SignatureMatrix}, and encoding function $f$ for a code $\mc{C}_{\log_2 r}$ as follows:
  \begin{align}
@@ -264,17 +264,16 @@ f(\mbf{b}_{\pi^{p}_{1}}) & f(\mbf{b}_{\pi^{p}_{2}}) & \cdots & f(\mbf{b}_{\pi^{p
 \overline{f(\mbf{b}_{\pi^{p}_{1}})} & \overline{f(\mbf{b}_{\pi^{p}_{2}})} & \cdots & \overline{f(\mbf{b}_{\pi^{p}_{r}})}\\
 \end{bmatrix}
 \end{align}  
-Then the overall testing matrix $\mbf{A}$ is defined in identical fashion to the definition in Sec. \ref{Sec:PriorWork} for the case of noiseless case except that $\mbf{U}$ will be replaced by $\mbf{U'}$. Formally it can be defined as $\mbf{A}\coleq [\mbf{A}_{1}^{T},\ldots,\mbf{A}_{M_{1}}^{T}]^T$ where $\mbf{A}_{i}=\mbf{U'} \diag (\mbf{t}_i)$ where the binary vectors $\mbf{t}_i$ are defined in Sec. \ref{Sec:PriorWork}. 
+Then the overall testing matrix $\mbf{A}$ is defined in identical fashion to the definition in Sec. \ref{Sec:PriorWork} for the case of noiseless case except that $\mbf{U}$ will be replaced by $\mbf{U'}$ in Eqn.~\eqref{Eqn:SignatureMatrixModified}. Formally it can be defined as $\mbf{A}\coleq [\mbf{A}_{1}^{T},\ldots,\mbf{A}_{M_{1}}^{T}]^T$ where $\mbf{A}_{i}=\mbf{U'} \diag (\mbf{t}_i)$ where the binary vectors $\mbf{t}_i$ are defined in Sec. \ref{Sec:PriorWork}. 
 
 \subsection*{Decoding}
 Describe error-control coding in one para using function $g$.
 
 \begin{figure}[t!]
-\label{Fig:SimulationNoiseless}
-\begin{center}
+\centering
 \resizebox{\columnwidth}{!}{\input{./Figures/noiseless_Kannan.tex}}
 \caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for various left degrees $\ell\in\{3,5,7\}$. For a given $\ell$ the bin detection size is fixed and we vary the number of bins. The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
-\end{center}
+\label{Fig:SimulationNoiseless}
 \end{figure}
 
 \subsection*{Results}
@@ -290,24 +289,33 @@ Let $p\in\Z$ such that $K$ and $N$ scale as $K\in o\left(N^{\frac{p\kappa}{p\kap
 \section{Simulation Results}
 In this section we will evaluate the performance of our proposed regular SAFFRON scheme via Monte Carlo simulations and compare it with the results for SAFFRON scheme provided in \cite{lee2015saffron}.
 
-\subsection{Noiseless Group Testing}
-As per Theorem.~\ref{Thm:NoiselessMain} the regular SAFFRON scheme we proposed recovers $(1-\epsilon)$ fraction of defective items with a high probability for $M_1>c_1 K$ where the pairs ($c_1,\ell$) are given for various values of error floors $\epsilon$ in Table.~\ref{Table:constantsDE}. We demonstrate this by simulating the performance for:
+\subsection*{Noiseless Group Testing}
+As per Thm.~\ref{Thm:NoiselessMain} the regular SAFFRON scheme we proposed recovers $(1-\epsilon)$ fraction of defective items with a high probability for $M_1>c_1 K$ where the pairs ($c_1,\ell$) are given for various values of error floors $\epsilon$ in Table.~\ref{Table:constantsDE}. We demonstrate this by simulating the performance for the system parameters summarized below.
 \begin{itemize}
 \item We fix $N=2^{16}$ and $K=100$
 \item In Eqn.~\ref{Eqn:SignatureMatrix} the parameter $p=2$ is chosen i.e. $h=6\log_2 r$
 \item For $\ell\in\{3,5,7\}$ we vary the number of bins $M_1=cK$. 
 \item Hence the total number of tests $M=6cK\log_2 \left(\frac{N\ell}{cK}\right)$
 \end{itemize} 
+The results are shown in Fig.~\ref{Fig:SimulationNoiseless}. We observe that there is clear improvement in performance for our regular SAFFRON scheme when compared to the SAFFRON scheme for each $\ell\in\{3,5,7\}$.
 
-\subsection{Noisy Group Testing}
-\begin{figure}[h!]
+\begin{figure}[t!]
+\centering
+\input{./Figures/noisy_Kannan.tex}
+%\resizebox{\columnwidth}{!}{}
+\caption{MonteCarlo simulations for $K=128, N=2^{32}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for a left degree $\ell=12$. We fix the number of bins and vary the rate of the error control code used. The plots in blue indicate the SAFFRON scheme\cite{lee2015saffron} and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
 \label{Fig:SimulationNoisy}
-\begin{center}
-\resizebox{\columnwidth}{!}{\input{./Figures/noisy_Kannan.tex}}
-\caption{MonteCarlo simulations for $K=128, N=2^{32}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for a left degree $\ell=12$. We fix the number of bins and we vary the rate of the error control code used. The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
-\end{center}
 \end{figure}
 
+
+\subsection*{Noisy Group Testing}
+Similar to the noiseless group testing problem we simulate the performance of our regular SAFFRON scheme and compare it with that of the SAFFRON scheme. For convenience of comparison we choose our system parameters identical to the choices in \cite{lee2015saffron}. The system parameters can be summarized as follows:
+\begin{itemize}
+\item $N=2^{32}, K=2^7$. We choose  $\ell=12, M_1=11.36K$ 
+\item Hence the total number of tests is $M=6cK\log_2 \left(\frac{N\ell}{cK}\right)$
+\item We simulate for BSC noise parameter $q\in\{0.03,0.04,0.05\}$
+\end{itemize}
+For the signature matrix we choose $p=1$ in Eqn.~\ref{Eqn:SignatureMatrix} i.e. $h=4\log_2 r$. Note that for the above set of parameters the right degree $r=\frac{N\ell}{M_1}\approx 26$. By choosing to operate in field $GF(2^7)$ gives us a message of length $4$ symbols. Then we encode using a $(4+2e,4)$ Reed-Solomon code for $e\in[0:8]$ thus giving us a column length of $4\times 7(4+2e)$ bits.
 \bibliographystyle{ieeetr}
 \bibliography{journal_full,\MyPath/sparseestimation}
 \end{document} 
