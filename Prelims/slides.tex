@@ -281,18 +281,18 @@ H=
 \begin{frame}{Pros \& Cons}
 \begin{defn}{Pros}
 \begin{itemize}
-\item Significant improvment in \textcolor{blue}{thresholds}
+\item Significant improvment in thresholds
 \vspace{0.25cm}
 \item Achieves capacity under {\blue simple BP decoding}
 \vspace{0.25cm}
-\item \alert{Universality} - works for all channels models! 
+\item {\blue Universality} - works for all channels models! 
 \vspace{0.25cm}
 \end{itemize}
 \end{defn}
 
 \begin{defn}{Cons}
 \begin{itemize}
-\item Need \textcolor{blue}{large} blocklengths to leverage the gains
+\item Need \textcolor{red}{large} blocklengths to leverage the gains
 \end{itemize}
 \end{defn}
 \end{frame}
@@ -339,11 +339,11 @@ New perspectives for dealing with interference:
 	\end{figure}
 \onslide<3->
 \begin{itemize}
-	\item Above schemes are all based on lattices \alert{good} for channel coding
+	\item Above schemes are all based on lattices {\blue good} for channel coding
 \end{itemize}
 \end{frame}
 
-\begin{frame}\frametitle{Lattices good for Channel Coding}
+\begin{frame}\frametitle{Goodness of Lattices for Channel Coding}
 \begin{itemize}
 \item Voronoi region $\mc{V}$ of a lattice $\Lambda$, $\mc{V}\coleq \{\mbf{x}:\norm{\mbf{x}}\leq \norm{\mbf{x-c}} \quad\forall \mbf{c}\in\Lambda\}$
 \item Fundamental volume of $\Lambda$, $V(\Lambda)$: Vol($\mc{V}$)
@@ -359,24 +359,24 @@ New perspectives for dealing with interference:
 For any VNR$>1$ $\exists \{\Lambda_n\}$ such that $P(\Lambda_n,\sigma^2)\rightarrow 0$ as $n\rightarrow \infty$.
 \end{block}
 \begin{itemize}
-	\item	\textit{Poltyrev-}good lattices are at the core of such lattice coding schemes
+	\item	{\blue \textit{Poltyrev-}good} lattices are at the core of such lattice coding schemes
 \end{itemize}
 \end{frame}  
 
 \begin{frame}\frametitle{Objective}
 \begin{defn}{Motivating questions}
 	\begin{itemize}
-		\item These results are all based on Construction-A.
+		\item All the existing results were based on Construction-A.
 		\begin{itemize}
-				\item Linear codes over increasing field sizes and their ML decoding 
+				\item Linear codes over \alert{ increasing field sizes} and their ML decoding 
 		\end{itemize}
 		\item<2-> Is this construction fundamental to good lattices?
-		\item<2-> Can we work with just binary codes under practical decoding schemes?
+		\item<2-> Can we work with just {\blue binary codes} under {\blue practical decoding} schemes?
 	\end{itemize}
 \end{defn}
 \end{frame}
 
-\begin{frame}\frametitle{Main Results}
+\begin{frame}\frametitle{Main Result}
 			\begin{defn}{Codes over $\mathbb{F}_{2}$ and BP decoding suffice}
 				\vspace{1em}
 	\begin{itemize}
@@ -390,7 +390,7 @@ For any VNR$>1$ $\exists \{\Lambda_n\}$ such that $P(\Lambda_n,\sigma^2)\rightar
 \vspace{2em}
 		\begin{block}{Applications}
 			    \begin{itemize}
-        \item As an application, propose {\blue Symmetric Interference Channel}
+        \item Apply proposed lattices to {\blue Symmetric Interference Channel}
         \item Can be applied to other problems which adopt Construction A lattices
     			\end{itemize}
 		\end{block}
@@ -407,9 +407,11 @@ For any VNR$>1$ $\exists \{\Lambda_n\}$ such that $P(\Lambda_n,\sigma^2)\rightar
 				\vspace{0.2in}
     \begin{columns}[t]      
  	      \begin{column}{0.6\textwidth}
+			\onslide<2->	{
             \begin{figure}
-			\only<2>	{\includegraphics[width=2.5in]{lattice_Constr_D1.pdf}}
+			\includegraphics[width=2.5in]{lattice_Constr_D1.pdf}
             \end{figure}
+            			}
         \end{column}
 
 \begin{column}{0.39\textwidth}
@@ -527,8 +529,8 @@ There exists a sequence of SC LDPC lattices with VNR$(\Lambda,\sigma^{2})\righta
 \vspace{0.3in}
 \pause
 \begin{itemize}
-        \item Binary codes and more importantly practical BP decoding suffices. 
-        \item Practically we observe that two levels of coding gets you lattices very close to Poltyrev limit.
+        \item {\blue Binary codes} and more importantly {\blue practical BP decoding} suffices. 
+        \item Practically we observe that {\blue two levels} of coding gets you lattices very close to Poltyrev limit.
     \end{itemize}
 \end{frame}
 	
@@ -550,7 +552,7 @@ $\sigma_{\text{eff}}$ & 0.16   &  0.32  & 0.64 \\ \hline
 \end{center}
 \onslide<3->
 \vspace{0.1in}
-\item Fix L=3 and use $(3,30)$, $(14,30)$ nested SC LDPC codes.
+\item Fix L=3 and use $(3,30)$, $(14,30)$ nested SC-LDPC codes.
 \begin{itemize}
 \item Note $P(4\Z^n,\sigma^2)\approx nP(4\Z,\sigma^2)$
 \item We fix $n=2\times 10^5$
@@ -559,7 +561,7 @@ $\sigma_{\text{eff}}$ & 0.16   &  0.32  & 0.64 \\ \hline
 \begin{center}
 \begin{tabular}{c c c c c c c}
 \hline  \hline
-$(d_{c},d_{v}^{1},d_{v}^{2})$ &(L,w)& $P(\Z_{4},\sigma^{2})$ & $\sigma_{\text{max}}$ &$\text{VNR}$ &$\text{VNR}_{\text{rate-loss}}$\\
+$(d_{c},d_{v}^{1},d_{v}^{2})$ &(L,w)& $P(4\Z,\sigma^{2})$ & $\sigma_{\text{max}}$ &$\text{VNR}$ &$\text{VNR}_{\text{rate-loss}}$\\
 \hline
 (30,14,3) & (32,4) & $5 \times 10^{-10}$ & 0.3184 & 1.02dB & 1.347dB \\
 \onslide<4->
@@ -594,10 +596,10 @@ $(d_{c},d_{v}^{1},d_{v}^{2})$ &(L,w)& $P(\Z_{4},\sigma^{2})$ & $\sigma_{\text{ma
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=3.2in]{BER_iters_4_72_9.pdf}
+\includegraphics[width=0.9\textwidth]{BER_iters_4_72_9.pdf}
 \end{center}
 \end{figure}
-\only<2->{  Note that the Block Error Probability is $10^{-4}$ at uncoded level.}
+\onslide<2->{Note that the Block Error Probability is $10^{-4}$ at uncoded level.}
 \end{frame}
 
 \subsection{Application to Symmetric Interference Channel}
@@ -643,29 +645,6 @@ where the carry overs are
 \end{columns}
 \end{frame}
 
-%\begin{frame}\frametitle{Simulations - Gap from Strong Interference regime}
-%
-%\end{frame}
-
-
-%\begin{frame}\frametitle{Symmetric Interference Channel(SIC)}
-%\begin{itemize}
-%\item For each user $i$, $X_{i}\in \Lambda_{C}\defeq \Lambda \cap \mathbb{Z}_{4}^{N}$ is transmitted.
-% \vspace{5pt}
-%\item At receiver 1 :
-%\[
-%Y_{1}=X_{1}+\beta \left( X_{2}+X_{3} \right)+ N
-%\]
-%where $N \sim \mathcal{N}(0,\sigma^{2}\cdot I)$.
-%\end{itemize}
-%    \vspace{20pt}
-%    \begin{figure}
-%     \begin{center}
-%       \includegraphics[width=3.5in]{SIC_decoder}
-%      \end{center}
-%    \end{figure}
-%\end{frame}
-
 
 \begin{frame}\frametitle{Achievable Information Rates}
     \begin{figure}
@@ -684,14 +663,16 @@ where the carry overs are
         \item Multilevel construction is provably good under message passing decoding
                \vspace{5pt}
                \pause
-        \item \red{Coding schemes based on Binary LDPC codes and iterative decoding suffice}
+        \item Coding schemes based on {\alert binary LDPC codes and iterative decoding} suffice
     \end{itemize}
 \end{frame}
 
 \section{Side-Information Problems}
-\subsection{Introduction}
+\subsection{Gelfand-Pinsker \& Wyner-Ziv}
 \begin{frame}{Lossy Source Coding Problem}
-  \centering{$X^n=(X_1,\cdots,X_n)$, $\alert{X_i \sim \mathsf{Bernoulli}(\frac{1}{2})}$ \\ \vspace{0.3cm} \alert{Binary code $\mathcal{C}=(n,k)$}, rate $R=k/n$}
+  \centering{$X^n=(X_1,\cdots,X_n)$, $X_i \sim \mathsf{Bernoulli}(\frac{1}{2})$ \\ 
+  \vspace{0.3cm}
+	Binary code $\mathcal{C}=(n,k)$, rate $R=k/n$}
   \begin{block}{Lossy Source Coding}<2->
     \begin{columns}
       \column{0.55\textwidth}
@@ -705,7 +686,7 @@ where the carry overs are
         \begin{align*}
           R > 1 - h(D)
         \end{align*}
-        \vspace{-0.5cm}
+        \vspace{-1.0cm}
       \item<3-> $h(\cdot)$ is binary entropy function
         \small{
           \begin{align*}
@@ -820,7 +801,6 @@ where the carry overs are
       \end{align*}
     \end{itemize}
   \end{columns}
-  \vspace{0.2cm}
   \begin{block}{Key Properties}<2->
     \begin{itemize}
     \item Compound code is 
@@ -855,36 +835,36 @@ where the carry overs are
   \end{block}
 \end{frame}
 
-% \begin{frame}{Coding Scheme: Wyner-Ziv}
-%   \vspace{-0.2cm}
-%   \begin{center}
-%     \scalebox{0.5}{\input{Figures/wyner-ziv-block-diagram}}
-%   \end{center}
-%   \vspace{-0.35cm}
-%   \begin{columns}
-%     \column{0.5\textwidth}
-%     \vspace{-0.5cm}
-%     \begin{center}
-%       \setlength\tikzheight{5cm}
-%       \setlength\tikzwidth{6cm}
-%       \scalebox{0.5}{\input{Figures/wyner-ziv-coding}}
-%     \end{center}
-%     \column{0.5\textwidth}
-%     \begin{itemize}
-%     \item<2-> Encode $X^n$ to $\hat{X}^n$ using \alert{LDGM} w/ Distortion $\approx D$ \vspace{0.1cm}
-%     \item<3-> Compute \& \textcolor{blue}{transmit $s_i$'s} \vspace{0.1cm} \small{$R = \frac{k}{n} \approx h(D*\delta) - h(D)$} \vspace{0.1cm}
-%     \item <3-> Decoder has $Z^n$: \vspace{-0.2cm}
-%       \small{
-%         \begin{align*}
-%           Z_i &= X_i \oplus \mathsf{Ber}(\delta) \\
-%           &\approx \hat{X_i} \oplus \mathsf{Ber}(D) \oplus \mathsf{Ber}(\delta) \\
-%           &= \hat{X_i} \oplus \mathsf{Ber}(D*\delta)
-%         \end{align*}
-%       }
-%     \item <3-> Decode $\hat{X}^n$ from $Z^n$ \& $s_i$
-%     \end{itemize}
-%   \end{columns}
-% \end{frame}
+ \begin{frame}{Coding Scheme: Wyner-Ziv}
+   \vspace{-0.2cm}
+   \begin{center}
+     \scalebox{0.5}{\input{\side_information_path/wyner-ziv-block-diagram}}
+   \end{center}
+   \vspace{-0.35cm}
+   \begin{columns}
+     \column{0.5\textwidth}
+     \vspace{-0.5cm}
+     \begin{center}
+       \setlength\tikzheight{5cm}
+       \setlength\tikzwidth{6cm}
+       \scalebox{0.5}{\input{\side_information_path/wyner-ziv-coding}}
+     \end{center}
+     \column{0.5\textwidth}
+     \begin{itemize}
+     \item<2-> Encode $X^n$ to $\hat{X}^n$ using \alert{LDGM} w/ Distortion $\approx D$ \vspace{0.1cm}
+     \item<3-> Compute \& \textcolor{blue}{transmit $s_i$'s} \vspace{0.1cm} \small{$R = \frac{k}{n} \approx h(D*\delta) - h(D)$} \vspace{0.1cm}
+     \item <3-> Decoder has $Z^n$: \vspace{-0.2cm}
+       \small{
+         \begin{align*}
+           Z_i &= X_i \oplus \mathsf{Ber}(\delta) \\
+           &\approx \hat{X_i} \oplus \mathsf{Ber}(D) \oplus \mathsf{Ber}(\delta) \\
+           &= \hat{X_i} \oplus \mathsf{Ber}(D*\delta)
+         \end{align*}
+       }
+     \item <3-> Decode $\hat{X}^n$ from $Z^n$ \& $s_i$
+     \end{itemize}
+   \end{columns}
+ \end{frame}
 
 \begin{frame}{Coding Scheme: Gelfand-Pinsker}
   \begin{center}
@@ -922,7 +902,7 @@ where the carry overs are
   \item Use spatial-coupling for \alert{goodness} of codes under message-passing \vspace{0.2cm}
   \end{itemize}
 \end{frame}
-\subsection{Spatial Coupling}
+\subsection{Spatial Coupling of Compound Codes}
 \begin{frame}{Spatially-Coupled Compound LDGM/LDPC Codes}
   \begin{center}
     \scalebox{0.8}{\input{\side_information_path/spatially_coupled_compound_code}}
@@ -1096,6 +1076,7 @@ where the carry overs are
 \end{frame}
 
 \section{Write-Once Memory}
+\subsection{Problem Statement}
 \begin{frame}{Write-Once Memories}
   \begin{center}
     \scalebox{0.5}{\input{\WOM_path/write-once-memory}}    
@@ -1226,6 +1207,7 @@ where the carry overs are
   \end{block}
 \end{frame}
 
+\subsection{Coding Scheme}
 \begin{frame}{Coding Scheme for 2-write WOM: First Write}
   \vspace{-2cm}
   \begin{center}
@@ -1473,4 +1455,41 @@ $(5,5,5,6)$  & $0.167$ & $0.079$ & $0.154$ & $0.159$\\
   \end{block}
 \end{frame}
 
+\section{Research Summary}
+\begin{frame}
+\begin{itemize}
+\item SC-LDPC Lattices [C1]
+\item SC-Compound Codes
+\begin{itemize}
+\item Side-Information Problems [C2]
+\item Coding for WOM [C3] 
+\end{itemize}
+\item Tools from Sparse graph coding for sparse recovery problems 
+\begin{itemize}
+\item Bipartite sparse graph for compressed sensing [C5]
+\item Group testing*
+\item Pattern matching*
+\end{itemize}
+\item Uncoordinated multiple access
+\begin{itemize}
+\item Universal schemes for massive uncoordinated multiple access [C4]
+\item Optimal distributions for finite user multiple access*
+\end{itemize}	
+\item Coding for low latency requirements*
+\end{itemize}
+\vspace{2mm}
+%\begin{center}
+%REFERENCES\\
+%\end{center}
+{\tiny
+C1.~A. Vem, Y.~C.~Huang, K.~R.~Narayanan and H.~D.~Pfister, ``Multilevel lattices based on spatially-coupled LDPC codes with applications", in \textit{Proc.~IEEE.~ISIT}, pp.~2336--2340, 2014.\\
+C2.~S.~Kumar, A.~Vem, K.~R.~Narayanan and H.~D.~Pfister,``Spatially-coupled codes for side-information problems",
+in \textit{Proc.~IEEE.~ISIT}, pp.~516--520, 2014.\\
+C3.~S.~Kumar, A.~Vem, K.~R.~Narayanan and H.~D.~Pfister,``Spatially-coupled codes for write-once memories",
+in \textit{Proc.~Allerton.~Conf}, pp.~125--131, 2015.\\
+C4.~A.~Taghavi, A.~Vem, J.-F.~Chamberland and K.~R.~Narayanan``On the design of universal schemes for massive uncoordinated multiple access", in \textit{Proc.~IEEE.~ISIT}, pp.~345--349, 2016. \\
+C5.~A.~Vem, N.~T.~Janakiraman, and K.~R.~Narayanan,``Sub-linear time compressed sensing for support recovery using left and right regular sparse-graph codes", in \textit{Proc.~IEEE.~ITW}, pp.~429--433, 2016.\\
+*-To be submitted
+}
+\end{frame}
 \end{document}
