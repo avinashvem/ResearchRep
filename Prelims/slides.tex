@@ -1,81 +1,26 @@
 \documentclass[10pt]{beamer}
-\def\side_information_path{../compound-codes/isit14/slides/Figures}
-\def\WOM_path{../compound-codes/WOM/slides/Figures}
-\def\SCLDPC_path{../SCLDPC-lattices}
-
 \mode<presentation>
 {
 \usetheme{CambridgeUS}
 \usecolortheme{dolphin}
 }
 
-\usepackage{etex}
-\usepackage[english]{babel}
-\usepackage{amstext,amsmath,amsfonts,latexsym,graphicx,amssymb,epsfig,epsf,psfrag}
-\usepackage{tikz,pgf,pgfplots,pgfpages,xcolor,subfigure,pstricks}
-\usepackage{algorithm}
-\usepackage[noend]{algpseudocode}
-\makeatletter
-\def\BState{\State\hskip-\ALG@thistlm}
-\makeatother
-
-\usetikzlibrary{%
-  arrows,%
-  decorations,%decorations
-  shapes.misc,% wg. rounded rectangle
-  shapes.arrows,%
-  shapes.callouts, %
-  shapes,%
-  chains,%
-  matrix,%
-  positioning,% wg. " of "
-  patterns,% slanted lines fill
-  scopes,%
-  petri,%
-  fadings
-}  
-\setbeamertemplate{footline}[frame number]
-\definecolor{purple}{RGB}{255,0,204}
-
-\newcommand{\h}{\texttt{h}}
-\newcommand{\hbp}{\h^{\mathrm{BP}}}
-\newcommand{\hmap}{\h^{\mathrm{MAP}}}
-\renewcommand{\epsilon}{\varepsilon}
-\newcommand{\dr}{d_c}
-\newcommand{\dl}{d_v}
-\newcommand{\dlh}{\hat{d}_c}
-\newcommand{\BPsmall}{\ensuremath{\text{\tiny BP}}} % Belief Propagation
-\newcommand{\MAPsmall}{\ensuremath{\text{\tiny MAP}}} % Maximum A Posteriori
-
-\usecolortheme[RGB={0,100,0}]{structure}
-\setbeamertemplate{itemize item}[triangle]
-\setbeamertemplate{itemize subitem}[circle]
-\setbeamertemplate{itemize subsubitem}{$-$}
-
-\setbeamertemplate{blocks}[rounded][shadow=true]
-\setbeamercolor{block title}{fg=black,bg=blue!35!white}
-\setbeamercolor{block body}{fg=black,bg=blue!15!white}
-\newenvironment<>{defn}[1]{%
-  \setbeamertemplate{blocks}[default]%
-  \setbeamercolor{block title}{fg=blue,bg=white}%
-  \setbeamercolor{block body}{fg=black,bg=white}%
-  \begin{block}#2{#1}}{\end{block}}
-
-
-\newlength\tikzwidth
-\newlength\tikzheight
-
-\input{../bib/avinash_beamer.def}
+\input{preamble}
 \input{./Figures/SC/tikz_preamble.tex}
+\input{../bib/avinash_beamer.def}
+
+\def\patha{../SCLDPC-lattices}
+\def\side_information_path{../compound-codes/isit14/slides/Figures}
+\def\WOM_path{../compound-codes/WOM/slides/Figures}
+\graphicspath{{./Figures/}{../SCLDPC-lattices/figures/}{../SCLDPC-lattices/ISIT_Talk/Figures/}}
 
 \AtBeginSection[]
 {
   \begin{frame}<beamer>{Outline}
-    \tableofcontents[currentsection,currentsubsection]
+    \tableofcontents[currentsection %currentsubsection,hideothersubsections, sectionstyle=show/hide, 	subsectionstyle=show/shaded
+    ]
   \end{frame}
 }
-
-\graphicspath{{./Figures/}{../SCLDPC-lattices/figures/}{../SCLDPC-lattices/ISIT_Talk/Figures/}}
 
 \begin{document}
 \title{\bf Applications of Spatial Coupling \& \\ Sparse Graph Codes for Sparse Recovery}
@@ -85,13 +30,14 @@
 
 \titlegraphic{
 \includegraphics[width=0.75in]{TAMULogoBox.pdf}
-}
-
+}	
 \date{} % if no date wanted, keep it blank
+
 \frame{\titlepage}
-
-\section{Spatial Coupling}
-
+\frame{\tableofcontents}
+%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
+\section{Spatial Coupling(SC)}
+\subsection{Introduction}
 \begin{frame}\frametitle{An $(\ell,r)$ LDPC Code}
 \begin{columns}
 \column{0.45\textwidth}
@@ -124,6 +70,7 @@ H=
 \end{defn}
 \end{columns}
 \end{frame}
+%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 
 \begin{frame}\frametitle{Two Decoders \& Two Thresholds}
 \hspace*{10pt}
@@ -462,10 +409,9 @@ For any VNR$>1$ $\exists \{\Lambda_n\}$ such that $P(\Lambda_n,\sigma^2)\rightar
 
 \begin{column}{0.39\textwidth}
 	\begin{figure}
-%\only<1->	{\includegraphics[width=0.95\columnwidth]{Nested_generator_matrix.pdf}} % both of these ways work
 \only<1->{\resizebox{\columnwidth}{!}{
 \begin{centering}
-\input{\SCLDPC_path/ISIT_Talk/Figures/Nested_generator_matrix.tex}
+\input{\patha/ISIT_Talk/Figures/Nested_generator_matrix.tex}
 \end{centering}
 }
 }
