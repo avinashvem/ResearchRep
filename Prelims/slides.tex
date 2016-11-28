@@ -55,6 +55,9 @@ H=
 \begin{align*}
   \ell&=2 & r&=3
 \end{align*}
+\begin{align*}
+\text{LDPC Code } \mc{C}=\{x: H\odot x=0 \}
+\end{align*}
 \end{defn}
 \column{0.45\textwidth}
 \begin{defn}{Tanner Graph}
@@ -72,7 +75,7 @@ H=
 \end{frame}
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 
-\begin{frame}\frametitle{Two Decoders \& Two Thresholds}
+\begin{frame}\frametitle{Belief Propagation Decoder \& Threshold}
 \hspace*{10pt}
 \begin{columns}
 \column{0.4\textwidth}
@@ -103,9 +106,9 @@ H=
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
   \hline
-  LDPC & Capacity & \multicolumn{2}{|c|}{\textcolor{blue}{AWGN}} & \multicolumn{2}{|c|}{\textcolor{blue}{BSC}} \\
+  LDPC & Shannon & \multicolumn{2}{|c|}{\textcolor{blue}{AWGN}} & \multicolumn{2}{|c|}{\textcolor{blue}{BSC}} \\
   \cline{3-6}
-  $(\ell,r)$ & & $\hbp$ & $\hmap$ & $\hbp$ & $\hmap$ \\
+  $(\ell,r)$ & $\texttt{h}^{\mathrm{Sh}}$ & $\hbp$ & $\hmap$ & $\hbp$ & $\hmap$ \\
   \hline
   $(3,6)$ & $0.5000$ & $0.4293$ & $0.4794$ & $0.4160$ & $0.4681$ \\
   $(4,6)$ & $0.6667$ & $0.5211$ & $0.6645$ & $0.5203$ & $0.6633$ \\
@@ -123,6 +126,7 @@ H=
   \item<3-> Shown to have \textcolor{blue}{near optimal BP thresholds}
   \end{itemize}
 \end{frame}
+
 \subsection{Threshold Saturation Phenomenon}
 \begin{frame}{Threshold Saturation via Spatial Coupling (1)}
 \begin{center}
@@ -238,8 +242,8 @@ H=
 }
 \begin{tabular}{|c|c|c|c|}
   \hline
-  SC-LDPC & Capacity & \textcolor{blue}{AWGN} & \textcolor{blue}{BSC} \\
-  $(\ell,r)$ & & $\hbp_{\mathrm{c}}$ & $\hbp_{\mathrm{c}}$  \\
+  SC-LDPC & Shannon & \textcolor{blue}{AWGN} & \textcolor{blue}{BSC} \\
+  $(\ell,r)$ & $\texttt{h}^{\mathrm{Sh}}$ & $\hbp_{\mathrm{c}}$ & $\hbp_{\mathrm{c}}$  \\
   \hline
   $(3,6)$ & $0.5000$ & $0.4794$ & $0.4681$ \\
   $(4,6)$ & $0.6667$ & $0.6645$ & $0.6633$ \\
@@ -248,12 +252,16 @@ H=
 \end{tabular}
 \end{frame}
 
+\begin{frame}
+  \includegraphics[width=0.9\textwidth]{./Figures/SC/spatially-coupled-ensemble.pdf}
+\end{frame}
+
 \begin{frame}{Rate loss for finite $N$ and $w$}
 \centering
 \begin{tabular}{|c|c|c|c|}
   \hline
-  SC-LDPC & Capacity & \textcolor{blue}{AWGN} & \textcolor{blue}{BSC} \\
-  $(\ell,r,N,w)$ & & $\hbp_{\mathrm{c}}$ & $\hbp_{\mathrm{c}}$  \\
+  SC-LDPC & Shannon & \textcolor{blue}{AWGN} & \textcolor{blue}{BSC} \\
+  $(\ell,r,N,w)$ & $\texttt{h}^{\mathrm{Sh}}$  & $\hbp_{\mathrm{c}}$ & $\hbp_{\mathrm{c}}$  \\
   \hline
   $(3,6,10,3)$ & $0.5434$ & $0.4794$ & $0.4681$ \\
   $(3,6,20,3)$ & $0.5222$ & $0.4794$ & $0.4681$ \\
@@ -275,16 +283,13 @@ H=
 \begin{itemize}
 \item Significant improvment in \textcolor{blue}{thresholds}
 \vspace{0.25cm}
+\item Achieves capacity under {\blue simple BP decoding}
+\vspace{0.25cm}
 \item \alert{Universality} - works for all channels models! 
 \vspace{0.25cm}
-\item No need for irregularity
-\vspace{0.25cm}
-\item Do not have to run decoder on the entire system length
-\begin{itemize}
-\item \alert{Windowed Decoder}
-\end{itemize}
 \end{itemize}
 \end{defn}
+
 \begin{defn}{Cons}
 \begin{itemize}
 \item Need \textcolor{blue}{large} blocklengths to leverage the gains
