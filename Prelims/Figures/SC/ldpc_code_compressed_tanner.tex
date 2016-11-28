@@ -1,0 +1,47 @@
+\pgfdeclarelayer{background layer}
+
+\pgfdeclarelayer{foreground layer}
+
+\pgfdeclarelayer{b-m layer}
+
+\pgfsetlayers{background layer,b-m layer,main,foreground layer}
+
+
+\begin{tikzpicture}[xscale=0.35,yscale=1]
+  \def \offset {0.75}
+  \def \eCtrl  {0.3}
+
+  \foreach \i/\text in {14/0} {
+    \foreach \j in {-1,1}{
+      \draw [thick] (\i+\offset*\j, 4) +(0,0) -- +(255:0.8);
+      \draw [thick] (\i+\offset*\j, 4) +(0,0) -- +(270:0.8);
+      \draw [thick] (\i+\offset*\j, 4) +(0,0) -- +(285:0.8);
+      \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(112:0.8);
+      \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(97:0.8);
+      \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(82:0.8);
+      \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(67:0.8);
+
+      \node[vnodeStyle] (v\i\j) at (\i+\offset*\j, 4) {};
+      \node[cnodeStyle] (c\i\j) at (\i+\offset*\j, 0) {};
+    }
+
+    \foreach \j in {0.4,3.5} {
+      \node (kk) at (\i,\j) {\scriptsize{$...$}};
+    }
+
+    \node[draw,rectangle,minimum width=22pt,minimum height=16pt, fill=white] (p1_node\i) at (\i,3) {\footnotesize{$\pi\phantom{'}$}};
+    \node[draw,rectangle,minimum width=22pt,minimum height=16pt, fill=white] (p2_node\i) at (\i,1) {\footnotesize{$\pi'$}};
+
+    \foreach \i/\text in {14/0} {
+      \draw[ultra thick,gray] (p2_node\i) -- (p1_node\i);
+      \draw[ultra thick,gray] (p2_node\i) .. controls (\i-\eCtrl,2) .. (p1_node\i);
+      \draw[ultra thick,gray] (p2_node\i) .. controls (\i+\eCtrl,2) .. (p1_node\i);
+    }
+
+  }
+\end{tikzpicture}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End: 

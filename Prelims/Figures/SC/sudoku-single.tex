@@ -1,0 +1,28 @@
+\begin{tikzpicture}[scale=0.5]
+  \begin{scope}
+
+    \draw (0, 0) grid (9, 9);
+    \draw[very thick, scale=3] (0, 0) grid (3, 3);
+
+    \setcounter{row}{1}
+    \setrow { }{2}{ }  {5}{ }{1}  { }{9}{ }
+    \setrow {8}{ }{ }  {2}{ }{3}  { }{ }{6}
+    \setrow { }{3}{ }  { }{6}{ }  { }{7}{ }
+
+    \setrow { }{ }{1}  { }{ }{ }  {6}{ }{ }
+    \setrow {5}{4}{ }  { }{ }{ }  { }{1}{9}
+    \setrow { }{ }{2}  { }{ }{ }  {7}{ }{ }
+
+    \setrow { }{9}{ }  { }{3}{ }  { }{8}{ }
+    \setrow {2}{ }{ }  {8}{ }{4}  { }{ }{7}
+    \setrow { }{1}{ }  {9}{ }{7}  { }{6}{ }
+
+    \node[draw=none,text=white] at (0,-3) {.};
+  \end{scope}
+\end{tikzpicture}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End: 

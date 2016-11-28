@@ -1,0 +1,38 @@
+\begin{tikzpicture}
+  [
+  node distance = 12mm, draw=black, thick, >=stealth',
+  bitnode/.style={circle, inner sep = 0pt, minimum size = 5.5mm, draw=black},
+  checknode/.style={rectangle, inner sep = 0pt, minimum size = 4mm, draw=black},
+  ]
+  
+  \foreach \x in {1,2,...,6} {
+    \node[bitnode] (b\x) at (1.2*\x-4.2,0) {$u_{\x}$};
+  }
+
+  \foreach \x in {1,...,4} {
+    \node[checknode] (cc\x) at (5*\x/3-2.5-5/3,-2) {};
+  }
+
+  \draw[thin] (cc1) -- (b2);
+  \draw[thin] (cc1) -- (b1);
+  \draw[thin] (cc1) -- (b5);
+  \draw[thin] (cc2) -- (b5);
+  \draw[thin] (cc2) -- (b3);
+  \draw[thin] (cc2) -- (b4);
+  \draw[thin] (cc3) -- (b1);
+  \draw[thin] (cc3) -- (b3);
+  \draw[thin] (cc3) -- (b6);
+  \draw[thin] (cc4) -- (b2);
+  \draw[thin] (cc4) -- (b6);
+  \draw[thin] (cc4) -- (b4);
+
+  \draw[<->] (2.5,-0.1) to [bend right=30] (3.25,-0.5) node [right] {\Large $\ell$};
+  \draw[<->] (2,-2) to [bend left=25] (3,-1.5) node [right] {\Large $r$};
+
+
+\end{tikzpicture}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End: 

@@ -24,6 +24,7 @@
 \newcommand{\lmb}{\lambda}
 \newcommand{\tx}[1]{\text{#1}}
 
+\newcommand{\expt}{\mathbb{E}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\Zw}{\mathbb{Z}[\omega]}
@@ -34,6 +35,7 @@
 \newcommand{\card}[1]{\abs{#1}}
 \newcommand{\norm}[1]{\lVert{#1}\rVert}
 \newcommand{\iid}{i.\@i.\@d.\ }
+\newcommand{\indicator}[1]{\mathbbm{1}_{\left\{ {#1} \right\} }}
 
 \newcommand{\ceil}[1]{\lceil{#1}\rceil}
 \newcommand{\floor}[1]{\lfloor{#1}\rfloor}

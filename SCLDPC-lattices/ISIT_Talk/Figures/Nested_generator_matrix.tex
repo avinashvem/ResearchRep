@@ -1,31 +1,32 @@
-\documentclass{article}
-\usepackage{graphicx,psfrag,epsfig,epsf,latexsym,hhline,amsmath,amssymb,multirow}
-\usepackage[usenames,dvipsnames]{pstricks}
-\usepackage{pst-plot}
-\usepackage{pstricks-add}
-\usepackage{color}
-\usepackage{stmaryrd}
-\usepackage{makecell}
-
-\interdisplaylinepenalty=2500
-\usepackage{graphicx}
-\usepackage{amsthm}
-\usepackage{footnote}
-\usepackage{blindtext}
-\usepackage{etoolbox}
-
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepgflibrary{shapes}
-\usetikzlibrary{matrix,positioning}
-\usetikzlibrary{decorations.pathreplacing}
-\usetikzlibrary{arrows,shapes,chains,matrix,positioning,scopes,patterns	}
-\pgfplotsset{compat=newest}
-\pgfplotsset{plot coordinates/math parser=false}
-
-\begin{document}
+%\documentclass{article}
+%\usepackage{graphicx,psfrag,epsfig,epsf,latexsym,hhline,amsmath,amssymb,multirow}
+%\usepackage[usenames,dvipsnames]{pstricks}
+%\usepackage{pst-plot}
+%\usepackage{pstricks-add}
+%\usepackage{color}
+%\usepackage{stmaryrd}
+%\usepackage{makecell}
+%
+%\interdisplaylinepenalty=2500
+%\usepackage{graphicx}
+%\usepackage{amsthm}
+%\usepackage{footnote}
+%\usepackage{blindtext}
+%\usepackage{etoolbox}
+%
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usepgflibrary{shapes}
+%\usetikzlibrary{matrix,positioning}
+%\usetikzlibrary{decorations.pathreplacing}
+%\usetikzlibrary{arrows,shapes,chains,matrix,positioning,scopes,patterns	}
+%\pgfplotsset{compat=newest}
+%\pgfplotsset{plot coordinates/math parser=false}
+%
+%\begin{document}
 
 \begin{tikzpicture}
+\def \offs{0.2in};
 
 \matrix(mymatrix)[matrix of math nodes, left delimiter={[},right delimiter={]}]
 	{
@@ -51,7 +52,7 @@
 
 \coordinate (ld) at (mymatrix-8-1.south west);	
 \coordinate (rd) at (mymatrix-8-3.south east);	
-\def \offs{0.2in};
+
 
   \node (la_left)  [left = \offs of la]    {};    %Left coordinate outside the matrix for the 1st extended hline
   \node (ra_right)  [right = \offs of ra]    {};    %Right coordinate outside the matrix for the 1st extended hline
@@ -83,5 +84,5 @@
 %\draw [decorate,thick,decoration={brace,amplitude=4pt,mirror},xshift=-0.5in,yshift=0pt]
 %(lb_left) -- (ld_left) node [black,midway,xshift=-19pt]{\small $\text{G}_{2}$};
 
-        \end{tikzpicture}
-\end{document}
+ \end{tikzpicture}
+%\end{document}

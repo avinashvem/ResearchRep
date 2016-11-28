@@ -1,0 +1,326 @@
+
+\tikzset
+{
+vnodeStyle/.style =
+{
+% -- shape properties --
+circle,                                 % shape
+%       rounded corners = 3mm,                  % kind of corner (and radius of the roundness)
+%       minimum height  = 0.15\textwidth,       % | minimum size of the node
+%       minimum width   = 0.9\textwidth,        % |
+minimum size    = 10pt,                %
+rotate          = 0,                    % angle of rotation
+scale           = 1.0,                  % scaling factor
+thick,                                  % thickness of the border
+%
+% -- colours properties --
+% filling: [ trasparent | monocolored | shaded]; decomment what you prefer
+%       %                                       % transparent (all commented)
+fill            = white,             % monocolored
+%       top color       = white,                % | filling of the node
+%       bottom color    = red!50!black!20,      % |
+text            = black,                % colour of the fonts
+draw            = black,                % colour of the border
+%
+% -- fonts --
+font            = \scriptsize,              % shape of the font (or dimension, like \tiny)
+%       text centered,                          % text alignment [text centered | text badly centered | text justified | text ragged | text badly ragged]
+inner xsep      = 0mm,                  % minimum distance between text and borders along x dimension
+inner ysep      = 0mm,                  % minimum distance between text and borders along y dimension
+text height     = 0.2cm,
+text depth      = 0.12cm,
+}
+}
+
+
+
+
+
+
+\tikzset
+{
+cnodeStyle/.style =
+{
+% -- shape properties --
+rectangle,                                  % shape
+%        rounded corners = 1mm,                  % kind of corner (and radius of the roundness)
+%       minimum height  = 0.15\textwidth,       % | minimum size of the node
+%       minimum width   = 0.9\textwidth,        % |
+minimum size    = 8pt,                %
+rotate          = 0,                    % angle of rotation
+scale           = 1.0,                  % scaling factor
+thick,                                  % thickness of the border
+%
+% -- colours properties --
+% filling: [ trasparent | monocolored | shaded]; decomment what you prefer
+%       %                                       % transparent (all commented)
+fill            = white,             % monocolored
+%       top color       = white,                % | filling of the node
+%       bottom color    = red!50!black!20,      % |
+text            = black,                % colour of the fonts
+draw            = black,                % colour of the border
+%
+% -- fonts --
+font            = \scriptsize,              % shape of the font (or dimension, like \tiny)
+text centered,                          % text alignment [text centered | text badly centered | text justified | text ragged | text badly ragged]
+%       text height     = 1mm,                  % ! minimum size of the text    % NOT WORKING
+%       text depth      = 1mm,                  % !
+inner xsep      = 0mm,                  % minimum distance between text and borders along x dimension
+inner ysep      = 0mm                   % minimum distance between text and borders along y dimension
+}
+}
+
+
+
+
+\tikzset {
+WarningTextStyle/.style =
+{
+rectangle,                      % shape
+rounded corners = 0.6cm,        %
+minimum size    = 1.2cm,          %
+rotate          = 0,            % angle of rotation
+scale           = 1.0,          % scaling factor
+thick,                          % thickness of the border
+fill            = red!10,       % monocolored
+text            = red!10!black, % colour of the fonts
+draw            = red,          % colour of the border
+font            = \large,       % shape of the font (or dimension, like \tiny)
+text centered,                  % text alignment
+text width      = 10cm,         % text alignment
+inner xsep      = 0.1cm,        % minimum distance between text and borders along x dimension
+inner ysep      = 0.1cm         % minimum distance between text and borders along y dimension
+}
+}
+
+
+
+\tikzset {
+RemarkTextStyle/.style =
+{
+rectangle,                      % shape
+rounded corners = 0.6cm,        %
+minimum size    = 1.2cm,          %
+rotate          = 0,            % angle of rotation
+scale           = 1.0,          % scaling factor
+thick,                          % thickness of the border
+fill            = blue!10,       % monocolored
+text            = blue!10!black, % colour of the fonts
+draw            = blue,          % colour of the border
+font            = \large,       % shape of the font (or dimension, like \tiny)
+text centered,                  % text alignment
+text width      = 10cm,         % text alignment
+inner xsep      = 0.3cm,        % minimum distance between text and borders along x dimension
+inner ysep      = 0.3cm         % minimum distance between text and borders along y dimension
+}
+}
+
+
+
+
+\tikzset
+{
+FittingStyle/.style =
+{
+% -- shape properties --
+shape = ellipse,                            % shape
+%       rounded corners = 1mm,                  % kind of corner (and radius of the roundness)
+%       minimum height  = 0.15\textwidth,       % | minimum size of the node
+%       minimum width   = 0.9\textwidth,        % |
+%       minimum size    = 4.5mm,                %
+%       rotate          = 0,                    % angle of rotation
+scale           = 1.0,                  % scaling factor
+thick,                                  % thickness of the border
+%
+% -- colours properties --
+% filling: [ trasparent | monocolored | shaded]; decomment what you prefer
+%       %                                       % transparent (all commented)
+%       fill            = black!30,             % monocolored
+%       top color       = white,                % | filling of the node
+%       bottom color    = red!50!black!20,      % |
+%       text            = black,                % colour of the fonts
+draw            = red,              % colour of the border
+%
+% -- fonts --
+%       font            = \scriptsize,              % shape of the font (or dimension, like \tiny)
+%       text centered,                          % text alignment [text centered | text badly centered | text justified | text ragged | text badly ragged]
+%       text height     = 1mm,                  % ! minimum size of the text    % NOT WORKING
+%       text depth      = 1mm,                  % !
+inner xsep      = 0mm,                  % minimum distance between text and borders along x dimension
+inner ysep      = 0mm                   % minimum distance between text and borders along y dimension
+}
+}
+
+
+
+\tikzset
+{
+GenericNodeStyle/.style =
+{
+% -- shape properties --
+shape = rectangle,                          % shape
+rounded corners = 3mm,                  % kind of corner (and radius of the roundness)
+minimum height  = 1cm,                  % | minimum size of the node
+minimum width   = 2cm,                  % |
+scale           = 1.0,                  % scaling factor
+thick,                                  % thickness of the border
+%
+% -- colours properties --
+% filling: [ trasparent | monocolored | shaded]; decomment what you prefer
+%       %                                       % transparent (all commented)
+fill            = green!10!white,               % monocolored
+%       top color       = white,                % | filling of the node
+%       bottom color    = red!50!black!20,      % |
+%       text            = black,                % colour of the fonts
+draw            = green,                % colour of the border
+%
+% -- fonts --
+%       font            = \scriptsize,              % shape of the font (or dimension, like \tiny)
+%       text centered,                          % text alignment [text centered | text badly centered | text justified | text ragged | text badly ragged]
+%       text height     = 1mm,                  % ! minimum size of the text    % NOT WORKING
+%       text depth      = 1mm,                  % !
+inner xsep      = 3mm,                  % minimum distance between text and borders along x dimension
+inner ysep      = 3mm                   % minimum distance between text and borders along y dimension
+}
+}
+
+
+
+
+\tikzset
+{
+NormalNodeStyle/.style =
+{
+shape = circle,                         % shape
+minimum size    = 20,                   %
+rotate          = 0,                    % angle of rotation
+scale           = 1.0,                  % scaling factor
+thick,                                  % thickness of the border
+text            = black,                % colour of the fonts
+draw            = black,                % colour of the border
+font            = \small,               % shape of the font (or dimension, like \tiny)
+text centered,                          % text alignment
+inner xsep      = 0,                    % minimum distance between text and borders along x dimension
+inner ysep      = 0                     % minimum distance between text and borders along y dimension
+}
+}
+
+
+
+\tikzset
+{
+BridgeNodeStyle/.style =
+{
+circle,                                 % shape
+minimum size    = 20,                   %
+rotate          = 0,                    % angle of rotation
+scale           = 1.0,                  % scaling factor
+thick,                                  % thickness of the border
+fill            = black!30,             % monocolored
+text            = black,                % colour of the fonts
+draw            = black,                % colour of the border
+font            = \small,               % shape of the font (or dimension, like \tiny)
+text centered,                          % text alignment
+inner xsep      = 0,                    % minimum distance between text and borders along x dimension
+inner ysep      = 0                     % minimum distance between text and borders along y dimension
+}
+}
+
+
+
+
+
+
+\tikzstyle{sNormalBlockStyle} = [
+draw,
+rectangle,
+rounded corners = 0.1cm,
+fill            = blue!20,
+minimum height  = 3em,
+minimum width   = 6em,
+]
+
+
+
+
+
+\tikzstyle{sSumBlockStyle} =
+[
+shape           = circle,
+draw,
+fill            = blue!20,
+]
+
+
+
+
+\tikzstyle{sArrowsStyle} =
+[
+thick,
+color   = black,
+-latex
+]
+
+
+
+
+\tikzstyle{sLinesStyle} =
+[
+thick,
+color   = black,
+-
+]
+
+
+
+
+\tikzstyle{sTextBlockStyle} =
+[
+draw,
+rectangle,
+drop shadow,
+rounded corners = 0.1cm,
+fill            = blue!10,
+thick,
+inner xsep      = 0.2cm,        % minimum distance between text and borders along x dimension
+inner ysep      = 0.2cm         % minimum distance between text and borders along y dimension
+]
+
+
+
+\tikzfading % DO NOT CHANGE THE ORDER OF THE COLORS otherwise it will not work
+[
+name            = middle,
+top color       = transparent!100,
+bottom color    = transparent!100,
+middle color    = transparent!00,
+]
+
+
+
+\tikzstyle{sCoalFiredPlant} =
+[
+shape           = rectangle,
+minimum height  = 0.5cm,
+minimum width   = 0.5cm,
+rounded corners = 0.1cm,
+fill            = black!20,
+draw            = black,
+line width      = 0.1cm,
+inner xsep      = 0.2cm,
+inner ysep      = 0.2cm
+]
+
+\newcommand\setrow[9]{
+\setcounter{col}{1}
+\foreach \n in {#1, #2, #3, #4, #5, #6, #7, #8, #9} {
+\edef\x{\value{col} - 0.5}
+\edef\y{9.5 - \value{row}}
+\node[anchor=center] at (\x, \y) {\n};
+\stepcounter{col}
+}
+\stepcounter{row}
+}
+
+\newcounter{row}
+\newcounter{col}

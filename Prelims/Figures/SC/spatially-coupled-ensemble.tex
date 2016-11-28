@@ -1,0 +1,249 @@
+\pgfdeclarelayer{background layer}
+
+\pgfdeclarelayer{foreground layer}
+
+\pgfdeclarelayer{b-m layer}
+
+\pgfsetlayers{background layer,b-m layer,main,foreground layer}
+
+
+\begin{tikzpicture}[xscale=0.35,yscale=1]
+  \def \offset {0.75}
+  \def \eCtrl  {0.3}
+
+  % \clip (2.5,-0.5) rectangle (25.5,5.5);
+
+  \uncover<1> {
+    \foreach \i/\text in {14/0} {
+      \foreach \j in {-1,1}{
+        \draw [thick] (\i+\offset*\j, 4) +(0,0) -- +(255:0.8);
+        \draw [thick] (\i+\offset*\j, 4) +(0,0) -- +(270:0.8);
+        \draw [thick] (\i+\offset*\j, 4) +(0,0) -- +(285:0.8);
+        \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(112:0.8);
+        \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(97:0.8);
+        \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(82:0.8);
+        \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(67:0.8);
+
+        \node[vnodeStyle] (v\i\j) at (\i+\offset*\j, 4) {};
+        \node[cnodeStyle] (c\i\j) at (\i+\offset*\j, 0) {};
+      }
+
+      \foreach \j in {0.4,3.5} {
+        \node (kk) at (\i,\j) {\scriptsize{$...$}};
+      }
+
+      \node[draw,rectangle,minimum width=22pt,minimum height=16pt, fill=white] (p1_node\i) at (\i,3) {\footnotesize{$\pi\phantom{'}$}};
+      \node[draw,rectangle,minimum width=22pt,minimum height=16pt, fill=white] (p2_node\i) at (\i,1) {\footnotesize{$\pi'$}};
+
+    }
+
+    \foreach \i/\text in {4/-N,8/-2,11/-1,14/0,17/1,20/2,24/N} {
+      \node[white] at (\i,4.5) {\footnotesize{$\text$}};
+    }
+
+    \foreach \i in {6,22} {
+      \node[white] (kk) at (\i,4.5) {\scriptsize{$...$}};
+    }
+
+
+    \foreach \i/\text in {14/0} {
+      \draw[ultra thick,gray] (p2_node\i) -- (p1_node\i);
+      \draw[ultra thick,gray] (p2_node\i) .. controls (\i-\eCtrl,2) .. (p1_node\i);
+      \draw[ultra thick,gray] (p2_node\i) .. controls (\i+\eCtrl,2) .. (p1_node\i);
+    }
+  }
+
+  \uncover<2-> {
+    \foreach \i/\text in {4/-N,8/-2,11/-1,14/0,17/1,20/2,24/N} {
+      \foreach \j in {-1,1}{
+        \draw [thick] (\i+\offset*\j, 4) +(0,0) -- +(255:0.8);
+        \draw [thick] (\i+\offset*\j, 4) +(0,0) -- +(270:0.8);
+        \draw [thick] (\i+\offset*\j, 4) +(0,0) -- +(285:0.8);
+        \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(112:0.8);
+        \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(97:0.8);
+        \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(82:0.8);
+        \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(67:0.8);
+
+        \node[vnodeStyle] (v\i\j) at (\i+\offset*\j, 4) {};
+        \node[cnodeStyle] (c\i\j) at (\i+\offset*\j, 0) {};
+      }
+
+      \foreach \j in {0.4,3.5} {
+        \node (kk) at (\i,\j) {\scriptsize{$...$}};
+      }
+
+      \node[draw,rectangle,minimum width=22pt,minimum height=16pt, fill=white] (p1_node\i) at (\i,3) {\footnotesize{$\pi_{\text}\phantom{'}$}};
+      \node[draw,rectangle,minimum width=22pt,minimum height=16pt, fill=white] (p2_node\i) at (\i,1) {\footnotesize{$\pi_{\text}'$}};
+    }
+
+    \foreach \x in {6,22} {
+      \foreach \y in {3,1} {
+        \node (blu) at (\x,\y) {\footnotesize{$...$}};
+      }
+    }
+
+    \foreach \i/\text in {4/-N,8/-2,11/-1,14/0,17/1,20/2,24/N} {
+      \node at (\i,4.5) {\footnotesize{$\text$}};
+    }
+
+    \foreach \i in {6,22} {
+      \node (kk) at (\i,4.5) {\scriptsize{$...$}};
+    }
+  }
+
+  \uncover<2> {
+    \foreach \i/\text in {4/-N,8/-2,11/-1,14/0,17/1,20/2,24/N} {
+      \draw[ultra thick,gray] (p2_node\i) -- (p1_node\i);
+      \draw[ultra thick,gray] (p2_node\i) .. controls (\i-\eCtrl,2) .. (p1_node\i);
+      \draw[ultra thick,gray] (p2_node\i) .. controls (\i+\eCtrl,2) .. (p1_node\i);
+    }
+  }
+
+  \uncover<3> {
+    \def \midx {0.5}
+
+    \foreach \i/\text in {-2/-\!N\!\!-\!\!2,1/-\!N\!\!-\!\!1,27/N\!+\!1,30/N\!+\!2} {
+      \node at (\i,4.5) {{\color{blue} \footnotesize{$\!\text\!\!$}}};
+    }
+
+    \foreach \i/\text in {-2/-\!N\!-\!2,1/-\!N\!-\!1} {
+      \foreach \j in {-1,1}{
+        \draw [thick, color=blue!70] (\i+\offset*\j, 4) +(0,0) -- +(255:0.8);
+        \draw [thick, color=blue!70] (\i+\offset*\j, 4) +(0,0) -- +(270:0.8);
+        \draw [thick, color=blue!70] (\i+\offset*\j, 4) +(0,0) -- +(285:0.8);
+
+        \node[vnodeStyle, fill=blue!20, draw=blue!70] (v\i\j) at (\i+\offset*\j, 4) {};
+      }
+
+      \node[draw,rectangle,minimum width=22pt,minimum height=16pt, fill=blue!20, draw=blue!70] (p1_node\i) at (\i,3) {\footnotesize{$\!\pi_{\text}\phantom{'}\!\!$}};
+
+      \foreach \j in {3.5} {
+        \node (kk) at (\i,\j) {\scriptsize{$...$}};
+      }
+    }
+
+    \foreach \i/\j in {-2/4, 1/4} {
+      \draw[color=blue!50] (p1_node\i) -- (p2_node\j);
+      \draw[color=blue!50] (p1_node\i) .. controls (\i*\midx+\j*\midx-0.2,2) .. (p2_node\j);
+      \draw[color=blue!50] (p1_node\i) .. controls (\i*\midx+\j*\midx+0.2,2) .. (p2_node\j);
+    }
+    \foreach \i in {1} {
+      \draw[color=blue!50] (p1_node\i) -- (9*0.35, 2.2);
+      \draw[color=blue!50] (p1_node\i) -- (9*0.35-0.2, 2.2);
+      \draw[color=blue!50] (p1_node\i) -- (9*0.35+0.2, 2.2);
+    }
+
+
+    \foreach \i/\text in {27/N+1,30/N+2} {
+      \foreach \j in {-1,1}{
+        \draw [thick, color=blue!70] (\i+\offset*\j, 4) +(0,0) -- +(255:0.8);
+        \draw [thick, color=blue!70] (\i+\offset*\j, 4) +(0,0) -- +(270:0.8);
+        \draw [thick, color=blue!70] (\i+\offset*\j, 4) +(0,0) -- +(285:0.8);
+
+        \node[vnodeStyle, fill=blue!20, draw=blue!70] (v\i\j) at (\i+\offset*\j, 4) {};
+      }
+
+      \node[draw,rectangle,minimum width=22pt,minimum height=16pt, fill=blue!20, draw=blue!70] (p1_node\i) at (\i,3) {\footnotesize{$\!\pi_{\text}\phantom{'}\!\!$}};
+
+      \foreach \j in {3.5} {
+        \node (kk) at (\i,\j) {\scriptsize{$...$}};
+      }
+    }
+
+  }
+
+  \uncover<3> {
+
+    \foreach \i/\text in {27/N+1,30/N+2} {
+      \foreach \j in {-1,1}{
+        \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(112:0.8);
+        \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(97:0.8);
+        \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(82:0.8);
+        \draw [thick] (\i+\offset*\j, 0) +(0,0) -- +(67:0.8);
+
+        \node[cnodeStyle] (c\i\j) at (\i+\offset*\j, 0) {};
+      }
+      \node[draw,rectangle,minimum width=22pt,minimum height=16pt, fill=white] (p2_node\i) at (\i,1) {\footnotesize{$\!\pi_{\text}'\!\!$}};
+
+      \foreach \j in {0.4} {
+        \node (kk) at (\i,\j) {\scriptsize{$...$}};
+      }
+    }
+  }
+
+  \uncover<3> {
+    \foreach \i/\j in {27/27, 27/30, 30/30} {
+      \draw[color=blue!50] (p1_node\i) -- (p2_node\j);
+      \draw[color=blue!50] (p1_node\i) .. controls (\i*\midx+\j*\midx-0.2,2) .. (p2_node\j);
+      \draw[color=blue!50] (p1_node\i) .. controls (\i*\midx+\j*\midx+0.2,2) .. (p2_node\j);
+    }
+  }
+
+
+  \uncover<3> {
+    \draw[gray] (p1_node4) -- (p2_node4);
+    \draw[gray] (p1_node4) .. controls (8*\midx-0.2,2) .. (p2_node4);
+    \draw[gray] (p1_node4) .. controls (8*\midx+0.2,2) .. (p2_node4);
+    \foreach \i/\j in {4/8,4/11} {
+      \draw[gray] (p1_node\i) -- node[fill=white, minimum size=10pt]  {} (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx-0.2,2) .. node[fill=white, minimum size=10pt]{} (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx+0.2,2) .. node[fill=white, minimum size=10pt]{} (p2_node\j);
+    }
+
+    \draw (8,1) +(131:1.2) node (tt0) {};
+    \draw (8,1) +(136:1.3) node (tt1) {};
+    \draw (8,1) +(141:1.4) node (tt2) {};
+    \draw[gray] (p2_node8) -- (tt0);
+    \draw[gray] (p2_node8) -- (tt1);
+    \draw[gray] (p2_node8) -- (tt2);
+    \foreach \i/\j in {8/8,8/11,8/14} {
+      \draw[gray] (p1_node\i) -- (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx-0.2,2) .. (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx+0.2,2) .. (p2_node\j);
+    }
+
+    \foreach \i/\j in {11/11,11/14,11/17} {
+      \draw[gray] (p1_node\i) -- (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx-0.2,2) .. (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx+0.2,2) .. (p2_node\j);
+    }
+
+    \foreach \i/\j in {14/14,14/17,14/20} {
+      \draw[gray] (p1_node\i) -- (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx-0.2,2) .. (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx+0.2,2) .. (p2_node\j);
+    }
+
+    \foreach \i/\j in {17/17,17/20} {
+      \draw[gray] (p1_node\i) -- (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx-0.2,2) .. (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx+0.2,2) .. (p2_node\j);
+    }
+    \draw[gray] (p1_node17) -- node[fill=white, minimum size=10pt] {}
+    (p2_node24);
+    \draw[gray] (p1_node17) .. controls (41*\midx-0.2,2) .. node[fill=white, minimum size=10pt]{} (p2_node24);
+    \draw[gray] (p1_node17) .. controls (41*\midx+0.2,2) .. node[fill=white, minimum size=10pt]{} (p2_node24);
+    \draw[gray] (p1_node20) -- (p2_node20);
+    \draw[gray] (p1_node20) .. controls (40*\midx-0.2,2) .. (p2_node20);
+    \draw[gray] (p1_node20) .. controls (40*\midx+0.2,2) .. (p2_node20);
+    \foreach \i/\j in {20/24,20/27} {
+      \draw[gray] (p1_node\i) -- node[fill=white, minimum size=10pt] {}
+      (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx-0.2,2) .. node[fill=white, minimum size=10pt]{} (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx+0.2,2) .. node[fill=white, minimum size=10pt]{} (p2_node\j);
+    }
+
+    \foreach \i/\j in {24/24,24/27,24/30} {
+      \draw[gray] (p1_node\i) -- (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx-0.2,2) .. (p2_node\j);
+      \draw[gray] (p1_node\i) .. controls (\i*\midx+\j*\midx+0.2,2) .. (p2_node\j);
+    }
+
+  }
+\end{tikzpicture}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../ita2016"
+%%% End: 
