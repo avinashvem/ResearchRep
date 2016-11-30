@@ -749,11 +749,11 @@ where the carry overs are
     \begin{itemize}
     \item<2-> Message $M^k$ encoded to $X^n \in \mathcal{C}$ with \textcolor{blue}{$\tfrac{1}{n} \sum_{i=1}^n \expt[X_i] \leq p \leq \frac{1}{2}$}
     \item<2-> Side-information $Z^n$ is available \alert{only at the encoder}
-    \item<3-> The output at the decoder is
+    \item<2-> The output at the decoder is
       \begin{align*}
         Y^n=X^n\oplus Z^n \oplus W^n, \quad \{W_i\} \sim \textsf{Ber}(\delta)
       \end{align*}
-    \item<4-> Capacity region by Gelfand-Pinsker:
+    \item<3-> Capacity region by Gelfand-Pinsker:
       \begin{align*}
         R < h(p) - h(\delta)
       \end{align*}
@@ -764,7 +764,7 @@ where the carry overs are
 \begin{frame}{Main Result}
   \begin{block}{Objective}<1->
     \begin{itemize}
-    \item Construct \alert{low-complexity} coding schemes that achieve the \textcolor{blue}{complete rate regions} of Wyner-Ziv and Gelfand-Pinsker \vspace{0.1cm}
+    \item Construct {\blue low-complexity} coding schemes that achieve the \textcolor{blue}{complete rate regions} of Wyner-Ziv and Gelfand-Pinsker \vspace{0.1cm}
       \begin{itemize}
       \item Low-complexity encoding and decoding
       \end{itemize}
@@ -774,18 +774,58 @@ where the carry overs are
   \begin{block}{Idea}<2->
     \begin{itemize}
     \item Wainwright et al.~used compound LDGM/LDPC codes with \alert{optimal encoding/decoding}\vspace{0.1cm}
-    \item Message-passing algorithms have \textcolor{blue}{non-negligible gap}\vspace{0.1cm}
-    \item<3-> Remedy via \alert{Spatial-Coupling}
+    \item Message-passing algorithms have \alert{non-negligible gap}\vspace{0.1cm}
+    \item<3-> Remedy via {\blue Spatial-Coupling}
       \begin{itemize}
       \item Channel coding in coupled compound codes (Kasai et al.)
       \item Lossy source coding with spatially-coupled LDGM (Aref et al.)
-      \item Encoding with \alert{compound codes has additional challenges}
+      \item Encoding with compound codes has additional challenges
       \end{itemize}
     \end{itemize}
   \end{block}
 \end{frame}
 
 \subsection{Compound LDGM/LDPC Codes}
+\begin{frame}\frametitle{An $(\ell,r)$ LDGM Code}
+\begin{columns}
+\column{0.55\textwidth}
+\begin{defn}{Generator Matrix}
+\vspace{-3mm}
+\centering
+\begin{align*}
+G=
+\begin{pmatrix}
+1 & 1 & 0 & 0 & 1 & 0\\
+0 & 0 & 1 & 1 & 1 & 0\\
+1 & 0 & 1 & 0 & 0 & 1\\
+0 & 1 & 0 & 1 & 0 & 1  
+\end{pmatrix}
+\end{align*}
+\begin{align*}
+  \ell&=3 & r&=2
+\end{align*}
+\begin{align*}
+\text{LDGM Code } \mc{C}=\{x: x=m\odot G\}
+\end{align*}
+\end{defn}
+\column{0.45\textwidth}
+\begin{defn}{Tanner Graph}
+\centering
+\vspace{1mm}
+\scalebox{0.7}{\input{Figures/ldgm_code}}
+\end{defn}
+\vspace{0.3cm}
+\pause
+$$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
+%\begin{defn}{Compressed Representation}
+%\centering
+%\vspace{1mm}
+%\scalebox{0.65}{\input{Figures/SC/ldpc_code_compressed_tanner}}  
+%\end{defn}
+\end{columns}
+\end{frame}
+%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
+
 \begin{frame}{Compound LDGM/LDPC Codes}
   \begin{columns}
     \column{0.45\textwidth}
