@@ -1,9 +1,14 @@
-\documentclass[10pt]{beamer}
-\mode<presentation>
-{
+\documentclass[10pt,presentation]{beamer}
 \usetheme{CambridgeUS}
 \usecolortheme{dolphin}
-}
+\usecolortheme[RGB={0,120,0}]{structure}
+
+\definecolor{light-gray}{gray}{0.93}
+\definecolor{title-green}{rgb}{0,0.4,0.2}
+
+\setbeamercolor{title}{fg=green!50!black,bg=white}
+\setbeamercolor*{frametitle}{bg=light-gray,fg=title-green}
+\setbeamertemplate{footline}[frame number]
 
 \input{preamble}
 \input{./Figures/SC/tikz_preamble.tex}
@@ -27,17 +32,18 @@
 \author{\textbf{Avinash Vem}} 
 \vspace{10pt}
 \institute{Department of Electrical and Computer Engineering \\ Texas A\&M University}
+\date{Dec 02, 2016} % if no date wanted, keep it blank
 
 \titlegraphic{
 \includegraphics[width=0.75in]{TAMULogoBox.pdf}
 }	
-\date{} % if no date wanted, keep it blank
+
 
 \frame{\titlepage}
-\frame{\tableofcontents}
+\frame{{Outline}\tableofcontents}
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 \section{Spatial Coupling(SC)}
-\subsection{Introduction}
+\subsection{SC-LDPC Ensemble}
 \begin{frame}\frametitle{An $(\ell,r)$ LDPC Code}
 \begin{columns}
 \column{0.45\textwidth}
@@ -89,8 +95,8 @@ H=
 \column{0.5\textwidth}
 \begin{defn}{Maximum a Posteriori (MAP)}
 \begin{itemize}
-\item Optimal Decoder
-\item \alert{Not Realizable}
+\item Optimal decoder
+\item \alert{Not realizable}
 \item Threshold: $\hmap$
 \end{itemize}
 \end{defn}
@@ -115,6 +121,10 @@ H=
   $(5,6)$ & $0.8333$ & $0.5731$ & $0.8333$ & $0.5773$ & $0.8333$ \\
   \hline
 \end{tabular}
+\\
+\onslide<2->
+\vspace{5mm}
+\alert{Spatial-Coupling aids in bridging this gap}
 \end{frame}
 
 \begin{frame}{$(\ell,r,N,w)$ Spatially-Coupled Ensemble}
@@ -123,7 +133,7 @@ H=
   \item<1> An LDPC code of left-degree $\ell=3$ and right-degree $r=4$
   \item<3-> Shown for $\ell = 3$, $r = 4$, and $w=3$
   \item<3-> Check-nodes at Section $\{i\}$ are connected to variable-nodes in Sections $\{i-(w-1),\dots,i\}$
-  \item<3-> Shown to have \textcolor{blue}{near optimal BP thresholds}
+  \item<3-> Shown to have {\blue near optimal BP thresholds}
   \end{itemize}
 \end{frame}
 
@@ -237,9 +247,10 @@ H=
 \alert{MAP Performance with a BP Decoder!}
 { \Large
 \begin{align*}
-  \text{For large $N$, $w$} \quad \alert{\hbp_{\mathrm{c}} = \hmap} 
+  \text{For large} N, w \quad  \hbp_{\mathrm{c}}= \hmap 
 \end{align*}
 }
+\onslide<2->
 \begin{tabular}{|c|c|c|c|}
   \hline
   SC-LDPC & Shannon & \textcolor{blue}{AWGN} & \textcolor{blue}{BSC} \\
@@ -250,6 +261,7 @@ H=
   $(5,6)$ & $0.8333$ & $0.8333$ & $0.8333$ \\
   \hline
 \end{tabular}
+
 \end{frame}
 
 \begin{frame}
@@ -297,7 +309,7 @@ H=
 \end{defn}
 \end{frame}
 \section{SC-LDPC Lattices}
-\subsection{Introduction}
+\subsection{Introduction to Lattices}
 \begin{frame}\frametitle{Lattices and Lattice Codes}
 \begin{block}{Lattice}
 A lattice of dimension $n$ is a discrete subgroup of $\mbb{R}^{n}$ isomorphic to $\mbb{Z}^n$
@@ -593,7 +605,6 @@ $(d_{c},d_{v}^{1},d_{v}^{2})$ &(L,w)& $P(4\Z,\sigma^{2})$ & $\sigma_{\text{max}}
 \end{frame}
 
 \begin{frame}\frametitle{Simulation Results}
-
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{BER_iters_4_72_9.pdf}
@@ -602,7 +613,7 @@ $(d_{c},d_{v}^{1},d_{v}^{2})$ &(L,w)& $P(4\Z,\sigma^{2})$ & $\sigma_{\text{max}}
 \onslide<2->{Note that the Block Error Probability is $10^{-4}$ at uncoded level.}
 \end{frame}
 
-\subsection{Application to Symmetric Interference Channel}
+\subsection{Symmetric Interference Channel}
 \begin{frame}\frametitle{3-User Symmetric Interference Channel}
 	\begin{figure}
 	\centering
@@ -663,7 +674,7 @@ where the carry overs are
         \item Multilevel construction is provably good under message passing decoding
                \vspace{5pt}
                \pause
-        \item Coding schemes based on {\alert binary LDPC codes and iterative decoding} suffice
+        \item Coding schemes based on \alert{binary codes and iterative decoding} suffice
     \end{itemize}
 \end{frame}
 
@@ -682,11 +693,12 @@ where the carry overs are
         \begin{align*}
           D=\frac{1}{n} \sum_{i=1}^n \expt \abs{X_i-\hat{X}_i}
         \end{align*}
+   \vspace{-4mm}
       \item<3-> Rate-Distortion theory: \vspace{-0.15cm}
         \begin{align*}
           R > 1 - h(D)
         \end{align*}
-        \vspace{-1.0cm}
+        \vspace{-7mm}
       \item<3-> $h(\cdot)$ is binary entropy function
         \small{
           \begin{align*}
@@ -710,6 +722,7 @@ where the carry overs are
   \begin{block}{Wyner-Ziv Formulation}<1->
     \begin{columns}
       \column{0.55\textwidth}
+      \vspace{-3mm}
       \begin{itemize}
       \item<1-> \textcolor{red}{Side-information} $Z^n$ about $X^n$
       \item<1-> Decoder \textcolor{blue}{additionally} has $Z^n$
@@ -772,14 +785,7 @@ where the carry overs are
   \end{block}
 \end{frame}
 
-% \begin{frame}{A Brief History}
-%   \begin{itemize}
-%   \item Item 1
-%   \item Item 2
-%   \end{itemize}
-% \end{frame}
-
-\subsection{Compound Codes}
+\subsection{Compound LDGM/LDPC Codes}
 \begin{frame}{Compound LDGM/LDPC Codes}
   \begin{columns}
     \column{0.45\textwidth}

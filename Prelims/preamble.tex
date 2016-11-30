@@ -23,8 +23,6 @@
   petri,%
   fadings
 }  
-\setbeamertemplate{footline}[frame number]
-\definecolor{purple}{RGB}{255,0,204}
 
 \newcommand{\h}{\texttt{h}}
 \newcommand{\hbp}{\h^{\mathrm{BP}}}
@@ -36,20 +34,20 @@
 \newcommand{\BPsmall}{\ensuremath{\text{\tiny BP}}} % Belief Propagation
 \newcommand{\MAPsmall}{\ensuremath{\text{\tiny MAP}}} % Maximum A Posteriori
 
-\usecolortheme[RGB={0,100,0}]{structure}
 \setbeamertemplate{itemize item}[triangle]
 \setbeamertemplate{itemize subitem}[circle]
 \setbeamertemplate{itemize subsubitem}{$-$}
 
-\setbeamertemplate{blocks}[rounded][shadow=true]
-\setbeamercolor{block title}{fg=black,bg=blue!35!white}
-\setbeamercolor{block body}{fg=black,bg=blue!15!white}
+\setbeamertemplate{blocks}[rounded,shadow=true]
+\setbeamercolor{block title}{fg=black,bg=blue!30!white}
+\setbeamercolor{block body}{fg=black,bg=blue!10!white}
 \newenvironment<>{defn}[1]{%
   \setbeamertemplate{blocks}[default]%
   \setbeamercolor{block title}{fg=blue,bg=white}%
   \setbeamercolor{block body}{fg=black,bg=white}%
   \begin{block}#2{#1}}{\end{block}}
 
-
+\setbeamerfont{alerted text}{family=\sffamily, shape=\slshape}
+\setbeamercolor{alerted text}{fg=red!95!white}
 \newlength\tikzwidth
 \newlength\tikzheight
