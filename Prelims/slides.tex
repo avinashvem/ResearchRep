@@ -817,24 +817,18 @@ G=
 \vspace{0.3cm}
 \pause
 $$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
-%\begin{defn}{Compressed Representation}
-%\centering
-%\vspace{1mm}
-%\scalebox{0.65}{\input{Figures/SC/ldpc_code_compressed_tanner}}  
-%\end{defn}
 \end{columns}
 \end{frame}
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
-
 \begin{frame}{Compound LDGM/LDPC Codes}
-  \begin{columns}
-    \column{0.45\textwidth}
-    \begin{center}
-      \setlength\tikzheight{5cm}
-      \setlength\tikzwidth{6cm}
-      \scalebox{0.5}{\input{\side_information_path/compound_code}}
-    \end{center}
-    \column{0.55\textwidth}
+\begin{columns}
+   \column{0.45\textwidth}
+ \begin{center}
+    \setlength\tikzheight{5cm}
+    \setlength\tikzwidth{6cm}
+    \scalebox{0.5}{\input{\side_information_path/compound_code}}
+ \end{center}
+   \column{0.55\textwidth}
     \begin{itemize}
     \item Codebook $\mathcal{C}(n,m-k-k')$ \vspace{0.1cm}
     \item \textcolor{blue}{Message constraints} \vspace{-0.2cm}
@@ -851,12 +845,12 @@ $$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
     \begin{itemize}
     \item Compound code is 
       \begin{itemize}
-      \item a \alert{good source code} under optimal encoding
-      \item a \alert{good channel code} under optimal decoding
+      \item a {\blue good source code} under optimal encoding
+      \item a {\blue good channel code} under optimal decoding
       \end{itemize}
      \item LDGM code is 
        \begin{itemize}
-       \item a \alert{good source code} under optimal encoding
+       \item a {\blue good source code} under optimal encoding
        \item \textcolor{blue}{(side note)} LDGM code is \alert{not} a good channel code
        \end{itemize}
     \end{itemize}
@@ -867,11 +861,12 @@ $$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
   \begin{block}{``Good'' source code}
     \begin{itemize}
     \item Rate of the code is $R=1-h(D)+\varepsilon$
-    \item When this code is used to \alert{optimally encode} $\mathsf{Ber}(\tfrac{1}{2})$
+    \item When this code is used to \alert{optimally encode} $\mathsf{Ber}(\tfrac{1}{2})$ source
     \item The average Hamming \textcolor{blue}{distortion is at most $D$}
     \end{itemize}
   \end{block}
   \vspace{0.4cm}
+  \onslide<2->
   \begin{block}{``Good'' channel code}
     \begin{itemize}
     \item Rate of the code is $R=1-h(\delta)-\varepsilon$
@@ -882,18 +877,18 @@ $$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
 \end{frame}
 
  \begin{frame}{Coding Scheme: Wyner-Ziv}
-   \vspace{-0.2cm}
+   \vspace{-0.4cm}
    \begin{center}
-     \scalebox{0.5}{\input{\side_information_path/wyner-ziv-block-diagram}}
+     \scalebox{0.4}{\input{\side_information_path/wyner-ziv-block-diagram}}
    \end{center}
    \vspace{-0.35cm}
    \begin{columns}
      \column{0.5\textwidth}
      \vspace{-0.5cm}
      \begin{center}
-       \setlength\tikzheight{5cm}
-       \setlength\tikzwidth{6cm}
-       \scalebox{0.5}{\input{\side_information_path/wyner-ziv-coding}}
+       \setlength\tikzheight{6cm}
+       \setlength\tikzwidth{7cm}
+       \scalebox{0.65}{\input{\side_information_path/wyner-ziv-coding}}
      \end{center}
      \column{0.5\textwidth}
      \begin{itemize}
@@ -998,29 +993,29 @@ $$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
 \end{frame}
 
 \begin{frame}{Encoding in SC Compound Codes: BPGD Algorithm}
-%  \begin{algorithmic}
-%  \WHILE{\textcolor{blue}{There are active LDPC bit-nodes}}
-%    \FOR {\alert{$t=1$ to $T$}}
-%    \STATE Run the BP equations
-%    \ENDFOR
-%    \STATE Evaluate LLRs $m_{i}$ for each LDPC bit-node
-%    \STATE Choose max. of $|m_i|$ in \alert{left-most $w$ active sections}
-%    \IF{$|m_{i^*}|=0$}
-%    \STATE Set $u_{i^*}$ to $0$ or $1$ \textcolor{blue}{uniformly randomly}
-%    \ELSE
-%    \STATE Set $u_{i^*}$ to $0$ or $1$ with \alert{prob. $\frac{1+\tanh m_{i^*}}{2}$ or $\frac{1-\tanh m_{i^*}}{2}$}
-%    \ENDIF
-%    \STATE \alert{Decimate} (remove) LDPC bit-node $i^*$ and \textcolor{blue}{update parities}
-%    \ENDWHILE
-%    \STATE If $\{u_{i}\}$ fail to satisfy LDPC checks, then \textbf{\alert{re-encode}}
-%  \end{algorithmic}
+  \begin{algorithmic}
+ \WHILE{\textcolor{blue}{There are active LDPC bit-nodes}}
+    \FOR{$t=1$ to $T$}
+    \STATE Run the BP equations
+    \ENDFOR
+    \STATE Evaluate LLRs $m_{i}$ for each LDPC bit-node
+    \STATE Choose max. of $|m_i|$ in \alert{left-most $w$ active sections}
+    \IF{$|m_{i^*}|=0$}
+    \STATE Set $u_{i^*}$ to $0$ or $1$ \textcolor{blue}{uniformly randomly}
+    \ELSE
+    \STATE Set $u_{i^*}$ to $0$ or $1$ with \alert{prob. $\frac{1+\tanh m_{i^*}}{2}$ or $\frac{1-\tanh m_{i^*}}{2}$}
+    \ENDIF
+    \STATE \alert{Decimate} (remove) LDPC bit-node $i^*$ and \textcolor{blue}{update parities}
+ \ENDWHILE
+    \STATE If $\{u_{i}\}$ fail to satisfy LDPC checks, then \textbf{\alert{re-encode}}
+  \end{algorithmic}
 \end{frame}
 
 \begin{frame}{Encoding in SC Compound Codes: Remarks}
   \begin{itemize}
   \item \textcolor{blue}{Randomization} in setting $u_{i^*}$ is crucial \vspace{0.3cm}
   \item BPGD applied to uncoupled code \alert{always failed} \vspace{0.3cm}
-  \item \alert{Spatially-coupled structure} is crucial for successful encoding \vspace{0.15cm}
+  \item \blue{ Spatially-coupled structure} is crucial for successful encoding \vspace{0.15cm}
     \begin{itemize}
     \item In addition, distortion is \textcolor{blue}{close to optimal thresholds} \vspace{0.2cm}
     \item \alert{Does not encode} if decimated from both \textcolor{blue}{left and right}\vspace{0.2cm}
@@ -1235,23 +1230,23 @@ $$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
   \end{block}
 \end{frame}
 
-\begin{frame}{Good Code}
-  \begin{block}{``Good'' source code}
-    \begin{itemize}
-    \item Rate of the code is $R=1-h(\delta)+\varepsilon$
-    \item When this code is used to \alert{optimally encode} $\mathsf{Ber}(\tfrac{1}{2})$
-    \item The average Hamming \textcolor{blue}{distortion is at most $\delta$}
-    \end{itemize}
-  \end{block}
-  \vspace{0.4cm}
-  \begin{block}{``Good'' channel code}
-    \begin{itemize}
-    \item Rate of the code is $R=1-h(p)-\varepsilon$
-    \item When this code is used for channel coding on $\mathsf{BSC}(p)$
-    \item Message est.~under \alert{optimal decoding} with \textcolor{blue}{error at most $\varepsilon$}
-    \end{itemize}
-  \end{block}
-\end{frame}
+%\begin{frame}{Good Code}
+%  \begin{block}{``Good'' source code}
+%    \begin{itemize}
+%    \item Rate of the code is $R=1-h(\delta)+\varepsilon$
+%    \item When this code is used to \alert{optimally encode} $\mathsf{Ber}(\tfrac{1}{2})$
+%    \item The average Hamming \textcolor{blue}{distortion is at most $\delta$}
+%    \end{itemize}
+%  \end{block}
+%  \vspace{0.4cm}
+%  \begin{block}{``Good'' channel code}
+%    \begin{itemize}
+%    \item Rate of the code is $R=1-h(p)-\varepsilon$
+%    \item When this code is used for channel coding on $\mathsf{BSC}(p)$
+%    \item Message est.~under \alert{optimal decoding} with \textcolor{blue}{error at most $\varepsilon$}
+%    \end{itemize}
+%  \end{block}
+%\end{frame}
 
 \subsection{Coding Scheme}
 \begin{frame}{Coding Scheme for 2-write WOM: First Write}
