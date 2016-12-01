@@ -28,7 +28,7 @@
 }
 
 \begin{document}
-\title{\bf Applications of Spatial Coupling \& \\ Sparse Graph Codes for Sparse Recovery}
+\title{\bf Applications of Spatial Coupling}
 \author{\textbf{Avinash Vem}} 
 \vspace{10pt}
 \institute{Department of Electrical and Computer Engineering \\ Texas A\&M University}
@@ -247,7 +247,7 @@ H=
 \alert{MAP Performance with a BP Decoder!}
 { \Large
 \begin{align*}
-  \text{For large} N, w \quad  \hbp_{\mathrm{c}}= \hmap 
+  \text{For large } N, w \quad  \hbp_{\mathrm{c}}= \hmap 
 \end{align*}
 }
 \onslide<2->
@@ -266,6 +266,9 @@ H=
 
 \begin{frame}
   \includegraphics[width=0.9\textwidth]{./Figures/SC/spatially-coupled-ensemble.pdf}
+\begin{center}
+  The video link comes here
+  \end{center}
 \end{frame}
 
 \begin{frame}{Rate loss for finite $N$ and $w$}
@@ -994,7 +997,7 @@ $$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
 
 \begin{frame}{Encoding in SC Compound Codes: BPGD Algorithm}
   \begin{algorithmic}
- \WHILE{\textcolor{blue}{There are active LDPC bit-nodes}}
+ \WHILE{{\blue There are active LDPC bit-nodes}}
     \FOR{$t=1$ to $T$}
     \STATE Run the BP equations
     \ENDFOR
@@ -1005,7 +1008,7 @@ $$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
     \ELSE
     \STATE Set $u_{i^*}$ to $0$ or $1$ with \alert{prob. $\frac{1+\tanh m_{i^*}}{2}$ or $\frac{1-\tanh m_{i^*}}{2}$}
     \ENDIF
-    \STATE \alert{Decimate} (remove) LDPC bit-node $i^*$ and \textcolor{blue}{update parities}
+    \STATE \blue{Decimate} (remove) LDPC bit-node $i^*$ and \textcolor{blue}{update parities}
  \ENDWHILE
     \STATE If $\{u_{i}\}$ fail to satisfy LDPC checks, then \textbf{\alert{re-encode}}
   \end{algorithmic}
@@ -1015,7 +1018,7 @@ $$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
   \begin{itemize}
   \item \textcolor{blue}{Randomization} in setting $u_{i^*}$ is crucial \vspace{0.3cm}
   \item BPGD applied to uncoupled code \alert{always failed} \vspace{0.3cm}
-  \item \blue{ Spatially-coupled structure} is crucial for successful encoding \vspace{0.15cm}
+  \item \blue{Spatially-coupled structure} is crucial for successful encoding \vspace{0.15cm}
     \begin{itemize}
     \item In addition, distortion is \textcolor{blue}{close to optimal thresholds} \vspace{0.2cm}
     \item \alert{Does not encode} if decimated from both \textcolor{blue}{left and right}\vspace{0.2cm}
@@ -1147,6 +1150,68 @@ $$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
       \begin{itemize}
       \item 2 bits in 2 writes with only 3 cells
       \end{itemize}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+\centering
+$2+2$ bits in 2-write WOM\\
+\vspace{3mm}
+\begin{tabular}{|c|c|c|}
+  \hline
+  $x$ & $r(x)$ & $r'(x)$ \\
+  \hline
+  00 &  & \\
+  01 &  & \\
+  10 &  &  \\
+  11 &  & \\
+  \hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}
+\centering
+$2+2$ bits in 2-write WOM\\
+\vspace{3mm}
+\begin{tabular}{|c|c|c|}
+  \hline
+  $x$ & $r(x)$ & $r'(x)$ \\
+  \hline
+  00 & 000 & \\
+  01 & 001 & \\
+  10 & 010 &  \\
+  11 & 100 & \\
+  \hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}
+\centering
+$2+2$ bits in 2-write WOM\\
+\vspace{3mm}
+\begin{tabular}{|c|c|c|}
+  \hline
+  $x$ & $r(x)$ & $r'(x)$ \\
+  \hline
+  00 & 000 & 111\\
+  01 & 001 & 110\\
+  10 & 010 & 101 \\
+  11 & 100 & 011 \\
+  \hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}{Capacity Region (I) - Noiseless}
+  \begin{center}
+    \scalebox{0.5}{\input{\WOM_path/write-once-memory-capacity-noiseless}}    
+  \end{center}
+  \begin{block}{Write-Once Memory without Noise}
+    \begin{itemize}
+    \item In 1982, Rivest and Shamir gave first WOM codes 
+      \begin{itemize}
+      \item 2 bits in 2 writes with only 3 cells
+      \end{itemize}
     \item Only about \textcolor{blue}{$n t / \log(t)$ cells} required to store $n$ bits for $t$ writes
     \item<2-> In 1985, Heegard gave the \alert{capacity} for $t$-write system
     \item<2-> For a $2$-write system, it is
@@ -1156,6 +1221,7 @@ $$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
     \end{itemize}
   \end{block}
 \end{frame}
+
 
 \begin{frame}{Capacity Region (II) - Read Errors}
   \begin{center}
@@ -1324,11 +1390,13 @@ $$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
 
 \begin{frame}{Coding Scheme for 2-write WOM: Second Write}
   \vspace{-2cm}
+\onslide<3->{
   \begin{center}
     \begin{align*}
       R_2 < 1 - \delta - h(p)
     \end{align*}
   \end{center}
+  }
   \vspace{-0.5cm}
   \begin{columns}
     \column{0.45\textwidth}
@@ -1505,9 +1573,9 @@ $(5,5,5,6)$  & $0.167$ & $0.079$ & $0.154$ & $0.159$\\
 \item Side-Information Problems [C2]
 \item Coding for WOM [C3] 
 \end{itemize}
-\item Tools from Sparse graph coding for sparse recovery problems 
+\item Sparse graph coding tools for solving sparse recovery problems 
 \begin{itemize}
-\item Bipartite sparse graph for compressed sensing [C5]
+\item Regular bipartite sparse graphs for compressed sensing [C5]
 \item Group testing*
 \item Pattern matching*
 \end{itemize}
