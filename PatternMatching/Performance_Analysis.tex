@@ -35,9 +35,12 @@ The probability of bin classification error at any bin $(i,j)$ can be upper boun
 \begin{lemma}
 Given that a bin $(i,j)$ is correctly classified as a singleton, the probability of error in identifying the position of the non-zero variable node can be upper bounded by
 \begin{align*}
-\mbb{P}[\mc{E}_2|\overline{\mc{E}}_1]\leq e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}+e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}
+\mbb{P}[\mc{E}_2|\overline{\mc{E}}_1]\leq \exp\left\lbrace-\frac{N^{\mu-\alpha}(1-2\eta)^2(c_1^2-1)}{8(c_1^2+1)}\right\rbrace + \exp\left\lbrace-\frac{N^{\mu - \alpha} ~ (c_1(1 - 2\eta) - 1)^2}{8(1+ c_1^2)}\right\rbrace
 \end{align*}
 \end{lemma}
+\begin{proof}
+	The detailed proof is provided in Appendix \ref{Append:PositionIdentif}.
+\end{proof}
 
 \subsection{\bf Peeling Process}
 \begin{table}[h]

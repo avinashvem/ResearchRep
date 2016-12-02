@@ -5,9 +5,9 @@ This table below will introduce the notations we use in this paper.
 \label{Table:Notations}
 \caption{Parameters and various quantities involved in describing the algorithm}
 \begin{center}
-	\begin{tabular}{|c|c|}		
+	\begin{tabular}{|c|c|} 	
 		\hline		
-		Symbol				        &  Notational Meaning \\		
+		\textit{Symbol}				        &  \textit{Notational Meaning} \\		
 		\hline
 		$N$           				& Size of the string or database in symbols \\
 		\hline
@@ -17,7 +17,8 @@ This table below will introduce the notations we use in this paper.
         \hline
         $K$             &$\max_{\tau}d_{H}(\xv[\tau:\tau+M-1],\yv)$\\
         \hline
-	    $eta$             &$\frac{K}{M}$\\
+	    $\eta$             &$\frac{K}{M}$\\
+	    \hline
 		$G = N^\gamma$    & Number of blocks \\
 		\hline
 		$\tilde{N} = N^{1-\gamma}$   & Length of one block \\
@@ -33,7 +34,7 @@ This table below will introduce the notations we use in this paper.
 	\end{tabular}
 \end{center}	
 \end{table}	
-We denote signals and vectors using the standard vector notation of arrow over the letter, time domain signals using lowercase letters and the frequency domain signals using uppercase letter. For example $\xv = (x[0], x[1], \ldots, x[N] )$ denotes a time domain signal with $i^{\text{th}}$ time component denoted by $x[i]$, and $\Xv= \mathcal{F}\xv$ denotes the Fourier coefficients of $\xv$. We denote matrices using boldface upper case letters. We denote the set $\{0,1,2\cdots, N-1\}$ by $[N]$. Note that in Table.~\ref{Table:Notations} we suppose the values of $M$ and $L$ to be $N^{\mu}$ and $N^{\lambda}$ respectively but it is not necessary that these parameters have this form. All our results can be extended straight forwardly to any $M$ and $L$ as long as $M=O(N^{\mu})$ and $L=O(N^{\lambda})$.
+We denote signals and vectors using the standard vector notation of arrow over the letter, time domain signals using lowercase letters and the frequency domain signals using uppercase letter. For example $\xv = (x[0], x[1], \ldots, x[N] )$ denotes a time domain signal with $i^{\text{th}}$ time component denoted by $x[i]$, and $\Xv= \mathcal{F}_{N}\{\xv\}$ denotes the $N$-point Fourier coefficients of $\xv$. We denote matrices using boldface upper case letters. We denote the set $\{0,1,2\cdots, N-1\}$ by $[N]$. Note that in Table.~\ref{Table:Notations} we suppose the values of $M$ and $L$ to be $N^{\mu}$ and $N^{\lambda}$ respectively but it is not necessary that these parameters have this form. All our results can be extended straight forwardly to any $M$ and $L$ as long as $M=O(N^{\mu})$ and $L=O(N^{\lambda})$.
 	
 	
 

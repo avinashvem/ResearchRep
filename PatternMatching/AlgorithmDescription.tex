@@ -45,16 +45,16 @@ where $\mathcal{F}_{N}\{ \cdot \}$ and $\mathcal{F}_{N}^{-1}\{ \cdot \}$ refer t
 \label{subsec:RSIDFT}	
  In this section we present Robust Sparse Inverse Discrete Fourier Transform(RSIDFT) scheme that exploits sparsity in the cross-correlation signal $\rv$ and efficiently recovers it's $L$ dominant coefficients. The architecture of RSIDFT is similar to that of the FFAST scheme proposed in \cite{pawar2014robust}, but the decoding algorithm has some key modifications to handle the noise model induced in this problem. We will see in Sec.~\ref{subsec:skteches} how the sketches $\Xv$ and $\Yv$ are computed efficiently but for this section we will focus only on the recovery of the sparse coefficients in $\rv$ given $\Xv$ and $\Yv$.
 	  	  
-Consider the RSIDFT framework shown in Fig.~\ref{fig:rsidft}. Let $ \Rv =\Xv \odot \Yv'$ be the DFT of the cross-correlation signal of $\xv$ and $\yv$. The framework consists of {\it $d$-stages} with each stage correpsonding to a sub-sampling factor of $\frac{N}{f_i}$. The design scheme for choosing parameters $\{f_1,f_2,\ldots,f_d\}$ for various values of $\mu$ such that $f_i | N$ and $f_i=N^{\alpha}+O(1) \forall ~i\in[d]$ are given in \ref{subsec:DesignParameters}. In each stage, there are {\it $B$ branches} with shifts from the set $ \{s_1, s_2, \cdots s_B\} $, where $s_1 =0$ in the first branch and the rest are chosen randomly from $[f_i]$.
+Consider the RSIDFT framework shown in Fig.~\ref{fig:rsidft}. Let $ \Rv =\Xv \odot \Yv'$ be the DFT of the cross-correlation signal of $\xv$ and $\yv$. The framework consists of {\it $d$-stages} with each stage correpsonding to a sub-sampling factor of $\frac{N}{f_i}$. The design scheme for choosing parameters $\{f_1,f_2,\ldots,f_d\}$ for various values of $\mu$ such that $f_i | N$ and $f_i=N^{\alpha}+O(1) \forall ~i\in[d]$ are given in \ref{subsec:DesignParameters}. In each stage, there are {\it $B$ branches} with shifts from the set $ \{s_1, s_2, \cdots s_B\} $, where $s_1 =0$ in the first branch and the rest are chosen randomly from $[N]$.
 	   	 	
 	 Given the input $\Rv$, in branch $j$ of $i^{\text{th}}$ stage of RSDIFT, referred to as \textit{branch $(i,j)$} for simplicity, RSIDFT sub-samples the signal $\Rv$ at
 \begin{align}
 \label{Eqn:SamplingSets}
 	 \mathcal{S}_{i,j} \coleq \{s_j,\ s_j + n_i,\ s_j + 2n_i,\ \cdots s_j + (f_i-1) n_i\}, \quad i\in[d], j\in[B]
 \end{align}
-where $n_i\coleq \frac{N}{f_i}$ to obtain $\Rv_{i,j}\coleq\Rv[\mc{S}_{i,j}]$. The sub-sampling operation is followed by a $f_i$-point IDFT in each branch of stage $i$ to obtain $ \rv_{i,j}$. Notice that $ \rv_{i,j}$ is an aliased version of $\rv$ due to the property that sub-sampling in Fourier domain is equivalent to aliasing in time domain.
+where $n_i\coleq \frac{N}{f_i}$ to obtain $\Rv_{i,j}\coleq\Rv[\mc{S}_{i,j}]$. The sub-sampling operation is followed by a $f_i$-point IDFT in each branch of stage-$i$ to obtain $ \rv_{i,j}$. Notice that $ \rv_{i,j}$ is an aliased version of $\rv$ due to the property that sub-sampling in Fourier domain is equivalent to aliasing in time domain.
 
-	 Let $\zv_{i,k}\in\mbb{R}^{B}$,  for $k\in [0:f_i-1]$, be the observation vector in stage formed by stacking the $k^{\text{th}}$ coefficients of the vectors $\rv_{i,j}, j\in[B]$ (the $B$ branches from stage $i$) together as a vector i.e.
+	 Let $\zv_{i,k}\in\mbb{R}^{B}$, for $k\in [f_i]$, be the $k$th \textit{binned} observation vector of stage-$i$ formed by stacking $\rv_{i,j}[k], j\in[B]$, together as a vector i.e.
 \[
 	  \zv_{i,k} = \begin{bmatrix}
 	 r_{i,1}[k] \\
@@ -63,7 +63,7 @@ where $n_i\coleq \frac{N}{f_i}$ to obtain $\Rv_{i,j}\coleq\Rv[\mc{S}_{i,j}]$. Th
 	 r_{i,B}[k]
 	 \end{bmatrix}  
 \]
-using the properties of Fourier transfrom, we can write the relationship between the the observation vectors $\zv_{i,j}$ at bin $(i,j)$ and sparse vector to be estimated $\rv$ as:
+Using the properties of Fourier transfrom, we can write the relationship between the observation vectors $\zv_{i,j}$ at bin $(i,j)$ and sparse vector to be estimated $\rv$ as:
 \begin{align}
 	\label{Eqn:Generator Equation}
 	\zv_{i,k}= \mb{W}_{i,k} \times
@@ -75,9 +75,9 @@ using the properties of Fourier transfrom, we can write the relationship between
 	\end{bmatrix}
 \end{align}
 
-where we refer to $\mb{W}_{i,k}$ as the sensing matrix at bin $(i,k)$ and can be defined as  
+where we refer to $\mb{W}_{i,k}$ as the sensing matrix at bin $(i,k)$ and is defined as  
 \begin{align}\label{Eqn:Sensing Matrix}
-	\mb{W}_{i,k} = \left[\wv^{k},\wv^{k+f_i},\ldots, \wv^{k+(n_i-1)f_i}\right] \text{and} ~\wv^{k}=
+	\mb{W}_{i,k} = \left[\wv^{k},\wv^{k+f_i},\ldots, \wv^{k+(n_i-1)f_i}\right] \text{where} ~\wv^{k}=
 	\begin{bmatrix}
 		e^{\frac{j2\pi ks_1}{N}}\\
 		e^{\frac{j2\pi ks_2}{N}}\\
@@ -95,10 +95,10 @@ where we refer to $\mb{W}_{i,k}$ as the sensing matrix at bin $(i,k)$ and can be
 	\vspace{5 pt}
 \end{figure}
 
-In Fig.~\ref{fig:factorgraph} we represent the relation between the set of observation vectors $\{\zv_{i,k},i\in[1:d],k\in[f_i]\}$ and $\rv$ via an example using Tanner graph. The nodes on the left, which we refer to as {\it variable nodes}, represent the $N$ elements of vector $\rv$. And similarly the nodes on the right, which we refer to as {\it bin nodes}, represent the $\sum_{i\leq d} f_i$ sub-sensing signals. We will now describe the decoding algorithm which takes the set of observation vectors $\{\zv_{i,k},i\in[1:d],k\in[f_i]\}$ at $df_i$ bins as input and estimates the $L$-sparse $\rv$.	 
+In Fig.~\ref{fig:factorgraph} we represent the relation between the set of observation vectors $\{\zv_{i,k},i\in[1:d],k\in[f_i]\}$ and $\rv$ via an example using Tanner graph. The nodes on the left, which we refer to as {\it variable nodes}, represent the $N$ elements of vector $\rv$. Similarly the nodes on the right, which we refer to as {\it bin nodes}, represent the $\sum_{i\leq d} f_i$ sub-sensing signals. We will now describe the decoding algorithm which takes the set of observation vectors $\{\zv_{i,k},i\in[1:d],k\in[f_i]\}$ at $df_i$ bins as input and estimates the $L$-sparse $\rv$.	 
 
 \subsubsection{Decoder}		
-	Observe from the Tanner graph that the degree of each bit node is $d$ and that of each bin node at stage $i$ is $n_i$. A variable node is referred to as non-zero if it corresponds to a matching position and as zero if it corresponds to a non-matching position. Note that even though the cross-correlation vector value corresponding to a non-matching position is not exactly zero but some negligible noise value we refer to them as zero variable nodes for simplicity. We refer to a bin node as {\it zero-ton} (or $\msc{H}_z$) if the number of non-zero variable nodes connected to the bin node is zero. The {\it singleton ($\msc{H}_s$), double-ton ($\msc{H}_d$) and multi-ton ($\msc{H}_m$)} bin nodes are defined similarly where the number of non-zero variable nodes connected are one, two and greater than two, respectively. The peeling decoder has the following three steps in the decoding process.
+	Observe from the Tanner graph that the degree of each variable node is $d$ and that of each bin node at stage $i$ is $n_i$. A variable node is referred to as non-zero if it corresponds to a matching position and as zero if it corresponds to a non-matching position. Note that even though the cross-correlation vector value corresponding to a non-matching position is not exactly zero but some negligible noise value we refer to them as zero variable nodes for simplicity. We refer to a bin node as {\it zero-ton} (or $\msc{H}_z$) if the number of non-zero variable nodes connected to the bin node is zero. The {\it singleton ($\msc{H}_s$), double-ton ($\msc{H}_d$) and multi-ton ($\msc{H}_m$)} bin nodes are defined similarly where the number of non-zero variable nodes connected are one, two and greater than two, respectively. The peeling decoder has the following three steps in the decoding process.
 
 \paragraph*{Bin Classification} In this step a bin node is classified as a zero-ton or a singleton or a multi-ton. At bin $(i,j)$ the classification is done based on  comparing the first observation $z_{i,j}[1]$, which corresponds to zero shift, with a predefined threshold. For $z_{i,j}[1]=z$, the classification at bin $(i,j)$, $\widehat{\msc{H}}_{i,j}$, can be written as follows:
 \begin{align}
@@ -122,10 +122,12 @@ where $\dagger$ denotes the conjugate transpose. The value of the variable node 
  \hat{r}[\hat{k}]=M(1-\eta).
  $$
  Note that for the case of exact matching we know the value to be exactly equal to $M$ which is our estimate in the case of exact matching ($\eta=0)$. But in the case of approximate matching the actual value of $r[k]\in\{M(1-2\eta),\ldots,M-1,M\}$ and our estimate $ \hat{r}[\hat{k}]=M(1-\eta)$, the mid-point of the range, although is only a loose approximate it would suffice for our purposes as we are mainly interested in recovering only the positions of matches i.e. the indices of the sparse coefficients in $\rv$.			 
-\paragraph*{Peeling Process} The peeling based decoder we employ consists of finding a singleton bin, then identify the single non-zero variable node connected to the bin, decode it's value and remove ({\it peel off}) it's contribution from all the bin nodes connected to that variable node. The main idea behind this decoding schem is that hopefully the peeling off operation makes atleast one more bin now a singleton and thus the process of peeling off can be repeated iteratively. Although the main idea is similar for exact matching and the approximate matching scenarios, there are some subtle differences in their implementation.\\
+\paragraph*{Peeling Process} The peeling based decoder we employ consists of finding a singleton bin, then identify the single non-zero variable node connected to the bin, decoding it's value and removing ({\it peeling off}) it's contribution from all the bin nodes connected to that variable node. The main idea behind this decoding scheme is that hopefully the peeling off operation induces at least one more singleton bin and thus the process of peeling off can be repeated iteratively. Although the main idea is similar for exact matching and the approximate matching scenarios, there are some subtle differences in their implementation.\\
 {\it Exact Matching}: In the case of exact matching, we remove the decoded variable node's contribution from all the bin nodes it is connected to.\\
-{\it Approximate Matching}: In this case we remove the decoded variable node's contribution only from bins that are originally a singleton or a double-ton. We do not alter the bins which are classified to be multi-tons with degree more than two.
+{\it Approximate Matching}: In this case we remove the decoded variable node's contribution only from bins that are originally a singleton or a double-ton. We do not alter the bins which are classified to be multi-tons with degree more than two.   
 
+{\it Note:} The differences in peeling implementation for exact and approximate matching cases is because unlike exact matching the approximate matching may result in non-zero error ($e_1$) between the actual correlation value $r[k]$ and the estimate $\hat{r}[\hat{k}]$, i.e. $e_1 = |r[k]- \hat{r}[\hat{k}]|$ with $0 \leq e_1 \leq \eta M$. This may lead to error propagation if we use the same decoding scheme as in exact matching. Hence to overcome this problem we impose a constraint on the type of bin nodes participating in the peeling process. 
+	
 We present the overall recovery algorithm, which comprises of {\it bin classification, singleton decoding} and {\it peeling process}, in the Algorithm. \ref{Algo:decoder} pseudo-code. Note that $\msc{N}(k)$ for variable node $k$ denote it's neighborhood i.e. the set of bins connected to $k^{\text{th}}$ variable node. 
 
 \def\gap{4pt}
@@ -133,7 +135,7 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 \caption{Peeling based recovery algorithm}
 \label{Algo:decoder}
 \begin{algorithmic}
-\State Compute $\widehat{\msc{H}}_{i,j}$ for $i\in[B], j\in[f_i]$. See Eqn. \eqref{Eqn:BinClassifApprox} \hspace{26.5ex} {\it Bin Classification}
+\State Compute $\widehat{\msc{H}}_{i,j}$ for $i\in[d], j\in[f_i]$. See Eqn. \eqref{Eqn:BinClassifApprox} \hspace{26.5ex} {\it Bin Classification}
 \vspace{\gap}
 \While {$\exists~ i,j:\widehat{\msc{H}}_{i,j}= \msc{H}_s$,}
 \vspace{\gap}
