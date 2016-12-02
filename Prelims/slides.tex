@@ -29,15 +29,14 @@
 
 \begin{document}
 \title{\bf Applications of Spatial Coupling}
-\author{\textbf{Avinash Vem}} 
+\author{\textbf{Avinash Vem}\\ \small Advisor: Dr.Krishna Narayanan} 
 \vspace{10pt}
 \institute{Department of Electrical and Computer Engineering \\ Texas A\&M University}
 \date{Dec 02, 2016} % if no date wanted, keep it blank
 
 \titlegraphic{
-\includegraphics[width=0.75in]{TAMULogoBox.pdf}
+\includegraphics[width=0.5in]{TAMULogoBox.pdf}
 }	
-
 
 \frame{\titlepage}
 \frame{{Outline}\tableofcontents}
@@ -81,14 +80,60 @@ H=
 \end{frame}
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 
-\begin{frame}\frametitle{Belief Propagation Decoder \& Threshold}
+\begin{frame}\frametitle{Belief Propagation(BP) Decoder}
+\begin{figure}
+\begin{center}
+\scalebox{0.5}{\input{./Figures/BSCsystemmodel}}
+\end{center}
+\end{figure}
+
+\begin{itemize}
+\item For BEC($\epsilon$), $\mathtt{h}=\epsilon$. For general BMS channel, $\text{C}^{\mathrm{Sh}}=1-\mathtt{h}$
+\end{itemize}
+
 \hspace*{10pt}
+\onslide<2->
 \begin{columns}
 \column{0.4\textwidth}
+\vspace{-3cm}
 \begin{defn}{Belief Propagation (BP)}
 \begin{itemize}
-\item Popular choice
-\item Low-complexity
+\item Non-optimal
+\item Popular, low-complexity
+\item Threshold: $\hbp$
+\end{itemize}
+\end{defn}
+
+\column{0.6\textwidth}
+\vspace{-7mm}
+\begin{figure}
+\includegraphics[width=0.6\columnwidth]{./Figures/BP_threshold_BSC.pdf}
+\caption{$(3,6), P_{\text{B}}$ vs BSC($\epsilon$) for $n=2^{i}.$}
+\end{figure}
+\centering
+$\varepsilon^{\mathrm{BP}}=0.084$, equivalent $\hbp=0.4160$\\
+whereas for rate 1/2 code $\text{h}^{\mathrm{Sh}}=0.5$ 
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{BP vs MAP}
+\vspace{-5mm}
+\begin{figure}
+\begin{center}
+\scalebox{0.5}{\input{./Figures/BSCsystemmodel}}
+\end{center}
+\end{figure}
+\begin{itemize}
+\item For BEC($\epsilon$), $\mathtt{h}=\epsilon$. For general BMS channel, $\text{C}^{\mathrm{Sh}}=1-\mathtt{h}$
+\end{itemize}
+\vspace{-5mm}
+\hspace*{10pt}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{defn}{Belief Propagation (BP)}
+\begin{itemize}
+\item Non-optimal
+\item Popular, low-complexity
 \item Threshold: $\hbp$
 \end{itemize}
 \end{defn}
@@ -101,15 +146,8 @@ H=
 \end{itemize}
 \end{defn}
 \end{columns}
-{\Large \textcolor{blue}{
-\begin{align*}
-  \hbp < \hmap
-\end{align*}
-}}
-\end{frame}
-
-\begin{frame}{Threshold Comparison}
 \centering
+\onslide<2->
 \begin{tabular}{|c|c|c|c|c|c|}
   \hline
   LDPC & Shannon & \multicolumn{2}{|c|}{\textcolor{blue}{AWGN}} & \multicolumn{2}{|c|}{\textcolor{blue}{BSC}} \\
@@ -118,14 +156,31 @@ H=
   \hline
   $(3,6)$ & $0.5000$ & $0.4293$ & $0.4794$ & $0.4160$ & $0.4681$ \\
   $(4,6)$ & $0.6667$ & $0.5211$ & $0.6645$ & $0.5203$ & $0.6633$ \\
-  $(5,6)$ & $0.8333$ & $0.5731$ & $0.8333$ & $0.5773$ & $0.8333$ \\
+%  $(5,6)$ & $0.8333$ & $0.5731$ & $0.8333$ & $0.5773$ & $0.8333$ \\
   \hline
-\end{tabular}
-\\
-\onslide<2->
-\vspace{5mm}
+\end{tabular}\\
+\onslide<3->
 \alert{Spatial-Coupling aids in bridging this gap}
 \end{frame}
+
+%\begin{frame}{Threshold Comparison}
+%\centering
+%\begin{tabular}{|c|c|c|c|c|c|}
+%  \hline
+%  LDPC & Shannon & \multicolumn{2}{|c|}{\textcolor{blue}{AWGN}} & \multicolumn{2}{|c|}{\textcolor{blue}{BSC}} \\
+%  \cline{3-6}
+%  $(\ell,r)$ & $\texttt{h}^{\mathrm{Sh}}$ & $\hbp$ & $\hmap$ & $\hbp$ & $\hmap$ \\
+%  \hline
+%  $(3,6)$ & $0.5000$ & $0.4293$ & $0.4794$ & $0.4160$ & $0.4681$ \\
+%  $(4,6)$ & $0.6667$ & $0.5211$ & $0.6645$ & $0.5203$ & $0.6633$ \\
+%  $(5,6)$ & $0.8333$ & $0.5731$ & $0.8333$ & $0.5773$ & $0.8333$ \\
+%  \hline
+%\end{tabular}
+%\\
+%\onslide<2->
+%\vspace{5mm}
+%\alert{Spatial-Coupling aids in bridging this gap}
+%\end{frame}
 
 \begin{frame}{$(\ell,r,N,w)$ Spatially-Coupled Ensemble}
   \scalebox{0.9}{\input{Figures/SC/spatially-coupled-ensemble}}
@@ -292,13 +347,14 @@ H=
   \hline
 \end{tabular}
 \end{frame}
+%%%%%---------------------------------------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 
 \begin{frame}{Pros \& Cons}
 \begin{defn}{Pros}
 \begin{itemize}
 \item Significant improvment in thresholds
 \vspace{0.25cm}
-\item Achieves capacity under {\blue simple BP decoding}
+\item Achieves capacity under {\blue simple BP decoding} [KRU'11,KYMP'14]
 \vspace{0.25cm}
 \item {\blue Universality} - works for all channels models! 
 \vspace{0.25cm}
@@ -311,20 +367,41 @@ H=
 \end{itemize}
 \end{defn}
 \end{frame}
+%%%%%---------------------------------------------------------------------------------------------------------------%%%%%%%%%%%%%%%
+
 \section{SC-LDPC Lattices}
 \subsection{Introduction to Lattices}
-\begin{frame}\frametitle{Lattices and Lattice Codes}
-\begin{block}{Lattice}
-A lattice of dimension $n$ is a discrete subgroup of $\mbb{R}^{n}$ isomorphic to $\mbb{Z}^n$
-\end{block}
-\vspace{-10pt}
-\begin{align*}
-\Lambda=\{\mbf{G}\mbf{z}, \mbf{z}\in\mbb{Z}^{n}\}
-\end{align*}
+
+\begin{frame}\frametitle{Lattice}
+\begin{defn}{Lattice}
+Let $\mathbf{G}\in\mathbb{R}^{n\times k}$. An $n$-dimensional real lattice $\Lambda$ can be defined as
+$$
+\Lambda=\{\mbf{G}\mbf{z}, \mbf{z}\in\mbb{Z}^{k}\}
+$$
+\end{defn}
 \onslide<2->
+\begin{columns}
+\column{0.45\textwidth}
+Example:\[
+\mathbf{G}= \left[ \begin{array}{cc}
+1 & -1/2 \\
+0 & \sqrt{3}/2 \end{array} \right]\]
+\column{0.55\textwidth}
+\centering
+\includegraphics[width=2.4in]{./Figures/lattice.eps}
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Lattices and Lattice Codes}
+\begin{defn}{Lattice}
+Let $\mathbf{G}\in\mathbb{R}^{n\times k}$. An $n$-dimensional real lattice $\Lambda$ can be defined as
+$$
+\Lambda=\{\mbf{G}\mbf{z}, \mbf{z}\in\mbb{Z}^{k}\}
+$$
+\end{defn}
 \vspace{-10pt}
 \begin{itemize}
-	\item Efficient structures for 
+	\item Efficient structures for
 	\begin{itemize}
 	 		 \item {\blue Mathematics}: sphere packing and sphere covering problems
 	   		 \item{\blue Information Theory}: channel coding \& quantization
@@ -358,14 +435,31 @@ New perspectives for dealing with interference:
 \end{itemize}
 \end{frame}
 
+\begin{frame}\frametitle{Background on lattices}
+\begin{defn}{Voronoi region}
+The \textit{fundamental Voronoi region} $\mathcal{V}$ of a lattice, is the set of all points in $\mathbb{R}^n$ that are closest to the zero vector.
+\vspace{-2mm}
+\begin{align*}
+\mc{V}\coleq \{\mbf{x}:\norm{\mbf{x-0}}\leq \norm{\mbf{x-c}} \quad\forall \mbf{c}\in\Lambda\}
+\end{align*}
+\end{defn}
+\onslide<2->
+\vspace{-3mm}
+\centering
+\includegraphics[width=0.5\textwidth]{./Figures/lattice_voronoi.eps}
+\vspace{-3mm}
+\onslide<3->
+\begin{itemize}
+\item Fundamental volume of $\Lambda$, $V(\Lambda)$: Vol($\mc{V}$)
+\end{itemize}
+\end{frame}
+
 \begin{frame}\frametitle{Goodness of Lattices for Channel Coding}
 \begin{itemize}
-\item Voronoi region $\mc{V}$ of a lattice $\Lambda$, $\mc{V}\coleq \{\mbf{x}:\norm{\mbf{x}}\leq \norm{\mbf{x-c}} \quad\forall \mbf{c}\in\Lambda\}$
-\item Fundamental volume of $\Lambda$, $V(\Lambda)$: Vol($\mc{V}$)
-\item Let a lattice point $\lambda\in\Lambda$ is trasnmitted via AWGN channel of variance $\sigma^2$
+\item Let a lattice point $\lambda\in\Lambda$ is transmitted via AWGN channel of variance $\sigma^2$
 \item Volume-to-noise ratio(VNR) of $\Lambda$:
 \begin{align*}
-\tx{VNR}=\frac{V(\Lambda)^{2/n}}{2\pi e\sigma^2}
+\tx{VNR}\coleq\frac{V(\Lambda)^{2/n}}{2\pi e\sigma^2}
 \end{align*}
 \item $P(\Lambda,\sigma^2)\coleq \text{Pr}(d(\lambda,\lambda+\mbf{z})\geq d(\lambda',\lambda'+\mbf{z})) \tx{ for some } \mbf{\lambda'}\in\Lambda\ $
 \end{itemize}
@@ -383,32 +477,21 @@ For any VNR$>1$ $\exists \{\Lambda_n\}$ such that $P(\Lambda_n,\sigma^2)\rightar
 	\begin{itemize}
 		\item All the existing results were based on Construction-A.
 		\begin{itemize}
-				\item Linear codes over \alert{ increasing field sizes} and their ML decoding 
+				\item Linear codes over \alert{increasing field sizes} and their ML decoding 
 		\end{itemize}
 		\item<2-> Is this construction fundamental to good lattices?
 		\item<2-> Can we work with just {\blue binary codes} under {\blue practical decoding} schemes?
 	\end{itemize}
 \end{defn}
-\end{frame}
-
-\begin{frame}\frametitle{Main Result}
-			\begin{defn}{Codes over $\mathbb{F}_{2}$ and BP decoding suffice}
-				\vspace{1em}
-	\begin{itemize}
-			\item Recall Forney et al's result - based on nested random binary linear codes
-			\item Propose capacity-achieving nested SC LDPC ensemble
-			\item Construct lattices using Construction-D, based on the above ensemble
-			\item Show existence of sequence of lattices that are \textit{Poltyrev}-good under BP 
-	\end{itemize}			
-			\end{defn}
-\pause
-\vspace{2em}
-		\begin{block}{Applications}
-			    \begin{itemize}
-        \item Apply proposed lattices to {\blue Symmetric Interference Channel}
-        \item Can be applied to other problems which adopt Construction A lattices
-    			\end{itemize}
-		\end{block}
+\onslide<3->
+\begin{defn}{Main Result}
+\begin{itemize}
+     \item Codes over \alert{$\mathbb{F}_{2}$ and BP decoding} suffice
+	 \item<4-> We show existence of sequence of lattices that are \textit{Poltyrev}-good under BP
+     \item<4-> Apply proposed lattices to {\blue Symmetric Interference Channel}
+     \item<4-> Can be applied to other problems which adopt Construction-A lattices
+\end{itemize}			
+\end{defn}
 \end{frame}
 
 \begin{frame}\frametitle{Construction D with $L$ levels}
@@ -522,9 +605,9 @@ Each code ensemble in the proposed nested Spatially-Coupled LDPC ensemble is cap
 \end{theorem}    
 \begin{proof}
 \begin{itemize}
-        \item Show that the mod 2 AWGN channel is BMS.
         \item Each derived protograph has the same spatially coupled structure.
-        \item The proof follows from Kudekar \& Urbanke, Kumar \& Pfister's  results.
+        \item Show that the mod 2 AWGN channel is BMS.
+        \item The proof follows from [KRU'12] \& [KYMP'13]'s  results.
     \end{itemize}
 \end{proof}
 \end{frame}
@@ -534,7 +617,6 @@ Each code ensemble in the proposed nested Spatially-Coupled LDPC ensemble is cap
 There exists a sequence of SC LDPC lattices with VNR$(\Lambda,\sigma^{2})\rightarrow 1$ for which, under multistage BP decoding, $\mbb{E}\left[P(\lambda,\sigma^{2})\right]\rightarrow 0$ as $w,L,M  \rightarrow \infty$.
 \end{theorem}    
 \begin{proof}
-%Follows from Forney's result and the fact that the proposed nested ensemble achieve capacity.
 \begin{itemize}
 \item The proposed nested ensemble achieve capacity.
 \item Follows from Forney's result.
@@ -610,7 +692,7 @@ $(d_{c},d_{v}^{1},d_{v}^{2})$ &(L,w)& $P(4\Z,\sigma^{2})$ & $\sigma_{\text{max}}
 \begin{frame}\frametitle{Simulation Results}
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{BER_iters_4_72_9.pdf}
+\includegraphics[width=0.6\textwidth]{BER_iters_4_72_9.pdf}
 \end{center}
 \end{figure}
 \onslide<2->{Note that the Block Error Probability is $10^{-4}$ at uncoded level.}
