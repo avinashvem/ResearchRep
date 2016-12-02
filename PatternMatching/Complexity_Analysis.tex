@@ -28,11 +28,12 @@ As described in Eq.~\ref{eqn:Rxy_fourier}, the computation of $\rv$ involves thr
 	\vspace{2pt}
 	\ & =	
 	\begin{cases}
-	O(N^{\max(1-\mu, \mu + \lambda) } \log^2 N ), &  	 \mu < 0.5\\
-	O(N^{\max(\mu, 1- \mu + \lambda )} \log^2 N ), &  	 \mu > 0.5
+	%O(N^{\max(1-\mu, \mu + \lambda) } \log^2 N ), &  	 \mu < 0.5\\
+	%O(N^{\max(\mu, 1- \mu + \lambda )} \log^2 N ), &  	 \mu > 0.5
+	O(\max(N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N )), &  	 \mu < 0.5\\
+	O(\max(N^{\mu}\log^2 N, N^{1-\mu +\lambda}\log N )), &  	 \mu > 0.5
 	\end{cases}
 	\end{align*}
-	
 	
 	\item  Operation - \RNum{2}:
 	Since we assume that the sketch of database $\xv$, $\mathcal{F}_{N}\{\xv\}$, is pre-computed, we do not include this in computational complexity.
@@ -49,17 +50,19 @@ As described in Eq.~\ref{eqn:Rxy_fourier}, the computation of $\rv$ involves thr
 	\end{align*}
 	
 	
-	{\textit{Note:}} Folding and adding, for each shift, involves adding $N^{1-\alpha}$ vectors of length $N^{\alpha}$. We know that the length of the query is $M =N^{\delta}$, i.e., the number of non-zero elements in $Y$ (zero-padded version of the query) is $M$ and hence we only need to compute $M$ additions instead of the length of the vector.
+	{\textit{Note:}} Folding and adding, for each shift, involves adding $N^{1-\alpha}$ vectors of length $N^{\alpha}$. We know that the length of the query is $M =N^{\mu}$, i.e., the number of non-zero elements in $\yv$ (zero-padded version of the query) is $M$ and hence we only need to compute $M$ additions instead of length of the vector $N$.
 	
 \end{enumerate}
 
 Total number of computations, $C = C_{\RNum{1}}+C_{\RNum{3}} $, is given by   
   \begin{align*}
   C \ =
-  \begin{cases}
-  O(N^{\max(1-\mu, \mu + \lambda) } \log^2 N ), &  	 \mu < 0.5\\
-  O(N^{\max(\mu, 1- \mu + \lambda )} \log^2 N ), &  	 \mu > 0.5
-  \end{cases}
+ \begin{cases}
+ 	%O(N^{\max(1-\mu, \mu + \lambda) } \log^2 N ), &  	 \mu < 0.5\\
+ 	%O(N^{\max(\mu, 1- \mu + \lambda )} \log^2 N ), &  	 \mu > 0.5
+ 	O(\max(N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N )), &  	 \mu < 0.5\\
+ 	O(\max(N^{\mu}\log^2 N, N^{1-\mu +\lambda}\log N )), &  	 \mu > 0.5
+ \end{cases}
   \end{align*}
   
 
