@@ -13,7 +13,7 @@ In this section, we will analyze the overall probability of error involved in fi
 \begin{lemma}
 The probability of bin classification error at any bin $(i,j)$ can be upper bounded by
 \begin{align*}
-\mbb{P}[\mc{E}_1]\leq 6e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}
+\mbb{P}[\mc{E}_1]\leq 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}
 \end{align*}
 \end{lemma}
 
@@ -25,8 +25,8 @@ The probability of bin classification error at any bin $(i,j)$ can be upper boun
 				&\leq \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~+
 						\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~+
 						\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
-    			&\leq  e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}+2e^{-\frac{N^{\mu-\alpha}(1-4\eta)^2}{16}}+ 2e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}+e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}\\
-    			&\leq 6e^{-\frac{N^{\mu-\alpha}(1-6\eta)^2}{16}}\\
+    			&\leq  e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}+2e^{-\frac{N^{\mu-\alpha}(1-4\eta)^2}{16}}+ 2e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}+e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}\\
+    			&\leq 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}\\
 						\end{align*}
 						where the inequalities in the third line are due to Lemmas \ref{Lem:ZerotonClassif}, \ref{Lem:SingletonClassif}, \ref{Lem:DoubletonClassif} and \ref{Lem:MultitonClassif} respectively provided in Appendix \ref{Append:BinClassif}.
 \end{proof}
@@ -35,7 +35,7 @@ The probability of bin classification error at any bin $(i,j)$ can be upper boun
 \begin{lemma}
 Given that a bin $(i,j)$ is correctly classified as a singleton, the probability of error in identifying the position of the non-zero variable node can be upper bounded by
 \begin{align*}
-\mbb{P}[\mc{E}_2|\overline{\mc{E}}_1]\leq \exp\left\lbrace-\frac{N^{\mu-\alpha}(1-2\eta)^2(c_1^2-1)}{8(c_1^2+1)}\right\rbrace + \exp\left\lbrace-\frac{N^{\mu - \alpha} ~ (c_1(1 - 2\eta) - 1)^2}{8(1+ c_1^2)}\right\rbrace
+\mbb{P}[\mc{E}_2|\overline{\mc{E}}_1]\leq \exp\left\lbrace-\frac{N^{\mu+\alpha-1}(1-2\eta)^2(c_1^2-1)}{8(c_1^2+1)}\right\rbrace + \exp\left\lbrace-\frac{N^{\mu+\alpha-1} ~ (c_1(1 - 2\eta) - 1)^2}{8(1+ c_1^2)}\right\rbrace
 \end{align*}
 \end{lemma}
 \begin{proof}
@@ -88,3 +88,14 @@ For the approximate matching case, choose parameter $d\geq 8$ as described in Se
 \begin{proof}
 As mentioned earlier the key difference in the approximate matching case is peeling off variable nodes from only singleton and double-tons. An identical peeling decoder is used and analyzed in the problem of group testing \cite{lee2015saffron} by Lee, Pedarsani and Ramchandran which the authors refer to as SAFFRON scheme. In SAFFRON the authors claim that for a graph ensemble which has a regular degree of $d$ on the variable nodes and a  Poisson degree distribution on the bins, this peeling decoder with a left degree of $d=8$ and a total number of bins atleast equal to $6.13 k$ recovers atleast $(1-\varepsilon)$ fraction of the $k$ non-zero variable nodes with exponentially decaying probability. Note that $\frac{6.13}{8}\approx 0.7663$ is approximately the number of bins per stage for $d=8$. We also leverage the result from \cite{pawar2014robust} that the Tanner graph representation of the robust-FFAST (or equivaently RSDIFT framework) has a Poisson degree distribution on the bins. Combining these two results gives us the required results.
 \end{proof}
+
+\begin{comment}
+\begin{theorem}[Overall Probability of Error ($P_e$)]
+	For the system parameters chosen according to Sec. \ref{subsec:DesignParameters}, the RSIDFT framework
+	{\it Exact Matching:}\begin{itemize}
+		\item[-] succe
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+\end{proof}
+\end{comment}

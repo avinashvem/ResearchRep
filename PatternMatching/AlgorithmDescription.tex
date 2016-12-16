@@ -50,9 +50,9 @@ Consider the RSIDFT framework shown in Fig.~\ref{fig:rsidft}. Let $ \Rv =\Xv \od
 	 Given the input $\Rv$, in branch $j$ of $i^{\text{th}}$ stage of RSDIFT, referred to as \textit{branch $(i,j)$} for simplicity, RSIDFT sub-samples the signal $\Rv$ at
 \begin{align}
 \label{Eqn:SamplingSets}
-	 \mathcal{S}_{i,j} \coleq \{s_j,\ s_j + n_i,\ s_j + 2n_i,\ \cdots s_j + (f_i-1) n_i\}, \quad i\in[d], j\in[B]
+	 \mathcal{S}_{i,j} \coleq \{s_j,\ s_j + g_i,\ s_j + 2g_i,\ \cdots s_j + (f_i-1) g_i\}, \quad i\in[d], j\in[B]
 \end{align}
-where $n_i\coleq \frac{N}{f_i}$ to obtain $\Rv_{i,j}\coleq\Rv[\mc{S}_{i,j}]$. The sub-sampling operation is followed by a $f_i$-point IDFT in each branch of stage-$i$ to obtain $ \rv_{i,j}$. Notice that $ \rv_{i,j}$ is an aliased version of $\rv$ due to the property that sub-sampling in Fourier domain is equivalent to aliasing in time domain.
+where $g_i\coleq \frac{N}{f_i}$ to obtain $\Rv_{i,j}\coleq\Rv[\mc{S}_{i,j}]$. The sub-sampling operation is followed by a $f_i$-point IDFT in each branch of stage-$i$ to obtain $ \rv_{i,j}$. Notice that $ \rv_{i,j}$ is an aliased version of $\rv$ due to the property that sub-sampling in Fourier domain is equivalent to aliasing in time domain.
 
 	 Let $\zv_{i,k}\in\mbb{R}^{B}$, for $k\in [f_i]$, be the $k$th \textit{binned} observation vector of stage-$i$ formed by stacking $\rv_{i,j}[k], j\in[B]$, together as a vector i.e.
 \[
@@ -71,13 +71,13 @@ Using the properties of Fourier transfrom, we can write the relationship between
 		r[k+(0)f_i] \\
 		r[k+(1)f_i] \\
 		\vdots\\
-		r[k+(n_i-1)f_i]
+		r[k+(g_i-1)f_i]
 	\end{bmatrix}
 \end{align}
 
 where we refer to $\mb{W}_{i,k}$ as the sensing matrix at bin $(i,k)$ and is defined as  
 \begin{align}\label{Eqn:Sensing Matrix}
-	\mb{W}_{i,k} = \left[\wv^{k},\wv^{k+f_i},\ldots, \wv^{k+(n_i-1)f_i}\right] \text{where} ~\wv^{k}=
+	\mb{W}_{i,k} = \left[\wv^{k},\wv^{k+f_i},\ldots, \wv^{k+(g_i-1)f_i}\right] \text{where} ~\wv^{k}=
 	\begin{bmatrix}
 		e^{\frac{j2\pi ks_1}{N}}\\
 		e^{\frac{j2\pi ks_2}{N}}\\
@@ -113,9 +113,9 @@ In Fig.~\ref{fig:factorgraph} we represent the relation between the set of obser
 \end{align}
 where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{1-2\eta}{2},\frac{3-4\eta}{2},\frac{5-6\eta}{2})$. Note that for the case of exact matching $\eta=0$.
 \paragraph*{Singleton decoding}
- If a bin node $(i,j)$ is classified as a singleton, we need to identify the position of the non-zero variable node connected to it. This is done by correlating the observation vector $\zv_{i,j}$ with each column of the sensing matrix  $\mb{W}_{i,j} \coleq [\wv^{j},\wv^{j+n_i},\ldots,   \wv^{j+(f_i-1)n_i}]$ and choose the index that maximizes the correlation value.
+ If a bin node $(i,j)$ is classified as a singleton, we need to identify the position of the non-zero variable node connected to it. This is done by correlating the observation vector $\zv_{i,j}$ with each column of the sensing matrix  $\mb{W}_{i,j} \coleq [\wv^{j},\wv^{j+g_i},\ldots,   \wv^{j+(f_i-1)g_i}]$ and choose the index that maximizes the correlation value.
 \begin{align*}
- \hat{k} = \underset{k\in\{j+l n_i\}}{\argmax}~~ \zv^{\dagger}_{i,j} \wv^{k}
+ \hat{k} = \underset{k\in\{j+l g_i\}}{\argmax}~~ \zv^{\dagger}_{i,j} \wv^{k}
 \end{align*}
 where $\dagger$ denotes the conjugate transpose. The value of the variable node connected to the singleton bin is estimated as follows:
  $$
@@ -196,8 +196,8 @@ To summarize our choice of design parameters: In both the exact and approximate 
 \label{subsec:skteches}		 
  As we have already seen in Sec.~\ref{subsec:RSIDFT} the RSDIFT framework requires the values of $\Rv(=\Xv\odot \Yv)$ only at indices $\mc{S}$ or in other words we need $\Xv$ and $\Yv$ only at the indices $\mc{S}$. We assume that the sketch of $\xv$, $ \Xv[\mc{S}]= \{X[i],i\in \mc{S}\}$ is pre-computed and stored in a database.
 
-\subsubsection*{Computing the sketch of $\yv$}: For every new query $\yv$, only $\{\Yv'[\mc{S}_{i,j}],i\in[d],j\in[B]\}$ needs to be computed where the subsets $\mc{S}_{i,j}$ are defined in Eq. \eqref{Eqn:SamplingSets}. Naively, the FFT algorithm can be used to compute $\Yv'$ and the required subset of coefficients can be taken but this is inefficient and would be of $O(N \log N)$ complexity. Instead, we observe that $\Yv'[\mc{S}_{i,j}]$ is $\Yv'$ shifted by $s_j$ and sub-sampled by a factor of $n_i$. Thus for a given $(i,j)$ this corresponds to, in time domain, a point-wise multiplication by $[1,w_{s_j},w_{s_j}^2,\ldots,w_{s_j}^{N-1}]$ followed by \textit{folding} the signal into $f_i$ number of length $\frac{N}{f_i}$ signals and adding them up resulting in a single length-$n_i$ signal denoted by $\yv'_{i,j}$. Formally the \textit{folding} operation can be described as follows:
+\subsubsection*{Computing the sketch of $\yv$}: For every new query $\yv$, only $\{\Yv'[\mc{S}_{i,j}],i\in[d],j\in[B]\}$ needs to be computed where the subsets $\mc{S}_{i,j}$ are defined in Eq. \eqref{Eqn:SamplingSets}. Naively, the FFT algorithm can be used to compute $\Yv'$ and the required subset of coefficients can be taken but this is inefficient and would be of $O(N \log N)$ complexity. Instead, we observe that $\Yv'[\mc{S}_{i,j}]$ is $\Yv'$ shifted by $s_j$ and sub-sampled by a factor of $g_i$. Thus for a given $(i,j)$ this corresponds to, in time domain, a point-wise multiplication by $[1,w_{s_j},w_{s_j}^2,\ldots,w_{s_j}^{N-1}]$ followed by \textit{folding} the signal into $f_i$ number of length $\frac{N}{f_i}$ signals and adding them up resulting in a single length-$n_i$ signal denoted by $\yv'_{i,j}$. Formally the \textit{folding} operation can be described as follows:
 	  \begin{equation}
-	  	\yv'_{i,j} = \sum \limits_{m = 0}^{n_i-1} \yv'[mf_i:(m+1)f_i-1] \odot [w_{s_j}^{mf_i},w_{s_j}^{mf_i+1},\ldots, w_{s_j}^{(m+1)f_i-1}],\qquad w_{s_j}=e^{-\frac{j2\pi s_j}{N}}.
+	  	\yv'_{i,j} = \sum \limits_{m = 0}^{g_i-1} \yv'[mf_i:(m+1)f_i-1] \odot [w_{s_j}^{mf_i},w_{s_j}^{mf_i+1},\ldots, w_{s_j}^{(m+1)f_i-1}],\qquad w_{s_j}=e^{-\frac{j2\pi s_j}{N}}.
 	  \end{equation}
  Taking $n_i$-point DFT of $\yv'_{i,j}$ produces $\Yv'[\mc{S}_{i,j}]$ i.e. $\Yv'$ sampled only at $\mathcal{S}_{i,j}$ indices which is what we need in branch $(i,j)$. To obtain all the samples in $\mathcal{S}$ required for the RSDIFT framework, the \textit{folding} technique followed by a IDFT needs to be carried out for each $(i,j)$, for $i\in[d],j\in[B]$, a total of $dB$ times $N^{1-\alpha}$-point DFT.
