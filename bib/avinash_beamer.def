@@ -60,6 +60,6 @@
 \DeclareMathOperator{\conv}{conv}
 \DeclareMathOperator{\Bernoulli}{Bernoulli}
 \DeclareMathOperator{\Ei}{Ei}
-\DeclareMathOperator{\OR}{OR}
+%\DeclareMathOperator{\OR}{OR}
 \DeclareMathOperator{\Geom}{Geom}
 \DeclareMathOperator{\var}{var}
