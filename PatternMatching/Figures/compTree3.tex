@@ -1,0 +1,68 @@
+\begin{tikzpicture}
+\def \depth{0.6in}; %vertical gap between nodes/levels
+\def \gap{0.3in}; %Horizontal gap between nodes
+\def \gapA{0.12in}; %Encoder Width
+\def \gapB{0.12in}; %Encoder Width
+\def \textoffs{0.18in}; %Offset for writing text above a node
+\def\nodewidth{0.1in};
+\tikzstyle{check} = [rectangle, draw, text centered, thick, fill=gray,
+                          minimum height=\nodewidth, minimum width=\nodewidth]
+\tikzstyle{bit} = [circle, draw, text centered, thick, fill=gray,
+                          radius=0.5*\nodewidth]
+                          
+\def \fsize{\large}; %Defining a generic font size to be adjusted depending on the scaling
+\def \dotsize{\Huge}; %Defining a generic font size to be adjusted depending on the scaling
+
+
+\node [bit](b1) at (0,0) {} ;
+\begin{scope}[thick,decoration={
+    markings,
+    mark=at position 0.5 with {\arrow{>}}}
+    ] 
+\draw[postaction={decorate}](b1)--+(0,0.2in)node[midway,left]{\fsize{$x_{1}=\epsilon (y_1^{(4)})^2$}};
+\end{scope}
+%Level 2
+\node[check] (c21) at ([xshift=-\gap,yshift=-\depth]b1) {};
+\node[check] (c22) at ([xshift=+\gap,yshift=-\depth]b1) {};
+
+%Lines form level 1-level 2
+\begin{scope}[thick,decoration={
+    markings,
+    mark=at position 0.5 with {\arrow{<}}}
+    ] 
+\draw[postaction={decorate}](b1)--(c21.north);
+\draw[postaction={decorate}](b1)--(c22.north)node[midway,right,align=left]{\fsize{$y_{1}^{(4)}=1-(1-\epsilon)^4$}};
+%\draw[postaction={decorate}](b1)--(c22.north)node[midway,right,align=left]{\fsize{$y_{1}^{(4)}=$} \\ \fsize{ $1-(1-\epsilon)^4$}};
+\end{scope}
+
+%Level 3
+\node[bit] (b31) at ([xshift=-0.18in,yshift=-\depth]c21) {};
+\node[bit] (b32) at ([xshift=-0.06in,yshift=-\depth]c21) {};
+\node[bit] (b33) at ([xshift=+0.06in,yshift=-\depth]c21) {};
+\node[bit] (b34) at ([xshift=+0.18in,yshift=-\depth]c21) {};
+\node[bit] (b35) at ([xshift=-0.18in,yshift=-\depth]c22) {};
+\node[bit] (b36) at ([xshift=-0.06in,yshift=-\depth]c22) {};
+\node[bit] (b37) at ([xshift=+0.06in,yshift=-\depth]c22) {};
+\node[bit] (b38) at ([xshift=+0.18in,yshift=-\depth]c22) {};
+
+%Lines form level 2-level 3
+
+
+\begin{scope}[thick, decoration={
+    markings,
+    mark=at position 0.5 with {\arrow{<}}}
+    ] 
+\draw[postaction={decorate}](c21)--(b31.north);
+\draw[postaction={decorate}](c21)--(b32.north);
+\draw[postaction={decorate}](c21)--(b33.north); 
+\draw[postaction={decorate}](c21)--(b34.north);
+\draw[postaction={decorate}](c22)--(b35.north);
+\draw[postaction={decorate}](c22)--(b36.north); 
+\draw[postaction={decorate}](c22)--(b37.north);
+\draw[postaction={decorate}](c22)--(b38.north)node[midway,right]{\fsize{$x_{0}=\epsilon$}};
+    \end{scope}
+
+
+
+
+\end{tikzpicture}

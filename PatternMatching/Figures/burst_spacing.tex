@@ -1,0 +1,20 @@
+\begin{tikzpicture}
+
+
+
+\draw [thick] (-3.4,1) rectangle (-1.4,0);
+\draw  [thick] (0,1) rectangle (2,0);
+\draw  [thick] (4.6,1) rectangle (6.6,0);
+\node[blue] at (-2.4,0.6) {\Large burst-1};
+\node[blue] at (1,0.6) {\Large burst-2};
+\node[blue] at (5.6,0.6) {\Large burst-$b$};
+\node (v3) at (-3.4,1.6) {};
+\node (v4) at (-1.4,1.6) {};
+\node (v1) at (-1.4,0.5) {};
+\node (v2) at (0,0.5) {};
+\draw[<->,blue]  (v1) edge (v2);
+\node at (3.4,0.6) {\Huge\ldots};
+\node at (-0.6,1) {\Large \color{red}$ s$};
+\node at (-2.3,2.1) {\Large \color{red}$ l $};
+\draw [<->,blue] (v3) edge (v4);
+\end{tikzpicture}
