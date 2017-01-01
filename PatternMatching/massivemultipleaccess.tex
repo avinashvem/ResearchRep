@@ -1,0 +1,735 @@
+\begin{frame}{Application 1}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{The changing mobile landscape}
+\begin{block}{}
+\begin{itemize}
+\item 5G will not only be ``4G but faster" but will support new models such as IoT
+\item Current wireless - a few devices with sustained connectivity
+\item Future wireless -  \alert{massive} no. of devices requesting \alert{sporadic} connectivity
+\end{itemize}
+\end{block}
+\begin{center}
+\includegraphics[width=4.5in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Projects/MACcollision/Figures/5Gchanginglandscape}
+\end{center}
+\end{frame}
+%------------------------------------------------------------------------------------
+\begin{frame}{The changing mobile landscape}
+\begin{block}{}
+\begin{itemize}
+%\item 5G will not only be ``4G but faster" but will support new models such as IoT
+\item Current wireless - a few devices with sustained connectivity
+\item Future wireless -  \alert{many uncoordinated} devices requesting \alert{sporadic} connectivity
+\end{itemize}
+\end{block}
+\begin{center}
+\includegraphics[width=2.75in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Projects/MACcollision/Figures/machinetomachine}
+\end{center}
+\end{frame}
+%------------------------------------------------------------------------------------
+\begin{frame}{The changing mobile landscape}
+\begin{block}{}
+\begin{itemize}
+%\item 5G will not only be ``4G but faster" but will support new models such as IoT
+\item Current wireless - a few devices with sustained connectivity
+\item Future wireless -  \alert{many uncoordinated} devices requesting \alert{sporadic} connectivity
+\end{itemize}
+\end{block}
+\begin{center}
+\includegraphics[width=2.75in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Projects/MACcollision/Figures/vehicular_sensor_networks}
+\end{center}
+\end{frame}
+%------------------------------------------------------------------------------------
+\begin{frame}{A possible MAC frame structure}
+\begin{itemize}
+\item Total of $Q$ users out of which $K$ are active
+\item $Q$ is very large and $K$ is a small fraction of $Q$
+\end{itemize}
+\begin{figure}[t!]
+  \begin{center}
+  %\scalebox{0.85}{\input{../../Projects/MACcollision/Figures/slotstructurewithoutfb}}
+\begin{center}
+\includegraphics[width=4.5in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Projects/MACcollision/Figures/slotstructurewithoutfb}
+\end{center}
+%  \caption{At the onset of a frame, the base station heralds the start of a new round, and transmits a beacon for coarse synchronization. It then estimates the number of active devices, and subsequently broadcasts the number of slots contained within the frame. This header is followed by a sequence of time slots during which codewords are transmitted in a largely uncoordinated manner.}
+%  \caption{Proposed structure: synchronization beacon, population estimation, slot sequence, \& feedback.}
+%  \label{fig:framework}
+  \end{center}
+\end{figure}
+\begin{itemize}
+\item Beacon is used to obtain coarse synchronization
+\item Each user transmits a signature sequence
+\item BS estimates the no. of users ($K$) (Chen, Guo '14, Calderbank)
+\item Picks an $M$ and broadcasts it
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------------------------------------------
+
+\begin{frame}{System under consideration}
+\begin{itemize}
+\item Wireless network with \textcolor{blue}{$K$ distributed users} (no coordination)
+\item Each user has one packet of info to transmit to a central receiver
+\item Total \textcolor{red}{time is split into $M$ slots} (packet duration)
+    \begin{itemize}
+    \item Some policy used to decide if they transmit in $j$-th slot or not
+    \item Receiver knows the set of users transmitting in the $j$-th slot
+    \end{itemize}
+\end{itemize}
+\vspace*{-0.1in}
+\begin{center}
+\includegraphics[width=2.5in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Projects/MACcollision/Figures/systemmodel1}
+\end{center}
+\end{frame}
+
+%------------------------------------------------------------------------------------
+\begin{frame}{Random access paradigm}
+\begin{itemize}
+\item $k$-th user:
+\begin{itemize}
+  \item Generates a random variable $D_k \in \{1,\ldots,M\}$
+  \item Generating PMF is $f_D$, i.e., \alert{$Pr(D_k=i) = f_D[i]$}
+  \item Transmits during $D_k$ time slots drawn uniformly from $\{1,\ldots,M\}$
+\end{itemize}
+\end{itemize}
+\begin{center}
+\includegraphics[width=2.5in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Projects/MACcollision/Figures/systemmodel2}
+\end{center}
+\vspace{-3mm}
+\begin{itemize}
+\item In this example, $D_3 = 3$ and user 3 transmits in slots $\{1,3,5\}$
+%\item Our setup is based on Liva 2011 \& Paolini et al. 2012
+\end{itemize}
+\end{frame}
+%------------------------------------------------------------------------------------
+\begin{frame}{Iterative interference cancelation}
+\begin{itemize}
+\item \textcolor{red}{If exactly one user transmits per slot, then packet is decoded w.h.p.}
+\vspace{1mm}
+\item \textcolor{blue}{If more than one user transmits per slot, then collision}
+    \begin{itemize}
+\vspace{1mm}
+    \item Rx subtracts previously decoded packets from collided packets
+\vspace{1mm}
+    \item If Rx can subtract all but one, remaining packet is decoded w.h.p.
+\vspace{1mm}
+    \item Otherwise, the received packet is saved for future processing
+\vspace{1mm}
+    \item Once all $K$ packets recovered, an ACK terminates the transmission
+\vspace{1mm}
+    \item Similar to interference cancellation in multi-user detection
+    \end{itemize}
+\end{itemize}
+\vspace*{-0.1in}
+\begin{center}
+\includegraphics[width=2.5in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Projects/MACcollision/Figures/iterativeinterferencecancellation2}
+\end{center}
+\end{frame}
+%------------------------------------------------------------------------------------
+\begin{frame}{Performance measure - Efficiency}
+ \begin{itemize}
+    \item Suppose \textcolor{red}{$M$ time slots} needed to successfully transmit all $K$ packets
+\vspace{6mm}
+    \item Then, the \textcolor{blue}{efficiency of the system} is said to be \[\eta = K/M \; \text{packets/slot} \]
+ \end{itemize}
+\end{frame}
+%------------------------------------------------------------------------------------
+\begin{frame}{Graphical representation (Liva 2012)}
+\begin{itemize}
+\item Tanner graph representation for the transmission scheme
+\item Variable nodes $\leftrightarrow$ users, Check nodes $\leftrightarrow$ received packets
+\item Message-passing decoder - \textcolor{blue}{peeling decoder} for the erasure channel
+\end{itemize}
+\begin{center}
+\includegraphics[width=3.75in]{./Figures/iterativeinterferencecancellation2}
+\end{center}
+%\begin{minipage}[t]{0.48\linewidth}
+%\begin{center}
+%\includegraphics[width=1.75in]{../../Projects/MACcollision/Figures/graphicalmodel}
+%\end{center}
+%\end{minipage}
+%\begin{minipage}[t]{0.48\linewidth}
+%\begin{center}
+%\includegraphics[width=1.75in]{../../Projects/MACcollision/Figures/graphicalmodelmsgpassing}
+%\end{center}
+%\end{minipage}
+\pause
+\begin{block}{}
+\begin{itemize}
+\item $L_i$ ($R_i$) - fraction of left (right) nodes with degree $i$ - notice that $\boxed{L_i = f_D[i]}$
+\item $\lambda_i$ ($\rho_i$) - fraction of edges connected to left (right) nodes with deg $i$
+\end{itemize}
+\end{block}
+\end{frame}
+%%------------------------------------------------------------------------------------
+\begin{frame}{Low density generator matrix (LDGM) codes}
+\vspace{-3mm}
+\begin{columns}
+\begin{column}{0.47\textwidth}
+\begin{center}
+\includegraphics[width=2.0in]{./Figures/LDGM}
+\end{center}
+\end{column}
+\begin{column}{0.47\textwidth}
+\begin{itemize}
+\item $L(x) = \frac14 x + \frac14 x^2 + \frac12 x^3$
+\vspace{2mm}
+\item $\lambda(x) = \frac19 + \frac29 x + \frac 69 x^2$
+\vspace{2mm}
+\item $R(x) = \frac15 x + \frac45 x^2$
+\vspace{2mm}
+\item $\rho(x) = \frac19 + \frac89 x$
+\vspace{2mm}
+\item Rate $R = \frac{\int_{0}^{1}\lambda(x) \ dx}{\int_{0}^{1} \rho(x) \ dx}$
+\end{itemize}
+\end{column}
+\end{columns}
+
+\begin{columns}
+\column{0.45\textwidth}
+\begin{block}{DE for LDPC}
+\vspace*{-3mm}
+\begin{eqnarray*}
+  x_0 &=& \epsilon \\
+  y_l &=& 1-\rho(1-x_{l-1}) \\
+  x_l &=& \epsilon \lambda(y_l)\\
+  x_l &=& \epsilon \lambda(1-\rho(1-x_{l-1}))
+\end{eqnarray*}
+\end{block}
+
+\column{0.45\textwidth}
+\begin{block}{DE for LDGM}
+\vspace*{-3mm}
+\begin{eqnarray*}
+  x_0 &=& 1 \\
+  y_l &=& 1-\rho(1-x_{l-1}) \\
+  x_l &=& \lambda(y_l) \\
+  x_l &=& \lambda(1-\rho(1-x_{l-1}))
+\end{eqnarray*}
+\end{block}
+\end{columns}
+\end{frame}
+%%------------------------------------------------------------------------------------
+%\begin{frame}{Analysis of the scheme - degree distributions}
+%%\begin{block}{}
+%%\begin{itemize}
+%%\item $L_i$ ($R_i$) - no. of left (right) nodes with degree $i$
+%%\item $\lambda_i$ ($\rho_i$) - no. of edges connected to left (right) nodes with deg $i$
+%%\end{itemize}
+%%\end{block}
+%\begin{itemize}
+%\item For a given $f_D$, the scheme results in an ensemble of LDGM codes
+%\vspace{2mm}
+%\begin{itemize}
+%\item VN d.d. from node perspective - $L(x) = \sum_i L_i x^i$ ($L_i = f_D[i]$)
+%\vspace{1mm}
+%\item VN d.d. from edge perspective - $\lambda(x) = \sum_i \lambda_i x^{i-1} = \frac{L'(x)}{L'(1)}$
+%\vspace{1mm}
+%\item CN d.d. from node perspective - $R(x) = \sum_i R_i x^i$
+%\vspace{1mm}
+%\item CN d.d. from edge perspective - $\rho(x) =\sum_i \rho_i x^{i-1} = \frac{R'(x)}{R'(1)}$
+%\end{itemize}
+%\item ${\texttt{l}}_{avg} = L'(1)$ and ${\texttt{r}}_{avg} = \frac{K}{M} {\texttt{l}}_{avg}$
+%\end{itemize}
+%
+%\begin{block}{Efficiency of the scheme}
+%\[
+%\eta = \frac{K}{M} = \frac{{\texttt r}_{avg}}{{\texttt l}_{avg}} =
+%\frac{R'(1)}{L'(1)}
+%\]
+%\end{block}
+%\end{frame}
+%%------------------------------------------------------------------------------------
+%\begin{frame}{Example of degree distributions}
+%\begin{columns}
+%\begin{column}{0.47\textwidth}
+%\begin{center}
+%\includegraphics[width=1.75in]{../Figures/graphicalmodel}
+%\end{center}
+%\end{column}
+%\begin{column}{0.47\textwidth}
+%\begin{itemize}
+%\item $L(x) = \frac14 x + \frac14 x^2 + \frac12 x^3$
+%\vspace{3mm}
+%\item $\lambda(x) = \frac19 + \frac29 x + \frac 69 x^2$
+%\vspace{3mm}
+%\item $R(x) = \frac15 x + \frac45 x^2$
+%\vspace{3mm}
+%\item $\rho(x) = \frac19 + \frac89 x$
+%\end{itemize}
+%\end{column}
+%\end{columns}
+%\end{frame}
+%------------------------------------------------------------------------------------
+\begin{frame}{Poisson approximation for check node d.d.}
+
+\vspace{-0.15in}
+\begin{center}
+\hspace{14mm} \includegraphics[width=2.0in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Projects/MACcollision/Figures/poissonapprox}
+\end{center}
+\vspace{-0.15in}
+\begin{block}{Slot transmission probability}
+User $k$ transmits in slot $m$ with prob. $p = \sum_{i=1}^\infty L_i \frac{i}{M} = \frac{\texttt{l}_{avg}}{M} = \frac{\texttt{r}_{avg}}{K}$ \pause
+\end{block}
+\begin{block}{Optimal multiple access policy}
+%\vspace*{-0.1in}
+%\begin{eqnarray}
+%\nonumber
+%R_i & = & \frac{\texttt{r}_{avg}^i e^{-\texttt{r}_{avg}}}{i!} \Rightarrow R(x) = \sum_i \frac{\texttt{r}_{avg}^i e^{-\texttt{r}_{avg}}}{i!} x^i \\
+%\nonumber
+%& \Rightarrow & \ R(x) \rightarrow e^{-{\texttt{r}}_{avg}(1-x)}, \ \ \ \rho(x) \rightarrow e^{-{\texttt{r}}_{avg}(1-x)}
+%\end{eqnarray}
+\begin{itemize}
+\item Poisson approximation for $R(x)$ as $K,M \rightarrow \infty$
+\item Finding optimal $f_D$ - same as finding optimal $\lambda(x)$ for $\rho(x) = e^{-{\texttt{r}}_{avg}(1-x)}$
+\end{itemize}
+\end{block}
+\end{frame}
+%------------------------------------------------------------------------------------
+\begin{frame}{Intuition behind the main result (Narayanan,Pfister'12)}
+%\small
+\begin{block}{Convergence condition : $\rho(1-\lambda(y)) > 1-y$}
+\begin{align*}
+\rho(1-\lambda(y)) &= 1-y \\
+e^{-\texttt{r}_{avg} \lambda(y)} &= e^{\ln(1-y)}\\
+\Rightarrow -\texttt{r}_{avg} \lambda(y)&= \ln(1-y) = -\sum_{i=1}^{\infty} \frac{y^i}{i}\\
+\Rightarrow \texttt{r}_{avg} \sum_i \lambda_i y^i & = \sum_{i=1}^{\infty} \frac{y^i}{i}
+\end{align*}
+\end{block}
+%\begin{itemize}
+%\item Analyze numerator of $\lambda^N(x)$ using $-\ln(1-x) = \sum_{i=1}^{\infty} \frac{x^i}{i}$
+%\item For $y\in(0,1)$, $-ay + \sum_{i=1}^{N} \frac{y^i}{i} < -ay -\ln(1-y)$
+%\item $\rho^N(1-\lambda^N(y)) = e^{ay-\sum_{i=1}^N \frac{y^i}{i}} > e^{\ln(1-y)} e^{ay} > (1-y)$
+%\end{itemize}
+%\end{block}
+%\vspace{-1mm}
+\pause
+\begin{block}{}
+\begin{align*}
+\texttt{r}_{avg} \lambda_i &= \frac{1}{i}\\
+\sum_i \lambda_i & = 1 \Rightarrow \boxed{\texttt{r}_{avg} = \sum_i \frac{1}{i}, \lambda_i = \frac{1/i}{\sum_i 1/i}} \Rightarrow \boxed{L_i = \frac{1}{i(i-1)}, i\geq2}
+\end{align*}
+\end{block}
+\end{frame}
+%%------------------------------------------------------------------------------------
+%\begin{frame}{Finding optimal $f_D$}
+%\begin{block}{Finding optimal $f_D$ - same as finding optimal $\lambda(x)$ for $\rho(x) = e^{-{\texttt{r}}_{avg}(1-x)}$}
+%\end{block}
+%%\pause
+%%\begin{block}{Optimal distribution is soliton: $f(i) = \frac{1}{i(i-1)}$}
+%%\begin{center}
+%%\begin{tabular}{|l|c|c|c|c|c|c|}
+%%\hline
+%%No. of times & 1 & 2 & 3 & 4 & $\ldots$ & $M$ \\
+%%\hline
+%%Fraction of users & 0 & $\frac12$ & $\frac16$ & $\frac{1}{12}$ & $\ldots$ & $\frac{1}{M (M-1)}$ \\
+%%\hline
+%%\end{tabular}
+%%\end{center}
+%%\end{block}
+%%\pause
+%% \begin{block}{}
+%% {For any $a\in[0,1]$, consider the sequence (indexed by $N\in \mathbb{N}$) of node-perspective degree-distributions,  $(L^N(x),R^N(x))$, where
+%%\begin{align*}
+%%L^N(x) &= \frac{\sum_{i=2}^{N+1}\frac{x^i}{i(i-1)}-\frac{a x^2}{2}}{\sum_{i=2}^{N+1}\frac{1}{i(i-1)}-\frac{a}{2}} \\
+%%R^N(x) &= e^{-\left(H(N)-a\right)(1-x)}.
+%%\end{align*}
+%%Here $H(N) = \sum_{i=1}^N \frac{1}{i}$ is the $N$-th Harmonic number. For every ensemble in this sequence, ${\sf y}_\ell \stackrel{\ell \rightarrow \infty}{\rightarrow} 0$ while $\eta^N = \frac{N}{N+1} - a \stackrel{N \rightarrow \infty}{\rightarrow} 1-a$.}
+%%\end{block}
+%%\pause
+%%\begin{block}{Average degree and its consequences}
+%%\begin{itemize}
+%%\item Average left degree is $\ln M \Rightarrow $ average right degree is $\eta \ln M$
+%%\item For $K,M \rightarrow \infty$, $\texttt{r}_{avg} \rightarrow \infty \Rightarrow P$(right degree $=1) \rightarrow 0$
+%%\pause
+%%\item Consequence 1: Iterations can get stuck at the beginning
+%%\item Consequence 2: Average power consumed is $\ln K$ times larger
+%%\end{itemize}
+%%\end{block}
+%\end{frame}
+
+%%------------------------------------------------------------------------------------
+%\begin{frame}{Connection with Luby Transform (LT) codes}
+%\begin{itemize}
+%\item Clearly, the coding paradigm is similar to that of rateless codes
+%\item The main difference is that data is not centrally available
+%\end{itemize}
+%\begin{center}
+%\includegraphics[width=2.5in]{../../Projects/MACcollision/Figures/rateless}
+%\end{center}
+%%\vspace{2mm}
+%\begin{itemize}
+%\item From a mathematical point of view
+%    \begin{itemize}
+%    \item Uncoordinated erasures imply LT codes must have a Poisson bit d.d. and optimality gives $\rho(x) \!= -\ln(1-x)$
+%    \item Uncoordinated transmission implies coded ALOHA has a Poisson check d.d. and optimality gives $\lambda(x) \!= -\ln(1-x)$
+%    \item \textcolor{red}{Both these pairs are optimal for the iterative process!}
+%    \end{itemize}
+%\end{itemize}
+%%\pause
+%\pause
+%\begin{itemize}
+%\item In some ways, Soliton d.d. is more natural here than for LT codes
+%\item An outer code is not required to recover bits that are left uncovered by the encoding process
+%\end{itemize}
+%\end{frame}
+%------------------------------------------------------------------------------------
+\begin{frame}{Graphical interpretation - EXIT chart}
+\begin{center}
+\includegraphics[width=3.5in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Projects/MACcollision/Figures/DEsoliton}
+\end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Main result}
+\begin{block}{}
+\begin{itemize}
+\item For coordinated transmission, clearly $\eta = 1$,
+\pause
+\item ALOHA provides $\eta \approx 0.37$
+\pause
+\item But, even for uncoordinated transmission, $\eta \rightarrow 1$ as $K \rightarrow \infty$
+\end{itemize}
+\end{block}
+\pause
+\begin{block}{Optimal distribution is soliton: $f_D[i] = \frac{1}{i(i-1)}$}
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+No. of times & 1 & 2 & 3 & 4 & $\ldots$ & $M$ \\
+\hline
+Fraction of users & $\frac{1}{M}$ & $\frac12$ & $\frac16$ & $\frac{1}{12}$ & $\ldots$ & $\frac{1}{M (M-1)}$ \\
+\hline
+\end{tabular}
+\end{center}
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Balls in bins}
+\begin{itemize}
+  \item $M$ balls thrown into $N$ bins uniformly at random
+  \item If every bin has to be non-empty with prob $1-\delta$, how large should $M$ be ? \pause $\boxed{N \log \frac{N}{\delta}}$
+  \item For the multiple access problem, an empty bin means a wasted time slot
+  \item Note that for the soliton the average number of edges is indeed $N \log N)$
+\end{itemize}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Poisson, soliton pair is optimal for rateless codes}
+\vspace{-3mm}
+\begin{columns}
+\column{0.55\textwidth}
+\begin{center}
+\scalebox{0.45}{\input{./Figures/EXIT_LDGM_PoissSoliton.tex}}
+  %\includegraphics[width=2.2in]{./Figures/EXIT_PoissSoliton}
+\end{center}
+\column{0.45\textwidth}
+\begin{center}
+  \includegraphics[width=2.2in]{./Figures/ratelesserasures3}
+\end{center}
+\end{columns}
+%\begin{block}{Poisson, Soliton pair is optimal - $\lambda(x) = e^{-r_{avg}(1-x)}$}
+\begin{itemize}
+%\item Poisson, soliton pair is optimal
+  %\item Left degree is Poisson : $\lambda(x) = e^{-r_{avg}(1-x)}$
+  \item   $x = \lambda(1-(1-\epsilon)\rho(1-x))$
+  \item $\lambda(x) = e^{-\frac{\alpha}{1-\epsilon}(1-x)}$, \alert{optimal right degree is soliton: $\rho(x) = -\frac{1}{\alpha}\ln(1-x)$}
+  %\item \alert{Optimal distribution is soliton: $f_D[i] = \frac{1}{i(i-1)}$}
+\end{itemize}
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|}
+\hline
+Degree of nodes & 1 & 2 & 3 & 4 & $\ldots$ & $i$ & \ldots & $K$ \\
+\hline
+Fraction: \alert{ $f_D[i]$ } & $\frac{1}{K}$ & $\frac12$ & $\frac16$ & $\frac{1}{12}$ & $\ldots$ & $\frac{1}{i(i-1)}$ & \ldots & $\frac{1}{K (K-1)}$ \\
+\hline
+\end{tabular}
+\end{center}
+%\end{block}
+\end{frame}
+%------------------------------------------------------------------------------------
+\begin{frame}{Connection with Luby Transform (LT) codes}
+%\begin{columns}
+%\begin{column}{0.47\textwidth}
+%\begin{center}
+%\includegraphics[width=1.5in]{../../Projects/MACcollision/Figures/poissonapproxerasures}
+%\end{center}
+%\end{column}
+%\begin{column}{0.47\textwidth}
+%\begin{center}
+%\includegraphics[width=2.0in]{../../Projects/MACcollision/Figures/ratelesserasures}
+%\end{center}
+%\end{column}
+%\end{columns}
+\begin{center}
+\includegraphics[width=3.8in]{./Figures/ratelessmaccomparison}
+\end{center}
+\begin{itemize}
+  \item For rateless codes $\lambda(x)$ is Poisson and $\rho(x)$ is soliton
+  \item For multiple access $\rho(x)$ is Poisson, \alert{optimal $\lambda(x)$ is soliton}
+  \item Our result shows that both are optimal pairs
+\end{itemize}
+\end{frame}
+%%--------------------------------------------------------------------------------------
+%\begin{frame}{Histogram of required $N$ for $K=10000$}
+%\begin{center}
+%  \includegraphics[width=4.2in]{./Figures/fountaincodes10000histogram}
+%\end{center}
+%\begin{block}{Finite length considerations}
+%\begin{itemize}
+%  \item Deg. dist. must be adjusted for optimizing finite length performance
+%  \item Raptor codes (Shokrollahi'06) is an excellent choice
+%\end{itemize}
+%\end{block}
+%\end{frame}
+%------------------------------------------------------------------------------------
+%\begin{frame}{Asymptotic decoding analysis}
+%\begin{itemize}
+%\item Analyze the ensemble $\mathcal{G}(K,M,\lambda,\rho)$ in the limit as $K,M \rightarrow \infty$
+%\item ${\sf x}_\ell$ - prob. outgoing msg from var node is erased ($\ell$-th iteration)
+%\item ${\sf y}_\ell$ - prob. outgoing msg from check node is erased ($\ell$-th iteration)
+%\end{itemize}
+%\begin{center}
+%\includegraphics[width=4.0in]{../Figures/graphicalmodelDE}
+%\end{center}
+%\end{frame}
+%%------------------------------------------------------------------------------------
+%\begin{frame}{Decoding analysis - Density evolution}
+%\begin{columns}
+%\begin{column}{0.4\textwidth}
+%\begin{center}
+%\includegraphics[width=1.6in]{../Figures/leftnode}
+%\end{center}
+%\small
+%\begin{eqnarray}
+%\nonumber x_{l,i} & = & y_l^{i-1} \\
+%\nonumber x_l & = & \sum_i \lambda_i y_l^{i-1} = \lambda(y_l)
+%\end{eqnarray}
+%\end{column}
+%\pause
+%\begin{column}{0.57\textwidth}
+%\begin{center}
+%\includegraphics[width=1.6in]{../Figures/rightnode}
+%\end{center}
+%\small
+%\begin{eqnarray}
+%\nonumber y_{l+1,j} & = & 1-(1-x_l)^{j-1} \\
+%\nonumber y_{l+1} & = & \sum_j \rho_j (1-(1-x_l)^{j-1}) = 1 - \rho(1-x_l)
+%\end{eqnarray}
+%\end{column}
+%\end{columns}
+%\end{frame}
+%------------------------------------------------------------------------------------
+%\normalsize
+%\begin{frame}{Density evolution and successful decoding}
+%\begin{columns}
+%\begin{column}{0.47\textwidth}
+%\begin{center}
+%\includegraphics[width=1.0in]{../Figures/leftnode}
+%\end{center}
+%\end{column}
+%\pause
+%\begin{column}{0.47\textwidth}
+%\begin{center}
+%\includegraphics[width=1.0in]{../Figures/rightnode}
+%\end{center}
+%\end{column}
+%\end{columns}
+%\begin{block}{Density evolution}
+%\vspace{-5mm}
+%\begin{align*}
+%{\sf x}_0 & = 1\\
+%\nonumber
+%{\sf y}_{\ell+1} & = 1 - \rho(1-{\sf x}_\ell) \\
+%\nonumber
+%{\sf x}_\ell & = \lambda({\sf y}_{\ell}) \\
+%\nonumber
+%{\sf y}_{\ell+1} & =  1 - \rho \left( (1-\lambda({\sf y}_{\ell}) \right)
+%\end{align*}
+%\end{block}
+%\pause
+%\begin{block}{Successful decoding condition}
+%\[
+%\boxed{\rho(1-\lambda(y)) > 1-y, \ \ \ y \in (0,1-\rho(0)]}
+%\]
+%\end{block}
+%\end{frame}
+%------------------------------------------------------------------------------------
+\iffalse
+\begin{frame}
+
+\begin{block}{Successful decoding}
+\[
+\rho(1-\lambda(y)) > 1-y, \ \ \ y \in (0,1-\rho(0)]
+\]
+\end{block}
+
+\begin{block}{Stability condition}
+Checking the derivative of this condition at $y=0$ gives the \emph{stability condition}, $\lambda_2 \rho'(1) \leq 1$, which is also required for convergence to 0. If the inequality is strict, then $y_\ell$ converges to 0 exponentially with iteration for sufficiently large $l$.
+\end{block}
+
+\end{frame}
+\fi
+%%------------------------------------------------------------------------------------
+%\begin{frame}{Graphical interpretation - EXIT chart}
+%\begin{center}
+%\includegraphics[width=3.5in]{../Figures/DEregular1}
+%\end{center}
+%\end{frame}
+%%------------------------------------------------------------------------------------
+%\begin{frame}{Graphical interpretation - EXIT chart}
+%\begin{center}
+%\includegraphics[width=3.5in]{../Figures/DEregular2}
+%\end{center}
+%\end{frame}
+%------------------------------------------------------------------------------------
+%\begin{frame}{Intuition behind the main result}
+%%\small
+%\begin{block}{Convergence follows from $\rho(1-\lambda(y)) > 1-y$}
+%\begin{align*}
+%\rho(1-\lambda(y)) &= 1-y \\
+%e^{-\texttt{r}_{avg} \lambda(y)} &= e^{\ln(1-y)}\\
+%\Rightarrow -\texttt{r}_{avg} \lambda(y)&= \ln(1-y) = -\sum_{i=1}^{\infty} \frac{y^i}{i}\\
+%\Rightarrow \texttt{r}_{avg} \sum_i \lambda_i y^i & = \sum_{i=1}^{\infty} \frac{y^i}{i}
+%\end{align*}
+%\end{block}
+%%\begin{itemize}
+%%\item Analyze numerator of $\lambda^N(x)$ using $-\ln(1-x) = \sum_{i=1}^{\infty} \frac{x^i}{i}$
+%%\item For $y\in(0,1)$, $-ay + \sum_{i=1}^{N} \frac{y^i}{i} < -ay -\ln(1-y)$
+%%\item $\rho^N(1-\lambda^N(y)) = e^{ay-\sum_{i=1}^N \frac{y^i}{i}} > e^{\ln(1-y)} e^{ay} > (1-y)$
+%%\end{itemize}
+%%\end{block}
+%%\vspace{-1mm}
+%\pause
+%\begin{block}{}
+%\begin{align*}
+%\texttt{r}_{avg} \lambda_i &= \frac{1}{i}\\
+%\sum_i \lambda_i & = 1 \Rightarrow \boxed{\texttt{r}_{avg} = \sum_i \frac{1}{i}, \lambda_i = \frac{1/i}{\sum_i 1/i}} \Rightarrow \boxed{L_i = \frac{1}{i(i-1)}, i\geq2}
+%\end{align*}
+%\end{block}
+%\end{frame}
+%%-------------------------------------------------------------------------------------
+%\begin{frame}{Precise proof}
+%\begin{block}{Truncate and adjust}
+%\begin{itemize}
+%\item Consider $\lambda^N(x) =  \frac{L'^N(x)}{L'^N(1)} = \frac{\sum_{i=1}^{N}\frac{x^i}{i}-ax}{H(N)-a}, \ \ \rho(x) = e^{-(H(N)-a)(1-x)}$
+%\item $H(N) = \sum_{i=1}^N \frac{1}{i}$
+%\end{itemize}
+%\end{block}
+%\begin{block}{Efficiency}
+%\vspace{-6mm}
+%\begin{align*}
+%\eta^N & = \frac{R'^N(1)}{L'^N(1)} = \frac{H(N)-a}{\frac{H(N)-a}{\sum_{i=2}^{N+1} \frac{1}{i(i-1)}-a}}
+%\nonumber
+%= \sum_{i=1}^{N} \frac{1}{i(i+1)}  - a = \frac{N}{N+1} - a
+%\end{align*}
+%\end{block}
+%
+%\pause
+%\vspace{-6mm}
+%\begin{block}{Stability}
+%\begin{itemize}
+%\item Expand $1-\rho(1-\lambda({\sf y}_\ell))$ around $\sf{y}_\ell = 0$ to get \vspace*{-2mm}
+%\[ {\sf y}_{\ell+1} = \lambda_2^N \rho'^N(1) {\sf y}_\ell + O({\sf y}^2_\ell) = (1-a)  {\sf y}_\ell + O({\sf y}^2_\ell) \]
+%%\item For any $a >  0$, the stability condition is satisfied
+%\end{itemize}
+%\end{block}
+%\end{frame}
+%---------------------------------------------------------------------------------------------------
+%\begin{frame}{Precise result}
+%\vspace{-4mm}
+%%\begin{itemize}
+%%\item Soliton distribution,  $L(x) = \sum_{i=2}^{\infty} \frac{x^i}{i(i-1)}$, is optimal
+%%\end{itemize}
+%%\pause
+% \begin{block}{}
+% {Theorem: For any $a\in[0,1]$, consider the sequence (indexed by $N\in \mathbb{N}$) of node-perspective degree-distributions,  $(L^N(x),R^N(x))$, where
+%\begin{align*}
+%L^N(x) &= \frac{\sum_{i=2}^{N+1}\frac{x^i}{i(i-1)}-\frac{a x^2}{2}}{\sum_{i=2}^{N+1}\frac{1}{i(i-1)}-\frac{a}{2}} \\
+%R^N(x) &= e^{-\left(H(N)-a\right)(1-x)}.
+%\end{align*}
+%Here $H(N) = \sum_{i=1}^N \frac{1}{i}$ is the $N$-th Harmonic number. For every ensemble in this sequence, ${\sf y}_\ell \stackrel{\ell \rightarrow \infty}{\rightarrow} 0$ while $\eta^N = \frac{N}{N+1} - a \stackrel{N \rightarrow \infty}{\rightarrow} 1-a$.}
+%\end{block}
+%%\vspace{2mm}
+%%\alert{Stability:} For any $a>0$, the stability condition is strictly satisfied
+%
+%\begin{block}{}
+%For $\eta \rightarrow 1$, $\texttt{r}_{avg} \rightarrow \infty \Rightarrow P$(right degree $=1) \rightarrow 0$
+%\end{block}
+%\end{frame}
+%------------------------------------------------------------------------------------
+\begin{frame}{Simulation Results}
+\begin{center}
+\includegraphics[width=3.2in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Projects/MACcollision/Figures/Simulationresultserasure}
+\end{center}
+\begin{itemize}
+\item Even for $K=10000$, efficiency close to 0.8 can be obtained
+\end{itemize}
+\end{frame}
+%------------------------------------------------------------------------------------
+\begin{frame}{Some open problems}
+\begin{itemize}
+\item Fundamental limits on universal multiple access, i.e. $K$, $\epsilon$ not known
+\item Uncoordinated multiple access with power constraint and Gaussian noise
+    \begin{itemize}
+    \item Power penalty for repeating information $\log n$ times on the average
+    \item Can we achieve the equal rate point on the MAC region with simple decoding?
+    \end{itemize}
+\end{itemize}
+\end{frame}
+%------------------------------------------------------------------------------------
+%\begin{frame}{Average Degree and its Consequences}
+%\begin{block}{Optimal distribution is soliton: $f(i) = \frac{1}{i(i-1)}$}
+%\begin{center}
+%\begin{tabular}{|l|c|c|c|c|c|c|}
+%\hline
+%No. of times & 1 & 2 & 3 & 4 & $\ldots$ & $M$ \\
+%\hline
+%Fraction of users & 0 & $\frac12$ & $\frac16$ & $\frac{1}{12}$ & $\ldots$ & $\frac{1}{M (M-1)}$ \\
+%\hline
+%\end{tabular}
+%\end{center}
+%\end{block}
+%\begin{block}{Average degree}
+%\begin{itemize}
+%\item Average left degree is $\ln M \Rightarrow $ average right degree is $\eta \ln M$
+%\item For $K,M \rightarrow \infty$, $\texttt{r}_{avg} \rightarrow \infty \Rightarrow P$(right degree $=1) \rightarrow 0$
+%\end{itemize}
+%\end{block}
+%\pause
+%\begin{block}{Consequences}
+%\begin{itemize}
+%\item Consequence 1: Iterations can get stuck at the beginning
+%\item Consequence 2: Average power consumed is $\ln K$ times larger
+%\item Data is not centrally available - joint precoding is not an option
+%\end{itemize}
+%\end{block}
+%\end{frame}
+%\begin{frame}{Non-Asymptotic Regime - Non-Poisson Right degrees?}
+%%\vspace{-2mm}
+%\begin{itemize}
+%\item For fixed number of users $K$, is this scheme still the optimal thing to do?
+%\item<2-> Each user picks the time-slots uniformly at random (uniform PMF)
+%\item<2-> What about other PMFs?
+%\item<2-> By picking step like PMF, we can induce mixture of Poisson distributions
+%\end{itemize}
+%\pause
+%\begin{figure}
+%\input{../Figures/PMFs_Uniform_Steplike.tex}
+%\end{figure}
+%\end{frame}
+
+%\begin{frame}{Simulation Results, $K = 1000$}
+%\begin{figure}
+%\input{../../Projects/MACcollision/Figures/BERvsEfficiency.tex}
+%\end{figure}
+%\end{frame}
+
+%\begin{frame}{Analysis of Peeling Decoder}
+%\begin{itemize}
+%\item Uniform leads to $\rho(x)$ =Poisson distribution, step-like PMF results in mixture of two Poisson PMFs.
+%\item $\rho_{1}$ for Poisson mixture is higher thus a lower probability of peeling decoder getting stuck in the initial stages.
+%\end{itemize}
+%\begin{figure}
+%\input{../Figures/ResidualGraph_Degree1Nodes.tex}
+%\caption{Expected path in the residual graph of peeling decoder}
+%\end{figure}
+%\end{frame}

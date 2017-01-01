@@ -1,0 +1,146 @@
+\begin{tikzpicture}
+\def \depth{0.8in}; %Encoder Length
+\def \gap{1in}; %Encoder Width
+\def \gapA{0.2in}; %Encoder Width
+\def\nodewidth{0.1in};
+\tikzstyle{check} = [rectangle, draw, text centered, thick,fill=gray,
+                          minimum height=\nodewidth, minimum width=\nodewidth]
+\tikzstyle{bit} = [circle, draw, text centered, thick,fill=gray,
+                          radius=0.5*\nodewidth]
+
+\def \fsize{\normalsize}; %Defining a generic font size to be adjusted depending on the scaling
+\def \dotsize{\Huge}; %Defining a generic font size to be adjusted depending on the scaling
+
+\node [bit](b1) at (0,0) {} ;
+%\node() at ([yshift=0.12in]b1) {$x_{\text{DE}}^{(l)}=\epsilon \sum_{i} \lambda y_l^{i-1}$ };
+
+%Level 2
+\node[check] (c21) at ([xshift=-\gap,yshift=-\depth]b1) {};
+\node[check] (c22) at ([yshift=-\depth]b1) {};
+\node[check] (c23) at ([xshift=+\gap,yshift=-\depth]b1) {};
+
+%Lines form level 1-level 2
+\begin{scope}[thick,decoration={
+    markings,
+    mark=at position 0.5 with {\arrow{>}}}
+    ]
+\draw[postaction={decorate}] (b1)--+(0,+0.2in)node[midway,right]{$x_{l}=\epsilon \sum_{i} \lambda_i y_l^{i-1} = \epsilon \lambda(y_l)$ };
+\draw[postaction={decorate}](c21.north)--(b1);
+\draw[postaction={decorate}](c22)--(b1);
+\draw[postaction={decorate}](c23.north)--(b1)node[midway,right]{$y_{l}=1-\rho(1- x_{l-1})$};
+\end{scope}
+
+%Level 3
+\node[bit] (b31) at ([xshift=-2*\gapA,yshift=-\depth]c21) {};
+\node[bit] (b32) at ([xshift=-\gapA,yshift=-\depth]c21) {};
+\node[bit] (b33) at ([yshift=-\depth]c21) {};
+\node[bit] (b34) at ([xshift=+\gapA,yshift=-\depth]c21) {};
+\node[bit] (b35) at ([xshift=2*\gapA,yshift=-\depth]c21) {};
+
+\node[bit] (b36) at ([xshift=-2*\gapA,yshift=-\depth]c22) {};
+\node[bit] (b37) at ([xshift=-\gapA,yshift=-\depth]c22) {};
+\node[bit] (b38) at ([yshift=-\depth]c22) {};
+\node[bit] (b39) at ([xshift=+\gapA,yshift=-\depth]c22) {};
+\node[bit] (b310) at ([xshift=2*\gapA,yshift=-\depth]c22) {};
+
+\node[bit] (b311) at ([xshift=-2*\gapA,yshift=-\depth]c23) {};
+\node[bit] (b312) at ([xshift=-\gapA,yshift=-\depth]c23) {};
+\node[bit] (b313) at ([yshift=-\depth]c23) {};
+\node[bit] (b314) at ([xshift=+\gapA,yshift=-\depth]c23) {};
+\node[bit] (b315) at ([xshift=2*\gapA,yshift=-\depth]c23) {};
+
+
+%Lines form level 2-level 3
+\begin{scope}[thick,decoration={
+    markings,
+    mark=at position 0.5 with {\arrow{<}}}
+    ]
+\draw[postaction={decorate}](c21)--(b31.north);
+\draw[postaction={decorate}](c21)--(b32.north);
+\draw[postaction={decorate}](c21)--(b33.north);
+\draw[postaction={decorate}](c21)--(b34.north);
+\draw[postaction={decorate}](c21)--(b35.north);
+
+\draw[postaction={decorate}](c22)--(b36.north);
+\draw[postaction={decorate}](c22)--(b37.north);
+\draw[postaction={decorate}](c22)--(b38.north);
+\draw[postaction={decorate}](c22)--(b39.north);
+\draw[postaction={decorate}](c22)--(b310.north);
+
+\draw[postaction={decorate}](c23)--(b311.north);
+\draw[postaction={decorate}](c23)--(b312.north);
+\draw[postaction={decorate}](c23)--(b313.north);
+\draw[postaction={decorate}](c23)--(b314.north);
+\draw[postaction={decorate}](c23)--(b315.north)node[midway,right]{$x_{l-1}$};%=\epsilon \sum_i \lmb_i y_l^{i-1}  $};
+\end{scope}
+
+
+\node(brace11) at ([xshift=-0.6in]c21.north){};
+\node(brace12) at ([xshift=-0.6in]b33.south){};
+\draw [decorate,thick,decoration={brace,amplitude=4pt,mirror}](brace11) -- (brace12) node [black,midway,left,xshift=-5pt]{\fsize Depth-$1$};
+
+ \node (dots1) at ([yshift=-0.4*\depth]b38){\dotsize $\vdots$};
+\node (dots2) at ([yshift=-0.6*\depth]b38){\dotsize $\vdots$};
+
+
+%Lines form level 3-level 4
+\def \offsx{0.05in};
+\def \offsy{0.1in};
+\draw[->,thick](b31.south)+(-\offsx,-\offsy)--(b31.south); \draw[->,thick](b31.south)+(\offsx,-\offsy)--(b31.south);
+\draw[->,thick](b32.south)+(-\offsx,-\offsy)--(b32.south); \draw[->,thick](b32.south)+(\offsx,-\offsy)--(b32.south);
+\draw[->,thick](b33.south)+(-\offsx,-\offsy)--(b33.south); \draw[->,thick](b33.south)+(\offsx,-\offsy)--(b33.south);
+\draw[->,thick](b34.south)+(-\offsx,-\offsy)--(b34.south); \draw[->,thick](b34.south)+(\offsx,-\offsy)--(b34.south);
+\draw[->,thick](b35.south)+(-\offsx,-\offsy)--(b35.south); \draw[->,thick](b35.south)+(\offsx,-\offsy)--(b35.south);
+\draw[->,thick](b36.south)+(-\offsx,-\offsy)--(b36.south); \draw[->,thick](b36.south)+(\offsx,-\offsy)--(b36.south);
+\draw[->,thick](b37.south)+(-\offsx,-\offsy)--(b37.south); \draw[->,thick](b37.south)+(\offsx,-\offsy)--(b37.south);
+\draw[->,thick](b38.south)+(-\offsx,-\offsy)--(b38.south); \draw[->,thick](b38.south)+(\offsx,-\offsy)--(b38.south);
+\draw[->,thick](b39.south)+(-\offsx,-\offsy)--(b39.south); \draw[->,thick](b39.south)+(\offsx,-\offsy)--(b39.south);
+\draw[->,thick](b310.south)+(-\offsx,-\offsy)--(b310.south); \draw[->,thick](b310.south)+(\offsx,-\offsy)--(b310.south);
+\draw[->,thick](b311.south)+(-\offsx,-\offsy)--(b311.south); \draw[->,thick](b311.south)+(\offsx,-\offsy)--(b311.south);
+\draw[->,thick](b312.south)+(-\offsx,-\offsy)--(b312.south); \draw[->,thick](b312.south)+(\offsx,-\offsy)--(b312.south);
+\draw[->,thick](b313.south)+(-\offsx,-\offsy)--(b313.south); \draw[->,thick](b313.south)+(\offsx,-\offsy)--(b313.south);
+\draw[->,thick](b314.south)+(-\offsx,-\offsy)--(b314.south); \draw[->,thick](b314.south)+(\offsx,-\offsy)--(b314.south);
+\draw[->,thick](b315.south)+(-\offsx,-\offsy)--(b315.south); \draw[->,thick](b315.south)+(\offsx,-\offsy)--(b315.south);
+
+%Level l
+\node[check] (cL1) at ([yshift=-0.5*\depth]dots2) {};
+
+\draw[<-,thick](dots2.south)--(cL1.north)node[midway,right]{$\begin{array}{ll}y_{1}& = \sum_i \rho_i \left(1-(1-x_0)^{i-1} \right)\\
+& = 1-\sum_i \rho_i (1-x_0)^{i-1} \\ & = 1-\rho(1-x_{0})\end{array}$};;
+
+%Level l+1
+\node[bit] (bl1) at ([xshift=-2*\gapA,yshift=-\depth]cL1) {};
+\node[bit] (bl2) at ([xshift=-\gapA,yshift=-\depth]cL1) {};
+\node[bit] (bl3) at ([yshift=-\depth]cL1) {};
+\node[bit] (bl4) at ([xshift=\gapA,yshift=-\depth]cL1) {};
+\node[bit] (bl5) at ([xshift=2*\gapA,yshift=-\depth]cL1) {};
+
+
+%Lines form level l-level l+1
+\begin{scope}[thick,decoration={
+    markings,
+    mark=at position 0.5 with {\arrow{<}}}
+    ]
+\draw[postaction={decorate}](cL1)--(bl1.north);
+\draw[postaction={decorate}](cL1)--(bl2.north);
+\draw[postaction={decorate}](cL1)--(bl3.north);
+\draw[postaction={decorate}](cL1)--(bl4.north);
+\draw[postaction={decorate}](cL1)--(bl5.north)node[midway,right]{$x_{0}=\epsilon$};
+\end{scope}
+
+\draw[<-,thick](bl5.east)--+(2*\gapA,0)node[midway,above]{$x_{\text{ch}}=\epsilon$};
+
+
+\node(lbrace1) at ([xshift=-1in]dots2.south){};
+\node(lbrace2) at ([xshift=-1in]bl3.south){};
+\draw [decorate,thick,decoration={brace,amplitude=4pt,mirror}](lbrace1) -- (lbrace2) node [black,midway,left,xshift=-5pt]{\fsize Depth-$l$};
+
+
+%\draw[<-,thick](enc)-- +(-\ext,0) node[midway,above]{\fsize $m_1,\ldots,m_l$};
+%\draw[<-,thick](enc)--(chan)node[midway,above]{\fsize $c_1,\ldots,c_l$}node[midway,below]{\fsize $c_i\in \mathbb{F}_p$};
+%\draw[<-,thick](chan)--(dec)node[midway,above]{\fsize $r_1,\ldots,r_l$}node[midway,below]{\fsize $r_i\in \mathbb{F}_p$};;
+%
+%\draw[<-,thick](chan)--+(0,\extB) node[above] {\fsize $e_1,\ldots,e_l$};
+%\draw[<-,thick](dec)--+(\ext,0)node[midway,above]{\fsize  $\hat{m_1},\ldots,\hat{m_l}$};
+%
+\end{tikzpicture} 

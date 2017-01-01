@@ -1,0 +1,59 @@
+\begin{tikzpicture}
+
+% Variable nodes 
+\draw [thick]   (-7,-9) node (v6) {} ellipse (1 and 1);
+\draw [thick] (-7,-5.2) node (v5) {} ellipse (1 and 1);
+\draw [thick] (-7,-1.6) node (v3) {} ellipse (1 and 1);
+\draw [thick] (-7,1.8) node (v1) {} ellipse (1 and 1);
+
+%Check nodes
+
+
+\draw [thick] (6,10) rectangle (8,8);
+\draw [thick] (6,7) rectangle (8,5);
+\draw  [thick] (6,4) rectangle (8,2);
+\draw  [thick] (6,1) rectangle (8,-1);
+\draw [thick] (6,-2) rectangle (8,-4);
+
+
+\draw [thick] (6,-6) rectangle (8,-8);
+\draw [thick] (6,-9) rectangle (8,-11);
+\draw [thick] (6,-12) rectangle (8,-14);
+\draw [thick] (6,-15) rectangle (8,-17);
+
+\node at (-9.6,1.8) {\Huge $X[0]$};
+\node at (-9.6,-1.6) {\Huge $X[5]$};
+\node at (-9.6,-5.2) {\Huge $X[12]$};
+\node at (-9.6,-9.) {\Huge $X[17]$};
+
+\node (v2) at (6,9) {};
+\node at (6,6) {};
+\node (v4) at (6,3) {};
+\node at (6,0) {};
+\node at (6,-3) {};
+\node (v7) at (6,-7) {};
+\node (v9) at (6,-10) {};
+\node (v8) at (6,-13) {};
+\node at (6,-16) {};
+
+\node [anchor=west] at (10.2,9) {\Huge $X_{s}[0] = X[0]+X[5]$};
+\node [anchor=west] at (10.2,6) {\Huge $X_{s}[1] = 0$};
+\node [anchor=west] at (10.2,3) {\Huge $X_{s}[2] = X[12]+X[17]$};
+\node [anchor=west] at (10.2,0) {\Huge $X_{s}[3] = 0$};
+\node [anchor=west] at (10.2,-3) {\Huge $X_{s}[4] = 0$};
+\node [anchor=west] at (10.2,-7) {\Huge $Z_{s}[0] = X[0]+X[12]$};
+\node [anchor=west] at (10.2,-10) {\Huge $Z_{s}[1] = X[5]+X[17]$};
+\node [anchor=west] at (10.2,-13) {\Huge $Z_{s}[2] = 0$};
+\node [anchor=west] at (10.2,-16) {\Huge $Z_{s}[3] = 0$};
+\draw  (v1) edge (v2);
+\draw  (v3) edge (v2);
+\draw  (v5) edge (v4);
+\draw  (v6) edge (v4);
+\draw  (v1) edge (v7);
+\draw  (v3) edge (v9);
+\draw  (v5) edge (v7);
+\draw  (v6) edge (v9);
+\node (v10) at (4,-5) {};
+\node (v11) at (10,-5) {};
+\draw [dashed] (v10) edge (v11);
+\end{tikzpicture}

@@ -1,0 +1,41 @@
+%\documentclass{article}
+%
+%\usepackage{tikz}
+%\usetikzlibrary{arrows,shapes,chains,matrix,positioning,scopes,patterns,calc}
+%\usepackage{color}
+%
+%\usepackage{latexsym}
+%\usepackage{amsmath,amssymb,amsthm}
+%\usepackage{etoolbox}
+%
+%\begin{document}
+
+\begin{tikzpicture}
+\def \recW{1in}; %Encoder Length
+\def \recH{0.5in}; %Encoder Width
+
+\def \R{0.06in}; %Larger circle radius
+
+\def \Gblks{0.25in}; %Gaps between blocks
+\def \ext{0.8in}; %Extensions towards left and right of the figure
+\def \extB{0.25in}; %Extensions towards top of the figure
+
+\def \fsizes{\normalsize}; %Defining a generic font size to be adjusted depending on the scaling
+\def \fsize{\Large}; %Defining a generic font size to be adjusted depending on the scaling
+
+\tikzstyle{rect}   = [ rectangle, draw, text centered, thick,
+                        minimum height=\recH, minimum width=\recW ]
+
+\node [rect](enc) at (0,0) {\fsizes{Encoder}} ;
+\node (chan)  [right = \ext of enc,draw,rectangle,text centered,thick,minimum width=1.5in,minimum height=1.5in]    {\includegraphics[width=1.5in,angle=-90]{/Users/avinashvem/Dropbox/NASIT2016/Figures/BECchannelmodel.pdf}};
+\node (dec)[rect,right=\ext of chan] {\fsizes Decoder} ;
+
+\draw[<-,thick](enc)-- +(-2*\ext,0) node[midway,above]{\fsize $m_1,\ldots,m_l$};
+\draw[->,thick](enc)--(chan)node[midway,above]{\fsize $c_1,\ldots,c_n$}node[midway,below]{\fsize $c_i\in \mathbb{F}_p$};
+\draw[->,thick](chan)--(dec)node[midway,above]{\fsize $r_1,\ldots,r_n$}node[midway,below]{\fsize $r_i\in \mathbb{F}_p$};;
+
+%\draw[<-,thick](chan)--+(0,\extB) node[above] {\fsize $e_1,\ldots,e_n$};
+\draw[->,thick](dec)--+(2*\ext,0)node[midway,above]{\fsize  $\hat{m_1},\ldots,\hat{m_l}$};
+
+\end{tikzpicture}
+%\end{document} 

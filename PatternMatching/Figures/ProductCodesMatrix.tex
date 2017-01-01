@@ -1,0 +1,121 @@
+\begin{tikzpicture}[scale=0.80]
+
+
+\draw  (-3,5) rectangle (-3,5) node (v1) {};
+\draw  (-8,10) rectangle (-8,10);
+\draw  (v1) rectangle (-8,10);
+\node (v2) at (-6.75,10.1) {};
+\node (v5) at (-5.5,10.1) {};
+\node (v6) at (-4.25,10.1) {};
+\node (v8) at (-8.1,9) {};
+\node (v11) at (-8.1,8) {};
+\node (v12) at (-8.1,7) {};
+\node (v14) at (-8.1,6) {};
+\node (v9) at (-2.9,9) {};
+\node (v10) at (-2.9,8) {};
+\node (v13) at (-2.9,7) {};
+\node (v15) at (-2.9,6) {};
+\node (v7) at (-4.25,4.9) {};
+\node (v4) at (-5.5,4.9) {};
+\node (v3) at (-6.75,4.9) {};
+\draw  (v2) edge (v3);
+\draw  (v4) edge (v5);
+\draw  (v6) edge (v7);
+\draw  (v8) edge (v9);
+\draw  (v10) edge (v11);
+\draw  (v12) edge (v13);
+\draw  (v14) edge (v15);
+
+\node at (-7.375,9.5) {$X[0]$};
+\node at (-6.125,9.5) {$X[5]$};
+\node at (-4.875,9.5) {$X[10]$};
+\node at (-3.625,9.5) {$X[15]$};
+\node at (-7.375,8.5) {$X[16]$};
+\node at (-6.125,8.5) {$X[1]$};
+\node at (-4.875,8.5) {$X[6]$};
+\node at (-3.625,8.5) {$X[11]$};
+\node at (-7.375,7.5) {$X[12]$};
+\node at (-6.125,7.5) {$X[17]$};
+\node at (-4.875,7.5) {$X[2]$};
+\node at (-3.625,7.5) {$X[7]$};
+\node at (-7.375,6.5) {$X[8]$};
+\node at (-6.125,6.5) {$X[13]$};
+\node at (-4.875,6.5) {$X[18]$};
+\node at (-3.625,6.5) {$X[3]$};
+\node at (-7.375,5.5) {$X[4]$};
+\node at (-6.125,5.5) {$X[9]$};
+\node at (-4.875,5.5) {$X[14]$};
+\node at (-3.625,5.5) {$X[19]$};
+
+
+%\draw[thick, red]  (-6,9.5) ellipse (2.2 and 0.35);
+%\draw [thick,blue]  (-7.5,7.5) ellipse (0.43 and 3.0);
+%\node (v16) at (-7.5,3.5) {};
+%\node (v17) at (-7.5,4.75) {};
+%\draw  [- triangle 45, blue ](v16) edge (v17);
+%\node at (-6.1,3.325) {\small{$ One ~error~ correcting$}};
+%\node (v19) at (-2.8,9.5) {};
+%\node (v18) at (-1.8,9.5) {};
+%\draw [- triangle 45, red ] (v18) edge (v19);
+%\node at (0.4,9.5) {\small{$ One ~error~ correcting$}};
+%\node at (0.275,9.2) {$~row  ~code$};
+%\node at (-6.2,3.025) { $~column ~code$};
+%\draw [blue, ->]  (-7.9,9.9)edge (v15);
+%\draw [blue, ->] (v2) edge (v13);
+\node (v16) at (-9,9.5) {};
+\node (v17) at (-8,9.5) {};
+\node at (-9.375,9.5) {$X_s[0]$};
+\draw [->] (v16) edge (v17);
+
+\node (v16) at (-9,8.5) {};
+\node (v17) at (-8,8.5) {};
+\node at (-9.375,8.5) {$X_s[1]$};
+\draw [->] (v16) edge (v17);
+
+\node (v16) at (-9,7.5) {};
+\node (v17) at (-8,7.5) {};
+\node at (-9.375,7.5) {$X_s[2]$};
+\draw [->] (v16) edge (v17);
+
+\node (v16) at (-9,6.5) {};
+\node (v17) at (-8,6.5) {};
+\node at (-9.375,6.5) {$X_s[3]$};
+\draw [->] (v16) edge (v17);
+
+
+\node (v16) at (-9,5.5) {};
+\node (v17) at (-8,5.5) {};
+\node at (-9.375,5.5) {$X_s[4]$};
+\draw [->] (v16) edge (v17);
+
+
+
+
+\node (v18) at (-7.375,11) {};
+\node (v19) at (-7.375,10) {};
+\node at (-7.375,11.25) {$Z_s[0]$};
+\draw [->] (v18) edge (v19);
+
+\node (v18) at (-6.125,11) {};
+\node (v19) at (-6.125,10) {};
+\node at (-6.125,11.25) {$Z_s[1]$};
+\draw [->] (v18) edge (v19);
+
+\node (v18) at (-4.875,11) {};
+\node (v19) at (-4.875,10) {};
+\node at (-4.875,11.25) {$Z_s[2]$};
+\draw [->] (v18) edge (v19);
+
+\node (v18) at (-3.625,11) {};
+\node (v19) at (-3.625,10) {};
+\node at (-3.625,11.25) {$Z_s[3]$};
+\draw [->] (v18) edge (v19);
+
+
+
+\end{tikzpicture}
+
+
+ 
+
+
