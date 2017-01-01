@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+\def \recW{1in}; %Encoder Length
+\def \recH{0.5in}; %Encoder Width
+
+\def \R{0.06in}; %Larger circle radius
+
+\def \Gblks{0.25in}; %Gaps between blocks
+\def \ext{1.05in}; %Extensions towards left and right of the figure
+\def \extB{0.25in}; %Extensions towards top of the figure
+
+\def \fsizes{\normalsize}; %Defining a generic font size to be adjusted depending on the scaling
+\def \fsize{\Large}; %Defining a generic font size to be adjusted depending on the scaling
+
+\tikzstyle{rect}   = [ rectangle, draw, text centered, thick,
+                        minimum height=\recH, minimum width=\recW ]
+
+\node [rect](enc) at (0,0) {\fsizes{LDPC Encoder}} ;
+\node[rect, right = \ext of enc] (chan){channel \LARGE{($\mathtt{h}$)} };
+\node (dec)[rect,right=\ext of chan] {\fsizes Decoder} ;
+
+\draw[<-,thick](enc)-- +(-1.6*\ext,0) node[midway,above]{\fsize $m_1,\ldots,m_k$};
+\draw[->,thick](enc)--(chan)node[midway,above]{\fsize $x_1,\ldots,x_n$}node[midway,below]{\fsize $x_i\in \{0,1\}$};
+\draw[->,thick](chan)--(dec)node[midway,above]{\fsize $r_1,\ldots,r_n$};
+
+\draw[->,thick](dec)--+(1.6*\ext,0)node[midway,above]{\fsize  $\hat{m}_1,\ldots,\hat{m}_k$};
+
+\end{tikzpicture}
