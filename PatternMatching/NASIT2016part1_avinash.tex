@@ -1,0 +1,994 @@
+\documentclass[10pt,xcolor=table]{beamer}
+		%\usetheme{warsaw}
+        \usetheme{CambridgeUS}
+		\usepackage{etex}
+		\usepackage[english]{babel}
+		\usepackage{amstext,amsthm,amsmath,amsfonts,latexsym,graphicx,amssymb,epsfig,epsf,psfrag,mathtools}
+		\usepackage{pgfpages,xcolor,subfigure,pstricks}
+		\usepackage{pgfplots}
+        \usepackage{tikz}
+		\pgfplotsset{compat=newest}
+		%% the following commands are sometimes needed
+		%\usetikzlibrary{plotmarks}
+        \usetikzlibrary{arrows,backgrounds,plotmarks,decorations.pathmorphing,decorations.footprints,fadings,calc,trees,mindmap,shadows,decorations.text,patterns,positioning,shapes,matrix,fit}
+
+        \input{graphical_settings}		
+		\usepackage{grffile}
+		\usepackage{fancyhdr}
+		\usepackage{pst-all}
+		\graphicspath{{figures/}}
+        \usepackage{tikz,pgfplots}
+        \pgfplotsset{plot coordinates/math parser=false}
+        \usetikzlibrary{shapes.geometric, arrows,decorations.markings}
+        \tikzstyle{startstop} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black, fill=red!30]
+        \tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=blue!30]
+        \tikzstyle{process} = [rectangle, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=orange!30]
+        \tikzstyle{decision} = [diamond, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=green!30]
+        \tikzstyle{arrow} = [thick,->,>=stealth]
+
+
+		%\hypersetup{pdfpagemode=FullScreen}
+		\usefonttheme{professionalfonts}
+		\setbeamertemplate{footline}[frame number]
+		\setbeamertemplate{theorem}[ams style]
+		\setbeamertemplate{theorems}[numbered]
+		\definecolor{purple}{RGB}{255,0,204}
+		
+		\newcommand{\defeq}{\triangleq}
+		\newcommand{\Pp}{\mathbb{P}}
+		\newcommand{\E}{\mathbb{E}}
+		\newcommand{\N}{\mathbb{N}}
+		\newcommand{\Z}{\mathbb{Z}}
+		\newcommand{\Zp}{\mathbb{Z}_{+}}
+		\newcommand{\R}{\mathbb{R}}
+		\newcommand{\Rp}{\R_{+}}
+		\newcommand{\C}{\mathbb{C}}
+		\newcommand{\Q}{\mathbb{Q}}
+		\newcommand{\F}{\mathbb{F}}
+		\newcommand{\Zw}{\mathbb{Z}[\omega]}
+		\newcommand{\Zi}{\mathbb{Z}[i]}
+		\newcommand{\mc}{\mathcal}
+		\newcommand{\mbb}{\mathbb}
+		\newcommand{\wv}{\underline{w}}
+		\newcommand{\cv}{\underline{c}}
+		\newcommand{\xv}{\underline{x}}
+		\newcommand{\kv}{\underline{k}}
+		\newcommand{\zv}{\underline{z}}
+        \newcommand{\yv}{\underline{y}}
+        \newcommand{\hv}{\underline{h}}
+		\newcommand{\mfk}[1]{\mathfrak{#1}}
+		
+		\usecolortheme[RGB={0,100,0}]{structure}
+		\setbeamertemplate{itemize item}[circle]
+		\setbeamertemplate{itemize subitem}[rectangle]
+		\setbeamertemplate{itemize subsubitem}{$-$}
+		\setbeamertemplate{blocks}[rounded][shadow=true]
+		\setbeamertemplate{navigation symbols}{} % get rid of navigation symbols
+		%\setbeamertemplate{footline}[page number]
+		%\logo{\includegraphics[height=1cm,keepaspectratio]{greentouch.eps}}
+
+\definecolor{DarkFern}{HTML}{407428}
+\definecolor{DarkCharcoal}{HTML}{4D4944}
+\colorlet{Fern}{DarkFern!85!white}
+\colorlet{Charcoal}{DarkCharcoal!85!white}
+\colorlet{LightCharcoal}{Charcoal!50!white}
+\colorlet{DarkRed}{red!70!black}
+\colorlet{AlertColor}{DarkRed!80!black}
+\colorlet{DarkBlue}{blue!70!black}
+\colorlet{DarkGreen}{green!70!black}
+% Use the colors:
+\setbeamercolor{title}{fg=DarkRed}
+\setbeamercolor{frametitle}{fg=DarkRed}
+\setbeamercolor{normal text}{fg=black}
+\setbeamercolor{block title}{fg=black,bg=DarkBlue!35!white}
+\setbeamercolor{block body}{fg=black,bg=DarkBlue!15!white}
+%\setbeamercolor{block title}{fg=black,bg=Fern!25!white}
+%\setbeamercolor{block body}{fg=black,bg=Fern!25!white}
+\setbeamercolor{alerted text}{fg=AlertColor}
+\setbeamercolor{itemize item}{fg=Charcoal}
+
+\begin{document}
+\title{The Peeling Decoder and its Applications}
+\author{ Krishna R. Narayanan
+% Joint work with H. Pfister, J.-F. Chamberland, S. Madala, A. Vem \\
+% Thanks to M. Wang and J. Huang
+}
+\titlegraphic{
+\includegraphics[width=0.75in]{./Figures/TAMULogoBox}
+}
+\institute{Department of Electrical and Computer Engineering \\ Texas A\&M University}
+\date{}
+\frame{\titlepage}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Outline}
+\begin{block}{Part I: Theory}
+\begin{itemize}
+  \item Binary erasure channel
+  \item Codes on graphs and the peeling decoder
+  \item Introduction to LDPC and LDGM codes, Tanner graph representation
+  \item Analysis of the peeling decoder - density evolution
+  \item Rateless codes and Luby Transform
+  \item Optimal degree distributions - soliton, poisson pair
+  \item Peeling decoder for BSC channel through GLDPC codes/Product codes
+  \item Syndrome source coding is the same as erasure decoding
+\end{itemize}
+\end{block}
+
+\begin{block}{Part II: Applications}
+\begin{itemize}
+  \item Massive uncoordinated multiple access
+  \item Fast fourier transform computation
+  \item Compressed sensing
+  \item Group testing
+\end{itemize}
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Binary erasure channel (BEC) and erasure correction}
+\begin{figure}[t]
+\centering
+\scalebox{0.55}{\input{./Figures/BECsystemmodel.tex}}
+\end{figure}
+\only<3>{
+\begin{figure}[t]
+\centering
+\scalebox{0.55}{\input{./Figures/BSCsystemmodel.tex}}
+\end{figure}
+}
+\only<1-2>{
+\begin{block}{BEC$(\epsilon$)}
+\begin{itemize}
+\item<1-2> Introduced by Elias in 1954 as a toy example
+  %\item Models the transmission of packets over internet well
+ \item<1-2> Has become the canonical model for coding theorists to gain insight
+\item<2> Capacity $C(\epsilon) = 1-\epsilon$
+\item<2> A sequence of codes $\{\mathcal{C}^n\}$ is capacity achieving if probability of erasure $P_e^n \rightarrow 0$ while the rate $R^n \rightarrow C(\epsilon)$
+\end{itemize}
+\end{block}
+}
+\end{frame}
+
+%--------------------------------------------------------------------------------------
+\begin{frame}{Tanner graph representation of codes}
+\begin{columns}
+\column{0.5\textwidth}
+\includegraphics[width=2.3in,angle=-90]{./Figures/paritycheckmatrix63code}
+\column{0.5\textwidth}
+\includegraphics[width=2.25in,angle=-90]{./Figures/Tannergraph63code}
+\end{columns}
+\begin{block}{}
+\begin{itemize}
+  \item Code constraints can be specified in terms of a bipartite (Tanner) graph
+  \item A code can be specified by giving the Tanner graph
+\end{itemize}
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Peeling decoder for the BEC}
+\begin{columns}
+\column{0.5\textwidth}
+\includegraphics[width=2.3in,angle=-90]{./Figures/paritycheckmatrix63code}
+\column{0.5\textwidth}
+\includegraphics[width=2.25in,angle=-90]{./Figures/Tannergraph63codewitherasures}
+\end{columns}
+\begin{block}{}
+\begin{itemize}
+  \item Remove edges incident on known variable nodes
+  \item Adjust check node values
+  \item If there is a check node with a single edge, it can be recovered
+\end{itemize}
+\end{block}
+\end{frame}
+
+%--------------------------------------------------------------------------------------
+\begin{frame}{Peeling decoder for the BEC}
+\vspace{-0.3in}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\includegraphics[width=2.3in,angle=-90]{./Figures/paritycheckmatrix63code}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\scalebox{1}{\input{./Figures/peelingdecoder_BEC.tex}}
+\end{column}
+\end{columns}
+
+\begin{block}{}
+\begin{itemize}
+  \item Remove edges incident on known variable nodes
+  \item Adjust check node values
+  \item If there is a check node with a single edge, it can be recovered
+\end{itemize}
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Message passing decoder for the BEC}
+\begin{columns}
+\column{0.5\textwidth}
+\includegraphics[width=2.3in,angle=-90]{./Figures/paritycheckmatrix63code}
+\column{0.5\textwidth}
+\includegraphics[width=2.25in,angle=-90]{./Figures/Tannergraph63codewitherasures}
+\end{columns}
+\vspace{-5mm}
+\begin{block}{}
+\begin{itemize}
+  \item Pass messages between variable nodes and check nodes along the edges
+  \item Messages are either value of the var node (NE) or erasure (E)
+  \item Var-to-check node message is NE if \alert{at least one incoming message is NE}
+  \item Check-to-var node message is NE if \alert{all other incoming messages are NE}
+\end{itemize}
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Peeling decoder is a greedy decoder}
+\vspace{-3mm}
+\begin{columns}
+\column{0.5\textwidth}
+\[
+H = \begin{bmatrix}
+      x_1 & x_2 & x_3 & x_4 & x_5 & x_6 \\
+      1 & 1 & 1 & 1 & 0 & 0 \\
+      1 & 0 & 0 & 0 & 1 & 0 \\
+      0 & 1 & 1 & 0 & 0 & 1 \\
+    \end{bmatrix}
+\]
+\begin{eqnarray*}
+% \nonumber % Remove numbering (before each equation)
+  x_1 \oplus x_1 \oplus x_3 \oplus x_4 &=& 0 \\
+  x_1 \oplus x_2 \oplus x_5 &=& 0 \\
+  x_2 \oplus x_3 \oplus x_6 &=& 0
+\end{eqnarray*}
+\column{0.5\textwidth}
+\includegraphics[width=2.25in,angle=-90]{./Figures/Tannergraph63codestoppingset}
+\end{columns}
+\pause
+\vspace{-3mm}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{block}{Linearly independent set of equations}
+\begin{eqnarray*}
+% \nonumber % Remove numbering (before each equation)
+  x_1 \oplus x_1 \oplus x_3 & = & x_4 \\
+  x_1 \oplus x_2 \oplus &=& x_5 \\
+  x_2 \oplus x_3 \oplus &=& x_6
+\end{eqnarray*}
+\end{block}
+\column{0.5\textwidth}
+\end{columns}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Degree distribution}
+\begin{columns}
+\begin{column}{0.47\textwidth}
+\begin{center}
+\includegraphics[width=1.75in,angle=-90]{./Figures/Tannergraph63codestoppingset}
+\end{center}
+\end{column}
+\begin{column}{0.47\textwidth}
+\begin{itemize}
+\item $L(x) = \frac{3}{6} x + \frac26 x^2 + \frac16 x^3$
+\vspace{3mm}
+\item $\lambda(x) = \frac{3}{10} + \frac{4}{10} x + \frac {3}{10} x^2$
+\vspace{3mm}
+\item $R(x) = \frac{2}{3}x^3 + \frac13 x^4$
+\vspace{3mm}
+\item $\rho(x) = \frac{6}{10} x^2+ \frac{4}{10} x^3$
+\end{itemize}
+\end{column}
+\end{columns}
+
+\begin{itemize}
+\item VN d.d. from node perspective - $L(x) = \sum_i L_i x^i$
+\vspace{1mm}
+\item VN d.d. from edge perspective - $\lambda(x) = \sum_i \lambda_i x^{i-1} = \frac{L'(x)}{L'(1)}$
+\vspace{1mm}
+\item CN d.d. from node perspective - $R(x) = \sum_i R_i x^i$
+\vspace{1mm}
+\item CN d.d. from edge perspective - $\rho(x) =\sum_i \rho_i x^{i-1} = \frac{R'(x)}{R'(1)}$
+\end{itemize}
+
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{LDPC code ensemble}
+\begin{block}{($n,\lambda,\rho$) ensemble}
+Figure to show a (3,6) ensemble using sockets
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Rate of the code (ensemble)}
+\begin{itemize}
+  \item $l_{\text{avg}} = L'(1) = \frac{1}{\int_{0}^{1} \lambda(x) \ dx}$
+  \item $r_{\text{avg}} = R'(1) = \frac{1}{\int_{0}^{1} \rho(x) \ dx}$
+  \item Rate $\boxed{r(\lambda,\rho) = 1-\frac{{l_{\text{avg}}}}{{r_{\text{avg}}}} = 1 - \frac{\int_{0}^{1} \rho(x) \ dx}{\int_{0}^{1} \lambda(x) \ dx}}$
+\end{itemize}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Analysis of the message passing decoder}
+\begin{block}{Computation Graph}
+Computation graph $\mathcal{C}_{l}(x_1\lambda,\rho)$ of bit $x_{1}$ of height $l$ ($l$-iterations) is the neighborhood graph of node $x_1$ of radius $l$.
+\end{block}
+$\mathcal{C}_{l=1}(\lambda(x)=x,\rho(x)=x^2)$
+\begin{columns}
+\begin{column}{0.33\textwidth}
+\begin{center}
+\scalebox{0.5}{\input{./Figures/compGraph1.tex}}
+\\$1-O(1/n)$
+\end{center}
+\end{column}
+
+\begin{column}{0.33\textwidth}
+\begin{center}
+\scalebox{0.5}{\input{./Figures/compGraph2.tex}}
+\\$O(1/n)$
+\end{center}
+\end{column}
+
+\begin{column}{0.33\textwidth}
+\begin{center}
+\scalebox{0.5}{\input{./Figures/compGraph3.tex}}
+\\$O(1/n^2)$
+\end{center}
+\end{column}
+
+\end{columns}
+\begin{block}{}
+In the limit of large block lengths a computation graph of depth-$l$ looks like a tree w.h.p
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Analysis of the message passing decoder}
+\begin{block}{Computation Tree Ensemble-$\mathcal{T}_{l}(\lambda,\rho)$}
+Ensemble of bipartite trees of depth $l$ rooted in a variable node (VN) where
+\begin{itemize}
+\item Root node has $i$ children(CN's) with probability $L_i$
+\item Each VN has $i$ children(CN's) with probability $\lambda_i$
+\item Each CN has $i$ children(VN's) with probability $\rho_i$
+\end{itemize}
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Analysis of the message passing decoder}
+$\lambda(x)=x^2,\rho(x)=\rho_4 x^3+\rho_5 x^4$ 
+\begin{columns}
+\only<1,4>{
+\begin{column}{0.33\textwidth}
+\begin{center}
+\scalebox{0.65}{\input{./Figures/compTree1.tex}}
+\\ \scriptsize{$P(T)=\rho_4^2$}
+%\\ \scriptsize{$P(T\in\mathcal{T}_1(\lambda,\rho))=\rho_4^2$}
+\end{center}
+\end{column}
+}
+\only<2,4>{
+\begin{column}{0.33\textwidth}
+\begin{center}
+\scalebox{0.65}{\input{./Figures/compTree2.tex}}
+\\ \scriptsize{$P(T)=2\rho_4\rho_5$}
+%\\ \scriptsize{$P(T\in\mathcal{T}_1(\lambda,\rho))=2\rho_4\rho_5$}
+\end{center}
+\end{column}
+}
+\only<3,4>{
+\begin{column}{0.3\textwidth}
+\begin{center}
+\scalebox{0.65}{\input{./Figures/compTree3.tex}}
+\\ \scriptsize{$P(T)=\rho_5^2$}
+%\\ \scriptsize{$P(T\in\mathcal{T}_1(\lambda,\rho))=\rho_5^2$}
+\end{center}
+\end{column}
+}
+\end{columns}
+\only<4->{
+\begin{block}{}
+\begin{eqnarray*}
+\mathbb{E}_{\text{LDPC}(\lambda,\rho)}[x_1]&=&\sum\limits_{T\in\mathcal{T}_{1}(\lambda,\rho)}P(T)*x_1(T,\epsilon)\\
+&=&\epsilon(\rho_4 y_1^{(3)}+\rho_5 y_1^{(4)})^2\\
+&=&\epsilon(1-\rho_4 (1-\epsilon)^{3}-\rho_5 (1-\epsilon)^{4})^2\\
+&=&\epsilon\lambda\left(1-\rho(1-\epsilon)\right)
+%&=&\epsilon(1-\rho(1-\epsilon))^2\\
+\end{eqnarray*}
+\end{block}
+}
+\end{frame}
+%---------------------------------------------------------------------------------------------------------------------------
+\begin{frame}{Density evolution}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{centering}
+\scalebox{0.6}{\input{./Figures/compTree_DE.tex}}
+\end{centering}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\only<2->{
+\begin{block}{Recursion}
+\begin{eqnarray*}
+  x_0 &=& \epsilon \\
+  y_l &=& 1-\rho(1-x_{l-1}) \\
+  x_l &=& \epsilon \lambda(y_l)\\
+  x_l &=& \epsilon \lambda(1-\rho(1-x_{l-1})) 
+\end{eqnarray*}
+\end{block}
+}
+\end{column}
+\end{columns}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Density evolution}
+\begin{block}{Recursion}
+\begin{eqnarray*}
+  y_0 &=& 1 \\
+  x_l &=& \epsilon \lambda(y_{l-1}) \\
+  y_l &=& 1-\rho(1-x_l) \\
+  x_l &=& \epsilon \lambda(1-\rho(1-x_{l-1})) = f(\epsilon,x_{l-1})
+\end{eqnarray*}
+\end{block}
+
+\begin{block}{Convergence condition}
+\[
+f(\epsilon,x) < x, \ x \in (0,\epsilon]
+\]
+\end{block}
+\begin{block}{Threshold of $(\lambda,\rho)$ pair}
+The threshold $\epsilon^{\text{BP}}(\lambda,\rho)$ is defined as
+\[
+\epsilon^{\text{BP}}(\lambda,\rho) = \sup \{\epsilon \in [0,1]: x_l \rightarrow 0 \ \text{as} \ l \rightarrow \infty \}
+\]
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Exit Charts}
+\begin{block}{Node functions}
+\begin{itemize}
+\item Var node function: $v_{\epsilon}(x) = \epsilon \lambda(x)$
+\item Check node function: $c(x) = 1- \rho(1-x)$
+\end{itemize}
+\end{block}
+\begin{columns}
+\begin{column}{0.47\textwidth}
+\begin{center}
+\scalebox{0.35}{\input{./Figures/EXIT_eps=0.35_regular(3,6).tex}}
+\end{center}
+\end{column}
+
+\begin{column}{0.47\textwidth}
+\begin{center}
+\scalebox{0.35}{\input{./Figures/EXIT_regular(3,6).tex}}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Optimality of EXIT chart matching}
+\begin{itemize}
+\item Var node function: $v_{\epsilon}(x) = \epsilon \lambda(x)$
+\item Check node function: $c(x) = 1- \rho(1-x)$
+\end{itemize}
+\begin{center}
+\scalebox{0.45}{\input{./Figures/EXIT_CapAch.tex}}
+\end{center}
+\end{frame}
+%------------------------------------------------------------------------------------
+\begin{frame}{Low Density Generator Matrix (LDGM) Codes}
+\vspace{-3mm}
+\begin{columns}
+\begin{column}{0.47\textwidth}
+\begin{center}
+\includegraphics[width=1.75in]{./Figures/graphicalmodel}
+\end{center}
+\end{column}
+\begin{column}{0.47\textwidth}
+\begin{itemize}
+\item $L(x) = \frac14 x + \frac14 x^2 + \frac12 x^3$
+\vspace{2mm}
+\item $\lambda(x) = \frac19 + \frac29 x + \frac 69 x^2$
+\vspace{2mm}
+\item $R(x) = \frac15 x + \frac45 x^2$
+\vspace{2mm}
+\item $\rho(x) = \frac19 + \frac89 x$
+\vspace{2mm}
+\item Rate $R = \frac{\int_{0}^{1}\rho(x) \ dx}{\int_{0}^{1} \lambda(x) \ dx}$
+\end{itemize}
+\end{column}
+\end{columns}
+\begin{block}{Density evolution equations}
+\vspace*{-3mm}
+\begin{eqnarray*}
+  x_0 &=& 1 \\
+  y_l &=& 1-(1-\epsilon) \rho(1-x_{l-1}) \\
+  x_l &=& \lambda(y_l) \\
+  x_l &=& \lambda(1-(1-\epsilon)\rho(1-x_{l-1}))
+\end{eqnarray*}
+\end{block}
+\end{frame}
+
+%--------------------------------------------------------------------------------------
+\begin{frame}{LDGM codes and Rateless Codes}
+\begin{center}
+  \includegraphics[width=2.75in]{./Figures/ratelesserasures1}
+\end{center}
+
+\begin{block}{LT Codes, Luby'02}
+\begin{itemize}
+  \item Choose the degree according to a distribution $f_D$
+  \item Pick bits uniformly at random to make linear combination
+  \item Left degree is Poisson : $\lambda(x) = e^{-r_{avg}(1-x)}$
+\end{itemize}
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Poisson, soliton pair is optimal for Rateless codes}
+\vspace{-3mm}
+\begin{columns}
+\column{0.55\textwidth}
+\begin{center}
+\scalebox{0.45}{\input{./Figures/EXIT_LDGM_PoissSoliton.tex}}
+\end{center}
+\column{0.45\textwidth}
+\begin{center}
+  \includegraphics[width=2.2in]{./Figures/ratelesserasures3}
+\end{center}
+\end{columns}
+%\begin{block}{Poisson, Soliton pair is optimal - $\lambda(x) = e^{-r_{avg}(1-x)}$}
+\begin{itemize}
+%\item Poisson, soliton pair is optimal 
+  %\item Left degree is Poisson : $\lambda(x) = e^{-r_{avg}(1-x)}$
+  \item   $x = \lambda(1-(1-\epsilon)\rho(1-x))$
+  \item $\lambda(x) = e^{-\frac{\alpha}{1-\epsilon}(1-x)}$, \alert{Optimal right degree is soliton: $\rho(x) = -\frac{1}{\alpha}\ln(1-x)$}
+  %\item \alert{Optimal distribution is soliton: $f_D[i] = \frac{1}{i(i-1)}$}
+\end{itemize}
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+Degree of nodes & 1 & 2 & 3 & 4 & $\ldots$ & $K$ \\
+\hline
+Fraction: \alert{ $f_D[i] = \frac{1}{i(i-1)}$ } & 0 & $\frac12$ & $\frac16$ & $\frac{1}{12}$ & $\ldots$ & $\frac{1}{K (K-1)}$ \\
+\hline
+\end{tabular}
+\end{center}
+%\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Histogram of required $N$ for $K=10000$}
+\begin{center}
+  \includegraphics[width=4.2in]{./Figures/fountaincodes10000histogram}
+\end{center}
+\begin{block}{Finite length considerations}
+\begin{itemize}
+  \item Deg. dist. must be adjusted for optimizing finite length performance
+  \item Raptor codes (Shokrollahi'06) is an excellent choice
+\end{itemize}
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Erasures to errors - Tensoring and Peeling}
+\begin{columns}
+    \column{.45\textwidth}
+    \small
+    \[
+    H = \left[
+    \begin{array}{ccccccc}
+    1&0&1&1&0&0\\
+    1&1&0&0&1&0 \\
+    0&1&1&0&0&1
+    \end{array}
+    \right]
+    \]
+    \[
+    \otimes
+    \]
+    \[
+    T = \left[
+    \begin{array}{ccccccc}
+    1&1&1&1&1&1\\
+    1&W&W^2&W^3&W^4&W^5
+    \end{array}
+    \right]
+    \]
+    \[
+    \mathbf{\tilde{H}} = \left[
+    \begin{array}{ccccccc}
+    1&0&1&1&0&0\\
+    1&0&W^2&W^3&0&0\\
+    1&1&0&0&1&0 \\
+    1&W&0&0&W^4&0 \\
+    0&1&1&0&0&1 \\
+    0&W&W^2&0&0&W^5
+    \end{array}
+    \right]
+    \]
+    \column{.45\textwidth}
+    \begin{figure}[t]
+    \centering
+    \includegraphics[width=2.0in,angle=-90]{./Figures/GLDPC}
+    \end{figure}
+\end{columns}
+
+\begin{itemize}
+\item $W$ is a primitive element in the field
+\item Each check is a 1-error correcting code
+\item If there is exactly one error in a check, it can be recovered
+\end{itemize}
+
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Peeling process is same for erasure and error channels}
+\begin{columns}
+\column{0.5\textwidth}
+\includegraphics[width=2.3in,angle=-90]{./Figures/Tannergraph63codewitherasures}
+\column{0.5\textwidth}
+\includegraphics[width=2.25in,angle=-90]{./Figures/GLDPC}
+\end{columns}
+\begin{block}{}
+\begin{itemize}
+  \item Assume no miscorrection by the check code
+  \item One-to-one correspondence between messages passed - DE can be used
+  \item Not optimal for the error channel but it is not bad at high rates
+\end{itemize}
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Generalized LDPC Code}
+
+\begin{columns}
+    \column{.6\textwidth}
+    .
+%    \small
+%    \[
+%    H = \left[
+%    \begin{array}{ccccccc}
+%    1&0&1&1&0&0\\
+%    1&1&0&0&1&0 \\
+%    0&1&1&0&0&1
+%    \end{array}
+%    \right]
+%    \]
+%    \[
+%    \otimes
+%    \]
+%    \[
+%    T = \left[
+%    \begin{array}{ccccccc}
+%    1&1&1&1&1&1\\
+%    1&W&W^2&W^3&W^4&W^5 \\
+%    \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+%    1&W^{2t-1}&W^{2(2t-1)}&\cdots&\cdots&W^{5(2t-1)}
+%    \end{array}
+%    \right]
+%    \]
+%    \[
+%    \mathbf{\tilde{H}} = H \otimes T
+%    \]
+    \column{.4\textwidth}
+    \begin{figure}[t]
+    \centering
+    \includegraphics[width=2.0in,angle=-90]{./Figures/GLDPC}
+    \end{figure}
+\end{columns}
+
+\begin{itemize}
+\item GLDPC introduced by Tanner in 1981
+\item Each check is a $t$-error correcting code
+\item If there are exactly $t$ errors in a check, it can be recovered
+\item Density evolution equations can be written and thresholds computed
+\end{itemize}
+
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Generalized LDPC Code}
+
+\begin{columns}
+    \column{.6\textwidth}
+    \small
+    \[
+    H = \left[
+    \begin{array}{ccccccc}
+    1&0&1&1&0&0\\
+    1&1&0&0&1&0 \\
+    0&1&1&0&0&1
+    \end{array}
+    \right]
+    \]
+    \[
+    \otimes
+    \]
+    \[
+    T = \left[
+    \begin{array}{ccccccc}
+    1&1&1&1&1&1\\
+    1&W&W^2&W^3&W^4&W^5 \\
+    \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+    1&W^{2t-1}&W^{2(2t-1)}&\cdots&\cdots&W^{5(2t-1)}     
+    \end{array}
+    \right]
+    \]
+    \[
+    \mathbf{\tilde{H}} = H \otimes T
+    \]
+    \column{.4\textwidth}
+    \begin{figure}[t]
+    \centering
+    \includegraphics[width=2.0in,angle=-90]{./Figures/GLDPC}
+    \end{figure}
+\end{columns}
+
+\begin{itemize}
+\item $W$ is a primitive element in the field
+\item Each check is a $t$-error correcting RS code
+\item If there are exactly $t$ errors in a check, it can be recovered
+\end{itemize}
+
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Product Code}
+\begin{itemize}
+\item Special case of generalized LDPC code
+\item Let component code $\mathcal{C}$ be an $(n,k,d_{\text{min}})$ linear code
+\item Well-known that \textcolor{blue}{$\mathcal{P}$ is an $(n^{2},k^{2},d_{\text{min}}^{2})$
+linear code }
+\end{itemize}
+
+\begin{center}
+\scalebox{0.8}{\input{Figures/justproduct}}
+\end{center}
+\end{frame}
+
+%--------------------------------------------------------------------------------------
+\begin{frame}{\alert{Peeling} decoding of Product Codes}
+
+\begin{itemize}
+\item \textcolor{blue}{Hard-decision ``cascade decoding''} by Abramson in 1968
+\item Identical to a \alert{peeling decoder}
+\item Example: $t=2$-error-correcting codes, bounded distance decoding
+\end{itemize}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\scalebox{1.4}{\input{figures/product_decode}}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{figure}[t]
+\centering
+\includegraphics[width=1.5in]{./Figures/Bipartite_graph}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+%---------------------------------------------------------------------------------------
+	\begin{frame}{Density Evolution(DE) for Product Codes -Justesen et al}
+	%   Slide-1:
+	%   \begin{itemize}
+	%   	\item Introduce the main idea of Justesen's analysis (establish the assumptions in the beginning)
+	%   \end{itemize}
+	%   Slide-2:
+	%   \begin{itemize}
+	%   	\item Tail of the Poisson Distribution. Notion of $\pi_{t}(m)$.
+	%   	\item Effect- of first step of decoding. Equation for the new mean in therms of $\pi_t(M)$.
+	%   \end{itemize}
+	
+	   \begin{columns}
+	   	\column{0.72\textwidth}
+	   	
+	   	\begin{block}{Assumptions}
+	   		
+	   		\begin{itemize}
+	   			\item $P_1=P_2 = P$
+	   			\item Errors are \alert{randomly distributed} in rows and columns
+	   			\item If $P \gg t$, \alert{\# errors} in each row/col $\sim$ \alert{Poisson}($M$))
+	   		\end{itemize}
+	   	\end{block}
+	   	\pause
+	   	\begin{block}{Main Idea}
+	   		\begin{itemize}
+	   			%\item Random \alert{bipartite graph} - row and column codes
+	   			\item Removal of \alert{corrected vertices} (degree$\leq t$) from row codes $\Leftrightarrow$ removal of random edges from column codes
+	   			\item \# of errors in row/column changes after each iter
+	   			\begin{itemize}
+	   				\item Track the distribution
+	   				%\item Changes the Poisson parameter ($m(j)$)
+	   				%\item \alert{Threshold} - max. $M$ such that $m(j) \rightarrow 0$ as $j \rightarrow \infty$
+	   			\end{itemize}
+	   			%\item Generalize for $d \geq 2$
+	   		\end{itemize}
+	   	\end{block}
+	   	\column{0.25\textwidth}
+	   	 	
+	   	\begin{figure}[t]
+	   		\centering
+	   		\includegraphics[width=1.3in]{./Figures/Bipartite_graph}
+	   	\end{figure}
+	   		
+	   \end{columns}
+	
+	\end{frame}
+	%--------------------------------------------------------------------------------------
+	\begin{frame}{DE continued}
+		\begin{block}{Tail of the Poisson distribution}
+			\begin{equation}\nonumber
+			\pi_t(m) = \sum_{j \geq t} \mathrm{e}^{-m}m^j/j!
+			\label{eqn:defpi}
+			\end{equation}
+		\end{block}
+		
+		\begin{block}{Effect of first step of decoding}
+			If the \# errors is poisson with mean $M$, Mean \# of errors after decoding is
+			\begin{equation}\nonumber
+			\textcolor{blue}{m(1)} = \sum_{j \geq t+1} j\mathrm{e}^{-M}M^j/j! = M\pi_t(M)
+			\label{eqn:defpi}
+			\end{equation}
+		\end{block}
+		
+	\end{frame}
+	%----------------------------------------------------------------------------------------
+	\begin{frame}{Evolution of degree distribution($d=2$) - first iteration}
+	
+	%	Slide-1: First iteration
+	%	\begin{itemize}
+	%		\item Figures: Graphs showing how the distribution changes before/after row/column decoding in the first iteration
+	%	\end{itemize}
+	%	Slide-2: jth iteration
+	%	\begin{itemize}
+	%		\item Figures: Degree distribution for jth iteration.
+	%		\item Equations showing the relation between two successive means.
+	%	\end{itemize}
+	
+		\begin{columns}
+			
+			\column{0.5\textwidth}
+			{\vspace{-6mm}
+				\hspace{6mm}
+				\begin{block}{Before row decoding}
+					{\color{blue}Distribution}: Poisson($M$) \\
+					{\color{blue}Mean}: $M$
+				\end{block}}
+				
+				\begin{block}{After row decoding}
+					{\color{blue}Distribution}: Truncated Poisson($M$) \\
+					{\color{blue}Mean}: $M \pi_t(M) = m(1)$
+				\end{block}
+				
+				\begin{block}{Before column decoding}
+					{\color{blue}Distribution}: Poisson($m(1)$) \\
+					{\color{blue}Mean}: $m(1)$
+				\end{block}
+				
+				\begin{block}{After column decoding}
+					{\color{blue}Distribution}: Truncated Poisson($m(1)$) \\
+					%{\color{blue}Mean}: $m(2) = M \pi_t(m(1))$
+				\end{block}
+				
+				
+				\column{0.5\textwidth}
+				\begin{center}
+					\vspace{-3mm}
+					\input{./Figures/poisson_row_before_1.tex}
+					\input{./Figures/poisson_row_after_1.tex}
+					\input{./Figures/poisson_col_before_1.tex}
+					\input{./Figures/poisson_col_after_1.tex}
+				\end{center}
+				
+			\end{columns}
+		\end{frame}
+	%------------------------------------------------------------------------------------------
+		\begin{frame}{Evolution of degree distribution - $j$th iteration}
+			\begin{columns}
+				
+				\column{0.55\textwidth}
+				{\vspace{-6mm}
+					\hspace{6mm}
+					\begin{block}{Before row decoding}
+						{\color{blue}Distribution}: Poisson($m(j)$) \\
+					\end{block}}
+					\vspace{6mm}
+					\begin{block}{After row decoding}
+						{\color{blue}Distribution}: Truncated Poisson($m(j)$) \\
+						{\color{blue}Mean}: $m(j) \pi_t(m(j))$ \\
+						{\color{blue}Reduction by a factor}: $\frac{m(j) \pi_t(m(j))}{m(j-1) \pi_t(m(j-1))}$ \\
+					\end{block}
+					\column{0.45\textwidth}
+					\begin{center}
+						\vspace{-3mm}
+						\input{./Figures/poisson_row_before_1.tex}
+						\input{./Figures/poisson_row_after_1.tex}
+					\end{center}
+			\end{columns}
+				
+				
+				\begin{block}{d-stages}
+					
+					\begin{center}
+						\begin{itemize}
+							\item  $m(j)= M \ \prod \limits_{i=1}^{d-1}{\pi_t(m(j-i))}$
+							\item $\frac{m(j)}{m(j-d)}=\frac{M\prod\limits_{i=1}^{d-1} \pi_t(m(j-i))}{m(j-d)} \leq M \frac{\pi_t^{d-1}(m(j-d))}{m(j-d)}$
+						\end{itemize}
+					\end{center}
+					
+				\end{block}
+			\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	\begin{frame}{Thresholds}
+%	%	\begin{itemize}
+%	%		
+%	%	\item Theorem for the Threshold value for Less-sparse case.
+%	%	\item Table showing threshold values for different $d$ and $t$.
+%	%	\item Highlight some useful points in the table {\bf(if needed)}
+%	%	\end{itemize}
+%		
+%		\begin{theorem}\label{thm:thresh}
+%			Less sparse case: In the limit of large $P$, the FFAST algorithm with $d$ branches and $2t$ stages can recover the FFT coefficients w.h.p if $K < \frac{2dt}{c_{d,t}}$. \\
+%			\vspace{2mm}
+%			\centering
+%			\color{blue} $c_{d,t} = \min_m \{ m / \pi^{d-1}(m)\} $
+%		\end{theorem}
+%		
+%		\begin{block}{}
+%			
+%			\begin{center}
+%				\alert{Threshold} = $ \frac{\# \ of \ measurements}{recoverable \ sparsity}={\color{blue} \frac{2dt}{c_{d,t}}}$
+%			\end{center}
+%			
+%			\vspace{-6mm}
+%			\color{black}
+%			\begin{table}[ht]
+%				\centering
+%				\begin{tabular}{c|ccccccc}
+%					\hline
+%					& $d=2$ & $d=3$ & $d=4$ & $d=5$ & $d=6$ & $d=7$ & $d=8$ \\
+%					\hline
+%					\rowcolor{lightgray}
+%					$t=1$& 4.0  & 2.4436 & 2.5897 & 2.8499 & 3.1393 & 3.4378 & 3.7383 \\
+%					$t=2$& 2.3874 & 2.5759 & 2.9993 & 3.4549 & 3.9153 & 4.3736 & 4.8278 \\
+%					\rowcolor{lightgray}
+%					$t=3$& 2.3304 & 2.7593 & 3.3133 & 3.8817 & 4.4483 & 5.0094 & 5.5641 \\
+%					$t=4$& 2.3532 & 2.9125 & 3.5556& 4.2043 & 4.8468 & 5.4802 & 6.1033 \\
+%					%\rowcolor{lightgray}
+%					%$t=5$& 2.3908 & 3.0394 & 3.7471 & 4.4500 & 5.1362 & 5.8018 & 6.4451 \\
+%					
+%					\hline
+%				\end{tabular}
+%			\end{table}
+%			\vspace{-3mm}
+%			
+%			Notice that $L,K = O \left( N^{\frac{1-d}{d}}\right)$
+%		\end{block}
+%		
+%		
+%	\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Syndrome Source Coding}
+Explain the problem and show that decoding an erasure pattern is the same as encoding a sparse source sequence
+\end{frame}
+
+%--------------------------------------------------------------------------------------
+\begin{frame}{The changing mobile landscape}
+\vspace{-3mm}
+\begin{block}{Distinguishing features of future wireless systems}
+\begin{itemize}
+\item 5G will not only be ``4G but faster" but will support new models such as IoT
+%\item Current wireless - a few devices with sustained connectivity
+\item Future wireless vs current wireless
+    \begin{itemize}
+      \item No. of devices - \alert{Massive} vs few
+      \item Connectivity - \alert{Sporadic} vs sustained
+      \item Multiple access - \alert{Uncoordinated} vs coordinated
+      \item Packet sizes - \alert{Short} vs moderate-to-long
+    \end{itemize}
+\end{itemize}
+\end{block}
+%\vspace{-3mm}
+\begin{center}
+\includegraphics[width=3.85in]{./Figures/5Gchanginglandscape}
+\end{center}
+\end{frame}
+
+
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

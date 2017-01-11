@@ -1,0 +1,48 @@
+\begin{tikzpicture}
+\def\horzgap{0.85in}; %Horizontal gap between nodes/levels
+\def \gapVN{0.3in}; %vertical gap between nodes
+\def \gapCN{0.4in}; %Horizontal gap between nodes
+
+\def \textoffs{0.12in}; %Offset for writing text above a node
+\def\nodewidth{0.1in};
+\def\ext{0.2in};
+
+\def \n {8};
+\def\ldeg{3};
+\def \m {4};
+\def\rdeg{6};
+\def\langle{40};%120 degrees/3
+\def\langle{20};%120 degrees/6
+
+\tikzstyle{check} = [rectangle, draw, text centered, thick, fill=black,
+                          minimum height=\nodewidth, minimum width=\nodewidth]
+\tikzstyle{bit} = [circle, draw, text centered, thick,fill=black,
+                          radius=0.5*\nodewidth]
+                          
+\foreach \vn in {1,...,\n}{
+ \node[bit] (vn\vn) at (0,\vn*\gapVN) {};
+  \draw[thick] (vn\vn) --+ (+40:\ext); 
+  \draw[thick] (vn\vn ) --+ (0:\ext); 
+   \draw[thick] (vn\vn ) --+ (-40:\ext); 
+}
+
+\foreach \cn in {1,...,\m}{
+\node[check] (cn\cn) at (\horzgap,0.2in+\cn*\gapCN) {};
+
+ \draw[thick] (cn\cn ) --+ (+130:\ext); 
+ \draw[thick] (cn\cn ) --+ (+150:\ext); 
+ \draw[thick] (cn\cn ) --+ (+170:\ext); 
+ \draw[thick] (cn\cn ) --+ (+190:\ext); 
+ \draw [thick](cn\cn ) --+ (+210:\ext); 
+ \draw [thick](cn\cn) --+ (+230:\ext); 
+
+% \draw[thick] (cn\cn.west ) --+ (+130:\ext); 
+% \draw[thick] (cn\cn.west ) --+ (+150:\ext); 
+% \draw[thick] (cn\cn.west ) --+ (+170:\ext); 
+% \draw[thick] (cn\cn.west ) --+ (+190:\ext); 
+% \draw [thick](cn\cn.west ) --+ (+210:\ext); 
+% \draw [thick](cn\cn.west) --+ (+230:\ext); 
+}
+\node[draw,minimum width=\horzgap-2*\ext,minimum height=\n*\gapVN,thick]() at (0.5*\horzgap,4.5*\gapVN){\Huge{$\pi$}};
+
+\end{tikzpicture}

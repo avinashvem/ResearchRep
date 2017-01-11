@@ -1,0 +1,474 @@
+\begin{frame}{Back to theory: from erasures to errors}
+\end{frame}
+%-----------------------------------------------------------------------
+\begin{frame}\frametitle{Finite field with $p$ elements}
+\begin{block}{$p$ is prime}
+\begin{itemize}
+\item $\mathbb{F}_p - \{0,1,2,\ldots,p-1\}$
+\item $a \oplus b = (a+b) \mod p$
+\item $a \odot b = (ab) \mod p$
+\item We can $+,\times,\div$, inverses
+\item $W$ is a (primitive) element such that $1,W,W^2,\ldots,W^{p-1}$ are distinct
+\end{itemize}
+\end{block}
+\pause
+\begin{block}{Example $\mathbb{F}_5$}
+\begin{itemize}
+\item $W=2$
+\item $W^0=1, W^1=2, W^2 = 4, W^3 = 3$
+\end{itemize}
+\end{block}
+\pause
+\begin{block}{$p$ need not be prime}
+\begin{itemize}
+\item Everything can be extended to finite fields with $q = 2^r$ elements
+\item May be extended to integers - not sure
+\end{itemize}
+\end{block}
+\end{frame}
+%-------------------------------------------------------------
+\begin{frame}{$p$-symmetric channel and error correction}
+
+\begin{figure}[t]
+\centering
+\scalebox{0.55}{\input{./Figures/pSCsystemmodel.tex}}
+\end{figure}
+
+\begin{block}{Error correction coding}
+\begin{itemize}
+%\item Capacity $C = 1-H_2(\epsilon)$
+\item Another simple channel model which has been extensively considered
+\item Has been the canonical model for algebraic coding theorists
+\end{itemize}
+\end{block}
+%\vspace*{-5mm}
+%\begin{figure}[t]
+%\centering
+%\includegraphics[width=1.5in,angle=-90]{./Figures/Parysymmetricchannelmodel}
+%\end{figure}
+\end{frame}
+
+%--------------------------------------------------------------------------------------
+\begin{frame}{Generalized LDPC code and error channels}
+\vspace{-7mm}
+\begin{figure}[t]
+\centering
+\includegraphics[width=2.15in,angle=-90]{./Figures/GLDPC}
+\end{figure}
+
+\begin{block}{}
+\begin{itemize}
+\item GLDPC introduced by Tanner in 1981
+\item Each check is a $(\tilde{n},\tilde{k})$, $t$-error correcting code
+\item If there are $\leq t$ errors in a check, it can be recovered
+%\item Density evolution equations can be written and thresholds computed
+\item For now, assume no miscorrections
+\end{itemize}
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Peeling process is same for erasure and error channels}
+\begin{columns}
+\column{0.5\textwidth}
+\includegraphics[width=2.3in,angle=-90]{./Figures/Tannergraph63codewitherasures}
+\column{0.5\textwidth}
+\includegraphics[width=2.15in,angle=-90]{./Figures/GLDPC}
+\end{columns}
+\begin{block}{}
+\begin{itemize}
+  \item Assume 1-error correcting check code and no miscorrections
+  \item One-to-one correspondence between messages passed - DE can be used
+  \item Not optimal for the error channel but it is not bad at high rates
+  \item Spatially coupled versions are optimal at high rates (Jian, Pfister and N)
+\end{itemize}
+\end{block}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Erasures to errors - tensoring and peeling}
+\begin{columns}
+    \column{.45\textwidth}
+    \small
+    \[
+    H = \left[
+    \begin{array}{ccccccc}
+    1&0&1&1&0&0\\
+    1&1&0&0&1&0 \\
+    0&1&1&0&0&1
+    \end{array}
+    \right]
+    \]
+    \[
+    \otimes
+    \]
+    \[
+    B = \left[
+    \begin{array}{ccccccc}
+    1&1&1&1&1&1\\
+    1&W&W^2&W^3&W^4&W^5
+    \end{array}
+    \right]
+    \]
+    \[
+    \mathbf{\tilde{H}} = \left[
+    \begin{array}{ccccccc}
+    1&0&1&1&0&0\\
+    1&0&W^2&W^3&0&0\\
+    1&1&0&0&1&0 \\
+    1&W&0&0&W^4&0 \\
+    0&1&1&0&0&1 \\
+    0&W&W^2&0&0&W^5
+    \end{array}
+    \right]
+    \]
+    \column{.45\textwidth}
+    \begin{figure}[t]
+    \centering
+    \includegraphics[width=2.0in,angle=-90]{./Figures/GLDPC}
+    \end{figure}
+\end{columns}
+\begin{block}{}
+\begin{itemize}
+\item $W$ is a primitive element in the field
+\item Each check is a 1-error correcting code
+\item If there is exactly one error in a check, it can be recovered
+\end{itemize}
+\end{block}
+\end{frame}
+%%--------------------------------------------------------------------------------------
+%\begin{frame}{Generalized LDPC Code}
+%
+%\begin{columns}
+%    \column{.6\textwidth}
+%    .
+%%    \small
+%%    \[
+%%    H = \left[
+%%    \begin{array}{ccccccc}
+%%    1&0&1&1&0&0\\
+%%    1&1&0&0&1&0 \\
+%%    0&1&1&0&0&1
+%%    \end{array}
+%%    \right]
+%%    \]
+%%    \[
+%%    \otimes
+%%    \]
+%%    \[
+%%    T = \left[
+%%    \begin{array}{ccccccc}
+%%    1&1&1&1&1&1\\
+%%    1&W&W^2&W^3&W^4&W^5 \\
+%%    \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+%%    1&W^{2t-1}&W^{2(2t-1)}&\cdots&\cdots&W^{5(2t-1)}
+%%    \end{array}
+%%    \right]
+%%    \]
+%%    \[
+%%    \mathbf{\tilde{H}} = H \otimes T
+%%    \]
+%    \column{.4\textwidth}
+%    \begin{figure}[t]
+%    \centering
+%    \includegraphics[width=2.0in,angle=-90]{./Figures/GLDPC}
+%    \end{figure}
+%\end{columns}
+%
+%\begin{itemize}
+%\item GLDPC introduced by Tanner in 1981
+%\item Each check is a $t$-error correcting code
+%\item If there are exactly $t$ errors in a check, it can be recovered
+%\item Density evolution equations can be written and thresholds computed
+%\end{itemize}
+%
+%\end{frame}
+
+%--------------------------------------------------------------------------------------
+\begin{frame}{Product code}
+\begin{itemize}
+\item Special case of generalized LDPC code
+\item Let component code $\mathcal{C}$ be an $(\tilde{n},\tilde{k},\tilde{d}_{\text{min}})$ linear code
+\item Well-known that \textcolor{blue}{$\mathcal{P}$ is an $(\tilde{n}^{2},\tilde{k}^{2},\tilde{d}_{\text{min}}^{2})$
+linear code }
+\end{itemize}
+
+\begin{center}
+\scalebox{0.8}{\input{Figures/justproduct}}
+\end{center}
+\end{frame}
+
+%--------------------------------------------------------------------------------------
+\begin{frame}{\alert{Peeling} decoding of product codes}
+
+\begin{itemize}
+\item \textcolor{blue}{Hard-decision ``cascade decoding''} by Abramson in 1968
+\item Identical to a \alert{peeling decoder}
+\item Example: $t=2$-error-correcting codes, bounded distance decoding
+\end{itemize}
+
+\begin{columns}
+\column{0.65\textwidth}
+\begin{center}
+\scalebox{1.2}{\input{figures/product_decode}}
+\end{center}
+
+\column{0.35\textwidth}
+\begin{figure}[t]
+\centering
+\includegraphics[width=1.3in]{./Figures/Bipartite_graph}
+\end{figure}
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------
+\begin{frame}{Density Evolution(DE) for Product Codes -Justesen et al}
+%   Slide-1:
+%   \begin{itemize}
+%   	\item Introduce the main idea of Justesen's analysis (establish the assumptions in the beginning)
+%   \end{itemize}
+%   Slide-2:
+%   \begin{itemize}
+%   	\item Tail of the Poisson Distribution. Notion of $\pi_{t}(m)$.
+%   	\item Effect- of first step of decoding. Equation for the new mean in therms of $\pi_t(M)$.
+%   \end{itemize}
+
+\begin{block}{What is different about DE?}
+\begin{itemize}
+\item Graph is highly structured
+\item Neighborhood is not tree-like
+\item Remarkably, randomness in the errors suffices!
+\end{itemize}
+\end{block}
+\pause
+   \begin{columns}
+   	\column{0.72\textwidth}	   	
+   	\begin{block}{Assumptions}
+   		\begin{itemize}
+   			\item Errors are \alert{randomly distributed} in rows and columns
+   			\item \alert{\# errors} in each row/col $\sim$ \alert{Poisson}($M$))
+   		\end{itemize}
+   	\end{block}
+   	\pause
+   	\begin{block}{Main Idea}
+   		\begin{itemize}
+   			%\item Random \alert{bipartite graph} - row and column codes
+   			\item Removal of \alert{corrected vertices} (degree$\leq t$) from row codes $\Leftrightarrow$ removal of random edges from column codes uniformly at random
+   			\item \# of errors in row/column changes after each iter
+   				\item Track the distribution
+   				%\item Changes the Poisson parameter ($m(j)$)
+   				%\item \alert{Threshold} - max. $M$ such that $m(j) \rightarrow 0$ as $j \rightarrow \infty$
+   			%\item Generalize for $d \geq 2$
+   		\end{itemize}
+   	\end{block}
+   	\column{0.25\textwidth}
+   	 	
+   	\begin{figure}[t]
+   		\centering
+   		\includegraphics[width=1.3in]{./Figures/Bipartite_graph}
+   	\end{figure}
+   		
+   \end{columns}
+
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{DE continued}
+	\begin{block}{Tail of the Poisson distribution}
+		\begin{equation}\nonumber
+		\pi_t(m) = \sum_{j \geq t} \mathrm{e}^{-m}m^j/j!
+		\label{eqn:defpi}
+		\end{equation}
+	\end{block}
+	
+	\begin{block}{Effect of first step of decoding}
+		If the \# errors is Poisson with mean $M$, Mean \# of errors after decoding is
+		\begin{equation}\nonumber
+		\textcolor{blue}{m(1)} = \sum_{j \geq t+1} j\mathrm{e}^{-M}M^j/j! = M\pi_t(M)
+		\label{eqn:defpi}
+		\end{equation}
+	\end{block}
+	
+\end{frame}
+%----------------------------------------------------------------------------------------
+\begin{frame}{Evolution of degree distribution($d=2$) - first iteration}
+\vspace*{-6mm}
+\begin{columns}
+
+\column{0.6\textwidth}
+\begin{block}{Row decoding}
+\begin{itemize}
+\item Before row decoding
+    \begin{itemize}
+      \item {\color{blue}Distribution}: Poisson($M$), {\color{blue}Mean}: $M$
+    \end{itemize}
+
+\item After row decoding
+    \begin{itemize}
+      \item {\color{blue}Distribution}: Truncated Poisson($M$)
+      \item {\color{blue}Mean}: $M \pi_t(M) = m(1)$
+    \end{itemize}
+\end{itemize}	
+\end{block}
+
+\begin{block}{Column decoding}
+\begin{itemize}
+\item Before column decoding
+    \begin{itemize}
+      \item {\color{blue}Distribution}: Poisson($m(1)$),{\color{blue}Mean}: $m(1)$
+    \end{itemize}
+
+\item After column decoding
+    \begin{itemize}
+      \item {\color{blue}Distribution}: Truncated Poisson($m(1)$)
+      \item {\color{blue}Mean}: $m(2) = M \pi_t(m(1))$
+    \end{itemize}
+\end{itemize}	
+\end{block}
+
+\begin{block}{After every decoding}
+\begin{itemize}
+  \item Distribution is a Truncated Poisson($m(j)$)
+  \item $P[\# errors = i] = b \frac{m(j)^i}{i!}$
+\end{itemize}
+\end{block}
+
+\column{0.4\textwidth}
+\begin{center}
+	\vspace{-3mm}
+	\input{./Figures/poisson_row_before_1.tex}
+	\input{./Figures/poisson_row_after_1.tex}
+	\input{./Figures/poisson_col_before_1.tex}
+	\input{./Figures/poisson_col_after_1.tex}
+\end{center}
+
+\end{columns}
+
+\end{frame}
+%------------------------------------------------------------------------------------------
+\begin{frame}{Evolution of the degree distribution - $j$th iteration}
+
+
+\begin{block}{Recursion}
+\begin{itemize}
+\item $m(0) = M$
+\item $m(1) = M \pi_t(M)$
+\item $m(j) = M \pi_t(m(j-1))$
+\end{itemize}
+\end{block}
+
+\begin{block}{Reduction in the parameter}
+\begin{itemize}
+  \item Average no. of errors in each row (column) = $m(j) \pi_t(m(j))$
+  \item Decoding of rows reduces the parameter by $\frac{m(j) \pi_t(m(j))}{m(j-1) \pi_t(m(j-1))} = \frac{M \pi(m(j))}{m(j-1)}$
+  \item New parameter is $m(j+1) = M \pi(m(j))$
+\end{itemize}
+\end{block}
+
+\begin{block}{Threshold}
+In the limit of large $\tilde{n}$ (length in each dimension), a $t$-error correcting product code can correct $\tilde{n}M$ errors when
+\[
+M < \min_m \displaystyle{\{ \frac{m}{\pi_t(m)} \}}
+\]
+\end{block}
+
+\end{frame}
+%------------------------------------------------------------------------------------------
+%\begin{frame}{Evolution of degree distribution - $j$th iteration}
+%\begin{columns}
+%
+%\column{0.55\textwidth}
+%{\vspace{-6mm}
+%	\hspace{6mm}
+%	\begin{block}{Before row decoding}
+%		{\color{blue}Distribution}: Poisson($m(j)$) \\
+%	\end{block}}
+%	\vspace{6mm}
+%	\begin{block}{After row decoding}
+%		{\color{blue}Distribution}: Truncated Poisson($m(j)$) \\
+%		{\color{blue}Mean}: $m(j) \pi_t(m(j))$ \\
+%		{\color{blue}Reduction by a factor}: $\frac{m(j) \pi_t(m(j))}{m(j-1) \pi_t(m(j-1))}$ \\
+%	\end{block}
+%	\column{0.45\textwidth}
+%	\begin{center}
+%		\vspace{-3mm}
+%		\input{./Figures/poisson_row_before_1.tex}
+%		\input{./Figures/poisson_row_after_1.tex}
+%	\end{center}
+%\end{columns}
+%
+%
+%\begin{block}{d-stages}
+%	
+%	\begin{center}
+%		\begin{itemize}
+%			\item  $m(j)= M \ \prod \limits_{i=1}^{d-1}{\pi_t(m(j-i))}$
+%			\item $\frac{m(j)}{m(j-d)}=\frac{M\prod\limits_{i=1}^{d-1} \pi_t(m(j-i))}{m(j-d)} \leq M \frac{\pi_t^{d-1}(m(j-d))}{m(j-d)}$
+%		\end{itemize}
+%	\end{center}
+%	
+%\end{block}
+%\end{frame}
+
+%----------------------------------------------------------------------------------------
+	\begin{frame}{Thresholds for asymptotically large field size}
+	%	\begin{itemize}
+	%		
+	%	\item Theorem for the Threshold value for Less-sparse case.
+	%	\item Table showing threshold values for different $d$ and $t$.
+	%	\item Highlight some useful points in the table {\bf(if needed)}
+	%	\end{itemize}
+		
+		\begin{block}{}
+			\begin{center}
+				\alert{Threshold} = $ \frac{\# \ of parity symbols}{\# \ of errors}$
+			\end{center}
+			
+			\vspace{-6mm}
+			\color{black}
+			\begin{table}[ht]
+				\centering
+				\begin{tabular}{c|ccccccc}
+					\hline
+					& $d=2$ & $d=3$ & $d=4$ & $d=5$ & $d=6$ & $d=7$ & $d=8$ \\
+					\hline
+					\rowcolor{lightgray}
+					$t=1$& 4.0  & 2.4436 & 2.5897 & 2.8499 & 3.1393 & 3.4378 & 3.7383 \\
+					$t=2$& 2.3874 & 2.5759 & 2.9993 & 3.4549 & 3.9153 & 4.3736 & 4.8278 \\
+					\rowcolor{lightgray}
+					$t=3$& 2.3304 & 2.7593 & 3.3133 & 3.8817 & 4.4483 & 5.0094 & 5.5641 \\
+					$t=4$& 2.3532 & 2.9125 & 3.5556& 4.2043 & 4.8468 & 5.4802 & 6.1033 \\
+					%\rowcolor{lightgray}
+					%$t=5$& 2.3908 & 3.0394 & 3.7471 & 4.4500 & 5.1362 & 5.8018 & 6.4451 \\
+					
+					\hline
+				\end{tabular}
+			\end{table}
+			\vspace{-3mm}
+			
+			Notice that $L,K = O \left( N^{\frac{1-d}{d}}\right)$
+		\end{block}
+	\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Syndrome source coding}
+
+\begin{columns}
+\column{0.5\textwidth}
+\begin{center}
+  \includegraphics[width=2.0in,angle=-90]{./Figures/syndromesourcecoding2_1}
+\end{center}
+\begin{itemize}
+  \item $H \underline{x} = 0$
+  \item Receive - $\underline{r} = \underline{x} \oplus \underline{e}$
+  \item $H \underline{r} = H \underline{e} = \underline{y}$
+  \item Recover $\xv$ and sparse $\ev$
+\end{itemize}
+\column{0.5\textwidth}
+\begin{center}
+  \includegraphics[width=2.0in,angle=-90]{./Figures/syndromesourcecoding2_2}
+\end{center}
+\begin{itemize}
+  \item $H \underline{s} = \underline{y}$
+  \item Set $\underline{r} = 0 $ (Let a genie add $\underline{x}$ to $\underline{r}$)
+  \item $\underline{y}$ is given to the decoder
+  \item Recover sparse $\sv$
+\end{itemize}
+\end{columns}
+\end{frame}

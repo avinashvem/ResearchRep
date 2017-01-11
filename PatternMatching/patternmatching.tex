@@ -1,0 +1,172 @@
+ \begin{frame}\frametitle{Pattern Matching}
+ 	\vspace{-0.4cm}
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=3.4in]{Pattern_matching_ex.jpg}
+	\end{figure}
+	\vspace{-12pt}
+	\begin{block}{}
+\begin{itemize}\itemsep3pt
+	\item {\color{blue} Database/String}: $\xv = [x[0], x[1], \cdots, x[N]]$ \ (length $N$)
+	\item { \color{blue} Query/Substring}: $\yv = [y[0], x[1], \cdots, x[M]]$ \ (length $M = N^\mu$) \vspace{2pt}
+	\item Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau_2, \cdots \tau_L]$ with  {\color{blue}high probability}  where\\
+	\begin{enumerate}
+		\item \normalsize \alert{Exact Matching}:~  $\yv$ appears {\color{blue}exactly} in $\xv$
+		\begin{itemize}\normalsize
+				\item [-]  $\yv := \xv[\tau:\tau+M-1]$
+		\end{itemize}  
+		\item \normalsize \alert{Approximate Matching:} ~ $\yv$ is a {\color{blue}noisy substring} of $\xv$
+		
+		\begin{itemize}\itemsep5pt \normalsize
+				\item [-] $\yv := \xv[\tau:\tau+M-1] \odot \bv$ 
+				\item [-] $\bv$ is a noise sequence with $d_H(\yv,\xv[\tau:\tau+M-1]) \leq K$   
+		\end{itemize}
+	\end{enumerate}   
+\end{itemize}
+
+	\end{block}
+	 \end{frame} 
+	 
+	 \begin{frame}{Main Result}
+	 	
+	 \begin{theorem}
+	 	Assume that a sketch of $\xv$ of size $O(max(M,N/M)\log N)$ can be precomputed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M,~ 0 \leq \eta \leq 1/6$) problems, with the number of matches $L$ scaling as $O(N^{\lambda})$, our algorithm has
+	 	\begin{itemize}
+	 		\item a sketching function for $\yv$ that computes {\color{blue} $O(\max(M,\frac{N}{M})\log N)=O(N^{\max(\mu,1-\mu)}\log N)$} \alert{samples}
+	 		\item a \alert{computational complexity} of 
+	 		\begin{itemize}
+	 			% \item  $O(N^{\max(1-\mu,\mu+\lambda)}\log^2 N)$ for $\mu<0.5$
+	 			% \item  $O(N^{\max(\mu,1-\mu+\lambda)}\log^2 N)$ for $\mu>0.5$
+	 			\item	{\color{blue}$O(\max(N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N ))$} for {\color{blue}$\mu < 0.5$}
+	 			\item	{\color{blue}$O(\max(N^{\mu}\log^2 N, N^{1-\mu +\lambda}\log N ))$} for {\color{blue}$\mu > 0.5$}
+	 		\end{itemize}
+	 		\item a decoder that recovers all the $L$ matching positions with a {\color{blue}failure probability that approaches zero asymptotically} 
+	 	\end{itemize}
+	 	
+	 	\vspace{10 pt}
+	 	{\color{alert}Note:} Particularly when $L=O(1)$ or $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$) our algorithm has a {\color{blue}sub-linear time} complexity.
+	 \end{theorem}	 
+\end{frame}	 
+
+
+\begin{frame} \frametitle{Some Prior Work}
+	\vspace{-0.2cm}
+	 \begin{block}{\alert{Exact Matching}}
+	 	
+	 	\begin{itemize}
+	 		\item  {\color{blue}\cite{boyer1977fast}}: First occurrence of the match (only $\tau_1$) 
+	 		
+	 		\begin{itemize}
+	 			\item[-] Average complexity - $O(N^{1-\mu} \log N)$ (sublinear)
+	 			\item[-] Worst case complexity - $O(N \log N)$  
+	 		\end{itemize}
+	 	\end{itemize}
+	 \end{block}
+	\begin{block}{\alert{Approximate Matching}}
+		
+	 	\begin{itemize}
+	 		\item {\color{blue} \cite{chang1994approximate}}: Generalization of \cite{boyer1977fast}
+	 		\begin{itemize}
+	 			\item[-] Average complexity - $O(NK/M \log N)$ (sub-linear only when $K \ll M$ ) 
+	 		\end{itemize}
+	 		
+	 		\item {\color{blue} \cite{andoni2013shift}}: $O(N/M^{0.359})$ (sub-linear even when $K = O(M)$) 
+	 		\begin{itemize}
+	 			\item[-] Combinatorial in nature
+	 		\end{itemize}
+	 	\end{itemize}
+	 \end{block}
+
+\begin{block}{\alert{Sparse Fourier Transform Approach}}
+	 	\begin{itemize}
+	 		\item {\color{blue} \cite{hassanieh2012faster}}: Faster GPS receiver
+	 		\begin{itemize}
+	 			\item[-] Exploited sparsity in Correlation function $R_{XY}$  
+	 		\end{itemize}
+	 		
+	 		\item {\color{blue} \cite{pawar2014robust}}: Robust Sparse Fourier Transform
+	 		\begin{itemize}
+	 			\item[-] Sparse Graph code Approach
+	 			\item[-] Computational complexity : $O(N \log N)$
+	 		\end{itemize}
+	 	\end{itemize}	 	
+	\end{block}
+\end{frame}
+
+\begin{frame}\frametitle{Motivation}
+	\vspace{-0.4cm}
+			\begin{block}{}
+			
+				\begin{itemize} 
+					\item {\bf Cross-correlation} ($\rv$):
+					
+					\begin{equation}\label{eqn:Rxy_def} \nonumber
+					r[m]=(\xv*\yv)[m] \defeq \sum_{i=0}^{M-1} x[m+i] y[i], ~ ~ \ 0 \leq m \leq N-1  
+					\end{equation}
+					
+					
+					\item {\bf Naive implementation}: $O(MN) = O(N^{1+\mu})$ ({\color{blue} super-linear} complexity) 
+					
+					\item 	{\bf Fourier Transform Approach}: $O(N \log N)$ complexity
+					
+				\end{itemize}
+			\end{block}
+			
+				\begin{columns}
+					\column{0.45\columnwidth}
+			\begin{block}{\alert{ \bf Key Observation}}
+			\vspace{0.2cm}
+				\begin{itemize}
+					\item $\rv$ is {\color{blue}Sparse} with some noise.
+				\end{itemize}
+				  
+				 \begin{equation} \label{eqn:RXY_sparse}\nonumber
+				 r[m] \ = \left\{
+				 \begin{array}{ll}
+				 &M,~~  \text{if} \ m \in \mathcal{T} \\
+				 & n_m,~~ m \in [N]-\mathcal{T}
+				 \end{array} 
+				 \right.  
+				 \end{equation}
+			
+			\end{block}
+										
+					\column[]{0.45\columnwidth}
+					\begin{figure}
+						\centering
+						\scalebox{0.7}{\input{./Figures/cross_corr.tex}}
+					\end{figure}
+					
+				\end{columns}
+				
+					
+\end{frame}
+
+\begin{frame}\frametitle{Sparse Fourier Transform Approach}
+	\begin{figure}[t]
+		\centering
+		\scalebox{0.29}{\input{./Figures/notional_diag.tex}}
+	\end{figure}
+\vspace{-0.2cm}
+	 	\begin{block}{}
+	 		\begin{equation}\label{eqn:Rxy_fourier} \nonumber
+	 		\boxed{\rv = \underset{\text{\color{red} 1 } } {\mathcal{F}_{N}^{-1}} \ \{ \underset{\text{ \color{red} 2 } }{  \mathcal{F}_{N}\{\xv\}}  \odot \ \underset{\text{ \color{red} 3 } }{ \mathcal{F}_{N}\{\yv'\}}  \} }
+	 		\end{equation} 
+	 		
+	 		\begin{itemize} 
+	 			\item[\color{red} 1.] \textit{\color{blue} Sketch of $\xv$ : }  Assume $ \Xv[l] = \mathcal{F}\{\xv\}$ is precomputed at positions $l \in \mathcal{S}$.
+	 			
+	 			\item[\color{red} 2.] \textit{\color{blue} Sketch of $\yv$:}
+	 			\begin{itemize} 
+	 				\item[-] Compute $ \Yv'[l] = \mathcal{F}\{\yv'\}$ for $l \in \mathcal{S}$.
+	 				\item[-] Only $M$ non-zero values in $\yv'$ - Efficient computation (folding and adding)
+	 			\end{itemize}
+	 			
+	 			\item[\color{red} 3.] \textit{\color{blue} Sparse $\mathcal{F}^{-1}$}:
+	 			\begin{itemize}  
+	 				\item[-] Robust Sparse Inverse Fourier Transform (RSIDFT)
+	 				\item[-] Efficient Implementation- {\color{blue} sublinear} time and sampling complexity
+	 			\end{itemize}
+	 		\end{itemize}
+	 	\end{block}
+\end{frame}

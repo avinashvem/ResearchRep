@@ -1,0 +1,98 @@
+\begin{tikzpicture}
+
+
+\draw [thick] (-4,3.9) node (v9) {} ellipse (0.5 and 0.5);
+\draw [thick] (-4,5.7) node (v5) {} ellipse (0.5 and 0.5);
+\draw [thick] (-4,7.7) node (v2) {} ellipse (0.5 and 0.5);
+
+
+\draw [thick] (-4,1.6) node (v13) {} ellipse (0.5 and 0.5);
+
+\node [thick] at (-4,2.7) {\Huge{\vdots}};
+\node (v1) at (-3,8.3) {};
+\node (v3) at (-3,7.9) {};
+\node (v4) at (-3,7.1) {};
+\node (v6) at (-3,6.3) {};
+\node (v8) at (-3,5.1) {};
+\node (v7) at (-3,5.9) {};
+\node (v10) at (-3,4.4) {};
+\node (v11) at (-3,4) {};
+\node (v12) at (-3,3.2) {};
+\node (v16) at (-3,2.2) {};
+\node (v15) at (-3,1.8) {};
+\node (v14) at (-3,1) {};
+\draw[blue,thick]  (v1) edge (v2);
+\draw [blue,thick] (v2) edge (v3);
+\draw [blue,thick] (v2) edge (v4);
+\draw [red,thick] (v5) edge (v6);
+\draw [red,thick] (v5) edge (v7);
+\draw [red,thick] (v5) edge (v8);
+\draw [green,thick] (v9) edge (v10);
+\draw [green,thick] (v9) edge (v11);
+\draw [green,thick] (v12) edge (v9);
+\draw [violet,thick] (v13) edge (v14);
+\draw [violet,thick] (v13) edge (v15);
+\draw [violet,thick] (v13) edge (v16);
+
+\node [blue, thick] at (-3.1,7.6) {\vdots};
+\node [thick, red] at (-3.1,5.6) {\vdots};
+\node [thick, green] at (-3.1,3.7) {\vdots};
+\node [thick, violet] at (-3.1,1.5) {\vdots};
+
+\draw [thick] (-4,3.9) node (v9) {} ellipse (0.5 and 0.5);
+\draw [thick] (-4,5.7) node (v5) {} ellipse (0.5 and 0.5);
+\draw [thick] (-4,7.7) node (v2) {} ellipse (0.5 and 0.5);
+\draw [thick] (-4,1.6) node (v13) {} ellipse (0.5 and 0.5);
+
+\begin{scope}[yscale=1,xscale=-1, shift={(3.5,0)}]
+
+\draw [thick] (-4,3.9) node (v9) {} ellipse (0.5 and 0.5);
+\draw [thick] (-4,5.7) node (v5) {} ellipse (0.5 and 0.5);
+\draw [thick] (-4,7.7) node (v2) {} ellipse (0.5 and 0.5);
+
+
+\draw [thick] (-4,1.6) node (v13) {} ellipse (0.5 and 0.5);
+
+\node [thick] at (-4,2.7) {\Huge{\vdots}};
+\node (v1) at (-3,8.3) {};
+\node (v3) at (-3,7.9) {};
+\node (v4) at (-3,7.1) {};
+\node (v6) at (-3,6.3) {};
+\node (v8) at (-3,5.1) {};
+\node (v7) at (-3,5.9) {};
+\node (v10) at (-3,4.4) {};
+\node (v11) at (-3,4) {};
+\node (v12) at (-3,3.2) {};
+\node (v16) at (-3,2.2) {};
+\node (v15) at (-3,1.8) {};
+\node (v14) at (-3,1) {};
+\draw[blue,thick]  (v1) edge (v2);
+\draw [green,thick] (v2) edge (v3);
+\draw [red,thick] (v2) edge (v4);
+\draw [green,thick] (v5) edge (v6);
+\draw [red,thick] (v5) edge (v7);
+\draw [violet,thick] (v5) edge (v8);
+\draw [red,thick] (v9) edge (v10);
+\draw [violet,thick] (v9) edge (v11);
+\draw [blue,thick] (v12) edge (v9);
+\draw [blue,thick] (v13) edge (v14);
+\draw [green,thick] (v13) edge (v15);
+\draw [violet,thick] (v13) edge (v16);
+
+\node [thick] at (-3.1,7.6) {\vdots};
+\node [thick] at (-3.1,5.6) {\vdots};
+\node [thick] at (-3.1,3.7) {\vdots};
+\node [thick] at (-3.1,1.5) {\vdots};
+
+\draw [thick] (-4,3.9) node (v9) {} ellipse (0.5 and 0.5);
+\draw [thick] (-4,5.7) node (v5) {} ellipse (0.5 and 0.5);
+\draw [thick] (-4,7.7) node (v2) {} ellipse (0.5 and 0.5);
+
+
+\draw [thick] (-4,1.6) node (v13) {} ellipse (0.5 and 0.5);
+\end{scope}
+
+
+\node at (-4,9.2) {\large{row codes}};
+\node at (0,9.2) {\large{column codes}};
+\end{tikzpicture}
