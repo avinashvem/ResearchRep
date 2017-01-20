@@ -392,7 +392,7 @@ As per Thm.~\ref{Thm:NoiselessMain} the proposed regular SAFFRON scheme requires
 \begin{itemize}
 \item We fix $N=2^{16}$ and $K=100$
 \item For $\ell\in\{3,5,7\}$ we vary the number of bins $M=c K$. 
-\item In Eqn.~\ref{Eqn:SignatureMatrix} the parameter $p=2$ is chosen
+\item In Eqn.~\ref{Eqn:SignatureMatrix} the parameter $p=2$ is chosen for matrix $\mbf{U}$
 \item Thus the bin detection size is $h=6\log_2 \frac{N\ell}{cK}$
 \item Hence the total number of tests $m=6cK\log_2 \left(\frac{N\ell}{cK}\right)$
 \end{itemize} 
@@ -410,10 +410,12 @@ The results are shown in Fig.~\ref{Fig:SimulationNoiseless}. We observe that the
 \subsection*{Noisy Group Testing}
 Similar to the noiseless group testing problem we simulate the performance of our robust regular SAFFRON scheme and compare it with that of the SAFFRON scheme. For convenience of comparison we choose our system parameters identical to the choices in \cite{lee2015saffron}. The system parameters can be summarized as follows:
 \begin{itemize}
-\item $N=2^{32}, K=2^7$. We fix $\ell=12, M_1=11.36K$ 
+\item $N=2^{32}, K=2^7$. We fix $\ell=12, M=11.36K$ 
 \item BSC noise parameter $q\in\{0.03,0.04,0.05\}$
+\item In Eqn.~\ref{Eqn:SignatureMatrix} the parameter $p=1$ is chosen for matrix $\mbf{U}$
+\item Thus the bin detection size is $h=4\log_2 \frac{N\ell}{M}$
 \end{itemize}
-For the signature matrix we choose $p=1$ in Eqn.~\ref{Eqn:SignatureMatrix} i.e. $h=4\log_2 r$. Note that for the above set of parameters the right degree $r=\frac{N\ell}{M_1}\approx 26$. We choose to operate in field $GF(2^7)$ thus giving us a message length of $4$ symbols. Then we encode using a $(4+2e,4)$ Reed-Solomon code for $e\in[0:8]$ thus giving us a column length of $4\times 7(4+2e)$ bits and the total number of tests $M=28M_1(4+2e)$.
+Note that for the above set of parameters the right degree $r=\frac{N\ell}{M_1}\approx 26$. We choose to operate in field $GF(2^7)$ thus giving us a message length of $4$ symbols. For the choice of code we use a $(4+2e,4)$ Reed-Solomon code for $e\in[0:8]$ thus giving us a column length of $4\times 7(4+2e)$ bits at each bin and the total number of tests $m=28M(4+2e)$.
 
 \bibliographystyle{ieeetr}
 \bibliography{\MyPath/journal_abbr,\MyPath/sparseestimation,grouptesting}
