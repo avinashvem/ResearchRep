@@ -358,7 +358,9 @@ where the location of the second non-zero variable node $l_1$ needs to be recove
 \begin{figure}[t!]
 \centering
 \resizebox{\columnwidth}{!}{\input{\FigPath/noiseless_Kannan.tex}}
-\caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for various left degrees $\ell\in\{3,5,7\}$. For a given $\ell$ the bin detection size is fixed and we vary the number of bins. The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
+\caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme \cite{lee2015saffron} with the proposed regular SAFFRON scheme for various left degrees $\ell\in\{3,5,7\}$. 
+%For a given $\ell$ the bin detection size is fixed and we vary the number of bins. 
+The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
 \label{Fig:SimulationNoiseless}
 \end{figure}
 
@@ -383,17 +385,18 @@ where the second line is due to Lem. \ref{Lem:RobustBinAnalysis} and the last li
 \end{proof}
 
 \section{Simulation Results}
-In this section we will evaluate the performance of our proposed regular SAFFRON scheme via Monte Carlo simulations and compare it with the results for SAFFRON scheme provided in \cite{lee2015saffron}.
+In this section we will evaluate the performance of our proposed regular SAFFRON scheme via Monte Carlo simulations and compare it with the results for SAFFRON scheme provided in \cite{lee2015saffron} for both the noiseless and noisy models.
 
 \subsection*{Noiseless Group Testing}
-As per Thm.~\ref{Thm:NoiselessMain} the regular SAFFRON scheme we proposed recovers $(1-\epsilon)$ fraction of defective items with a high probability for $M_1>c_1 K$ where the pairs ($c_1,\ell$) are given for various values of error floors $\epsilon$ in Table.~\ref{Table:constantsDE}. We demonstrate this by simulating the performance for the system parameters summarized below.
+As per Thm.~\ref{Thm:NoiselessMain} the proposed regular SAFFRON scheme requires only $6\ceps K\log \frac{N\ell}{\ceps K}$ tests as opposed to $6\ceps K\log N$ tests of SAFFRON scheme to recover $(1-\epsilon)$ fraction of defective items with a high probability. We demonstrate this by simulating the performance for the system parameters summarized below.
 \begin{itemize}
 \item We fix $N=2^{16}$ and $K=100$
-\item In Eqn.~\ref{Eqn:SignatureMatrix} the parameter $p=2$ is chosen i.e. $h=6\log_2 r$
-\item For $\ell\in\{3,5,7\}$ we vary the number of bins $M_1=cK$. 
-\item Hence the total number of tests $M=6cK\log_2 \left(\frac{N\ell}{cK}\right)$
+\item For $\ell\in\{3,5,7\}$ we vary the number of bins $M=c K$. 
+\item In Eqn.~\ref{Eqn:SignatureMatrix} the parameter $p=2$ is chosen
+\item Thus the bin detection size is $h=6\log_2 \frac{N\ell}{cK}$
+\item Hence the total number of tests $m=6cK\log_2 \left(\frac{N\ell}{cK}\right)$
 \end{itemize} 
-The results are shown in Fig.~\ref{Fig:SimulationNoiseless}. We observe that there is clear improvement in performance for our regular SAFFRON scheme when compared to the SAFFRON scheme for each $\ell\in\{3,5,7\}$.
+The results are shown in Fig.~\ref{Fig:SimulationNoiseless}. We observe that there is clear improvement in performance for the proposed regular SAFFRON scheme when compared to the SAFFRON scheme for each $\ell\in\{3,5,7\}$.
 
 \begin{figure}[t!]
 \centering
