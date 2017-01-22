@@ -385,7 +385,7 @@ For $\mbf{U'}_{r,p}$ in \eqref{Eqn:SignatureMatrixModified}, the robust bin deco
 The fraction of missed singletons can be compensated by using $M(1+\frac{p}{r^{\kappa}})$ instead of $M$ such that the total number of singletons decoded will be $M(1+\frac{p}{r^{\kappa}})(1-\frac{p}{r^{\kappa}})\approx M$.
 
 \begin{theorem}
-Let $p\in\Z$ such that $K\in o\left(N^{(p-1)/p}\right)$. The proposed robust regular SAFFRON scheme using $m=c\cdot K \log_{2}\frac{N\ell}{\ceps K}$ tests recovers atleast $(1-\epsilon)$ fraction of the defective items w.h.p. where $c=2p\beta(q)\ceps$ and $\beta(q)=1/R$. The computational complexity of the decoding scheme is $O(K\log \frac{N}{K})$.
+Let $p\in\Z$ such that $K=o\left(N^{(p-1)/p}\right)$. The proposed robust regular SAFFRON scheme using $m=c\cdot K \log_{2}\frac{N\ell}{\ceps K}$ tests recovers atleast $(1-\epsilon)$ fraction of the defective items w.h.p. where $c=2p\beta(q)\ceps$ and $\beta(q)=1/R$. The computational complexity of the decoding scheme is $O(K\log \frac{N}{K})$.
 % $1-O\left(N^{-\kappa}\right)$. 
 \end{theorem}
 \begin{proof}
@@ -402,7 +402,7 @@ where the last line is due to the fact that $\tx{Pr}(E_1)$ is exponentially deca
 In this section we will evaluate the performance of our proposed regular SAFFRON scheme via Monte Carlo simulations and compare it with the results for SAFFRON scheme provided in \cite{lee2015saffron}.
 \subsection*{Noiseless Group Testing}
 %As per Thm. \ref{Thm:NoiselessMain} the regular SAFFRON scheme we proposed recovers $(1-\epsilon)$ fraction of defective items with a high probability for $M_1>c_1 K$ where the pairs ($c_1,\ell$) are given for various values of error floors $\epsilon$ in Table.~\ref{Table:constantsDE}. 
-The system parameters are summarized as following:
+The system parameters are summarized below:
 \begin{itemize}
 \item We fix $N=2^{16}$ and $K=100$
 \item For $\ell\in\{3,5,7\}$ we vary the number of bins $M=c K$. 
@@ -423,7 +423,7 @@ The plots in blue indicate the SAFFRON scheme and the plots in red indicate our 
 
 
 \subsection*{Noisy Group Testing}
-Similar to the noiseless group testing problem we simulate the performance of our robust regular SAFFRON scheme and compare it with that of the SAFFRON scheme. For convenience of comparison we choose our system parameters identical to the choices in \cite{lee2015saffron}. The system parameters can be summarized as following:
+Similar to the noiseless group testing problem we simulate the performance of our robust regular SAFFRON scheme and compare it with that of the SAFFRON scheme. For convenience of comparison we choose our system parameters identical to the choices in \cite{lee2015saffron}. The system parameters are summarized below:
 \begin{itemize}
 \item $N=2^{32}, K=2^7$. We fix $\ell=12, M=11.36K$ 
 \item BSC noise parameter $q\in\{0.03,0.04,0.05\}$
