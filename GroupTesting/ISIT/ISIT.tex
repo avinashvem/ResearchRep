@@ -153,6 +153,8 @@ First part of the decoder, which we will refer to as bin decoder, will be able t
 \section{Proposed Scheme}
 The main difference between the SAFFRON scheme and our proposed scheme is that we use a left-and-right-regular sparse-graph in the first stage for the binning operation.
 
+\textcolor[rgb]{1.00,0.00,0.00}{If there is space in the end, it may be better to give a small example of the construction. Nothing makes it as clear as an example.}
+
 \begin{definition}[Left-and-right-regular sparse graph ensemble]
 Let $\mc{G}_{\ell,r}(N,M)$ be the ensemble of left and right regular bipartite graphs where the $N\ell$ edge connections from the left and $Mr(=N\ell)$ edge connections from the right are paired up according to a permutation $\pi_{N\ell}$ chosen at random from $S_{N\ell}$.
 \end{definition}
@@ -190,7 +192,7 @@ For the pruned graph ensemble $\tilde{\mc{G}}_{\ell,r}(N,K,M)$ it can be shown i
 \end{lemma}
 \vspace{\proofgap}
 \begin{proof}
-See .
+See . \textcolor{red}{In general, it appears that there is a order of limits issue here. We would really like to use a d.d. that is valid for any $K$ and $N$ and then we take the limit for $K, N \rightarrow \infty$. However, here we take the limit to obtain the d.d. The same problem also occurs in our analysis of the multiple access problem etc. But it would be nice to formalize this proof correctly. We should at least make a note of this somewhere. Otherwise, an attentive reviewer may point out this mistake. How to Kannan and co handle this issue?}
 \end{proof}
 %Note that even if our initial ensemble is left-and-right-regular the pruned graph has asymptotically same degree distribution as in the SAFFRON scheme where the initial graph is from left-regular ensemble.
 
@@ -261,6 +263,8 @@ where the second inequality is due to the union bound over a maximum of $K\ell$ 
 %Similarly we can show $\lim_{K,N\rightarrow \infty}\rho_2=\lambda e^{-\lambda}$.
 %\end{proof}
 
+\textcolor[rgb]{1.00,0.00,0.00}{It may be better to mention that the singleton-only variant and the noisy group testing approaches follow the same ideas from Kannan and co.}
+
 \section{Total recovery: Singleton-Only Variant}
 In this section we will look at the proposed regular-SAFFRON scheme but with a decoder that operates only on the singleton bins. To elaborate, the only difference is in the decoder which is not iterative in this framework and recovers only the variable nodes connected to the singleton bins and terminates. The trade-off is that now we can recover the \textit{whole} defective set instead of just a large fraction of the defective items with an additional $\log K$ factor tests. Since we do not need to be able to recover resolvable double-tons we only need $2\log_2 r$ number of tests at each bin i.e. we choose $p=1$ in Eqn. \eqref{Eqn:SignatureMatrix}.
 
@@ -311,6 +315,7 @@ For the choice of $\mc{C}_n$ consider any capacity achieving codes, polar or spa
 \begin{itemize}
 \item There exists a sequence of codes $\{\mc{C}_n\}$ with the rate of each code being $R$ satisfying $R< C_{\tx{Sh}}(q)-\delta$ for any arbitrary small constant $\delta$ such that the probability of error $\text{Pr}\left(g(\mbf{x+w})\neq \mbf{x}\right)<2^{-\kappa n}$ for some $\kappa >0$. Here $C_{\tx{Sh}}(q)=1-h_2(q)$ is the Shannon capacity of the BSC channel model.
 \end{itemize}
+\textcolor[rgb]{1.00,0.00,0.00}{You require the probability of error to decay exponentially, whereas you claim that you can use a Polar code or Spatially coupled code. We do not know that for these codes, the probability of error decays exponentially at least with the successive cancellation decoder or the iterative decoder.}
 %In Eqn.~\ref{Eqn:ProbErrorCoding}, $\overline{q}\coleq 1-q$.
 %\begin{align}
 %\label{Eqn:ProbErrorCoding}
@@ -433,7 +438,8 @@ Similar to the noiseless group testing problem we simulate the performance of ou
 Note that for the above set of parameters the right degree $r=\frac{N\ell}{M}\approx 26$. We choose to operate in field $GF(2^7)$ thus giving us a message length of $4$ symbols. For the choice of code we use a $(4+2e,4)$ Reed-Solomon code for $e\in[0:8]$ thus giving us a column length of $4\times 7(4+2e)$ bits at each bin and the total number of tests $m=28M(4+2e)$.
 %For the signature matrix we choose $p=1$ in Eqn.~\ref{Eqn:SignatureMatrix} i.e. $h=4\log_2 r$. Note that for the above set of parameters the right degree $r=\frac{N\ell}{M_1}\approx 26$. We choose to operate in field $GF(2^7)$ thus giving us a message length of $4$ symbols. Then we encode using a $(4+2e,4)$ Reed-Solomon code for $e\in[0:8]$ thus giving us a column length of $4\times 7(4+2e)$ bits and the total number of tests $M=28M_1(4+2e)$.
 
-
+\section{Conclusion}
+\textcolor[rgb]{1.00,0.00,0.00}{Write a brief conclusion section.}
 \bibliographystyle{ieeetr}
 \bibliography{\MyPath/journal_abbr,\MyPath/sparseestimation,../grouptesting}
 \end{document}
