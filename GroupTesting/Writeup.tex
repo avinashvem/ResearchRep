@@ -1,4 +1,4 @@
-\documentclass[conference,,twocolumn]{IEEEtran}
+\documentclass[conference,twocolumn]{IEEEtran}
 
 \newcommand*{\MyPath}{../bib}
 \newcommand*{\FigPath}{./Figures}
@@ -246,8 +246,7 @@ Similarly we can show $\lim_{K,N\rightarrow \infty}\rho_2=\lambda e^{-\lambda}$.
 
 
 \section{Total recovery: Singleton-Only Variant}
-In this section we will look at the proposed regular-SAFFRON scheme but with a decoder that uses only the singleton bins. To elaborate, the only difference is in the decoder which is not iterative in this scheme and recovers the variable nodes connected to only the singleton bin nodes and terminates. We will refer to this scheme as \textit{singleton-only} regular-SAFFRON scheme. The trade-off of is that we can now recover the \textit{whole} defective set instead of just a large fraction of the defective items with an additional $\log K$ factor tests.
-%, is that now the left-degree of the bipartite graph, or equivalently the number of times a sample is divided for testing, cannot be finite and needs to be scaled as $\log K$.
+In this section we will look at the proposed regular-SAFFRON scheme but with a decoder that uses only the singleton bins. To elaborate, the only difference is in the decoder which is not iterative in this scheme and recovers the variable nodes connected to only the singleton bin nodes and terminates. We will refer to this scheme as \textit{singleton-only} regular-SAFFRON scheme. The trade-off is that we can now recover the \textit{whole} defective set instead of just a large fraction of the defective items with an additional $\log K$ factor tests.
 
 Since we do not need to be able to recover resolvable double-tons we only need $2\log_2 r$ number of tests at each bin i.e. we choose $p=0$ for the signature matrix in Eqn. \eqref{Eqn:SignatureMatrix}.
 \begin{theorem}
@@ -355,14 +354,6 @@ f(\mbf{b}_{\pi^1_{l_1}})\\
 \end{align*} 
 where the location of the second non-zero variable node $l_1$ needs to be recovered. Given $\mbf{y}=\mbf{u}_{l_0} \vee \mbf{u}_{l_1}+\mbf{w}$ and $\mbf{u}_{l_0}$, the first segments of each section in $\mbf{u}_{l_1}+\mbf{w}$ can be recovered since for each segment of $\mbf{u}_{l_0}$ either the vector $f(\mbf{b}_{\pi^k_{l_0}})$ or it's complement is available. Once the first section $f(\mbf{b}_{\pi_{l_1}^i})+\mbf{w}$ of each segment $i$ is recovered, we apply singleton decoding procedure and rules as described above.
 
-\begin{figure}[t!]
-\centering
-\resizebox{\columnwidth}{!}{\input{\FigPath/noiseless_Kannan.tex}}
-\caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme \cite{lee2015saffron} with the proposed regular SAFFRON scheme for various left degrees $\ell\in\{3,5,7\}$. 
-%For a given $\ell$ the bin detection size is fixed and we vary the number of bins. 
-The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
-\label{Fig:SimulationNoiseless}
-\end{figure}
 
 \begin{lemma}[Robust Bin Decoder Analysis]
 \label{Lem:RobustBinAnalysis}
@@ -400,12 +391,12 @@ The results are shown in Fig.~\ref{Fig:SimulationNoiseless}. We observe that the
 
 \begin{figure}[t!]
 \centering
-\input{\FigPath/noisy_Kannan.tex}
-%\resizebox{\columnwidth}{!}{}
-\caption{MonteCarlo simulations for $K=128, N=2^{32}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for a left degree $\ell=12$. We fix the number of bins and vary the rate of the error control code used. The plots in blue indicate the SAFFRON scheme\cite{lee2015saffron} and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
-\label{Fig:SimulationNoisy}
+\resizebox{\columnwidth}{!}{\input{\FigPath/noiseless_Kannan.tex}}
+\caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme \cite{lee2015saffron} with the proposed regular SAFFRON scheme for various left degrees $\ell\in\{3,5,7\}$. 
+%For a given $\ell$ the bin detection size is fixed and we vary the number of bins. 
+The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
+\label{Fig:SimulationNoiseless}
 \end{figure}
-
 
 \subsection*{Noisy Group Testing}
 Similar to the noiseless group testing problem we simulate the performance of our robust regular SAFFRON scheme and compare it with that of the SAFFRON scheme. For convenience of comparison we choose our system parameters identical to the choices in \cite{lee2015saffron}. The system parameters can be summarized as follows:
@@ -416,6 +407,15 @@ Similar to the noiseless group testing problem we simulate the performance of ou
 \item Thus the bin detection size is $h=4\log_2 \frac{N\ell}{M}$
 \end{itemize}
 Note that for the above set of parameters the right degree $r=\frac{N\ell}{M_1}\approx 26$. We choose to operate in field $GF(2^7)$ thus giving us a message length of $4$ symbols. For the choice of code we use a $(4+2e,4)$ Reed-Solomon code for $e\in[0:8]$ thus giving us a column length of $4\times 7(4+2e)$ bits at each bin and the total number of tests $m=28M(4+2e)$.
+
+\begin{figure}[t!]
+\centering
+\input{\FigPath/noisy_Kannan.tex}
+%\resizebox{\columnwidth}{!}{}
+\caption{MonteCarlo simulations for $K=128, N=2^{32}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for a left degree $\ell=12$. We fix the number of bins and vary the rate of the error control code used. The plots in blue indicate the SAFFRON scheme\cite{lee2015saffron} and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
+\label{Fig:SimulationNoisy}
+\end{figure}
+
 
 \bibliographystyle{ieeetr}
 \bibliography{\MyPath/journal_abbr,\MyPath/sparseestimation,grouptesting}
