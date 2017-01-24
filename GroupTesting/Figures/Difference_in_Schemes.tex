@@ -1,4 +1,5 @@
 \begin{tikzpicture}
+\def\emphsize{\normalsize}
 \def\horzgap{40pt}; %Horizontal gap between nodes/levels
 \def \gapVN{21pt}; %vertical gap between nodes
 \def \gapCN{	29pt}; %Horizontal gap between nodes
@@ -40,7 +41,7 @@
   \draw (vn\vn) -- (evB\vn.west); 
   \draw (vn\vn) -- (evC\vn.west); 
 }
-\draw[->,thin] (vn7)++(-60:\arcradius) arc (-60:60:\arcradius)node[above]{\tiny{$l$}};
+\draw[->,thin] (vn7)++(-60:\arcradius) arc (-60:60:\arcradius)node[above]{\tiny{$\ell$}};
 
 \path (vn3)--node(vndots) {\Large{$\vdots$}} (vn6);
 \node[left =-0.2*\nodewidth of vndots](){\tiny{$N$ vars}};
@@ -60,7 +61,7 @@
 }
 
 \draw[->,thin] (cn4)++(240:\arcradius) arc (240:120:\arcradius);
-\path(cn4)++(2pt,\textoffs)node(){\tiny{$r\leq N$}};
+\path(cn4)++(5pt,2*\textoffs)node(){\emphsize{$r\leq N$}};
 \path (cn2)--node(cndots) {\Large{$\vdots$}} (cn4);
 \node [right=0.01*\nodewidth of cndots]{\tiny{$c_1K$ bins}};
 
@@ -79,15 +80,11 @@
 \draw (bitnC\cn.east)--(checknB\cn.west);
 \draw (bitnB\cn.east)--(checknC\cn.west);
 \draw (bitnD\cn.east)--(checknC\cn.west);
-\path(bitnD\cn)++(0.6*\moveX,-0.3*\moveX) node(){\tiny{$\mathbf{U}\in\{0,1\}^{c\log N \times N }$}};
 }
+\path(bitnD2)++(0.6*\moveX,-0.3*\moveX) node(){\tiny{$\mathbf{U}\in\{0,1\}^{c\log N \times N }$}};
 
-\path (checknC2)++(2*\textoffs,0.5*\moveYa)node{\tiny{$\log N$ tests}};
-\node [below left=3*\nodewidth and 2*\nodewidth of bitnD2,anchor=west]{\tiny{$M=\Omega(K\log N)$} };
-
-
-
-
+\path (checknC2)++(3*\textoffs,0.5*\moveYa)node{\emphsize{$\log N$ tests}};
+\node [below left=3*\nodewidth and 2*\nodewidth of bitnD2,anchor=west]{\emphsize{$M=\Theta(K\log N)$} };
 
 
 
@@ -105,7 +102,7 @@
   \draw (Bvn\vn) -- (BevB\vn.west); 
   \draw (Bvn\vn) -- (BevC\vn.west); 
 }
-\draw[->,thin] (Bvn7)++(-60:\arcradius) arc (-60:60:\arcradius)node[above]{\tiny{$l$}};
+\draw[->,thin] (Bvn7)++(-60:\arcradius) arc (-60:60:\arcradius)node[above]{\tiny{$\ell$}};
 
 \path (Bvn3)--node(Bvndots) {\Large{$\vdots$}} (Bvn6);
 \node[left =-0.2*\nodewidth of Bvndots](){\tiny{$N$ vars}};
@@ -125,7 +122,7 @@
 }
 
 \draw[->,thin] (Bcn4)++(240:\arcradius) arc (240:120:\arcradius);
-\draw[->,densely dotted](Bcn4)++(140:\arcradius)--++(12pt,20pt)node[](){\tiny{$r=\frac{Nl}{c_1K}$}};
+\draw[->,densely dotted](Bcn4)++(140:\arcradius)--++(14pt,20pt)node[](){\emphsize{$r=\frac{N\ell}{c_1K}$}};
 \path (Bcn2)--node(Bcndots) {\Large{$\vdots$}} (Bcn4);
 \node [right=0.01*\nodewidth of Bcndots]{\tiny{$c_1K$ bins}};
 
@@ -144,10 +141,10 @@
 \draw (BbitnC\cn.east)--(BchecknB\cn.west);
 \draw (BbitnB\cn.east)--(BchecknC\cn.west);
 \draw (BbitnD\cn.east)--(BchecknC\cn.west);
-\path(BbitnD\cn)++(0.6*\moveX,-0.3*\moveX) node(){\tiny{$\mathbf{U}\in\{0,1\}^{c\log r\times r}$}};
 }
+\path(BbitnD2)++(0.6*\moveX,-0.3*\moveX) node(){\tiny{$\mathbf{U}\in\{0,1\}^{c\log r\times r}$}};
 
-\path (BchecknC2)++(2*\textoffs,0.5*\moveYa)node{\tiny{$\log r$ tests}};
-\node [below left=3*\nodewidth and 2*\nodewidth of BbitnD2,anchor=west]{\tiny{$M=\Omega(K \log \frac{Nl}{c_1K})$} };
+\path (BchecknC2)++(3*\textoffs,0.5*\moveYa)node{\emphsize{$\log r$ tests}};
+\node [below left=3*\nodewidth and 2*\nodewidth of BbitnD2,anchor=west]{\emphsize{$M=\Theta(K \log \frac{N}{K})$} };
 
 \end{tikzpicture}

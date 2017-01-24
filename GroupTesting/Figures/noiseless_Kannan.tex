@@ -30,7 +30,7 @@ xlabel={\fsize{Number of tests per defective item ($M/K$)}},
 ylabel={\fsize{Fraction of unidentified defectives}},
 legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell align=left,font=\fsize}
 ]
-\addplot [color=blue,solid, mark=square,mark options={solid},line width=1pt]
+\addplot [color=blue,dashed, mark=square,mark options={solid},line width=1pt]
   table[row sep=crcr]{96	0.8\\
 144	0.4\\
 192	0.16\\
@@ -47,7 +47,7 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 };
 \addlegendentry{$\ell=3$};
 
-\addplot [color=blue,solid,line width=2pt,mark=square,mark options={solid}]
+\addplot [color=blue,dashed,line width=1pt,mark=triangle,mark options={solid}]
   table[row sep=crcr]{96	0.94\\
 144	0.68\\
 192	0.32\\
@@ -65,7 +65,7 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 \addlegendentry{$\ell=5$};
 
 
-\addplot [color=blue,dashed,mark=square,mark options={solid},line width=1pt]
+\addplot [color=blue,dashed,mark=o,mark options={solid},line width=1pt]
   table[row sep=crcr]{96	0.98\\
 144	0.88\\
 192	0.62\\
@@ -99,7 +99,7 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 %};
 %\addlegendentry{$l=9$};
 
-\addplot [color=red,solid, line width=1pt, mark=star,mark size=2pt]
+\addplot [color=red,solid, line width=1pt, mark=square,mark options={solid}]
   table[row sep=crcr]{
 36  0.99261\\
 50.40      8.22e-1 \\
@@ -130,9 +130,9 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 %480.0  0.00021 \\
 %672 0.000076\\
 };
-\addlegendentry{$\ell=3$, Regular};
+\addlegendentry{$\ell=3$, regular};
 
-\addplot [color=red, solid, line width=2pt, mark=triangle, mark size=2pt]
+\addplot [color=red, solid, line width=1pt, mark=triangle,mark options={solid}]
   table[row sep=crcr]{
    39.000    0.970769\\
     50.700      9.16e-1   \\
@@ -161,9 +161,9 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 % 540.000    0.000013\\
 % 604.800    0.000003\\
  };
-\addlegendentry{$\ell=5$, Regular};
+\addlegendentry{$\ell=5$, regular};
 
-\addplot [color=red, dashed, line width=1.0pt,mark=star, mark size=4pt]
+\addplot [color=red, solid, line width=1.0pt,mark=o]
   table[row sep=crcr]{
 42.00  0.99      \\
 58.50	0.9995  \\
@@ -178,7 +178,7 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 540.00  4.00e-6   \\
 594.00  1.25e-6   \\
 };
-\addlegendentry{$\ell=7$, Regular};
+\addlegendentry{$\ell=7$,regular};
 
 \end{axis}
 \end{tikzpicture}%

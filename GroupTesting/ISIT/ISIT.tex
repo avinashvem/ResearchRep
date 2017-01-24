@@ -42,7 +42,6 @@ For the probabilistic version of the problem, it was shown in \cite{chan2014non,
 
 In \cite{lee2015saffron}, Lee, Pedarsani and Ramchandran proposed a non-adaptive group testing scheme based on \textit{left-regular sparse-graph} codes and an elegant \textit{peeling} based iterative decoder, which are popular tools in channel coding \cite{richardson2008modern}. They refer to the scheme as SAFFRON(\textbf{S}parse-gr\textbf{A}ph codes \textbf{F}ramewrok \textbf{F}or g\textbf{RO}up testi\textbf{N}g), a reference which we will use throughout this paper. The authors proved that using the SAFFRON scheme, $m=c_\epsilon K\log_2 N$ number of tests suffice to identify at least $(1-\epsilon)$ fraction of defective items (the approximate version of GT) w.h.p. The precise value of constant $c_\epsilon$ as a function of the required error floor $\epsilon$ is also given. More importantly the computational complexity of the proposed iterative decoder is only $O(K\log N)$. They also showed that with $m=c_\alpha K\log K \log N$ tests  i.e., with an additional $\log K$ factor, the \textit{whole} defective set (the probabilistic version of GT) can be recovered with an asymptotically high probability of $1-O(K^{-\alpha})$.
 
-\subsection*{Our Contributions}
 In this work, we propose a non-adaptive GT scheme that is similar to the SAFFRON, but we employ \textit{left-and-right-regular sparse-graph} codes instead of the left-regular sparse-graph codes, and show that we only require $c_\epsilon K\log \frac{N}{K}$ number of tests for an error floor of $\epsilon$ in the approximate GT problem.
 % The other novel result of this construction is that for a fixed error floor $\epsilon$ we can achieve these optimal testing and sampling complexities using a fixed and finite value for parameter $\ell$ which is the maximum number of tests any item participates in. In other words we are able to solve efficiently for GT (approximate version) under the constraint that the total number of times any item can be divided\cite{gandikotanearly} is finite (finite divisibility constraint). %And also the first testing scheme for the approximate version that achieves the optimal testing complexity under finite divisibility constraint.
 Although the testing complexity of our scheme has the same asymptotic order $O(K\log N)$ as that of \cite{lee2015saffron}, which as far as we are aware is the best known lower bound for approximate GT, it provides a better explicit upper bound of $\Theta(K\log \frac{N}{K})$ with optimal computational complexity and also a significant improvement in the required number of tests for finite values of $K,N$. 
@@ -80,7 +79,7 @@ where $\odot$ is the usual matrix multiplication in which the arithmetic additio
 %where the new operator $\bigORtxt$ is the logical OR of all the elements in the vector and $\circ$ is the Hadamard product of matrices/vectors of identical size.
 %
 \subsection*{Testing Scheme}
-In this section we will briefly review the SAFFRON testing scheme \cite{lee2015saffron} and the decoder. The testing scheme consists of two stages: the first stage is based on a left-regular sparse graph code which pools the $N$ items into non-disjoint $M$ bins where each item belongs to exactly $\ell$ bins. The second stage comprises producing $h$ testing outputs at each bin where the $h$ different combinations of the pooled items at the respective bin are tested according to a universal signature matrix. For the first stage the authors consider a bipartite graph with $N$ variable nodes (corresponding to the $N$ items) and $M$ bin nodes. Each variable node is connected to $\ell$ bin nodes chosen uniformly at random from the $M$ available bin nodes. All the variable nodes (historically depicted on the left side of the graph in coding theory) have a degree $\ell$ (hence, the left-regular graph), whereas the degree of a bin node on the right is a random variable ranging from $[1:n]$.
+In this section we will briefly review the SAFFRON testing scheme \cite{lee2015saffron} and the decoder. The testing scheme consists of two stages: the first stage is based on a left-regular sparse graph code which pools the $N$ items into non-disjoint $M$ bins where each item belongs to exactly $\ell$ bins. The second stage comprises producing $h$ testing outputs at each bin where the $h$ different combinations of the pooled items at the respective bin are tested according to a universal signature matrix. For the first stage the authors consider a bipartite graph with $N$ variable nodes (corresponding to the $N$ items) and $M$ bin nodes. Each variable node is connected to $\ell$ bin nodes chosen uniformly at random from the $M$ available bin nodes. All the variable nodes (historically depicted on the left side of the graph in coding theory) have a degree $\ell$ (hence, the left-regular graph), whereas the degree of a bin node on the right is a random variable ranging from $[):N]$.
 
 \begin{definition}[Left-regular sparse graph ensemble]
 Let $\mc{G}_{\ell}(N,M)$ be the ensemble of left-regular bipartite graphs where for each variable node the $\ell$ right node connections are chosen uniformly at random from the $M$ right nodes.
@@ -154,7 +153,7 @@ First part of the decoder, which we will refer to as bin decoder, will be able t
 \section{Proposed Scheme}
 The main difference between the SAFFRON scheme and our proposed scheme is that we use a left-and-right-regular sparse-graph in the first stage for the binning operation.
 
-\textcolor[rgb]{1.00,0.00,0.00}{If there is space in the end, it may be better to give a small example of the construction. Nothing makes it as clear as an example.}
+%\textcolor[rgb]{1.00,0.00,0.00}{If there is space in the end, it may be better to give a small example of the construction. Nothing makes it as clear as an example.}
 
 \begin{definition}[Left-and-right-regular sparse graph ensemble]
 Let $\mc{G}_{\ell,r}(N,M)$ be the ensemble of left and right regular bipartite graphs where the $N\ell$ edge connections from the left and $Mr(=N\ell)$ edge connections from the right are paired up according to a permutation $\pi_{N\ell}$ chosen at random from $S_{N\ell}$.
@@ -172,10 +171,48 @@ Note that $\mbf{A}_i$ is defined by placing the $r$ columns of $\mbf{U}$ at the 
 %\caption{Illustration of the main differences between SAFFRON \cite{lee2015saffron} on the left and our regular-SAFFRON scheme on the right. In both the schemes the peeling decoder on sparse graph requires $\Omega(K)$ bins. But for the bin decoder part, in SAFFRON scheme the right degree is a random variable with a maximum value of $N$ and thus requires $\Omega(\log N)$ tests at each bin. Whereas our scheme based on right-regular sparse graph has a constant right degree of $\Omega(\frac{N}{K})$ and thus requires only $\Omega(\log \frac{N}{K})$ tests at each bin. Thus we can improve the number of tests from $\Omega (K\log N)$ to order optimal $\Omega(K\log \frac{N}{K})$.}
 %\end{figure*}
 
+
+\begin{Example}\label{exmp:tensor}
+Let us look at an example for $(N,M)=(6,3)$ and $(\ell,r)=(2,4)$. Then the adjacency matrix $\mbf{T}_G$ of a graph $G\in\mathcal{G}_{2,4}(6,3)$ and a signature matrix $\mbf{U}\in \{0,1\}^{4\times 3}$ for $p=1$ and $\log_2 r = 2$ are given by
+ \[
+ \mbf{T}_G = \begin{bmatrix}
+1 & 1 & 0 & 1 & 0 & 1    \\
+0 & 1 & 1 & 1& 1 & 0 \\
+1 & 0 & 1 & 0 & 1 & 1
+\end{bmatrix}
+\mbf{U} = \begin{bmatrix}
+0 & 0 & 1  & 1\\
+0 & 1 & 0  & 1\\
+1 & 1 & 0  & 0\\
+1 & 0 & 1  & 0
+\end{bmatrix}.
+ \] 
+ %denote the adjacency matrix of a graph $G$ with $6$ items and $3$ bins from the ensemble $\mathcal{G}_{2,4}(6,3)$. We choose $p=1$ and $\log_2 r = 2$ thus resulting in $\mbf{U}$ of dimension $\{0,1\}^{4\times 3}$
+Then, the measurement matrix $\bf A	$ with $m = 2pM\ceil{\log_2 r}=12$ tests is given by
+\[ \mbf{A} = \begin{bmatrix}
+0 & 0 & 0 & 1 & 0 & 1\\
+0 & 1 & 0 & 0 & 0 & 1\\
+1 & 1 & 0 & 0 & 0 & 0\\
+1 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1& 1 & 0 \\
+0 & 0 & 1 & 0& 1 & 0 \\
+0 & 1 & 1 & 0& 0 & 0 \\
+0 & 1 & 0 & 1& 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 1\\
+0 & 0 & 1 & 0 & 0 & 1\\
+1 & 0 & 1 & 0 & 0 & 0\\
+1 & 0 & 0 & 0 & 1 & 0\\
+\end{bmatrix}
+ \]
+ \end{Example}
+
+
 \begin{definition}[Regular SAFFRON]
 \label{Def:RegSaffron}
 Let the ensemble of testing matrices be $\mc{G}_{\ell,r}(N,M)\times \mbf{U}_{r,p}$ where a graph $G$ from $\mc{G}_{\ell,r}(N,M)$ and a signature matrix $\mbf{U}$ from $\mbf{U}_{r,p}$ are chosen at random and the testing matrix $\mbf{A}$ is defined according to Eq. \eqref{Eqn:TestingMatrixDefn}. Note that the total number of tests is $2pM\log_2 r$ where $r=\frac{N\ell}{M}$.
 \end{definition}
+
+
 
 \subsection*{Analysis}
 For the regular SAFFRON testing ensemble defined in Def. \ref{Def:RegSaffron}, we employ the iterative decoder described in Sec.~\ref{Sec:PriorWork}. We will
@@ -264,8 +301,8 @@ where the second inequality is due to the union bound over a maximum of $K\ell$ 
 %\end{align*}
 %Similarly we can show $\lim_{K,N\rightarrow \infty}\rho_2=\lambda e^{-\lambda}$.
 %\end{proof}
-
-\textcolor[rgb]{1.00,0.00,0.00}{It may be better to mention that the singleton-only variant and the noisy group testing approaches follow the same ideas from Kannan and co.}
+%
+%\textcolor[rgb]{1.00,0.00,0.00}{It may be better to mention that the singleton-only variant and the noisy group testing approaches follow the same ideas from Kannan and co.}
 
 \section{Total recovery: Singleton-Only Variant}
 In this section we will look at the proposed regular-SAFFRON scheme but with a decoder that operates only on the singleton bins. To elaborate, the only difference is in the decoder which is not iterative in this framework and recovers only the variable nodes connected to the singleton bins and terminates. The trade-off is that now we can recover the \textit{whole} defective set instead of just a large fraction of the defective items with an additional $\log K$ factor tests. Since we do not need to be able to recover resolvable double-tons we only need $2\log_2 r$ number of tests at each bin i.e. we choose $p=1$ in Eqn. \eqref{Eqn:SignatureMatrix}.
@@ -323,19 +360,19 @@ Let $\mc{C}_n$ be a binary error-correcting code with the encoder and decoder fu
 %\label{Eqn:ProbErrorCoding}
 %R<1-H(q)-\delta=1+q\log_2 q+ \overline{q}\log_2\overline{q}-\delta
 %\end{align}
-The modified signature matrix $\mbf{U}'_{r,p}$ can be described via $\mbf{U}_{r, p}$ given in Eq. \eqref{Eqn:SignatureMatrix} and encoding function $f$ for $\mc{C}_n$ where $n=\ceil{\log_2 r}$ as follows:
- \begin{align}
-\label{Eqn:SignatureMatrixModified}
-\mbf{U}_{r,p}'\coleq\begin{bmatrix}
-f(\mbf{b}_1)  & f(\mbf{b}_2) &\cdots & f(\mbf{b}_r) \\
-\overline{f(\mbf{b}_1)} & \overline{f(\mbf{b}_2)} & \cdots & \overline{f(\mbf{b}_r)}\\
-f(\mbf{b}_{\pi^{1}_{1}}) & f(\mbf{b}_{\pi^{1}_{2}}) & \cdots & f(\mbf{b}_{\pi^{1}_{r}})\\
-\overline{f(\mbf{b}_{\pi^{1}_{1}})} & \overline{f(\mbf{b}_{\pi^{1}_{2}})} & \cdots & \overline{f(\mbf{b}_{\pi^{1}_{r}})}\\
-\cdots &  &\vdots \\
-f(\mbf{b}_{\pi^{p-1}_{1}}) & f(\mbf{b}_{\pi^{p-1}_{2}}) & \cdots & f(\mbf{b}_{\pi^{p-1}_{r}})\\
-\overline{f(\mbf{b}_{\pi^{p-1}_{1}})} & \overline{f(\mbf{b}_{\pi^{p-1}_{2}})} & \cdots & \overline{f(\mbf{b}_{\pi^{p-1}_{r}})}\\
-\end{bmatrix}
-\end{align}
+The modified signature matrix $\mbf{U}'_{r,p}=[\mbf{c}_1,\mbf{c}_2,\ldots,\mbf{c}_r]$ where $\mbf{c}_i=[f(\mbf{b}^T_1),\overline{f(\mbf{b}^T_1)},f(\mbf{b}^T_{\pi^{1}_{1}}),\ldots,f(\mbf{b}^T_{\pi^{p-1}_{1}}),\overline{f(\mbf{b}^T_{\pi^{p-1}_{1}})}]^T$ .
+% \begin{align}
+%\label{Eqn:SignatureMatrixModified}
+%\mbf{U}_{r,p}'\coleq\begin{bmatrix}
+%f(\mbf{b}_1)  & f(\mbf{b}_2) &\cdots & f(\mbf{b}_r) \\
+%\overline{f(\mbf{b}_1)} & \overline{f(\mbf{b}_2)} & \cdots & \overline{f(\mbf{b}_r)}\\
+%f(\mbf{b}_{\pi^{1}_{1}}) & f(\mbf{b}_{\pi^{1}_{2}}) & \cdots & f(\mbf{b}_{\pi^{1}_{r}})\\
+%\overline{f(\mbf{b}_{\pi^{1}_{1}})} & \overline{f(\mbf{b}_{\pi^{1}_{2}})} & \cdots & \overline{f(\mbf{b}_{\pi^{1}_{r}})}\\
+%\cdots &  &\vdots \\
+%f(\mbf{b}_{\pi^{p-1}_{1}}) & f(\mbf{b}_{\pi^{p-1}_{2}}) & \cdots & f(\mbf{b}_{\pi^{p-1}_{r}})\\
+%\overline{f(\mbf{b}_{\pi^{p-1}_{1}})} & \overline{f(\mbf{b}_{\pi^{p-1}_{2}})} & \cdots & \overline{f(\mbf{b}_{\pi^{p-1}_{r}})}\\
+%\end{bmatrix}
+%\end{align}
 Then the overall testing matrix $\mbf{A}$ is defined similar to the noiseless case in Sec. \ref{Sec:PriorWork} except that $\mbf{U}$ will be replaced by $\mbf{U'}$ in Eqn.~\eqref{Eqn:TestingMatrixDefn}.  %Eqn:SignatureMatrixModified} Formally it can be defined as $\mbf{A}\coleq [\mbf{A}_{1}^{T},\ldots,\mbf{A}_{M_{1}}^{T}]^T$ where $\mbf{A}_{i}=\mbf{U'} \diag (\mbf{t}_i)$ where the binary vectors $\mbf{t}_i$ are defined in Sec. \ref{Sec:PriorWork}.
 
 %\subsection*{Decoding}
@@ -422,10 +459,8 @@ The results are shown in Fig.~\ref{Fig:SimulationNoiseless}. We observe that the
 \begin{figure}[t!]
 \centering
 \input{\FigPath/noisy_Kannan.tex}
-\caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme \cite{lee2015saffron} with the proposed regular SAFFRON scheme for various left degrees $\ell\in\{3,5,7\}$.
-%For a given $\ell$ the bin detection size is fixed and we vary the number of bins.
-The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
-\label{Fig:SimulationNoisy}
+\caption{MonteCarlo simulations for $K=128, N=2^{32}$. We compare the SAFFRON scheme with the proposed regular-SAFFRON scheme for a left degree $\ell=12$. We fix the number of bins and vary the rate of the error control code used. The plots in blue indicate the SAFFRON scheme\cite{lee2015saffron} and the plots in red indicate the regular-SAFFRON scheme based on left-and-right-regular bipartite graphs.}
+--\label{Fig:SimulationNoisy}
 \end{figure}
 
 
@@ -440,8 +475,8 @@ Similar to the noiseless group testing problem we simulate the performance of ou
 Note that for the above set of parameters the right degree $r=\frac{N\ell}{M}\approx 26$. We choose to operate in field $GF(2^7)$ thus giving us a message length of $4$ symbols. For the choice of code we use a $(4+2e,4)$ Reed-Solomon code for $e\in[0:8]$ thus giving us a column length of $4\times 7(4+2e)$ bits at each bin and the total number of tests $m=28M(4+2e)$.
 %For the signature matrix we choose $p=1$ in Eqn.~\ref{Eqn:SignatureMatrix} i.e. $h=4\log_2 r$. Note that for the above set of parameters the right degree $r=\frac{N\ell}{M_1}\approx 26$. We choose to operate in field $GF(2^7)$ thus giving us a message length of $4$ symbols. Then we encode using a $(4+2e,4)$ Reed-Solomon code for $e\in[0:8]$ thus giving us a column length of $4\times 7(4+2e)$ bits and the total number of tests $M=28M_1(4+2e)$.
 
-\section{Conclusion}
-\textcolor[rgb]{1.00,0.00,0.00}{Write a brief conclusion section.}
+%\section{Conclusion}
+%\textcolor[rgb]{1.00,0.00,0.00}{Write a brief conclusion section.}
 \bibliographystyle{ieeetr}
 \bibliography{\MyPath/journal_abbr,\MyPath/sparseestimation,../grouptesting}
 \end{document}
