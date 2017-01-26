@@ -1,17 +1,11 @@
 \documentclass[conference,twocolumn]{IEEEtran}
+\input{../preamble.tex}
+\usepackage{caption}
+\setcounter{MaxMatrixCols}{20}
+\captionsetup[figure]{font=small,skip=2pt}
 
 \newcommand*{\MyPath}{../../bib}
 \newcommand*{\FigPath}{../Figures}
-\input{\MyPath/Preamble.tex}
-\input{\MyPath/Avinash.def}
-\input{\MyPath/Preamble_tikz.tex}
-
-\setlength{\parindent}{20pt}
-\parskip=5pt
-
-\usepackage{scalerel}
-\DeclareMathOperator*{\bigOR}{\scalerel*{\text{$\vee$}}{\sum}}
-\DeclareMathOperator*{\bigORtxt}{\scalerel*{\text{$\vee$}}{\textstyle\sum}}
 \def\ceps{c_{\epsilon}}
 \def\proofgap{-3ex}
 
@@ -24,29 +18,27 @@ Texas A\&M University\\
 
 \maketitle
 \begin{abstract}
-We consider the problem of non-adaptive group testing of $N$ items out of which $K$ or less items are known to be defective. We propose a testing scheme based on left-{\em and}-right-regular sparse-graph codes and a simple iterative decoder. We show that for any arbitrarily small $\epsilon>0$ our scheme requires only $m=\ceps K\log \frac{c_1N}{K}$ tests to recover $(1-\epsilon)$ fraction of the defective items with high probability (w.h.p) i.e., with probability approaching $1$ asymptotically in $N$ and $K$, where the value of constants $\ceps$ and $\ell$ are a function of the desired error floor $\epsilon$ and constant $c_1=\frac{\ell}{\ceps}$ ($\approx 1$ for various values of $\epsilon$). More importantly the iterative decoding algorithm has a sub-linear computational complexity of $O(K\log \frac{N}{K})$ which is known to be optimal. Also for $m=c_2 K\log K\log \frac{N}{K}$ tests our scheme recovers the \textit{whole} set of defective items w.h.p. These results are valid for both noiseless and noisy versions of the problem as long as the number of defective items scales sub-linearly with the total number of items, i.e., $K=o(N)$. The simulation results validate the theoretical results by showing a substantial improvement in the number of tests required when compared to the testing scheme based on left-regular sparse-graphs.
+We consider the problem of non-adaptive group testing of $N$ items out of which $K$ or less items are known to be defective. We propose a testing scheme based on left-{\em and}-right-regular sparse-graph codes and a simple iterative decoder. We show that for any arbitrarily small $\epsilon>0$ our scheme requires only $m=\ceps K\log \frac{c_1N}{K}$ tests to recover $(1-\epsilon)$ fraction of the defective items with high probability (w.h.p) i.e., with probability approaching $1$ asymptotically in $N$ and $K$, where the value of constants $\ceps$ and $\ell$ are a function of the desired error floor $\epsilon$ and constant $c_1=\frac{\ell}{\ceps}$ ($\approx 1$ for various values of $\epsilon$). More importantly the iterative decoding algorithm has a sub-linear computational complexity of $\mc{O}(K\log \frac{N}{K})$ which is known to be optimal. Also for $m=c_2 K\log K\log \frac{N}{K}$ tests our scheme recovers the \textit{whole} set of defective items w.h.p. These results are valid for both noiseless and noisy versions of the problem as long as the number of defective items scales sub-linearly with the total number of items, i.e., $K=o(N)$. The simulation results validate the theoretical results by showing a substantial improvement in the number of tests required when compared to the testing scheme based on left-regular sparse-graphs.
 \end{abstract}
 
 \section{Introduction}
-The problem of Group Testing (GT) refers to testing a large population of $N$ items for $K$ defective items (or sick people) where grouping multiple items together for a single test is possible. The output of the test is \textit{negative} if all the grouped items are non-defective or else the output is \textit{positive.} In the scenario when $K \ll N$, the objective of GT is to design the testing scheme such that the total number of tests to be performed $m$, is minimized.
+The problem of Group Testing (GT) refers to testing a large population of $N$ items for $K$ defective items (or sick people) where grouping multiple items together for a single test is possible. The output of the test is \textit{negative} if all the grouped items are non-defective or else the output is \textit{positive.} In the scenario when $K \ll N$, the objective of GT is to design the testing scheme such that the total number of tests $m$ to be performed is minimized.
 
-This problem was first introduced to the field of statistics by Dorfman \cite{dorfman1943detection} during World War II for testing the soldiers for syphilis without having to test each soldier individually.
-%Since then group testing has found application in wide variety of problems like clone library screening, non-linear optimization, multi-access communication etc.., \cite{du1999combinatorial} and fields like biology\cite{chen2008survey}, machine learning\cite{malioutov2013exact}, data structures\cite{goodrich2005indexing} and signal processing\cite{emad2014poisson}. A comprehensive survey on group testing algorithms, both combinatorial and probabilistic, can be found in \cite{du1999combinatorial,chan2014non,atia2012boolean}. Since then if we look at the history of the GT problem
-Since then, in the literature on GT, three kinds of reconstruction guarantees have been considered: combinatorial, probabilistic and approximate. In the combinatorial designs for the GT problem, the probability of recovering the defective set should be equal to $1$, whereas for the probabilistic version, one is interested in recovering \textit{all} the defective items with high probability (w.h.p).
+This problem was first introduced to the field of statistics by Dorfman \cite{dorfman1943detection} during World War II for testing the soldiers for syphilis without having to test each soldier individually. In the literature on GT, three kinds of reconstruction guarantees have been considered: combinatorial, probabilistic and approximate. In the combinatorial designs for the GT problem, the probability of recovering the defective set should be equal to $1$, whereas for the probabilistic version, one is interested in recovering \textit{all} the defective items with high probability (w.h.p).
 %ith high probability which usually refers  either greater than or equal to $(1-\varepsilon)$ for arbitrarily small $\varepsilon>0$ or approaching $1$ asymptotically in $N$ and $K$.
 For the approximate recovery version, one is interested in only recovering a $(1-\epsilon)$ fraction of the defective items (not the whole set) w.h.p. %ith a high probability.
 
-For combinatorial GT, the best known lower bound on the number of tests required is $\Omega(K^2\frac{\log N}{\log K})$ \cite{d1982bounds,erdos1985families} whereas the best known achievability bound is $\Omega(K^2 \log N)$ tests \cite{kautz1964nonrandom,porat2011explicit}. Most of these results were based on algorithms relying on exhaustive searches and hence, have a high computational complexity of at least $O(K^2 N\log N)$. Only recently a scheme with efficient decoding was proposed by Indyk et al., \cite{indyk2010efficiently} where all the defective items are guaranteed to be recovered using $m=O(K^2\log N)$ tests in $\text{poly}(K)\cdot O(m \log^2 m )+O(m^2)$ time.
+For combinatorial GT, the best known lower bound on the number of tests required is $\Omega(K^2\frac{\log N}{\log K})$ \cite{d1982bounds} whereas the best known achievability bound is $\Omega(K^2 \log N)$ tests \cite{kautz1964nonrandom,porat2011explicit}. Most of these results were based on algorithms relying on exhaustive searches and hence, have a high computational complexity of at least $\mc{O}(K^2 N\log N)$. Only recently a scheme with efficient decoding was proposed by Indyk et al., \cite{indyk2010efficiently} where all the defective items are guaranteed to be recovered using $m=\mc{O}(K^2\log N)$ tests in $\text{poly}(K)\cdot \mc{O}(m \log^2 m )+\mc{O}(m^2)$ time.
 
-For the probabilistic version of the problem, it was shown in \cite{chan2014non,atia2012boolean} that the number of tests necessary is $\Omega(K\log \frac{N}{K})$ which is the best known lower bound in the literature. And regarding the best known achievability bound, Mazumdar \cite{mazumdar2015nonadaptive} proposed a construction that requires $O(K\frac{\log^2 N}{\log K})$ tests to recover the defective set w.h.p. For the approximate version, it was shown \cite{atia2012boolean} that the required number of tests scale as $O(K\log N)$ and to the best of our knowledge, this is the tightest bound known.
+For the probabilistic version of the problem, it was shown in \cite{chan2014non,atia2012boolean} that the number of tests necessary is $\Omega(K\log \frac{N}{K})$ which is the best known lower bound in the literature. And regarding the best known achievability bound, Mazumdar \cite{mazumdar2015nonadaptive} proposed a construction that requires $\mc{O}(K\frac{\log^2 N}{\log K})$ tests to recover the defective set w.h.p. For the approximate version, it was shown \cite{atia2012boolean} that the required number of tests scale as $\mc{O}(K\log N)$ and to the best of our knowledge, this is the tightest bound known.
 
-In \cite{lee2015saffron}, Lee, Pedarsani and Ramchandran proposed a non-adaptive group testing scheme based on \textit{left-regular sparse-graph} codes and an elegant \textit{peeling} based iterative decoder, which are popular tools in channel coding \cite{richardson2008modern}. They refer to the scheme as SAFFRON(\textbf{S}parse-gr\textbf{A}ph codes \textbf{F}ramewrok \textbf{F}or g\textbf{RO}up testi\textbf{N}g), a reference which we will use throughout this paper. The authors proved that using the SAFFRON scheme, $m=c_\epsilon K\log_2 N$ number of tests suffice to identify at least $(1-\epsilon)$ fraction of defective items (the approximate version of GT) w.h.p. The precise value of constant $c_\epsilon$ as a function of the required error floor $\epsilon$ is also given. More importantly the computational complexity of the proposed iterative decoder is only $O(K\log N)$. They also showed that with $m=c_\alpha K\log K \log N$ tests  i.e., with an additional $\log K$ factor, the \textit{whole} defective set (the probabilistic version of GT) can be recovered with an asymptotically high probability of $1-O(K^{-\alpha})$.
+In \cite{lee2015saffron}, Lee, Pedarsani and Ramchandran proposed a non-adaptive group testing scheme based on \textit{left-regular sparse-graph} codes and an elegant \textit{peeling} based iterative decoder, which are popular tools in channel coding \cite{richardson2008modern}. They refer to the scheme as SAFFRON(\textbf{S}parse-gr\textbf{A}ph codes \textbf{F}ramewrok \textbf{F}or g\textbf{RO}up testi\textbf{N}g), a reference which we will use throughout this paper. The authors proved that using the SAFFRON scheme, $m=c_\epsilon K\log_2 N$ number of tests suffice to identify at least $(1-\epsilon)$ fraction of defective items (the approximate version of GT) w.h.p. The precise value of constant $c_\epsilon$ as a function of the required error floor $\epsilon$ is also given. More importantly the computational complexity of the proposed iterative decoder is only $\mc{O}(K\log N)$. They also showed that with $m=c_\alpha K\log K \log N$ tests  i.e., with an additional $\log K$ factor, the \textit{whole} defective set (the probabilistic version of GT) can be recovered with an asymptotically high probability of $1-\mc{O}(K^{-\alpha})$.
 
 In this work, we propose a non-adaptive GT scheme that is similar to the SAFFRON, but we employ \textit{left-and-right-regular sparse-graph} codes instead of the left-regular sparse-graph codes, and show that we only require $c_\epsilon K\log \frac{N}{K}$ number of tests for an error floor of $\epsilon$ in the approximate GT problem.
 % The other novel result of this construction is that for a fixed error floor $\epsilon$ we can achieve these optimal testing and sampling complexities using a fixed and finite value for parameter $\ell$ which is the maximum number of tests any item participates in. In other words we are able to solve efficiently for GT (approximate version) under the constraint that the total number of times any item can be divided\cite{gandikotanearly} is finite (finite divisibility constraint). %And also the first testing scheme for the approximate version that achieves the optimal testing complexity under finite divisibility constraint.
-Although the testing complexity of our scheme has the same asymptotic order $O(K\log N)$ as that of \cite{lee2015saffron}, which as far as we are aware is the best known lower bound for approximate GT, it provides a better explicit upper bound of $\Theta(K\log \frac{N}{K})$ with optimal computational complexity and also a significant improvement in the required number of tests for finite values of $K,N$. 
+Although the testing complexity of our scheme has the same asymptotic order $\mc{O}(K\log N)$ as that of \cite{lee2015saffron}, which as far as we are aware is the best known lower bound for approximate GT, it provides a better explicit upper bound of $\Theta(K\log \frac{N}{K})$ with optimal computational complexity and also a significant improvement in the required number of tests for finite values of $K,N$. 
 %To the best of our knowledge, this is the first scheme which meets the lower bound {\textcolor{red}{(We must be careful here since it is not exactly a lower bound but only order optimal lower bound, right?)}) for approximate GT problem with optimal computational complexity. 
-We also show that for $m=c\cdot K\log K \log \frac{N}{K}$ tests  i.e., with an additional $\log K$ factor the \textit{whole} defective set can be recovered w.h.p of $1-O(K^{-\alpha})$. Note that the testing complexity is only a $\log K$ factor away from the best known lower bound of $\Omega(K\log \frac{N}{K})$ \cite{chan2014non} for the probabilistic GT.
+We also show that for $m=c\cdot K\log K \log \frac{N}{K}$ tests  i.e., with an additional $\log K$ factor the \textit{whole} defective set can be recovered w.h.p of $1-\mc{O}(K^{-\alpha})$. Note that the testing complexity is only a $\log K$ factor away from the best known lower bound of $\Omega(K\log \frac{N}{K})$ \cite{chan2014non} for the probabilistic GT.
 % ({\blue the section for this result(recent addition)}, which is very short as it relies only on singleton bins and no iterative decoding process needs to be added).
 %order optimal for both the noiseless and noisy settings as mentioned in \cite{lee2015saffron}. Regarding the optimality of the number of tests for the noiseless setting where both $K$ and $N$ scale satisfying $K=o(N)$, it was shown \cite{atia2012boolean} that the number of tests need to be atleast as large as $C K \log (\frac{N}{K})$ for some constant $C$ such that the probability of error approaches zero. As far as we are aware this is the tightest lower bound. In the same work it is shown that $C K \log N$ is the sufficient number of tests. In our work we show that in fact $C(\epsilon) K \log(\frac{N}{K})$ tests is sufficient to recover $(1-\epsilon)$ fraction of the defective items with high probability. More survey needs to be done regarding the lower and upper bounds for the number of tests in noiseless and noisy settings especially under different performance evaluation criteria. For e.g., in \cite{atia2012boolean} the upper bound(achievable) on the minimal number of tests $O(K \log N)$ is when the performance metric considered is the average probability of error that the decoded support set is not exactly equal to the original support set. But for the framework where $\epsilon$-fraction of the defective items are allowed to be missed, only the locd wer bound on the number of tests required is given.
 
@@ -79,7 +71,7 @@ where $\odot$ is the usual matrix multiplication in which the arithmetic additio
 %where the new operator $\bigORtxt$ is the logical OR of all the elements in the vector and $\circ$ is the Hadamard product of matrices/vectors of identical size.
 %
 \subsection*{Testing Scheme}
-In this section we will briefly review the SAFFRON testing scheme \cite{lee2015saffron} and the decoder. The testing scheme consists of two stages: the first stage is based on a left-regular sparse graph code which pools the $N$ items into non-disjoint $M$ bins where each item belongs to exactly $\ell$ bins. The second stage comprises producing $h$ testing outputs at each bin where the $h$ different combinations of the pooled items at the respective bin are tested according to a universal signature matrix. For the first stage the authors consider a bipartite graph with $N$ variable nodes (corresponding to the $N$ items) and $M$ bin nodes. Each variable node is connected to $\ell$ bin nodes chosen uniformly at random from the $M$ available bin nodes. All the variable nodes (historically depicted on the left side of the graph in coding theory) have a degree $\ell$ (hence, the left-regular graph), whereas the degree of a bin node on the right is a random variable ranging from $[):N]$.
+In this section we will briefly review the SAFFRON testing scheme \cite{lee2015saffron} and the decoder. The testing scheme consists of two stages: the first stage is based on a left-regular sparse graph code which pools the $N$ items into non-disjoint $M$ bins where each item belongs to exactly $\ell$ bins. The second stage comprises producing $h$ testing outputs at each bin where the $h$ different combinations of the pooled items at the respective bin are tested according to a universal signature matrix. For the first stage the authors consider a bipartite graph with $N$ variable nodes (corresponding to the $N$ items) and $M$ bin nodes. Each variable node is connected to $\ell$ bin nodes chosen uniformly at random from the $M$ available bin nodes. All the variable nodes (historically depicted on the left side of the graph in coding theory) have a degree $\ell$ (hence, the left-regular graph), whereas the degree of a bin node on the right is a random variable ranging from $[0:N]$.
 
 \begin{definition}[Left-regular sparse graph ensemble]
 Let $\mc{G}_{\ell}(N,M)$ be the ensemble of left-regular bipartite graphs where for each variable node the $\ell$ right node connections are chosen uniformly at random from the $M$ right nodes.
@@ -110,50 +102,10 @@ where $\mbf{b}_{i}\in\{0,1\}^{\ceil{\log_{2}r}}$ is the binary expansion vector 
 \subsection*{Decoding}
 Before describing the decoding process let us review some terminology. A bin node is referred to as a \textit{singleton} if there is exactly one non-zero variable node connected, as a \textit{double-ton} if two non-zero variable nodes are connected and a \textit{multi-ton} if more than two non-zero variable nodes. For a double-ton if we know the identity of one of the two non-zero variables nodes leaving the decoder to decode the identity of the other one, the bin is referred to as a \textit{resolvable double-ton}.
 
-First part of the decoder, which we will refer to as bin decoder, will be able to detect and decode the identity of the connected non-zero variable nodes exactly if the bin is a singleton or a resolvable double-ton. If the bin is a multi-ton, the bin decoder will detect it neither as a singleton nor a resolvable double-ton w.h.p. The second part of the decoder which we will refer to as the peeling decoder \cite{li2015subisit}, when given the identities of some of the non-zero variable nodes by the bin decoder, identifies the bins connected to the recovered variable nodes and looks for newly uncovered resolvable double-tons in these bins. This process of recovering new non-zero variable nodes from already discovered non-zero variable nodes proceeds in an iterative manner. For details of the decoder we refer the reader to \cite{lee2015saffron}. Note that we are not literally peeling off the decoded nodes from the graph because of the \textit{non-linear} OR operation on the non-zero variable nodes at each bin thus preventing us in subtracting the effect of the non-zero node from the measurements of the bin node unlike in the problems of compressed sensing or LDPC codes on binary erasure channel.
-
-%\begin{Remark}
-%\end{Remark}
-%Now we state the series of lemmas and theorems, without proofs, from \cite{lee2015saffron} that shows that the SAFFRON scheme with the described peeling decoder solves the approximate GT with $\Omega( K\log N)$ tests and $O(K\log N)$ computational complexity.
-%
-%\begin{lemma}[Bin decoder analysis]
-%\label{Lem:BinDecoderAnalysis}
-%For a signature matrix $\mbf{U}_{r,p}$ as described in \eqref{Eqn:SignatureMatrix}, the bin decoder successfully detects and resolves if the bin is either a singleton or a resolvable double-ton. In the case of the bin being a multi-ton, the bin decoder declares a wrong hypothesis of either a singleton or a resolvable double-ton with a probability no greater than $\frac{1}{r^p}$.
-%\end{lemma}
-%
-%For convenience the performance of the peeling decoder is analyzed independently of the bin decoder i.e., a peeling decoder is considered which assumes that the bin decoder is working accurately which will be referred to as \textit{oracle based peeling decoder}. Another simplification is that a pruned graph is considered where all the zero variable nodes and their respective edges are removed from the graph. Also the oracle based peeling decoder is assumed to decode a variable node if it is connected to a bin-node with degree one or degree two with one of them already decoded, in an iterative fashion. Any right node with more than degree two is untouched by this oracle based peeling decoder. It is easy to verify that the original decoder with accurate bin decoding is equivalent to this simplified oracle based peeling decoder on a pruned graph.
-%
-%\begin{definition}[Pruned graph ensemble]
-%We will define the pruned graph ensemble $\tilde{\mc{G}}_{\ell}(N,K,M_1)$ as the set of all bipartite graphs obtained from removing a random $N-K$ subset of variable nodes from a graph from the ensemble $\mc{G}_{\ell}(N,M_1)$. Note that graphs from the pruned ensemble have $K$ variable nodes.
-%\end{definition}	
-%
-%Before we analyze the pruned graph ensemble let us define the right-node degree distribution (d.d) of an ensemble as $R(x)=\sum_{i}R_i x^i$ where $R_i$ is the probability that a right-node has degree $i$. Similarly the edge d.d $\rho(x)=\sum_{i}\rho_ix^{i-1}$ is defined where $\rho_i$ is the probability that a random edge in the graph is connected to a right-node of degree $i$. Note that the left-degree distribution is regular even for the pruned graph ensemble and hence is not specifically mentioned.
-%
-%\begin{lemma}[Edge d.d of Pruned graph]
-%For the pruned ensemble $\tilde{\mc{G}}_{\ell}(N,K,M_1)$, it can be shown in the limit $K,N\rightarrow\infty$ that $\rho_{1}=e^{-\lambda}$ and $\rho_{2}=\lambda e^{-\lambda}$ where $\lambda=l/c_1$ if $M_1=c_1K$ for some constant $c_1$.
-%\end{lemma}
-%
-%\begin{lemma}
-%\label{Lem:PeelingAnalysisLeftRegular}
-%For the pruned graph ensemble $\tilde{\mc{G}}_{\ell}(N, K,M_1)$ the oracle-based peeling decoder fails to decode atleast $(1-\epsilon)$ fraction of the variable nodes with exponentially decaying probability if $M_1\geq \ceps K$ where $\ceps$ for various $\epsilon$ is given in Table. \ref{Table:constantsDE}.
-%\end{lemma}
-%\begin{proof}
-%Instead of reworking the whole proof here from \cite{lee2015saffron}, we will list the main steps involved in the proof which we will use further along. If we let $p_j$ be the probability that a random defective item is not identified at iteration $j$, in the limit $N \text{ and } K\rightarrow \infty$ we can write density evolution (DE) equation relating $p_{j+1}$ to $p_{j}$ as
-%\begin{align*}
-%p_{j+1}=\left[1-(\rho_1+\rho_2(1-p_j))\right]^{\ell-1}.
-%\end{align*}
-%For this DE, we can see that $0$ is not a fixed point and hence $p_j\nrightarrow 0$ as $j\rightarrow\infty$. Therefore numerically optimizing the values of $\ceps$ and $\ell$ such that $\lim_{j\rightarrow\infty}p_j\leq \epsilon$ gives the optimal values for $\ceps$ and $\ell$ given in Table. \ref{Table:constantsDE}.
-%\end{proof}
-
-%Combining the lemmas and remarks above, the main result from \cite{lee2015saffron} can be summarized as follows.
-%\begin{theorem}
-%For any arbitrarily-small $\epsilon>0$ the SAFFRON framework performing $m=6\ceps K \log_{2}N$ tests recovers atleast $(1-\epsilon)$ fraction of the defective items with a high probability of atleast $1-O(\frac{K}{N^2})$. And the computational complexity of the decoding scheme is $O(K\log N)$. The constant $\ceps$ is given in Table. \ref{Table:constantsDE} for some values of $\epsilon$.
-%\end{theorem}
+First part of the decoder, which we will refer to as bin decoder, will be able to detect and decode the identity of the connected non-zero variable nodes exactly if the bin is a singleton or a resolvable double-ton. If the bin is a multi-ton, the bin decoder will detect it neither as a singleton nor a resolvable double-ton w.h.p. The second part of the decoder which we will refer to as the peeling decoder \cite{li2015subisit}, when given the identities of some of the non-zero variable nodes by the bin decoder, identifies the bins connected to the recovered variable nodes and looks for newly uncovered resolvable double-tons in these bins. This process of recovering new non-zero variable nodes from already discovered non-zero variable nodes proceeds in an iterative manner. For details of the decoder we refer the reader to \cite{lee2015saffron,vem2017regular}. Note that we are not literally peeling off the decoded nodes from the graph because of the \textit{non-linear} OR operation on the non-zero variable nodes at each bin thus preventing us in subtracting the effect of the non-zero node from the measurements of the bin node unlike in the problems of compressed sensing or LDPC codes on binary erasure channel.
 
 \section{Proposed Scheme}
 The main difference between the SAFFRON scheme and our proposed scheme is that we use a left-and-right-regular sparse-graph in the first stage for the binning operation.
-
-%\textcolor[rgb]{1.00,0.00,0.00}{If there is space in the end, it may be better to give a small example of the construction. Nothing makes it as clear as an example.}
 
 \begin{definition}[Left-and-right-regular sparse graph ensemble]
 Let $\mc{G}_{\ell,r}(N,M)$ be the ensemble of left and right regular bipartite graphs where the $N\ell$ edge connections from the left and $Mr(=N\ell)$ edge connections from the right are paired up according to a permutation $\pi_{N\ell}$ chosen at random from $S_{N\ell}$.
@@ -166,16 +118,10 @@ Let $\mc{G}_{\ell,r}(N,M)$ be the ensemble of left and right regular bipartite g
  \end{align}
 Note that $\mbf{A}_i$ is defined by placing the $r$ columns of $\mbf{U}$ at the $r$ non-zero indices of $\mbf{t}_i$ and the remaining are padded with zero columns. We can observe that the total number of tests for this testing scheme is $m=M\times h$ where $h=2p\log_2 r$.
 
-%\begin{figure*}[t!]
-%\centering \scalebox{1}{\input{\FigPath/Difference_in_Schemes.tex}}
-%\caption{Illustration of the main differences between SAFFRON \cite{lee2015saffron} on the left and our regular-SAFFRON scheme on the right. In both the schemes the peeling decoder on sparse graph requires $\Omega(K)$ bins. But for the bin decoder part, in SAFFRON scheme the right degree is a random variable with a maximum value of $N$ and thus requires $\Omega(\log N)$ tests at each bin. Whereas our scheme based on right-regular sparse graph has a constant right degree of $\Omega(\frac{N}{K})$ and thus requires only $\Omega(\log \frac{N}{K})$ tests at each bin. Thus we can improve the number of tests from $\Omega (K\log N)$ to order optimal $\Omega(K\log \frac{N}{K})$.}
-%\end{figure*}
-
-
 \begin{Example}\label{exmp:tensor}
 Let us look at an example for $(N,M)=(6,3)$ and $(\ell,r)=(2,4)$. Then the adjacency matrix $\mbf{T}_G$ of a graph $G\in\mathcal{G}_{2,4}(6,3)$ and a signature matrix $\mbf{U}\in \{0,1\}^{4\times 3}$ for $p=1$ and $\log_2 r = 2$ are given by
- \[
- \mbf{T}_G = \begin{bmatrix}
+\[
+\mbf{T}_G = \begin{bmatrix}
 1 & 1 & 0 & 1 & 0 & 1    \\
 0 & 1 & 1 & 1& 1 & 0 \\
 1 & 0 & 1 & 0 & 1 & 1
@@ -187,22 +133,32 @@ Let us look at an example for $(N,M)=(6,3)$ and $(\ell,r)=(2,4)$. Then the adjac
 1 & 0 & 1  & 0
 \end{bmatrix}.
  \] 
- %denote the adjacency matrix of a graph $G$ with $6$ items and $3$ bins from the ensemble $\mathcal{G}_{2,4}(6,3)$. We choose $p=1$ and $\log_2 r = 2$ thus resulting in $\mbf{U}$ of dimension $\{0,1\}^{4\times 3}$
-Then, the measurement matrix $\bf A	$ with $m = 2pM\ceil{\log_2 r}=12$ tests is given by
-\[ \mbf{A} = \begin{bmatrix}
-0 & 0 & 0 & 1 & 0 & 1\\
-0 & 1 & 0 & 0 & 0 & 1\\
-1 & 1 & 0 & 0 & 0 & 0\\
-1 & 0 & 0 & 1 & 0 & 0\\
-0 & 0 & 0 & 1& 1 & 0 \\
-0 & 0 & 1 & 0& 1 & 0 \\
-0 & 1 & 1 & 0& 0 & 0 \\
-0 & 1 & 0 & 1& 0 & 0 \\
-0 & 0 & 0 & 0 & 1 & 1\\
-0 & 0 & 1 & 0 & 0 & 1\\
-1 & 0 & 1 & 0 & 0 & 0\\
-1 & 0 & 0 & 0 & 1 & 0\\
-\end{bmatrix}
+Then, the measurement matrix $\bf A	$ with $m = 2pM\ceil{\log_2 r}=12$ tests thus of size $12\times 6$ is given by
+%\[
+% \mbf{A} = \begin{bmatrix}
+%0 & 0 & 0 & 1 & 0 & 1\\
+%0 & 1 & 0 & 0 & 0 & 1\\
+%1 & 1 & 0 & 0 & 0 & 0\\
+%1 & 0 & 0 & 1 & 0 & 0\\
+%0 & 0 & 0 & 1& 1 & 0 \\
+%0 & 0 & 1 & 0& 1 & 0 \\
+%0 & 1 & 1 & 0& 0 & 0 \\
+%0 & 1 & 0 & 1& 0 & 0 \\
+%0 & 0 & 0 & 0 & 1 & 1\\
+%0 & 0 & 1 & 0 & 0 & 1\\
+%1 & 0 & 1 & 0 & 0 & 0\\
+%1 & 0 & 0 & 0 & 1 & 0\\
+%\end{bmatrix}
+% \] 
+\[
+\mbf{A} = \begin{bmatrix}
+0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1\\
+0 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 0\\
+1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 1\\
+1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 
+\end{bmatrix}^T
  \]
  \end{Example}
 
@@ -230,7 +186,7 @@ For the pruned graph ensemble $\tilde{\mc{G}}_{\ell,r}(N,K,M)$ it can be shown i
 \end{lemma}
 \vspace{\proofgap}
 \begin{proof}
-See .
+See \cite{vem2017regular}.
 % \textcolor{red}{In general, it appears that there is a order of limits issue here. We would really like to use a d.d. that is valid for any $K$ and $N$ and then we take the limit for $K, N \rightarrow \infty$. However, here we take the limit to obtain the d.d. The same problem also occurs in our analysis of the multiple access problem etc. But it would be nice to formalize this proof correctly. We should at least make a note of this somewhere. Otherwise, an attentive reviewer may point out this mistake. How to Kannan and co handle this issue?}
 \end{proof}
 %Note that even if our initial ensemble is left-and-right-regular the pruned graph has asymptotically same degree distribution as in the SAFFRON scheme where the initial graph is from left-regular ensemble.
@@ -241,7 +197,7 @@ For the pruned graph ensemble $\tilde{\mc{G}}_{\ell,r}(N, K,M)$ the oracle-based
 \vspace{\proofgap}
 \end{lemma}
 \begin{proof}
-From Lemma. \ref{Lem:EdgeDDPrunedGraph} the edge d.d. coefficients $\rho_1$ and $\rho_2$ are identical to that of the SAFFRON scheme. Thus we can employ the proof same as \cite[Thm.~4.1]{lee2015saffron} where the authors use the density evolution equations based on $\rho_1$ and $\rho_2$ to show the required result. For details we refer the reader to.
+From Lemma. \ref{Lem:EdgeDDPrunedGraph} the edge d.d. coefficients $\rho_1$ and $\rho_2$ are identical to that of the SAFFRON scheme. Thus we can employ the proof same as \cite[Thm.~4.1]{lee2015saffron} where the authors use the density evolution equations based on $\rho_1$ and $\rho_2$ to show the required result. See \cite{vem2017regular} for details.
 \end{proof}
 
 \begin{table}[h!]
@@ -268,7 +224,7 @@ This result was proved in \cite{lee2015saffron} for the choice of parameters $r=
 
 \begin{theorem}
 \label{Thm:NoiselessMain}
-Let $p\in\Z$ such that $K=o(N^{1-1/p})$. A random testing matrix from the proposed regular SAFFRON ensemble $\mc{G}_{\ell,\frac{N\ell}{\ceps K}}(N,\ceps K)\times \mbf{U}_{\frac{N\ell}{\ceps K},p}$ with $m=c\cdot K\log_{2}\frac{c_2 N}{K}$ tests recovers atleast $(1-\epsilon)$ fraction of the defective items w.h.p. The computational complexity of the decoding scheme is $O(K\log \frac{N}{K})$. The constants are $c=2p\ceps, c_2=\frac{\ell}{\ceps}$ where $\ell$ and $\ceps$ for various values of $\epsilon$ are given in Table. \ref{Table:constantsDE}.%, for any arbitrarily small $\epsilon>0$,
+Let $p\in\Z$ such that $K=o(N^{1-1/p})$. A random testing matrix from the proposed regular SAFFRON ensemble $\mc{G}_{\ell,\frac{N\ell}{\ceps K}}(N,\ceps K)\times \mbf{U}_{\frac{N\ell}{\ceps K},p}$ with $m=c\cdot K\log_{2}\frac{c_2 N}{K}$ tests recovers atleast $(1-\epsilon)$ fraction of the defective items w.h.p. The computational complexity of the decoding scheme is $\mc{O}(K\log \frac{N}{K})$. The constants are $c=2p\ceps, c_2=\frac{\ell}{\ceps}$ where $\ell$ and $\ceps$ for various values of $\epsilon$ are given in Table. \ref{Table:constantsDE}.%, for any arbitrarily small $\epsilon>0$,
 %with high probability $1-O\left(\frac{K^{p+1}}{N^p}\right)$.
 \end{theorem}
 %Let $p\in\Z$ such that $K$ and $N$ scale as $K\in o(N^{\frac{p}{p+1}})$. The proposed regular SAFFRON framework using $M=2(p+1)\ceps K \log_{2}\frac{N\ell}{\ceps K}$ tests recovers atleast $(1-\epsilon)$ fraction of the defective items with asymptotically high probability of $1-O\left(\frac{K^{p+1}}{N^p}\right)$, for any arbitrarily small $\epsilon>0$. Note that computational complexity of the decoding scheme is $O(K\log \frac{N}{K})$. The constant $\ceps$ for various $\epsilon$ is given in Table. \ref{Table:constantsDE}.
@@ -278,7 +234,7 @@ It remains to be shown that the total probability of error vanishes asymptotical
 \begin{align*}
 P_e &\leq \tx{Pr}(E_1)+ \tx{Pr}(E_2)\\
                &\leq \tx{Pr}(E_1)+ K\ell\tx{ Pr}(E_{\tx{bin}})\\
-               &\in O\left(\frac{K^{p}}{N^{p-1}}\right)
+               &\in \mc{O}\left(\frac{K^{p}}{N^{p-1}}\right)
 \end{align*}
 where the second inequality is due to the union bound over a maximum of $K\ell$ (number of edges in the pruned graph) instances of bin decoding. The third line is due to the fact that $\tx{Pr}(E_1)$ is exponentially decaying in $K$ (see Lemma. \ref{Lem:PeelingRegularAnalysis}) and $\tx{Pr}(E_{\tx{bin}})=(\frac{\ceps K}{N\ell})^{p-1}$ (see Lemma. \ref{Lem:BinDecoderAnalysis} and Def. \ref{Def:RegSaffron})
 \end{proof}
@@ -308,14 +264,14 @@ where the second inequality is due to the union bound over a maximum of $K\ell$ 
 In this section we will look at the proposed regular-SAFFRON scheme but with a decoder that operates only on the singleton bins. To elaborate, the only difference is in the decoder which is not iterative in this framework and recovers only the variable nodes connected to the singleton bins and terminates. The trade-off is that now we can recover the \textit{whole} defective set instead of just a large fraction of the defective items with an additional $\log K$ factor tests. Since we do not need to be able to recover resolvable double-tons we only need $2\log_2 r$ number of tests at each bin i.e. we choose $p=1$ in Eqn. \eqref{Eqn:SignatureMatrix}.
 
 \begin{theorem}
-For $M=c_\alpha K \log K$ and $(\ell,r)=(c_\alpha \log K,\frac{N}{K})$ a random testing matrix from the regular SAFFRON ensemble $\mc{G}_{\ell,r}(N,M)\times \mbf{U}_{r,1}$ with $m=2c_\alpha K\log K \log_2 \frac{N}{K}$ tests with the singleton-only decoder fails to recover all the non-zero variable nodes with a vanishing probability of $O(\frac{1}{K^{\alpha}})$ where $c_\alpha=e(1+\alpha)$.
+For $M=c_\alpha K \log K$ and $(\ell,r)=(c_\alpha \log K,\frac{N}{K})$ a random testing matrix from the regular SAFFRON ensemble $\mc{G}_{\ell,r}(N,M)\times \mbf{U}_{r,1}$ with $m=2c_\alpha K\log K \log_2 \frac{N}{K}$ tests with the singleton-only decoder fails to recover all the non-zero variable nodes with a vanishing probability of $\mc{O}(\frac{1}{K^{\alpha}})$ where $c_\alpha=e(1+\alpha)$.
 %The computational complexity of the decoding scheme is $O(K\log \frac{N}{K})$. The constants are $c=2(p+1)\ceps, c_2=\frac{\ell}{\ceps}$ where $\ell$ and $\ceps$ for various $\epsilon$ are given in Table. \ref{Table:constantsDE}.
 %
 %Using a $(\ell,r)=(c_\alpha \log K,\frac{N}{K})$ regular-bipartite graph, the regular-SAFFRON scheme with $m=2c_\alpha K\log K \log_2 \frac{N}{K}$ tests and the singleton-only decoder fails to recover all the non-zero variable nodes with a vanishing probability of $O(\frac{1}{K^{\alpha}})$ where $c_\alpha=e(1+\alpha)$.
 \end{theorem}
 \vspace{\proofgap}
 \begin{proof}
-For proof see .%As the number of tests in each bin is $2\log_2 \frac{N}{K}$ it is enough if we show that for the number of bins in the bipartite graph equal to $e(1+\alpha)K\log K$ all the variable nodes in the pruned graph are connected to atleast one singleton bin with high probability.
+See \cite{vem2017regular}.%As the number of tests in each bin is $2\log_2 \frac{N}{K}$ it is enough if we show that for the number of bins in the bipartite graph equal to $e(1+\alpha)K\log K$ all the variable nodes in the pruned graph are connected to atleast one singleton bin with high probability.
 %
 %In the pruned graph ensemble, for any particular variable node, the probability that any of the $\ell$ connected bit nodes are not a singleton can be given by $(1-R_1)^\ell$ where $R_1$ is the probability that a bin node in the pruned graph ensemble is a singleton. From Eq. \ref{Eqn:Deg1ChkDistribution} asymptotically the value of $R_1$ approaches
 %\begin{align*}
@@ -343,16 +299,15 @@ where the addition is over binary field and $\mbf{w}\in\{0,1\}^N$ is an i.i.d no
 
 \subsection*{Testing Scheme}
 %In \cite{lee2015saffron} for the robust group testing problem, the signature matrix used for noiseless group testing problem is modified using a error control coding such that it can handle singletons and resolvable doubletons in the presence of noise. The binning operation as defined by the bipartite graph is exactly identical to that of noiseless case. We describe the modifications to the signature matrix and the bin detection decoding scheme as given in \cite{lee2015saffron} for the sake of completeness and then state the performance bounds for our scheme for the noisy group testing problem.
-
-Let $\mc{C}_n$ be a binary error-correcting code with the encoder and decoder functions $f:\{0,1\}^{n}\rightarrow \{0,1\}^{\frac{n}{R}}$ and $g:\{0,1\}^{\frac{n}{R}}\rightarrow \{0,1\}^{n}$ respectively where $R$ is the rate of the code.
+Let $\mc{C}_n$ be the binary error-correcting code with the encoder and decoder functions $f:\{0,1\}^{n}\rightarrow \{0,1\}^{\frac{n}{R}}$ and $g:\{0,1\}^{\frac{n}{R}}\rightarrow \{0,1\}^{n}$ respectively where $R$ is the rate of the code.
 %\begin{itemize}
 %\item Let the encoder and decoder functions be $f:\{0,1\}^{n}\rightarrow \{0,1\}^{\frac{n}{R}}$ and $g:\{0,1\}^{\frac{n}{R}}\rightarrow \{0,1\}^{n}$ respectively where $R$ is the rate of the code.
 %\end{itemize}
 %We can use any error-correcting code but for ease of analysis and tight upper bound for the number of tests
-\textcolor{blue}{ Change this} For the choice of $\mc{C}_n$ consider any capacity achieving codes, polar or spatially-coupled codes, whose properties can be summarized as follows:
+For the choice of $\mc{C}_n$ we consider the class of codes by Justesen\cite{justesen1972class} where for each code the normalized minimum distance and the rate are bounded below by $d$ and $R$ respectively. Choose $d, R$ such that $d>2q$ which will give us the following properties:
 %ich has the following properties use spatially-coupled LDPC codes which are known to be capacity achieving \cite{kumar2014threshold,kudekar2013spatially}. A sequence of codes being  is equivalent to:
 \begin{itemize}
-\item There exists a sequence of codes $\{\mc{C}_n\}$ with the rate of each code being $R$ satisfying $R< C_{\tx{Sh}}(q)-\delta$ for any arbitrary small constant $\delta$ such that the probability of error $\text{Pr}\left(g(\mbf{x+w})\neq \mbf{x}\right)<2^{-\kappa n}$ for some $\kappa >0$. Here $C_{\tx{Sh}}(q)=1-h_2(q)$ is the Shannon capacity of the BSC channel model.
+\item There exists a sequence of codes $\{\mc{C}_n\}$ with the rate of each code being atleast $R$ where $R< C_{\tx{Sh}}(q)-\delta$ for some $\delta$ such that the probability of error $\text{Pr}\left(g(\mbf{x+w})\neq \mbf{x}\right)<2^{-\kappa n}$ for some $\kappa >0$. Here $C_{\tx{Sh}}(q)=1-h_2(q)$ is the Shannon capacity of the BSC channel model.
 \end{itemize}
 %\textcolor[rgb]{1.00,0.00,0.00}{You require the probability of error to decay exponentially, whereas you claim that you can use a Polar code or Spatially coupled code. We do not know that for these codes, the probability of error decays exponentially at least with the successive cancellation decoder or the iterative decoder.}
 %In Eqn.~\ref{Eqn:ProbErrorCoding}, $\overline{q}\coleq 1-q$.
@@ -416,28 +371,27 @@ Then the overall testing matrix $\mbf{A}$ is defined similar to the noiseless ca
 %\end{align*}
 %where the location of the second non-zero variable node $l_1$ needs to be recovered. Given $\mbf{y}=\mbf{u}_{l_0} \vee \mbf{u}_{l_1}+\mbf{w}$ and $\mbf{u}_{l_0}$, $f(\mbf{b}_{\pi_{l_1}^k})+\mbf{w}$ can be recovered since for each segment either the vector $f(\mbf{b}_{\pi^k_{l_0}})$ or it's complement is available. Once $f(\mbf{b}_{\pi_{l_1}^k})+\mbf{w},~\forall k$ are recovered, we apply singleton decoding procedure and rules as described above.
 
-\begin{figure}[t!]
+\begin{figure}
 \centering
-\resizebox{\columnwidth}{!}{\input{\FigPath/noiseless_Kannan.tex}}
-\caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme with our regular SAFFRON scheme for various left degrees $\ell\in\{3,5,7\}$. For a given $\ell$ the bin detection size is fixed and we vary the number of bins. The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
+\resizebox{0.9\columnwidth}{2.4in}{\input{\FigPath/noiseless_sims.tex}}
+\caption{We compare the SAFFRON scheme(blue) with the proposed regular-SAFFRON scheme for For $K=100, N=2^{16}$  and various left degrees $\ell\in\{3,5,7\}$. For a given $\ell$ the bin detection size is fixed and we vary the number of bins.}
 \label{Fig:SimulationNoiseless}
 \end{figure}
 
 \begin{lemma}[Robust Bin Decoder Analysis]
-For $\mbf{U'}_{r,p}$ in \eqref{Eqn:SignatureMatrixModified}, the robust bin decoder misses a singleton with probability no greater than $\frac{p}{r^{\kappa}}$. The robust bin decoder wrongly declares a singleton with probability at most $\frac{1}{r^{p(1+\kappa)}}$.
+For the modified signature matrix $\mbf{U'}_{r,p}$, the robust bin decoder misses a singleton with probability no greater than $\frac{p}{r^{\kappa}}$. The robust bin decoder wrongly declares a singleton with probability no greater than $\frac{1}{r^{p\kappa +p-1}}$.
 \end{lemma}
 The fraction of missed singletons can be compensated by using $M(1+\frac{p}{r^{\kappa}})$ instead of $M$ such that the total number of singletons decoded will be $M(1+\frac{p}{r^{\kappa}})(1-\frac{p}{r^{\kappa}})\approx M$.
 
 \begin{theorem}
-Let $p\in\Z$ such that $K=o\left(N^{(p-1)/p}\right)$. The proposed robust regular SAFFRON scheme using $m=c\cdot K \log_{2}\frac{N\ell}{\ceps K}$ tests recovers atleast $(1-\epsilon)$ fraction of the defective items w.h.p. where $c=2p\beta(q)\ceps$ and $\beta(q)=1/R$. The computational complexity of the decoding scheme is $O(K\log \frac{N}{K})$.
-% $1-O\left(N^{-\kappa}\right)$.
+Let $p\in\Z$ such that $K=o\left(N^{(p-1)/p}\right)$. The proposed robust regular SAFFRON scheme using $m=c\cdot K \log_{2}\frac{N\ell}{\ceps K}$ tests recovers atleast $(1-\epsilon)$ fraction of the defective items w.h.p. where $c=2p\beta(q)\ceps$ and $\beta(q)=1/R$. The computational complexity of the decoding scheme is $\mc{O}(K\log \frac{N}{K})$.
 \end{theorem}
 \begin{proof}
 Similar to the noiseless case the total probability of error $P_e$ is dominated by the performance of bin decoder.
 \begin{align*}
 P_e &\leq  \tx{Pr}(E_1)+ K\ell \tx{ Pr}(E_{\tx{bin}})\\
                &\leq \tx{Pr}(E_1)+ \frac{K^{1+p(1+\kappa)}}{N^{p(1+\kappa)}}\\
-               &=O(N^{-\kappa-1/p})
+               &=\mc{O}(N^{-\kappa-1/p})
 \end{align*}
 where the last line is due to the fact that $\tx{Pr}(E_1)$ is exponentially decaying in $K$ and $K\leq N^{(p-1)/p}$ for large enough $K,N$.
 \end{proof}
@@ -445,7 +399,6 @@ where the last line is due to the fact that $\tx{Pr}(E_1)$ is exponentially deca
 \section{Simulation Results}
 In this section we will evaluate the performance of our proposed regular SAFFRON scheme via Monte Carlo simulations and compare it with the results for SAFFRON scheme provided in \cite{lee2015saffron}.
 \subsection*{Noiseless Group Testing}
-%As per Thm. \ref{Thm:NoiselessMain} the regular SAFFRON scheme we proposed recovers $(1-\epsilon)$ fraction of defective items with a high probability for $M_1>c_1 K$ where the pairs ($c_1,\ell$) are given for various values of error floors $\epsilon$ in Table.~\ref{Table:constantsDE}.
 The system parameters are summarized below:
 \begin{itemize}
 \item We fix $N=2^{16}$ and $K=100$
@@ -456,13 +409,12 @@ The system parameters are summarized below:
 \end{itemize}
 The results are shown in Fig.~\ref{Fig:SimulationNoiseless}. We observe that there is clear improvement in performance for our regular SAFFRON scheme when compared to the SAFFRON scheme for each $\ell\in\{3,5,7\}$.
 
-\begin{figure}[t!]
+\begin{figure}
 \centering
-\input{\FigPath/noisy_Kannan.tex}
-\caption{MonteCarlo simulations for $K=128, N=2^{32}$. We compare the SAFFRON scheme with the proposed regular-SAFFRON scheme for a left degree $\ell=12$. We fix the number of bins and vary the rate of the error control code used. The plots in blue indicate the SAFFRON scheme\cite{lee2015saffron} and the plots in red indicate the regular-SAFFRON scheme based on left-and-right-regular bipartite graphs.}
---\label{Fig:SimulationNoisy}
+\resizebox{0.86\columnwidth}{!}{\input{\FigPath/noisy_sims.tex}}
+\caption{For $K=128, N=2^{32}$ we compare the SAFFRON scheme(blue) \cite{lee2015saffron} with the proposed regular-SAFFRON scheme(red) for a left degree $\ell=12$  . We fix the number of bins and vary the rate of the error control code used.}
+\label{Fig:SimulationNoisy}
 \end{figure}
-
 
 \subsection*{Noisy Group Testing}
 Similar to the noiseless group testing problem we simulate the performance of our robust regular SAFFRON scheme and compare it with that of the SAFFRON scheme. For convenience of comparison we choose our system parameters identical to the choices in \cite{lee2015saffron}. The system parameters are summarized below:
@@ -472,11 +424,8 @@ Similar to the noiseless group testing problem we simulate the performance of ou
 \item In Eqn.~\ref{Eqn:SignatureMatrix} the parameter $p=1$ is chosen for matrix $\mbf{U}$
 \item Thus the bin detection size is $h=4\log_2 \frac{N\ell}{M}$
 \end{itemize}
-Note that for the above set of parameters the right degree $r=\frac{N\ell}{M}\approx 26$. We choose to operate in field $GF(2^7)$ thus giving us a message length of $4$ symbols. For the choice of code we use a $(4+2e,4)$ Reed-Solomon code for $e\in[0:8]$ thus giving us a column length of $4\times 7(4+2e)$ bits at each bin and the total number of tests $m=28M(4+2e)$.
-%For the signature matrix we choose $p=1$ in Eqn.~\ref{Eqn:SignatureMatrix} i.e. $h=4\log_2 r$. Note that for the above set of parameters the right degree $r=\frac{N\ell}{M_1}\approx 26$. We choose to operate in field $GF(2^7)$ thus giving us a message length of $4$ symbols. Then we encode using a $(4+2e,4)$ Reed-Solomon code for $e\in[0:8]$ thus giving us a column length of $4\times 7(4+2e)$ bits and the total number of tests $M=28M_1(4+2e)$.
+The results are shown in Fig. \ref{Fig:SimulationNoisy}. Note that for the above set of parameters the right degree $r=\frac{N\ell}{M}\approx 26$. We choose to operate in field $GF(2^7)$ thus giving us a message length of $4$ symbols. For the choice of code we use a $(4+2e,4)$ Reed-Solomon code for $e\in[0:8]$ thus giving us a column length of $4\times 7(4+2e)$ bits at each bin and the total number of tests $m=28M(4+2e)$.
 
-%\section{Conclusion}
-%\textcolor[rgb]{1.00,0.00,0.00}{Write a brief conclusion section.}
 \bibliographystyle{ieeetr}
 \bibliography{\MyPath/journal_abbr,\MyPath/sparseestimation,../grouptesting}
 \end{document}

@@ -49,6 +49,7 @@
 \newtheorem{Example}[lemma]{Example}
 \newtheorem{Remark}[lemma]{Remark}
 \newtheorem*{Discussion}{Discussion}
+%\newtheorem{example}[theorem]{Example}
 
 
 
