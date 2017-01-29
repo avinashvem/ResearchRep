@@ -24,12 +24,12 @@ Both the exact pattern matching problem and the approximate pattern matching pro
 Assume that a sketch of $\xv$ of size $O(N/M)$ can be computed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M$) problems, with the number of matches $L$ scaling as $O(N^{\lambda})$, our algorithm has
 \begin{itemize}
  \item a sketching function for $\yv$ that computes $O(\max(M,\frac{N}{M})\log N)=O(N^{\max(\mu,1-\mu)}\log N)$ samples
+ \item a decoder that recovers all the $L$ matching positions with a failure probability that approaches zero asymptotically in $N$
  \item a computational complexity of
  \begin{itemize}
  \item  $O(N^{\max(1-\mu,\mu+\lambda)}\log^2 N)$ for $\mu<0.5$
   \item  $O(N^{\max(\mu,1-\mu+\lambda)}\log^2 N)$ for $\mu>0.5$
 \end{itemize}
- \item a decoder that recovers all the $L$ matching positions with a failure probability that approaches zero asymptotically
  \end{itemize}
 %Particularly when we are interested only in finding a constant number of matches $L=O(1)$ or $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$) which is the extreme case of input string $\xv$ being just the repetition of the query $\yv$, which are both very practical assumptions to make for many real world problems, our algorithm has a {\it sub-linear time complexity}.
 When $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$), which is typically the interesting case, our algorithm has a {\it sub-linear time complexity}.
