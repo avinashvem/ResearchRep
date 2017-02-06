@@ -1,0 +1,123 @@
+\section{Sample and Computational Complexity}
+\label{Sec:Complexity}
+In this section, we will analyze the sample complexity which is the  number of samples we access from the sketch of the signal $\xv$ stored in the database and the computational complexity as a function of the system parameters.
+
+\subsection{\bf Sample Complexity}
+In each branch of the RSDIFT framework we down-sample the $N$ samples by a factor of $\frac{N}{f_i}$ to get $f_i\approx N^{\alpha}$ samples. As mentioned we repeat this for a random shift in each branch for $B=O(\log N)$ branches in each stage thus resulting in a total of $O(N^{\alpha}\log N)$ samples per block per stage. We repeat this for $d = \frac{1}{1-\alpha}$ such stages resulting in a total of $dN^{\alpha}\log N$ samples per block. So, the total number of samples is given by  
+
+\begin{align*}
+\text{Total \# of samples required (S)} &= O \left(dN^{\alpha}\log N\right)\\
+   &=   O(N^{\max(\mu,1-\mu)}\log N)
+\end{align*}
+
+%\begin{align*}
+%%\text{Total \# of samples required (S)} &=  d \ \underset{\text{Samples per block per stage} }{\underbrace{N^{\alpha}\log N}}\\
+%%   &=   O(N^{\max(\mu,1-\mu)}\log N)
+%\end{align*}
+
+
+
+\subsection{\bf Computational Complexity}
+As described in Eq.~\ref{eqn:Rxy_fourier}, the computation of $\rv$ involves three steps:
+\begin{enumerate} 
+	\item  Operation - \RNum{1}:
+	 Computing $\mathcal{F}_{N}^{-1}\{ \xv \}$ involves two parts: RSIDFT framework and the decoder. The RSIDFT framework involves computing smaller $f_i$ point IDFTs, which takes approximately $O(N^{\alpha} \log N^{\alpha})$ computations in each branch. For a total of $dB$ branches, we get a complexity of $O(dB N^{\alpha} \log N^{\alpha})$. In the decoding process, the dominant computation is from position identification. Each position identification process involves correlating the observation vector of length $B$ with $\frac{N}{f_i} \approx N^{1-\alpha}$ column vectors, which amounts to $B N^{1-\alpha}$ computations. There will a maximum of $dL$ such position identifications, which gives a complexity of $O(dLBN^{1-\alpha} )$.   So, the total number of computations involved in this step, $C_{\RNum{1}}$, is given by
+	\begin{align*}
+	C_{\RNum{1}} \ &=  {d ~ B} \ \left (
+	\underset{\text{Shorter IFFTs /block/stage} }{\underbrace{ O(N^{\alpha} \ \log N^{\alpha})}}  ~ + ~ L~N^{1-\alpha} \right )& \\
+	\vspace{2pt}
+	\ & =	
+	\begin{cases}
+	%O(N^{\max(1-\mu, \mu + \lambda) } \log^2 N ), &  	 \mu < 0.5\\
+	%O(N^{\max(\mu, 1- \mu + \lambda )} \log^2 N ), &  	 \mu > 0.5
+	O(\max(N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N )), &  	 \mu < 0.5\\
+	O(\max(N^{\mu}\log^2 N, N^{1-\mu +\lambda}\log N )), &  	 \mu > 0.5
+	\end{cases}
+	\end{align*}
+	
+	\item  Operation - \RNum{2}:
+	Since we assume that the sketch of database $\xv$, $\mathcal{F}_{N}\{\xv\}$, is pre-computed, we do not include this in computational complexity.
+	
+	\item  Operation - \RNum{3}:
+	
+	As described in Sec.~\ref{subsec:skteches}, in each branch $(i,j)$, we use a folding based technique to compute the sketch of $\yv$, $\mathcal{F}_{N}\{\yv\}$ at points in the set $\mc{S}_{i,j}$. The folding technique involves two steps: folding and adding (aliasing) which has a complexity of $O(M)$ computations , and computing $f_i$-point IDFTs that takes $O(N^\alpha \log N^{\alpha})$ computations. So, for a total of $dB$ branches the number of computations in this step is given by
+	
+	\begin{align*}
+	 C_{\RNum{3}} \ &= \  dB ~ 
+	( \underset{\text{\# of additions (aliasing)} }{\underbrace{N^{\mu}}} + \ \
+	\underset{\text{Shorter FFTs} }{\underbrace{N^{\alpha} \ \log N^{\alpha}}} \ ) \\
+	&=  O(N^{\max(\mu,1- \mu)} \log^2 N))
+	\end{align*}
+	
+	
+	{\textit{Note:}} Folding and adding, for each shift, involves adding $N^{1-\alpha}$ vectors of length $N^{\alpha}$. We know that the length of the query is $M =N^{\mu}$, i.e., the number of non-zero elements in $\yv$ (zero-padded version of the query) is $M$ and hence we only need to compute $M$ additions instead of length of the vector $N$.
+	
+\end{enumerate}
+
+Total number of computations, $C = C_{\RNum{1}}+C_{\RNum{3}} $, is given by   
+  \begin{align*}
+  C \ =
+ \begin{cases}
+ 	%O(N^{\max(1-\mu, \mu + \lambda) } \log^2 N ), &  	 \mu < 0.5\\
+ 	%O(N^{\max(\mu, 1- \mu + \lambda )} \log^2 N ), &  	 \mu > 0.5
+ 	O(\max(N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N )), &  	 \mu < 0.5\\
+ 	O(\max(N^{\mu}\log^2 N, N^{1-\mu +\lambda}\log N )), &  	 \mu > 0.5
+ \end{cases}
+  \end{align*}
+  
+
+
+
+%\subsection{Sample Complexity}
+%As stated in the problem statement, we exploit the sparseness in IDFT computations to compute the correlations using less number of samples from the database.
+%
+%
+%
+%
+%In each branch of the FFAST algorithm, executed over a block of samples, we down-sample the $\tilde{N}$ samples by a factor of $N^{\alpha}$ to get $N^{1-\gamma-\alpha}$ samples. We also do this for each chosen shift and we get a total of  $N^{1-\gamma-\alpha+\beta}$ samples per block per stage. We repeat this for $d = \frac{1-\gamma}{\alpha}$ such stages to get a total complexity of $dN^{1-\gamma-\alpha+\beta}$ samples per block. So, the total number of samples is given by  
+%
+%\[
+%\text{Total \# of samples required (S)} \  = \  \underset{\text{$d$ stages} }{\underbrace{\frac{1-\gamma}{\alpha}}} \ \underset{\text{Samples per block per stage} }{\underbrace{N^{1-\gamma-\alpha+\beta}}} \ \underset{\text{ \# of blocks} }{\underbrace{N^{\gamma}}} \ \ 
+%   =  \ \ \frac{1-\gamma}{\alpha} \ N^{1-\alpha+\beta}
+%\]  
+%
+%
+%
+%\subsection{Computational Complexity}
+%
+%Consider the operations involved in the computation of correlation of $X$ and $Y$, $R_{XY}$, as shown below.
+%
+%\[  R_{XY} = \underset{\text{ \RNum{1} } } {\underbrace{IDFT}} \ \{ \underset{\text{ \RNum{2} } }{\underbrace{DFT\{ X \} } }  \times \ \underset{\text{ \RNum{3} } }{\underbrace{DFT\{ Y \} } }  \}  \]
+%
+%
+%In each block of samples from the database, the process of computing the correlation involves three sets of operations: two $\tilde{N}$-point DFT operations ($\RNum{2}, \RNum{3}$) sampled at $N^{1-\gamma-\alpha+\beta}$ points(based on sampling requirements of FFAST architecture) and one sparse-IDFFT operation ($\RNum{1}$). We assume that the database already contains sampled version of DFT \{ $X$ \} stored and hence we exclude those computations from the complexity calculations. So, it is enough that we analyze the computations involved in operations ($\RNum{1}, \RNum{3}$) on each block to get the overall computational complexity.
+%
+%\begin{enumerate}
+%	\item  Operation - \RNum{3}: 
+%	
+%	Notice that the operation $ DFT \{ Y \} $ is just a one time computation and can be reused in each block since the query is same for all blocks.
+%	Since we only need to compute the sampled version of the DFT\{$Y$\} in each branch, we can do some clever implementations to reduce the complexity. We can create aliasing on $Y$ and then take a shorter length ($N^{1-\gamma-\alpha}$-point) DFT to obtain the sampled version of $\tilde{N}$-point DFT of $Y$.
+%	
+%	This method of computing sampled DFT\{$Y$\} involves two operations - folding and adding (aliasing), and then a $N^{1-\gamma-\alpha}$-point DFT. The complexity involved in computing down-sampled DFT\{$Y$\}, $C_{\RNum{3}}$, is given by
+%	
+%	 \[ C_{\RNum{3}} \ = \  \underset{\text{$d$ stages} }{\underbrace{\frac{1-\gamma}{\alpha}}} \
+%	  ( \underset{\text{\# of additions (aliasing)} }{\underbrace{N^{\delta+\beta}}} + \ \
+%	  \underset{\text{Shorter FFTs} }{\underbrace{N^{1-\gamma-\alpha+\beta} \ \log N^{1-\gamma-\alpha}}} \ )  
+%	 \]
+%	
+%	Folding and adding, for each shift, involves adding $N^{\alpha}$ vectors of length $N^{1-\gamma-\alpha}$. We know that the length of the query is $L =N^{\delta}$, i.e., the number of non-zero elements in $Y$ (zero-padded version of the query) is $L$ and hence we only need to compute $L$ additions instead of the length of the vector.
+%	
+%	\item  Operation - \RNum{1}:
+%	
+%	Taking advantage of the fact that the correlations are sparse (with some noise), we use a FFAST based architecture to reduce the complexity involved in computing IDFT. The number of computations involved in this process,$C_{\RNum{1}}$, is given by
+%	
+%	 \[C_{\RNum{1}} \ = \ \underset{\text{ \# of blocks} }{\underbrace{N^{\gamma}}} \underset{\text{$d$ stages} }{\underbrace{\frac{1-\gamma}{\alpha}}} \
+%	 \underset{\text{Shorter IFFTs /block/stage} }{\underbrace{N^{1-\gamma-\alpha+\beta} \ \log N^{1-\gamma-\alpha}}} 
+%	 \ = \  \frac{1-\gamma}{\alpha} \ N^{1-\alpha+\beta} \ \log N^{1-\gamma-\alpha} 
+%	 \]    
+%\end{enumerate}
+%
+%Total number of computations, $C = C_{\RNum{3}}+C_{\RNum{1}} $, is given by
+%
+%  \[ C \ = \ \  \frac{1-\gamma}{\alpha} \ ( N^{\delta+\beta} \ + \ N^{1-\gamma-\alpha+\beta} \ \log N^{1-\gamma-\alpha} \ + \ N^{1-\alpha+\beta} \ \log N^{1-\gamma-\alpha})
+%  \]

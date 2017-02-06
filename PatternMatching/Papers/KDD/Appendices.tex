@@ -1,0 +1,261 @@
+\appendix
+\section{Chernoff Bounds}
+%\begin{lemma}[Chernoff Bound for bounded random variables]
+%\label{Lem:Chernoff}
+%Let $X_1, X_2,\ldots, X_n$ be a sequence of independent random variables such that $X_i \in\{-1, +1\}$ for all $i$ and $E[X_i]=\mu$ for all $i$. Then for any $\delta>0$:
+%\begin{align*}
+%\text{\textbf{Upper Tail}}: &\mbb{P}\left[\frac{1}{n}\sum \left(X_i-\mu\right)\geq \delta\right]\leq e^{-\frac{n\delta^2}{2}}\\
+%\textbf{Lower Tail}: &\mbb{P}\left[\frac{1}{n}\sum \left(X_i-\mu\right)\leq -\delta\right]\leq e^{-\frac{n\delta^2}{4}}
+%\end{align*}
+%\end{lemma}
+
+\begin{lemma}[Hoeffding inequality for bounded random variables]
+\label{Lem:Chernoff}
+Let $X_1, X_2,\ldots, X_n$ be a sequence of independent random variables such that $X_i \in[a_i, b_i]$ and $E[X_i]=\mu_i$ for all $i$. Then for any $\delta>0$:
+\begin{align*}
+\text{\textbf{Upper Tail}}: ~&\mbb{P}\left[\sum \left(X_i-\mu_i\right)\geq \delta\right]\leq \exp\left\lbrace-\frac{2\delta^2}{\sum(b_i-a_i)^2}\right\rbrace\\
+\textbf{Lower Tail}: ~&\mbb{P}\left[\sum \left(X_i-\mu_i\right)\leq -\delta\right]\leq \exp\left\lbrace-\frac{2\delta^2}{\sum(b_i-a_i)^2}\right\rbrace
+\end{align*}
+\end{lemma}
+
+\begin{lemma}[Tail bounds for noise terms]
+	\label{Lem:tailbounds}
+Let us consider $r[\theta_0],r[\theta_1],\ldots ,r[\theta_{g_i-1}]$ where $\theta_j=\theta_0+jf_i$ and $\theta_j \notin \{\tau_1,\ldots, \tau_L\}$ is not one of the matching positions for any $j$. Then for any $\delta>0$:
+\begin{align*}
+\text{\textbf{Upper Tail}}: ~&\mbb{P}\left[ \left(\frac{1}{M}\sum\limits_{j=0}^{g_i-1}\sum\limits_{k=0}^{M-1}x[\theta_j+k]y[k]\right)\geq \delta\right]\leq \exp\left\lbrace-\frac{M\delta^2}{2g_i}\right\rbrace\\
+\text{\textbf{Lower Tail}}: ~&\mbb{P}\left[ \left(\frac{1}{M}\sum\limits_{j=0}^{g_i-1}\sum\limits_{k=0}^{M-1}x[\theta_j+k]y[k]\right)\geq \delta\right]\leq \exp\left\lbrace-\frac{M\delta^2}{2g_i}\right\rbrace\\
+\end{align*}
+\end{lemma}
+\begin{proof}
+Since $\theta_j$ is not one of the matching positions for any $j$, $x[\theta_j+k]\neq y[k]$ and more importantly $x[\theta_j+k]\indep y[k] \forall k$. This implies that $x[\theta_i+k]y[k]=\pm 1$ with equal probability and $\mbb{E}[x[\theta_i+k]y[k]]=0$. Now to show the independence of the sets of random variables $\{x[\theta_i+k]y[k],k\in[0:M-1]\}$ and $\{x[\theta_j+k]y[k],k\in[0:M-1]\}$ for $i\neq j$ we will use the fact that $\mu<\alpha$  from Eqn. \eqref{Eqn:IneqMuAlpha} and thus $M<f_i$, resulting in non-overlapping parts of $\xv$  participating in the correlation coefficients $r[\theta_i]$ and $r[\theta_j]$. Thus the $Mg_i$ random variables involved are shown to be independent and hence we can apply the bounds from Lem. \ref{Lem:Chernoff} to achieve the required result.
+\end{proof}
+
+%\begin{remark}
+%\label{Lem:CorrelationCoefficient}
+%Let us consider $r[\theta_1],\ldots ,r[\theta_{f_i}]$ where $\theta_i \notin \{\tau_1,\ldots, \tau_L\}$ are not one of the matching positions. Then we can show that $\mbb{P}[x[\theta_i+k]y[k]=+1]$ with probability 1/2 and $\mbb{E}[x[\theta_i+k]y[k]]=0$. We also need to show that  the set of random variables  $\{x[\theta_i+k]y[k]: i\in\{1,2,\ldots f_i\},k\in[M]\}$ are independent to be able to apply Chernoff bounds or Normal distribution approximations. I was able to show this for the case of $M=3$. I don't see a simple way of extending this to the case of general $M$. Note that without independence of these terms from non-matching positions, we can only obtain polynomial decay from Chebyshev inequality that requires only pairwise independence.
+%\end{remark}
+
+\section{Bin Classification Errors}
+\label{Append:BinClassif}
+We employ classification rules based only on the first element of the measurement vector at bin $(i,j)$ which can be given by
+\begin{align}
+Z[1]=\begin{cases}
+\sum\limits_{\ell=0}^{g_{i}-1}\sum\limits_{k=0}^{M-1} n_{l,k}  & ~~\text{ if } ~~ \msc{H}=\msc{H}_z\label{Eqn:BinCombination}\\
+\vspace{\vgap}
+M_1+\sum\limits_{\ell=0}^{g_{i}-2}\sum\limits_{k=0}^{M-1} n_{l,k}  & ~~\text{ if } ~~ \msc{H}=\msc{H}_s\\
+\vspace{\vgap}
+M_1+M_2+\sum\limits_{\ell=0}^{g_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}  & ~~\text{ if } ~~ \msc{H}=\msc{H}_d\\
+\end{cases}
+\end{align}
+where $n_{l,k}=x[\theta_{\ell}+k]y[k]$ and $\theta_{\ell}\notin\{\tau_1,\tau_2,\ldots,\tau_L\}$. Also for the case of exact matching $M_1=M_2=M$ whereas in the case of approximate matching the values of $M_1,M_2\in[M(1-2\eta):M]$.
+
+\begin{lemma}[zero-ton]
+\label{Lem:ZerotonClassif}
+Given that the bin $(i,j)$ is a zero-ton, the classification error can be bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_1|\msc{H}_z]\leq e^{-\frac{N^{\mu+\alpha-1}(1-2\eta)^2}{8}}
+\end{align*}
+\end{lemma}
+\begin{proof}
+The above expression can be derived by observing that a bin is not classified as zero-ton if $\frac{Z[1]}{M}\geq\frac{1-2\eta}{2}$. Let us denote the probability of this event as $p_{z1}$ which can be bounded as:
+\begin{align*}
+p_{z1}=&\mbb{P}\left[\frac{Z[1]}{M}\geq\frac{1-2\eta}{2}\right]\\
+&\leq e^{-\frac{Mg_i(1-2\eta)^2}{8g_i^{2}}}\\
+&\approx e^{-\frac{N^{\mu+\alpha-1}(1-2\eta)^2}{8}}
+\end{align*} 
+where the second bound is due to Eqn. \eqref{Eqn:BinCombination} and Lemma.~\ref{Lem:tailbounds}. The approximation in the third line is from our design that all the $g_i$ are chosen such that $g_i\approx N^{1-\alpha}$ and $M=N^{\mu}.$
+\end{proof}
+
+\begin{lemma}[singleton]
+\label{Lem:SingletonClassif}
+Given that the bin $(i,j)$ is a singleton, the classification error can be bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_1|\msc{H}_s]\leq 2e^{-\frac{N^{\mu+\alpha-1}(1-4\eta)^2}{16}}
+\end{align*}
+\end{lemma}
+\begin{proof}
+We observe that a bin is not classified as singleton if $\frac{Z[1]}{M}\leq\frac{1-2\eta}{2}$ or $\frac{Z[1]}{M}\geq\frac{3-4\eta}{2}$. Let us denote the probability of the two events as $p_{s1}$ and $p_{s2}$ respectively which can be bounded as:
+\begin{align*}
+p_{s1}&=\mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{g_{i}-2}\sum\limits_{k=0}^{M-1} n_{l,k}\leq\frac{1-2\eta}{2}-\frac{M_1}{M}\right]\\
+&\leq \mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{g_{i}-2}\sum\limits_{k=0}^{M-1} n_{l,k}\leq-\frac{1-2\eta}{2}\right]\\
+&\leq e^{-\frac{Mg_i(1-2\eta)^2}{16g_i^{2}}}\\
+&\approx e^{-\frac{N^{\mu+\alpha-1}(1-2\eta)^2}{16}}
+\end{align*} 
+where we used  {\it lower tail} of Lemma \ref{Lem:Chernoff} and $g_i\approx N^{1-\alpha}$ and the lower bound on $\frac{M_1•}{M}\geq (1-2\eta)$. Similarly $p_{s2}$ can be upper bounded by:
+% $p_{s2|\leq e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{16}}$
+\begin{align*}
+p_{s2}&=\mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{g_{i}-2}\sum\limits_{k=0}^{M-1} n_{l,k}\geq\frac{3-4\eta}{2}-\frac{M_1}{M}\right]\\
+&\leq \mbb{P}\left[\frac{1}{Mg_i}\sum\limits_{\ell=0}^{g_{i}-2}\sum\limits_{k=0}^{M-1} n_{l,k}\geq-\frac{1-4\eta}{2g_i}\right]\\
+&\approx e^{-\frac{N^{\mu+\alpha-1}(1-4\eta)^2}{8}}
+\end{align*} 
+Thus the overall probability of error for classifying a singleton can be obtained by combining $p_{s1}$ and $p_{s2}$.
+\end{proof}
+
+\begin{lemma}[double-ton]
+\label{Lem:DoubletonClassif}
+Given that the bin $(i,j)$ is a double-ton, the classification error can be bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_1|\msc{H}_d]\leq 2e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}
+\end{align*}
+\end{lemma}
+\begin{proof}
+We observe that a bin is not classified as double-ton if $\frac{Z[1]}{M}\leq\frac{3-4\eta}{2}$ or $\frac{Z[1]}{M}\geq\frac{5-6\eta}{2}$. Let us denote the probability of these two events as $p_{d1}$ and $p_{d2}$ respectively which can be bounded similar to Lemma ~\ref{Lem:SingletonClassif}.
+\begin{align*}
+p_{d1}&=\mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{g_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}\leq\frac{3-4\eta}{2}-\frac{M_1+M_2}{M}\right]\\
+&\leq \mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{g_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}\leq-\frac{1-4\eta}{2}\right]\\
+&\leq e^{-\frac{M(g_i-2)(1-4\eta)^2}{16(g_i-2)^{2}}}\\
+&\approx e^{-\frac{N^{\mu+\alpha-1}(1-4\eta)^2}{16}}.
+\end{align*} 
+Similarly $p_{d2}$ can be bounded as 
+\begin{align*}
+p_{d2}&=\mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{g_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}\geq\frac{5-6\eta}{2}-\frac{M_1+M_2}{M}\right]\\
+&\leq \mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{g_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}\geq\frac{1-6\eta}{2}\right]\\
+&\leq e^{-\frac{M(g_i-2)(1-6\eta)^2}{8(g_i-2)^{2}}}\\
+&\approx e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{8}}
+\end{align*} 
+where we use the lower bounds $M_1,M_2\leq M$.
+\end{proof}
+
+\begin{lemma}[multi-ton]
+\label{Lem:MultitonClassif}
+Given that the bin $(i,j)$ is a multi-ton, the classification error can be bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_1|\msc{H}_m]\leq e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}
+\end{align*}
+\end{lemma}
+\begin{proof}
+We observe that a bin is not classified as multi-ton if $\frac{Z[1]}{M}\leq\frac{5-6\eta}{2}$. Let us denote the probability of this event as $p_{m1}$ which can be bounded as:
+\begin{align*}
+p_{m1}&=\mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{g_{i}-3}\sum\limits_{k=0}^{M-1} n_{l,k}\leq\frac{5-6\eta}{2}-\frac{M_m}{M}\right]\\
+&\leq \mbb{P}\left[\frac{1}{M}\sum\limits_{\ell=0}^{g_{i}-m}\sum\limits_{k=0}^{M-1} n_{l,k}\leq-\frac{1-6\eta}{2}\right]\\
+&\leq e^{-\frac{M(g_i-m)(1-4\eta)^2}{16(g_i-m)^{2}}}\\
+&\leq e^{-\frac{M(1-6\eta)^2}{16 n_i}}\\
+ &\approx e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}.
+\end{align*} 
+\end{proof}
+
+\section{Position Identification}
+\label{Append:PositionIdentif}
+We will analyze the singleton identification in two separate cases:
+\begin{itemize}
+\item $\mc{E}_{21}$: Event where the position is identified incorrectly when the bin is classified  correctly a singleton
+\item $\mc{E}_{22}$: In the case of approximate matching, event where the position is identified incorrectly when the bin is originally a double-ton and one of the non-zero variable nodes has already been peeled off
+\end{itemize}
+
+\begin{definition}[Mutual Incoherence]
+	The mutual incoherence $\mu_{\text{max}}( \mb{W})$ of a matrix $\mb{W} = [\wv_1 ~ \wv_2 ~ \cdots \wv_i \cdots \wv_N ]$ is defined as 
+	
+	\[\mu_{\text{max}}(\mb{W}) \defeq \max \limits_{\forall i \neq j} \frac{|\wv_i^{\dagger} \wv_j |}{||\wv_i || . ||\wv_j ||} \]
+\end{definition}
+
+\begin{lemma}[Mutual Incoherence Bound for sub-sampled IDFT matrix  [\cite{pawar2014robust},Proposition~A.1]
+\label{lemma:MutualCoherence}
+	The mutual incoherence $\mu_{\text{max}} (\mb{W_{i,k}})$ of the sensing matrix $\mb{W}_{i,k}$ (defined in Eq.~\ref{Eqn:Sensing Matrix}), with $B$ shifts, is upper bounded by
+	
+	\[ \mu_{\text{max}} < 2\sqrt{\frac{\log(5N)}{B}} \] 
+	
+\end{lemma}
+\begin{proof}
+	The proof follows similar lines as the proof for Lemma V.3. in \cite{pawar2014robust}.
+\end{proof}
+ 
+\begin{lemma}
+For some constant $c_1 \in \mathbb{R}$ and the choice of $B=4c_1^2\log 5N$,  the probability of error in identifying the position of a singleton at any bin $(i,j)$ can be upper bounded by
+\begin{align*}
+\mbb{P}[\mc{E}_{21}]\leq \exp\left\lbrace-\frac{N^{\mu+\alpha-1}(1-2\eta)^2(c_1^2-1)}{8(c_1^2+1)}\right\rbrace
+\end{align*}
+\end{lemma}
+\begin{proof}
+	
+	Let $j_p$ be the variable node participating in the singleton $(i,j)$. Then the observation vector $\zv_{i,j}$ is given by
+	\begin{align*}
+	\underline{z}_{i,j} &= \begin{bmatrix}
+	\wv_{j_{1}},\wv_{j_2}, & \cdots   & \wv_{j_p}, &\cdots \ &\wv_{j_{g_i}}
+	\end{bmatrix} \times
+	\begin{bmatrix}
+	n_{1} \\
+	\vdots \\
+	r[j_p]\\
+	\vdots\\
+	n_{j} \\
+	\vdots\\
+	n_{g_i}\\
+	\end{bmatrix}\\
+	&= r[j_p] ~ \wv_{j_p}+ \sum_{k \neq p}n_k \wv_{j_k} \\
+	\end{align*}
+	where for convenience we use a simpler notation $j_k=j+(k-1)\frac{N}{f_i}, \wv_{j_k}=\wv^{j_k}$ as defined in Eq. and $n_{l}=\sum\limits_{k=0}^{M-1}x[\theta_{\ell}+k]y[k]$ as defined in Eq. \eqref{Eqn:BinCombination}.
+	
+	The estimated position $\hat{p}$ is given by
+	\begin{align}
+	\label{Eqn:SingletonBinCombination}
+	\hat{p}= \underset{l}{\argmax}~~ \frac{\wv_{j_l}^{\dagger}\underline{z}_{i,j}}{B}
+	\end{align}
+	where $\dagger$ denotes the conjugate transpose of the vector. Also note that $|| \wv_{j_k}||=B$ for any $j$ and $k$.  From Eq. \eqref{Eqn:SingletonBinCombination} we observe that the position is wrongly identified when $\exists p'$ such that
+	\begin{align*}
+	&r[j_p] + \frac{1}{B}\sum_{k \neq p} n_k 	\wv_{j_p}^{\dagger}\wv_{j_k} \leq \frac{r[j_p]}{B} ~ \wv_{j_{p'}}^{\dagger}\wv_{j_p}+ n_{p'}+\frac{1}{B}\sum_{k \neq p,p'}n_k\wv_{j_{p'}}^{\dagger} \wv_{j_k} \\
+	&\leftrightarrow \sum_{k \neq p,p'}\alpha_k n_k+\beta n_{p'}\geq  r[j_p]\left(1-\frac{\wv_{j_{p'}}^{\dagger}\wv_{j_p}}{B}\right)\geq M(1-2\eta)(1-\mu_{\text{max}})
+	\end{align*}
+	where $\alpha_k$ and $\beta$ are constants and can be shown to be in the range $\alpha_k\in[-2\mu_\text{max},2\mu_\text{max}]$ and $\beta\in[1-\mu_\text{max},1+\mu_\text{max}]$. Now using the bound given Chernoff Lemma in Lem.~\ref{Lem:Chernoff2} we obtain
+	\begin{align*}
+	\mbb{P}[\mc{E}_{21}]&\leq \exp\left\lbrace-\frac{2M(1-2\eta)^2(1-\mu_{\text{max}})^2}{16g_i\mu^2_{\max}+4(1+\mu_{\max})^2}\right\rbrace\\
+	&\leq\exp\left\lbrace-\frac{2M(1-2\eta)^2(1-\mu_{\text{max}})^2}{16(g_i\mu^2_{\max}+1)}\right\rbrace\\
+	&\leq\exp\left\lbrace-\frac{2M(1-2\eta)^2(c_1-1)^2}{16(g_i+c_1^2)}\right\rbrace\\
+	&\approx\exp\left\lbrace-\frac{N^{\mu+\alpha-1}(1-2\eta)^2(c_1^2-1)}{8(c_1^2+1)}\right\rbrace\\
+	\end{align*}
+	The second inequality follows by the definition of  $\mu_{\text{max}} \leq 1$.  We choose $B=4c_1^2\log 5N$, and substituting $\mu_{\max}\leq 2\sqrt{\frac{\log 5N}{B}} = 1/c_1$ (Lemma \ref{lemma:MutualCoherence}) we get the third inequality.
+	
+\end{proof}
+\begin{lemma}
+For some constant $c_1 \in \mathbb{R}$ and the choice of $B=4c_1^2\log 5N$, the probability of error in identifying the position of second non-zero variable node at a double-ton at any bin $(i,j)$, given that the first position identification is correct, can be upper bounded by
+	\begin{align*}
+		\mbb{P}[\mc{E}_{22}]\leq \exp\left\lbrace-\frac{N^{\mu+\alpha-1} ~ (c_1(1 - 2\eta) - 1)^2}{8(1+ c_1^2)}\right\rbrace
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	
+	{\bf $\mc{E}_{22}$:}
+	
+	Let $j_p$ and $j_{\tilde{p}}$ be the two variable nodes participating in the doubleton $(i,j)$. Then the observation vector $\zv_{i,j}$ is given by 
+	
+	\begin{align*}
+		\underline{z}_{i,j} &= \begin{bmatrix}
+			\wv_{j_{1}},\wv_{j_2}, & \cdots   & \wv_{j_p}, &\cdots \ &\wv_{j_{g_i}}
+		\end{bmatrix} \times
+		\begin{bmatrix}
+			n_{1} \\
+			\vdots \\
+			r[j_p]\\
+			\vdots\\
+			n_{j} \\
+			\vdots\\
+			r[j_{\tilde{p}}]\\
+			\vdots\\
+			n_{g_i}\\
+		\end{bmatrix}\\
+		&= r[j_p] ~ \wv_{j_p} + r[j_{\tilde{p}}] ~ \wv_{j_{\tilde{p}}} + \sum_{k \neq p}n_k \wv_{j_k} \\
+	\end{align*}
+	
+	Let the contribution from $j_{\tilde{p}}$ be peeled off from the doubleton at some iteration, then we get
+	\[ \zv_{i,j} = r[j_p] ~ \wv_{j_p} + \frac{e_1}{B} ~ \wv_{j_{\tilde{p}}} + \sum_{k \neq p}n_k \wv_{j_k}\]
+	
+	where $e_1 \in[-\eta M, \eta M]$ is an extra error term induced due to peeling off.
+	
+	Now the estimated second position $\hat{p}$ is calculated using Eq. \eqref{Eqn:SingletonBinCombination}. We can observe that the position is wrongly identified when $\exists p'$ such that
+	\[ \frac{\wv_{j_p}^{\dagger}\underline{z}_{i,j}}{B} \leq \frac{\wv_{j_{p'}}^{\dagger}\underline{z}_{i,j}}{B}\]
+	\begin{align*}
+		&\implies r[j_p] + \frac{1}{B}\sum_{k \neq p, \tilde{p}} n_k 	\wv_{j_p}^{\dagger}\wv_{j_k} + \frac{e_1}{B} \wv_{j_p}^{\dagger}\wv_{j_{\tilde{p}}}  \leq \frac{r[j_p]}{B} ~ \wv_{j_{p'}}^{\dagger}\wv_{j_p}+ n_{p'}+\frac{1}{B}\sum_{k \neq p,p',\tilde{p}}n_k\wv_{j_{p'}}^{\dagger} \wv_{j_k} + \frac{e_1}{B} \wv_{j_{p'}}^{\dagger}\wv_{j_{\tilde{p}}}\\
+		&\leftrightarrow \sum_{k \neq p,p',\tilde{p}}\alpha_k n_k+ \beta n_{p'}  \geq  r[j_p]\left(1-\frac{\wv_{j_{p'}}^{\dagger}\wv_{j_p}}{B}\right) - \frac{2 \eta M}{B} \wv_{j_{p'}}^{\dagger}\wv_{j_{\tilde{p}}}
+	\end{align*}
+	\[~~\geq M(1-2\eta)(1-\mu_{\text{max}}) - 2 \eta M \mu_{\text{max}} = M(1 - 2\eta - \mu_{\text{max}})                         
+	\]
+	where $\alpha_k$ and $\beta$ are constants and can be shown to be in the range $\alpha_k\in[-2\mu_\text{max},2\mu_\text{max}]$ and $\beta\in[1-\mu_\text{max},1+\mu_\text{max}]$. Now using the bound given by Chernoff Lemma in Lem.~\ref{Lem:Chernoff2} we obtain
+	\begin{align*}
+		\mbb{P}[\mc{E}_{22}]&\leq \exp\left\lbrace-\frac{2M(1 - 2\eta - \mu_{\text{max}})^2}{16g_i\mu^2_{\max}+4(1+\mu_{\max})^2}\right\rbrace\\
+		&\leq\exp\left\lbrace-\frac{2M(1 - 2\eta - \mu_{\text{max}})^2}{16(g_i\mu^2_{\max}+1)}\right\rbrace\\
+		&\leq\exp\left\lbrace-\frac{M(c_1(1 - 2\eta) - 1)^2}{8(g_i+c_1^2)}\right\rbrace\\
+		&\leq\exp\left\lbrace-\frac{N^{\mu+\alpha-1} ~ (c_1(1 - 2\eta) - 1)^2}{8(1+ c_1^2)}\right\rbrace\\
+	\end{align*}
+	where for the choice of $B=4c_1^2\log 5N$, $\mu_{\max}\leq 2\sqrt{\frac{\log 5N}{B}} = 1/c_1$.
+	
+\end{proof}
+
