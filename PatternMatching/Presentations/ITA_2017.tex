@@ -1,0 +1,137 @@
+\documentclass[10pt,xcolor=table]{beamer}
+%\usetheme{warsaw}
+\usetheme{CambridgeUS}
+\usepackage{etex}
+\usepackage[english]{babel}
+\usepackage{amstext,amsthm,amsmath,amsfonts,latexsym,graphicx,amssymb,epsfig,epsf,psfrag,mathtools}
+\usepackage{pgfpages,xcolor,subfigure,pstricks}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\pgfplotsset{compat=newest}
+%% the following commands are sometimes needed
+%\usetikzlibrary{plotmarks}
+\usetikzlibrary{arrows,backgrounds,plotmarks,decorations.pathmorphing,decorations.footprints,fadings,calc,trees,mindmap,shadows,decorations.text,patterns,positioning,shapes,matrix,fit}
+\input{graphical_settings}		
+\usepackage{grffile}
+\usepackage{fancyhdr}
+\usepackage{pst-all}
+
+\graphicspath{{./../figures/}}
+\makeatletter
+\def\input@path{{./../figures/}}
+\makeatother
+
+\usepackage{tikz,pgfplots}
+\pgfplotsset{compat=newest}
+\pgfplotsset{plot coordinates/math parser=false}
+\usetikzlibrary{shapes.geometric, arrows}
+\usetikzlibrary{decorations.markings}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+
+%\hypersetup{pdfpagemode=FullScreen}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{theorem}[ams style]
+\setbeamertemplate{theorems}[numbered]
+\definecolor{purple}{RGB}{255,0,204}
+
+\newcommand{\defeq}{\triangleq}
+\newcommand{\Pp}{\mathbb{P}}
+\newcommand{\Gm}{\mathbf{G}}
+\newcommand{\Hm}{\mathbf{H}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Zp}{\mathbb{Z}_{+}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rp}{\R_{+}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Zw}{\mathbb{Z}[\omega]}
+\newcommand{\Zi}{\mathbb{Z}[i]}
+\newcommand{\mc}{\mathcal}
+\newcommand{\mbb}{\mathbb}
+
+\newcommand{\wv}{\underline{w}}
+\newcommand{\cv}{\underline{c}}
+\newcommand{\ev}{\underline{e}}
+\newcommand{\sv}{\underline{s}}
+\newcommand{\xv}{\underline{x}}
+\newcommand{\bv}{\underline{b}}
+\newcommand{\kv}{\underline{k}}
+\newcommand{\zv}{\underline{z}}
+\newcommand{\yv}{\underline{y}}
+\newcommand{\hv}{\underline{h}}
+\newcommand{\rv}{\underline{r}}
+
+\newcommand{\Yv}{\underline{Y}}
+\newcommand{\Xv}{\underline{X}}
+\newcommand{\Rv}{\underline{R}}
+\newcommand{\mfk}[1]{\mathfrak{#1}}
+
+
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+\usecolortheme[RGB={0,100,0}]{structure}
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}[rectangle]
+\setbeamertemplate{itemize subsubitem}{$-$}
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamertemplate{navigation symbols}{} % get rid of navigation symbols
+%\setbeamertemplate{footline}[page number]
+%\logo{\includegraphics[height=1cm,keepaspectratio]{greentouch.eps}}
+
+\definecolor{DarkFern}{HTML}{407428}
+\definecolor{DarkCharcoal}{HTML}{4D4944}
+\colorlet{Fern}{DarkFern!85!white}
+\colorlet{Charcoal}{DarkCharcoal!85!white}
+\colorlet{LightCharcoal}{Charcoal!50!white}
+\colorlet{DarkRed}{red!70!black}
+\colorlet{AlertColor}{DarkRed!80!black}
+\colorlet{DarkBlue}{blue!70!black}
+\colorlet{DarkGreen}{green!70!black}
+% Use the colors:
+\setbeamercolor{title}{fg=DarkRed}
+\setbeamercolor{frametitle}{fg=DarkRed}
+\setbeamercolor{normal text}{fg=black}
+\setbeamercolor{block title}{fg=black,bg=DarkBlue!35!white}
+\setbeamercolor{block body}{fg=black,bg=DarkBlue!15!white}
+%\setbeamercolor{block title}{fg=black,bg=Fern!25!white}
+%\setbeamercolor{block body}{fg=black,bg=Fern!25!white}
+\setbeamercolor{alerted text}{fg=AlertColor}
+\setbeamercolor{itemize item}{fg=Charcoal}
+
+\begin{document}
+\title{Sub-string/Pattern Matching in Sub-linear Time Using a Sparse Fourier Transform Approach}
+\author{ Krishna R. Narayanan \\
+%Joint work with Nagaraj T. Janakiraman, Avinash Vem \& J.F. Chamberand \\
+% Thanks to M. Wang and J. Huang
+%Thanks to Henry Pfister, Avinash Vem, Nagaraj Thenkarai Janakiraman, Kannan Ramchandran, Jean-Francois Chamberland
+}
+\titlegraphic{
+\includegraphics[width=0.75in]{TAMULogoBox}
+}
+\institute{Department of Electrical and Computer Engineering \\ Texas A\&M University}
+\date{}
+\frame{\titlepage}
+
+%\input{sparsefouriertransform}
+\input{patternmatching}
+%---------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Questions?}
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=2.8in]{questions}
+	\end{figure}
+	\centering
+	\color{blue}
+	\Huge{Thank you!}
+\end{frame}
+
+\end{document} 
