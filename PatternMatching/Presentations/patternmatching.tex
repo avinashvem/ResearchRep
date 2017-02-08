@@ -1,3 +1,4 @@
+
  \begin{frame}\frametitle{Problem Statement}
  	\vspace{-0.4cm}
 	\begin{figure}[t]
@@ -171,12 +172,51 @@
 
 %--------------------------------------------------------------------------------------
 \begin{frame}{Example}
+\def\fract{0.55}
+%	\begin{figure}[t]
+%		\centering
+%		\includegraphics[width=4.8in]{Example_full_framework}
+%	\end{figure}
+\begin{columns}
+\begin{column}{0.48\textwidth}
+	Signal Domain
+\begin{figure}
+\centering
+\resizebox{\fract\columnwidth}{!}{\input{\fig_path/database_x.tex}}
+\caption{Database: $x[n]$}
+\end{figure}
 
-	\begin{figure}[t]
-		\centering
-		\includegraphics[width=4.8in]{Example_full_framework}
-	\end{figure}
+\begin{figure}
+\centering
+\resizebox{\fract\columnwidth}{!}{\input{\fig_path/database_x.tex}}
+\end{figure}
 
+\begin{figure}
+\centering
+\resizebox{\fract\columnwidth}{!}{\input{\fig_path/database_x.tex}}
+\end{figure}
+
+\end{column}
+
+\begin{column}{0.48\textwidth}
+Fourier Domain ($N$-pt FFT)
+\begin{figure}
+\centering
+\resizebox{0.7\columnwidth}{!}{\input{\fig_path/query_y.tex}}
+\end{figure}
+
+\begin{figure}
+\centering
+\resizebox{0.7\columnwidth}{!}{\input{\fig_path/database_x.tex}}
+\end{figure}
+
+\begin{figure}
+\centering
+\resizebox{0.7\columnwidth}{!}{\input{\fig_path/database_x.tex}}
+\end{figure}
+\end{column}
+
+\end{columns}
 \end{frame}
 
 
