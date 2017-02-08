@@ -15,15 +15,16 @@
 
 \pgfplotsset{every tick label/.append style={font=\Huge}}
 \begin{axis}[%
-width=6.01828521434821in,
-height=4.74667979002625in,
+width=10in,
+height=8in,
 scale only axis,
-xmin=-50,
+xmin=0,
 xmax=200,
 ymin=-1,
 ymax=1,
 xtick={0,50,...,150,200},
-ytick={-1,0,1}
+ytick={-1,0,1},
+clip=false
 ]
 
 \node at (axis cs:-25,0) {\Huge{$x[n]$}};

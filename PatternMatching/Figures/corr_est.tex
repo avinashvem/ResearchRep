@@ -10,8 +10,8 @@
 \pgfplotsset{every tick label/.append style={font=\Huge}}
 
 \begin{axis}[%
-width=4.521in,
-height=3.566in,
+width=10in,
+height=8in,
 at={(0.758in,0.481in)},
 scale only axis,
 xmin=0,
@@ -20,8 +20,11 @@ ymin=-30,
 ymax=50,
 axis background/.style={fill=white},
 xtick={0,50,...,150,200},
-ytick={-50,0,50}
+ytick={0,50,...,200},
+clip=false
 ]
+\node at (axis cs:-25,0) {\Huge{$r[n]$}};
+
 \addplot[ycomb, color=mycolor1, dashed, mark size=1.5pt, mark=o, mark options={solid, mycolor1}, forget plot] table[row sep=crcr] {%
 1	6\\
 2	-2.27373675443232e-15\\
