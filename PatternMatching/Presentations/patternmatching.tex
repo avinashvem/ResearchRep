@@ -171,50 +171,55 @@
 \end{frame}
 
 %--------------------------------------------------------------------------------------
+\def\fracty{0.36}
+\def\fractx{0.6}
 \begin{frame}{Example}
-\def\fract{0.55}
 %	\begin{figure}[t]
 %		\centering
 %		\includegraphics[width=4.8in]{Example_full_framework}
 %	\end{figure}
+
 \begin{columns}
+\vspace{-2.0in}
 \begin{column}{0.48\textwidth}
-	Signal Domain
+%	Signal Domain
 \begin{figure}
 \centering
-\resizebox{\fract\columnwidth}{!}{\input{\fig_path/database_x.tex}}
-\caption{Database: $x[n]$}
+\text{$x[n]:$}\resizebox{\fractx\columnwidth}{\fracty\columnwidth}{\input{\fig_path/database_x.tex}}
+%\caption{\small{Database: $x[n]$}}
 \end{figure}
+\vspace{-0.2in}
 
 \begin{figure}
 \centering
-\resizebox{\fract\columnwidth}{!}{\input{\fig_path/database_x.tex}}
+\text{$y[n]:$}\resizebox{\fractx\columnwidth}{\fracty\columnwidth}{\input{\fig_path/query_y.tex}}
 \end{figure}
+
+\vspace{-0.2in}
 
 \begin{figure}
 \centering
-\resizebox{\fract\columnwidth}{!}{\input{\fig_path/database_x.tex}}
+\text{corr $r[n]$}\resizebox{\fractx\columnwidth}{\fracty\columnwidth}{\input{\fig_path/corr_est.tex}}
 \end{figure}
-
 \end{column}
 
-\begin{column}{0.48\textwidth}
-Fourier Domain ($N$-pt FFT)
-\begin{figure}
-\centering
-\resizebox{0.7\columnwidth}{!}{\input{\fig_path/query_y.tex}}
-\end{figure}
-
-\begin{figure}
-\centering
-\resizebox{0.7\columnwidth}{!}{\input{\fig_path/database_x.tex}}
-\end{figure}
-
-\begin{figure}
-\centering
-\resizebox{0.7\columnwidth}{!}{\input{\fig_path/database_x.tex}}
-\end{figure}
-\end{column}
+%\begin{column}{0.48\textwidth}
+%\tiny{Fourier Domain ($N$-pt FFT)}
+%\begin{figure}
+%\centering
+%\resizebox{0.7\columnwidth}{!}{\input{\fig_path/database_sketch.tex}}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\resizebox{0.7\columnwidth}{!}{\input{\fig_path/query_sketch.tex}}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\resizebox{0.7\columnwidth}{!}{\input{\fig_path/corr_fft.tex}}
+%\end{figure}
+%\end{column}
 
 \end{columns}
 \end{frame}
