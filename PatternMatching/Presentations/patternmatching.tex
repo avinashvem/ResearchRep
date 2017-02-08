@@ -7,8 +7,8 @@
 	\vspace{-12pt}
 	\begin{block}{}
 \begin{itemize}\itemsep3pt
-	\item {\color{blue} Database/String}: $\xv = [x[0], x[1], \cdots, x[N]]$ \ (length $N$)
-	\item { \color{blue} Query/Substring}: $\yv = [y[0], x[1], \cdots, x[M]]$ \ (length $M = N^\mu$) \vspace{2pt}
+	\item {\color{blue} Database/String}: $\xv = [x[0], x[1], \cdots, x[N-1]]$ \ (length $N$)
+	\item { \color{blue} Query/Substring}: $\yv = [y[0], x[1], \cdots, x[M-1]]$ \ (length $M = N^\mu$) \vspace{2pt}
 	\item Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau_2, \cdots \tau_L]$ with  {\color{blue}high probability}  where\\
 	\begin{enumerate}
 		\item \normalsize \alert{Exact Matching}:~  $\yv$ appears {\color{blue}exactly} in $\xv$
@@ -30,22 +30,20 @@
 	 \begin{frame}{Main Result}
 	 	
 	 \begin{theorem}
-	 	Assume that a sketch of $\xv$ of size $O(max(M,N/M)\log N)$ can be precomputed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M,~ 0 \leq \eta \leq 1/6$) problems, with the number of matches $L$ scaling as $O(N^{\lambda})$, our algorithm has
+	 	Assume that a sketch of $\xv$ of size $O(\frac{N}{M}\log N)$ can be precomputed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M,~ 0 \leq \eta \leq 1/6$) problems, with the number of matches $L$ scaling as $O(N^{\lambda})$, our algorithm has
 	 	\begin{itemize}
-	 		\item a sketching function for $\yv$ that computes {\color{blue} $O(\max(M,\frac{N}{M})\log N)=O(N^{\max(\mu,1-\mu)}\log N)$} \alert{samples}
+	 		\item a sketching function for $\yv$ that computes {\color{blue} $O(\frac{N}{M}\log N)=O(N^{1-\mu}\log N)$} \alert{samples}
 	 		\item a \alert{computational complexity} of 
-	 		\begin{itemize}
-	 			% \item  $O(N^{\max(1-\mu,\mu+\lambda)}\log^2 N)$ for $\mu<0.5$
-	 			% \item  $O(N^{\max(\mu,1-\mu+\lambda)}\log^2 N)$ for $\mu>0.5$
-	 			\item	{\color{blue}$O(\max(N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N ))$} for {\color{blue}$\mu < 0.5$}
-	 			\item	{\color{blue}$O(\max(N^{\mu}\log^2 N, N^{1-\mu +\lambda}\log N ))$} for {\color{blue}$\mu > 0.5$}
-	 		\end{itemize}
+	 		{\color{blue}$O(\max(N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N ))$}
+	 		
 	 		\item a decoder that recovers all the $L$ matching positions with a {\color{blue}failure probability that approaches zero asymptotically} 
 	 	\end{itemize}
 	 	
-	 	\vspace{10 pt}
-	 	{\color{alert}Note:} Particularly when $L=O(1)$ or $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$) our algorithm has a {\color{blue}sub-linear time} complexity.
-	 \end{theorem}	 
+	 \end{theorem}
+	 \pause
+	 \begin{block}{\alert{Note}}
+	 	Particularly when $L=O(1)$ or $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$) our algorithm has a {\color{blue}sub-linear time} complexity.
+	 \end{block}	 
 \end{frame}	 
 
 
@@ -145,7 +143,7 @@
 \begin{frame}\frametitle{Sparse Fourier Transform Approach}
 	\begin{figure}[t]
 		\centering
-		\scalebox{0.27}{\input{notional_diag.tex}}
+		\scalebox{0.28}{\input{notional_diag.tex}}
 	\end{figure}
 \vspace{-0.2cm}
 	 	\begin{block}{}
@@ -170,6 +168,17 @@
 	 		\end{itemize}
 	 	\end{block}
 \end{frame}
+
+%--------------------------------------------------------------------------------------
+\begin{frame}{Example}
+
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=4.8in]{Example_full_framework}
+	\end{figure}
+
+\end{frame}
+
 
 	%--------------------------------------------------------------------------------------
 	\begin{frame}{Aliasing and Sparse Graph Codes}
@@ -295,7 +304,7 @@
 			
 \end{frame}
 
-\begin{frame}\frametitle{Decoding Process}
+\begin{frame}\frametitle{Decoder}
 
 \only<1>{\begin{block}{Bin Classification}
 		\begin{itemize} 
