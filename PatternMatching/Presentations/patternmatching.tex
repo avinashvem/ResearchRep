@@ -161,9 +161,8 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	 		\begin{itemize} 
 	 			\item[\color{red} 1.] \textit{\color{blue} Sketch of $\xv$ : }  Assume $ \Xv[l] = \mathcal{F}\{\xv\}$ is precomputed at positions $l \in \mathcal{S}$.
 	 			
-	 			\item[\color{red} 2.] \textit{\color{blue} Sketch of $\yv$:}
+	 			\item[\color{red} 2.] \textit{\color{blue} Sketch of $\yv$:}  Compute $ \Yv'[l] = \mathcal{F}\{\yv'\}$ for $l \in \mathcal{S}$.
 	 			\begin{itemize} 
-	 				\item[-] Compute $ \Yv'[l] = \mathcal{F}\{\yv'\}$ for $l \in \mathcal{S}$.
 	 				\item[-] Only $M$ non-zero values in $\yv'$ - Efficient computation (folding and adding)
 	 			\end{itemize}
 	 			
@@ -241,7 +240,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \begin{frame}{Robust Sparse Inverse Fourier Transform(RSIDFT)}
 \begin{block}{Main Idea}
 	\begin{itemize}
-		\item \alert{Sub-sampling} in time corresponds to \alert{aliasing} in frequency
+		\item \alert{Sub-sampling} in frequency corresponds to \alert{aliasing} in time
 		\item Aliased coefficients $\Leftrightarrow$ parity check constraints of \alert{GLDPC codes}
 		\item \alert{CRT} guided sub-sampling induces a code good for \alert{Peeling decoder}
 		\item R-FFAST- proposed by Pawar and Ramchandran 2014
