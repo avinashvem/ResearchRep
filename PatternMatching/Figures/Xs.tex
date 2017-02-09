@@ -18,23 +18,23 @@
 \draw[thick,line  width =1.5pt]  (3.9,0) rectangle (4.9,-1);
 \draw[thick,line  width =1.5pt]  (4.9,0) rectangle (5.9,-1);
 \draw[thick,line  width =1.5pt]  (5.9,0) rectangle (6.9,-1);
-\node at (4.4,-0.5) {$x[0]$};
-\node at (5.4,-0.5) {$x[2]$};
-\node at (6.4,-0.5) {$x[4]$};
+\node at (4.4,-0.5) {$R[0]$};
+\node at (5.4,-0.5) {$R[2]$};
+\node at (6.4,-0.5) {$R[4]$};
 
 % DFT arrow
 \node (v1) at (7.8,-0.5) {};
 \node (v2) at (9.5,-0.5) {};
 \draw[thick, ->,line  width =1.5pt]  (v1) edge (v2);
-\node at (8.5,-0.2) {DFT};
+\node at (8.5,-0.2) {3 pt. IDFT};
 
 % X_{s} (DFT of x_{s}) 
 \draw[thick,line  width =1.5pt]  (10.3,0) rectangle (11.3,-1);
 \draw[thick,line  width =1.5pt]  (11.3,0) rectangle (12.3,-1);
 \draw[thick,line  width =1.5pt]  (12.3,0) rectangle (13.3,-1);
-\node (v3) at (10.8,-0.5) {$X_{s}[0]$};
-\node (v5) at (11.8,-0.5) {$X_{s}[1]$};
-\node (v7) at (12.8,-0.5) {$X{s}[2]$};
+\node (v3) at (10.8,-0.5) {$x_{s}[0]$};
+\node (v5) at (11.8,-0.5) {$x_{s}[1]$};
+\node (v7) at (12.8,-0.5) {$x_{s}[2]$};
 
 \node (v4) at (9.1,-1.9) {};
 \node (v6) at (11.8,-1.9) {};
@@ -50,15 +50,15 @@
 \draw[thick,fill=antiquewhite,line  width =1.5pt]  (15.6,-2.4) rectangle (16.4,-3.4);
 
 
-\node at (8,-2.9) {$X[0]$};
-\node at (9.4,-2.9) {$X[3]$};
+\node at (8,-2.9) {$r[0]$};
+\node at (9.4,-2.9) {$r[3]$};
 \node at (8.7,-2.9) {$\mathbf{+}$};
 
-\node at (11.3,-2.9) {$X[1]$};
-\node at (12.7,-2.9) {$X[4]$};
+\node at (11.3,-2.9) {$r[1]$};
+\node at (12.7,-2.9) {$r[4]$};
 \node at (15.3,-2.9) {$\mathbf{+}$};
 
-\node at (14.6,-2.9) {$X[2]$};
-\node at (16,-2.9) {$X[5]$};
+\node at (14.6,-2.9) {$r[2]$};
+\node at (16,-2.9) {$r[5]$};
 \node at (12,-2.9) {$\mathbf{+}$};
 \end{tikzpicture}
