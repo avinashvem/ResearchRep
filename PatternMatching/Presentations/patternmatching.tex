@@ -2,27 +2,32 @@
  	\vspace{-0.4cm}
 	\begin{figure}[t]
 		\centering
-		\includegraphics[width=3.4in]{Pattern_matching_ex.jpg}
+		\includegraphics[width=2.8in]{Pattern_matching_ex.jpg}
 	\end{figure}
-	\vspace{-12pt}
+	\vspace{-10pt}
 	\begin{block}{}
-\begin{itemize}\itemsep3pt
+\begin{itemize}\itemsep5pt
 	\item {\color{blue} Database/String}: $\xv = [x[0], x[1], \cdots, x[N-1]]$ \ (length $N$)
-	\item { \color{blue} Query/Substring}: $\yv = [y[0], x[1], \cdots, x[M-1]]$ \ (length $M = N^\mu$) \vspace{2pt}
-	\item Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau_2, \cdots \tau_L]$ with  {\color{blue}high probability}  where\\
+	\item { \color{blue} Query/Substring}: $\yv = [y[0], y[1], \cdots, y[M-1]]$ \ (length $M = N^\mu$) 
+	\item {\color{blue} Signal Model:} $x[i]$'s are i.i.d ~ r.v. from $\mathcal{A} = \{+1,-1\}$ (extensions possible) 
+\end{itemize} 
+\end{block}
+
+\vspace{-3pt}
+\pause
+\begin{block}{}
+Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau_2, \cdots \tau_L]$ with  {\color{blue}high probability}  where
 	\begin{enumerate}
-		\item \normalsize \alert{Exact Matching}:~  $\yv$ appears {\color{blue}exactly} in $\xv$
-		\begin{itemize}\normalsize
+		\item \alert{Exact Matching}:~  $\yv$ appears {\color{blue}exactly} in $\xv$
+		\begin{itemize}
 				\item [-]  $\yv := \xv[\tau:\tau+M-1]$
 		\end{itemize}  
-		\item \normalsize \alert{Approximate Matching:} ~ $\yv$ is a {\color{blue}noisy substring} of $\xv$
-		
-		\begin{itemize}\itemsep5pt \normalsize
+		\item \alert{Approximate Matching:} ~ $\yv$ is a {\color{blue}noisy substring} of $\xv$
+		\begin{itemize}\itemsep3pt 
 				\item [-] $\yv := \xv[\tau:\tau+M-1] \odot \bv$ 
 				\item [-] $\bv$ is a noise sequence with $d_H(\yv,\xv[\tau:\tau+M-1]) \leq K$   
 		\end{itemize}
 	\end{enumerate}   
-\end{itemize}
 
 	\end{block}
 	 \end{frame} 
@@ -106,6 +111,9 @@
 					\item {\bf Naive implementation}: $O(MN) = O(N^{1+\mu})$ ({\color{blue} super-linear} complexity) 
 					
 					\item 	{\bf Fourier Transform Approach}: $O(N \log N)$ complexity
+					\begin{equation}\nonumber
+					\rv = \mathcal{F}_{N}^{-1} \{~  \mathcal{F}_{N}\{\xv\} ~ \odot ~  \mathcal{F}_{N}\{\yv'\} ~ \}, \ \ \yv' = \yv^{*}[-n]
+					\end{equation}
 					
 				\end{itemize}
 			\end{block}
@@ -117,16 +125,14 @@
 				\begin{itemize}
 					\item $\rv$ is {\color{blue}Sparse} with some noise.
 				\end{itemize}
-				  
 				 \begin{equation} \label{eqn:RXY_sparse}\nonumber
 				 r[m] \ = \left\{
 				 \begin{array}{ll}
 				 &M,~~  \text{if} \ m \in \mathcal{T} \\
 				 & n_m,~~ m \in [N]-\mathcal{T}
 				 \end{array} 
-				 \right.  
+				 \right.  			 
 				 \end{equation}
-			
 			\end{block}
 										
 					\column[]{0.45\columnwidth}
@@ -147,7 +153,7 @@
 	\end{figure}
 \vspace{-0.2cm}
 	 	\begin{block}{}
-	 		\begin{equation}\label{eqn:Rxy_fourier} \nonumber
+	 		\begin{equation}\label{eqn:Rxy_fourier}\nonumber
 	 		\boxed{\rv = \underset{\text{\color{red} 3 } } {\mathcal{F}_{N}^{-1}} \ \{ \underset{\text{ \color{red} 1 } }{  \mathcal{F}_{N}\{\xv\}}  \odot \ \underset{\text{ \color{red} 2 } }{ \mathcal{F}_{N}\{\yv'\}}  \} }
 	 		\end{equation} 
 	 		
@@ -176,8 +182,28 @@
 		\centering
 		\includegraphics[width=4.8in]{Example_full_framework}
 	\end{figure}
-
+	
 \end{frame}
+%------------------------------------------------------------------
+\begin{frame}{Robust Sparse Inverse Fourier Transform(RSIDFT)}
+\begin{block}{Main Idea}
+	\begin{itemize}
+		\item \alert{Sub-sampling} in time corresponds to \alert{aliasing} in frequency
+		\item Aliased coefficients $\Leftrightarrow$ parity check constraints of \alert{GLDPC codes}
+		\item \alert{CRT} guided sub-sampling induces a code good for \alert{Peeling decoder}
+		\item R-FFAST- proposed by Pawar and Ramchandran 2014
+	\end{itemize}
+\end{block}
+\begin{block}{Key modifications}
+   \begin{itemize}
+   	\item Optimized for the induced noise model
+   	\item Correlation peak is always {\color{blue} positive}
+   	\item Take advantage in decoding algorithm - {\color{blue}sub-linear} time complexity
+   \end{itemize}
+\end{block}
+\end{frame}
+
+
 
 
 	%--------------------------------------------------------------------------------------
@@ -225,25 +251,12 @@
 	
 		\begin{figure}[t!]
 			\begin{center}
-				\resizebox{0.6\textwidth}{!}{\input{FFAST_Robust_PM.tex}}
+				\resizebox{0.8\textwidth}{!}{\input{FFAST_Robust_PM.tex}}
 				%	 		\includegraphics[height=7cm]{Figures/FFAST_Robust} 
 			\end{center}	   
 			\label{fig:rsidft}
 			\vspace{5 pt}
 		\end{figure}
-			\vspace{-0.5cm}
-			\begin{block}{}
-				{\small
-				\begin{itemize}
-					\item Similar to FFAST
-					\item Key modifications
-					\begin{itemize}
-						\item Correlation peak is always {\color{blue} positive}
-						\item Take advantage in decoding algorithm - {\color{blue}sub-linear} time complexity
-					\end{itemize}
-				\end{itemize}
-
-}			\end{block}
 \end{frame}
 
 
