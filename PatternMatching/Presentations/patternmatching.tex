@@ -32,7 +32,52 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 
 	\end{block}
 	 \end{frame} 
+% ----------------------------------------Notations---------------------------------------
+
+\begin{frame}\frametitle{Notations}
+
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=2.5in]{Pattern_matching_ex.jpg}
+	\end{figure}
+	\vspace{-8pt}
+	{\small
+	\begin{table}[h!]
+		\label{Table:Notations}
+		\begin{center}
+			\begin{tabular}{|c|c|} 	
+				\hline		
+				\textit{Symbol}		&  \textit{Meaning} \\		
+				\hline
+				$N$           		& Size of the string or database in symbols \\
+				\hline
+				$M = N^{\mu}$       & Length of the query in symbols \\
+				\hline
+				$L = N^\lambda$    &   Number of matches \\
+				\hline
+				$K$             &$\max_{\tau}d_{H}(\xv[\tau:\tau+M-1],\yv)$\\
+				\hline
+				$\eta$             &$\frac{K}{M}$\\
+				\hline
+				$G = N^\gamma$    & Number of blocks \\
+				\hline
+				$\tilde{N} = N^{1-\gamma}$   & Length of one block \\
+				\hline
+				$f_i = N^\alpha$     & Length of smaller point IDFT at each branch\\
+				\hline
+				$g_i = N/f_i$     	   &  Sub-sampling parameter \\
+				\hline
+				$B$   					    & Number of shifts also referred to as branches  \\
+				\hline
+				$d$           				& Number of stages in the FFAST algorithm \\
+				\hline
+			\end{tabular}
+		\end{center}
+	\end{table}
+}
+	\end{frame}	 
 	 
+%--------------------------------------------- Main Result -------------------------------	 
 	 \begin{frame}{Main Result}
 	 	
 	 \begin{theorem}
@@ -146,7 +191,68 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 				
 					
 \end{frame}
-
+%--------------------------------------------------------------------------------------
+\def\fracty{0.45}
+\def\fractx{0.8}
+\begin{frame}{Example}
+	%	\begin{figure}[t]
+	%		\centering
+	%		\includegraphics[width=4.8in]{Example_full_framework}
+	%	\end{figure}
+	
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=4.8in]{Example_full_framework}
+	\end{figure}
+	
+	%\begin{columns}
+	%\vspace{-2.0in}
+	%\begin{column}{0.48\textwidth}
+	%%	Signal Domain
+	%\begin{figure}
+	%\centering
+	%%\text{$x[n]:$}
+	%%\resizebox{\fractx\columnwidth}{\fracty\columnwidth}{\input{\fig_path/database_x.tex}}
+	%\input{\fig_path/database_x.tex}
+	%\end{figure}
+	%\vspace{-0.2in}
+	%
+	%\begin{figure}
+	%\centering
+	%%\resizebox{\fractx\columnwidth}{\fracty\columnwidth}{\input{\fig_path/query_y.tex}}
+	%\input{\fig_path/query_y.tex}
+	%\end{figure}
+	%
+	%\vspace{-0.2in}
+	%
+	%\begin{figure}
+	%\centering
+	%%\resizebox{\fractx\columnwidth}{\fracty\columnwidth}{\input{\fig_path/corr_est.tex}}
+	%\input{\fig_path/corr_est.tex}
+	%\end{figure}
+	%\end{column}
+	%
+	%%\begin{column}{0.48\textwidth}
+	%%\tiny{Fourier Domain ($N$-pt FFT)}
+	%%\begin{figure}
+	%%\centering
+	%%\resizebox{0.7\columnwidth}{!}{\input{\fig_path/database_sketch.tex}}
+	%%\end{figure}
+	%%
+	%%\begin{figure}
+	%%\centering
+	%%\resizebox{0.7\columnwidth}{!}{\input{\fig_path/query_sketch.tex}}
+	%%\end{figure}
+	%%
+	%%\begin{figure}
+	%%\centering
+	%%\resizebox{0.7\columnwidth}{!}{\input{\fig_path/corr_fft.tex}}
+	%%\end{figure}
+	%%\end{column}
+	%
+	%\end{columns}
+\end{frame}
+%-----------------------------------------
 \begin{frame}\frametitle{Sparse Fourier Transform Approach}
 	\begin{figure}[t]
 		\centering
@@ -175,67 +281,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	 	\end{block}
 \end{frame}
 
-%--------------------------------------------------------------------------------------
-\def\fracty{0.45}
-\def\fractx{0.8}
-\begin{frame}{Example}
-%	\begin{figure}[t]
-%		\centering
-%		\includegraphics[width=4.8in]{Example_full_framework}
-%	\end{figure}
 
-	\begin{figure}[t]
-		\centering
-		\includegraphics[width=4.8in]{Example_full_framework}
-	\end{figure}
-	
-%\begin{columns}
-%\vspace{-2.0in}
-%\begin{column}{0.48\textwidth}
-%%	Signal Domain
-%\begin{figure}
-%\centering
-%%\text{$x[n]:$}
-%%\resizebox{\fractx\columnwidth}{\fracty\columnwidth}{\input{\fig_path/database_x.tex}}
-%\input{\fig_path/database_x.tex}
-%\end{figure}
-%\vspace{-0.2in}
-%
-%\begin{figure}
-%\centering
-%%\resizebox{\fractx\columnwidth}{\fracty\columnwidth}{\input{\fig_path/query_y.tex}}
-%\input{\fig_path/query_y.tex}
-%\end{figure}
-%
-%\vspace{-0.2in}
-%
-%\begin{figure}
-%\centering
-%%\resizebox{\fractx\columnwidth}{\fracty\columnwidth}{\input{\fig_path/corr_est.tex}}
-%\input{\fig_path/corr_est.tex}
-%\end{figure}
-%\end{column}
-%
-%%\begin{column}{0.48\textwidth}
-%%\tiny{Fourier Domain ($N$-pt FFT)}
-%%\begin{figure}
-%%\centering
-%%\resizebox{0.7\columnwidth}{!}{\input{\fig_path/database_sketch.tex}}
-%%\end{figure}
-%%
-%%\begin{figure}
-%%\centering
-%%\resizebox{0.7\columnwidth}{!}{\input{\fig_path/query_sketch.tex}}
-%%\end{figure}
-%%
-%%\begin{figure}
-%%\centering
-%%\resizebox{0.7\columnwidth}{!}{\input{\fig_path/corr_fft.tex}}
-%%\end{figure}
-%%\end{column}
-%
-%\end{columns}
-\end{frame}
 %------------------------------------------------------------------
 \begin{frame}{Robust Sparse Inverse Fourier Transform(RSIDFT)}
 \begin{block}{Main Idea}
