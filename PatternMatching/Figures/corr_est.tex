@@ -5,21 +5,27 @@
 %where you can also make suggestions and rate matlab2tikz.
 %
 \definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
-%
+\def\fsize{\normalsize}
+
 \begin{tikzpicture}
+\pgfplotsset{every tick label/.append style={font=\fsize}}
 
 \begin{axis}[%
-width=4.521in,
-height=3.566in,
-at={(0.758in,0.481in)},
+width=1.5in,
+height=0.75in,
 scale only axis,
 xmin=0,
 xmax=200,
 ymin=-30,
 ymax=50,
-axis background/.style={fill=white}
+axis background/.style={fill=white},
+xtick={0,50,...,150,200},
+ytick={-30,0,50,100,...,200},
+clip=false
 ]
-\addplot[ycomb, color=mycolor1, dashed, mark size=1.5pt, mark=o, mark options={solid, mycolor1}, forget plot] table[row sep=crcr] {%
+\node at (axis cs:-50,0) {\fsize{$r[n]$}};
+
+\addplot[ycomb, color=mycolor1, solid, mark size=0.2, mark=o, mark options={solid, mycolor1}, forget plot,mark size=0.2] table[row sep=crcr] {%
 1	6\\
 2	-2.27373675443232e-15\\
 3	8\\
@@ -225,14 +231,14 @@ axis background/.style={fill=white}
 0	0\\
 200	0\\
 };
-\addplot[ycomb, color=red, line width=2.0pt, mark=*, mark options={solid, fill=red, green}, forget plot] table[row sep=crcr] {%
+\addplot[ycomb, color=red, line width=1.0pt, mark=*, mark options={solid, fill=red, green}, forget plot] table[row sep=crcr] {%
 9	50\\
 };
-\addplot[forget plot, color=white!15!black, line width=2.0pt] table[row sep=crcr] {%
+\addplot[forget plot, color=white!15!black, line width=1.0pt] table[row sep=crcr] {%
 0	0\\
 200	0\\
 };
-\addplot[ycomb, color=red, line width=2.0pt, mark=*, mark options={solid, fill=red, green}, forget plot] table[row sep=crcr] {%
+\addplot[ycomb, color=red, line width=1.0pt, mark=*, mark options={solid, fill=red, green}, forget plot] table[row sep=crcr] {%
 99	50\\
 };
 \addplot[forget plot, color=white!15!black, line width=2.0pt] table[row sep=crcr] {%
