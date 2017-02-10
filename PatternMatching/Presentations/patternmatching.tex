@@ -141,7 +141,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	 	\end{itemize}	 	
 	\end{block}
 \end{frame}
-
+%-------------------------------------------------------------------------------------------------------------
 \begin{frame}\frametitle{Motivation}
 	\vspace{-0.4cm}
 			\begin{block}{}
@@ -306,12 +306,8 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 
 	%--------------------------------------------------------------------------------------
 	\begin{frame}{Aliasing and Sparse Graph Codes}
-		%\begin{itemize}
-		%
-		%\item Give a simple example that explains how aliasing can induce a Sparse Graph Code.\\ \item Introduce the Tanner Graph for the induced code here (No background required since it is covered in Part I).	
-		%\end{itemize}
 		
-		\begin{block}{IDFT Computation($N=6$)}
+\only<1>{  \begin{block}{IDFT Computation($N=6$)}
 			\begin{figure}[t]
 				\centering
 				\includegraphics[width=3.1in]{X_DFT}
@@ -342,7 +338,41 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 					\includegraphics[width=2.3in]{Factorgraph_example}
 				\end{figure}
 			\end{block}
-		\end{columns}
+		\end{columns}}
+
+\only<2>{ \begin{block}{IDFT Computation($N=6$)}
+		\begin{figure}[t]
+			\centering
+			\includegraphics[width=3.1in]{X_DFT}
+		\end{figure}
+	\end{block}
+	
+	\begin{columns}
+		
+		\column{.47\textwidth}
+		\begin{block}{{\small $\color{red}x_s$:\ Sub-sampled by $P_1=2$ (shifted)}}
+			\begin{figure}[t]
+				\centering
+				\includegraphics[width=2.3in]{Xs_shift}
+			\end{figure}
+		\end{block}
+		
+		\begin{block}{{\small$\color{red}z_s$:\ Sub-sampled by $P_2=3$ (shifted)}}
+			\begin{figure}[t]
+				\centering
+				\includegraphics[width=2.3in]{Zs_shift}
+			\end{figure}
+		\end{block}
+		
+		\column{.47\textwidth}
+		\begin{block}{\small Factor graph}
+			\begin{figure}[t]
+				\centering
+				\includegraphics[width=2.3in]{Factorgraph_example_tilde}
+			\end{figure}
+		\end{block}
+	\end{columns}}
+		
 	\end{frame}
 
 \begin{frame}\frametitle{RSIDFT Framework}
@@ -384,35 +414,40 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \end{frame}
 
 \begin{frame}\frametitle{RSIDFT-Decoding (Peeling Decoder)}
-
+\begin{columns}
+	\column[]{0.65\columnwidth}
 		\begin{figure}[h!]
 			\begin{center}
 				%		\includegraphics[height=7cm]{Figures/Factorgraph} 
-				\resizebox{0.55\textwidth}{!}{\input{Factorgraph_PM.tex}}	
+				\resizebox{1.0\textwidth}{!}{\input{Factorgraph_PM.tex}}	
 			\end{center}	   
 			%\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $d=2$, $B=2$, $N=6$, $f_1 = 2$ and $f_2=3$. The variable nodes (colored gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (uncolored white boxes) represent the binned observation vector $\zv_{i,k}$. The figure also illustrates the relationship between $\zv_{i,k}$ and $\rv$.}\label{fig:factorgraph}
 		\end{figure}
+	\column[]{0.33\columnwidth}
+	    \begin{block}{Observations:}
+	          $
+	    		\zv_{i,k} = \begin{bmatrix}
+	    		r_{i,1}[k]\\
+	    		r_{i,2}[k]\\
+	    		\vdots\\
+	    		r_{i,B}[k]
+	    		\end{bmatrix}^{T}  
+	    		$
+	    	\end{block}
+	    	\begin{block}{Decoding- 3 steps}	 
+	    		\begin{enumerate}
+	    			\item Bin Classification
+	    			\item Position Identification
+	    			\item Peeling Process
+	    		\end{enumerate}
+	  
+	    \end{block}
+	    
 		
+\end{columns}
+	
 		
-			\begin{block}{}
-						\begin{itemize}
-							\item {\color{blue} Observations:} $
-							\zv_{i,k} = \begin{bmatrix}
-							r_{i,1}[k],
-							r_{i,2}[k],
-							\cdots,
-							r_{i,B}[k]
-							\end{bmatrix}^{T}  
-							$
-							\item Decoding- 3 steps
-							\begin{enumerate}
-								\item Bin Classification
-								\item Position Identification
-								\item Peeling Process
-							\end{enumerate}
-						\end{itemize}
-			\end{block}
-			
+						
 \end{frame}
 
 \begin{frame}\frametitle{Decoder}
@@ -441,9 +476,14 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	
 \only<2>{\vspace{-5pt} \begin{block}{Position Identification}
 		\begin{itemize}
-			\item 	{\color{blue}Observation:} \vspace{-8pt}	\begin{align} \nonumber
+			\item 	{\color{blue}Observation:} 	\begin{align} \nonumber
 			\label{Eqn:Generator Equation}
-			\zv_{i,k}= \mbb{W}_{i,k} \times
+			\zv_{i,k}= \begin{bmatrix}
+			e^{\frac{j2\pi k s_1}{N}} & e^{\frac{j2\pi (k+f_i) s_1}{N}} & \ldots & e^{\frac{j2\pi (k+(g_i-1)f_i) s_1}{N}} \\
+			e^{\frac{j2\pi k s_2}{N}} & e^{\frac{j2\pi (k+f_i) s_2}{N}} & \ldots & e^{\frac{j2\pi (k+(g_i-1)f_i) s_2}{N}} \\
+			\vdots & \vdots & \ddots & \vdots\\
+			e^{\frac{j2\pi k s_B}{N}} & e^{\frac{j2\pi (k+f_i) s_B}{N}} & \ldots & e^{\frac{j2\pi (k+(g_i-1)f_i) s_B}{N}} \\
+			\end{bmatrix} \times
 			\begin{bmatrix}
 			r[k+(0)f_i] \\
 			r[k+(1)f_i] \\
@@ -451,15 +491,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			r[k+(g_i-1)f_i]
 			\end{bmatrix}
 			\end{align}
-			\item {\color{blue}Sensing Matrix:}\vspace{-8pt}	\begin{align}\label{Eqn:Sensing Matrix} \nonumber
-			\mbb{W}_{i,k} = \left[\wv^{k},\wv^{k+f_i},\ldots, \wv^{k+(g_i-1)f_i}\right] \text{where} ~\wv^{k}=
-			\begin{bmatrix}
-			e^{\frac{j2\pi ks_1}{N}}\\
-			e^{\frac{j2\pi ks_2}{N}}\\
-			\vdots\\
-			e^{\frac{j2\pi ks_B}{N}}
-			\end{bmatrix}, ~~ g_i = \frac{N}{f_i}
-			\end{align}
+			
 			\item Column that gives {\color {blue} maximum correlation} with the observation\\
 			{ \[\boxed{\hat{k} = \underset{k\in\{j+l g_i\}}{\arg \max}~~ \zv^{\dagger}_{i,j} \wv^{k}}\]}
 		\end{itemize}
