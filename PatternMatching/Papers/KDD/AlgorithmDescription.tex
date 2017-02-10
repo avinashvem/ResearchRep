@@ -2,15 +2,23 @@
 \label{sec:Algo_desc}
 In this section, given the input string $\xv$ and the query string $\yv$, we describe our algorithm that finds the matching positions $\mathcal{T}\coleq \{\tau_1, \tau_2, \cdots \tau_L\}$ with sample and time complexities that are sub-linear in $N$. The main idea here is to exploit the fact that the correlation vector $\rv$ is sparse (upto some noise) with dominant peaks at $L$ matching positions denoted by $\mc{T}$ and noise components at $N-L$ positions where the strings do not match.
 
-\begin{figure}[h!]
-	\begin{center}
-	 	\resizebox{0.47\textwidth}{!}{\input{./Figures/notional_diag.tex}}	
-%		\includegraphics[height=3cm]{Figures/notional_diag}
+
+\begin{figure*}
+  \centering 
+	 	\resizebox{0.95\textwidth}{!}{\input{./Figures/notional_diag.tex}}	
 	\caption{Schematic of the proposed scheme using sparse Fourier transform computation.}
-	\end{center}	
-    \label{fig:notional}
-	\vspace{5 pt}
-\end{figure}
+\end{figure*}
+
+
+%\begin{figure}[t!]
+%	\begin{center}
+%	 	\resizebox{0.47\textwidth}{!}{\input{./Figures/notional_diag.tex}}	
+%%		\includegraphics[height=3cm]{Figures/notional_diag}
+%	\caption{Schematic of the proposed scheme using sparse Fourier transform computation.}
+%	\end{center}	
+%    \label{fig:notional}
+%	\vspace{5 pt}
+%\end{figure}
 
 Consider the correlation signal $\rv$ in the case of exact matching:
 \begin{equation} \label{eqn:RXY_sparse}
