@@ -479,10 +479,10 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			\item 	{\color{blue}Observation:} 	\begin{align} \nonumber
 			\label{Eqn:Generator Equation}
 			\zv_{i,k}= \begin{bmatrix}
-			e^{\frac{j2\pi k s_1}{N}} & e^{\frac{j2\pi (k+f_i) s_1}{N}} & \ldots & e^{\frac{j2\pi (k+(g_i-1)f_i) s_1}{N}} \\
-			e^{\frac{j2\pi k s_2}{N}} & e^{\frac{j2\pi (k+f_i) s_2}{N}} & \ldots & e^{\frac{j2\pi (k+(g_i-1)f_i) s_2}{N}} \\
+			1 & 1 & \ldots & 1 \\
+			w^{k s_2} & w^{(k+f_i) s_2} & \ldots & w^{(k+(g_i-1)f_i) s_2}   \\
 			\vdots & \vdots & \ddots & \vdots\\
-			e^{\frac{j2\pi k s_B}{N}} & e^{\frac{j2\pi (k+f_i) s_B}{N}} & \ldots & e^{\frac{j2\pi (k+(g_i-1)f_i) s_B}{N}} \\
+			w^{k s_B} & w^{(k+f_i) s_B} & \ldots & w^{(k+(g_i-1)f_i) s_B} \\
 			\end{bmatrix} \times
 			\begin{bmatrix}
 			r[k+(0)f_i] \\
@@ -493,7 +493,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			\end{align}
 			
 			\item Column that gives {\color {blue} maximum correlation} with the observation\\
-			{ \[\boxed{\hat{k} = \underset{k\in\{j+l g_i\}}{\arg \max}~~ \zv^{\dagger}_{i,j} \wv^{k}}\]}
+			{ \[\boxed{\hat{k} = \underset{k\in\{j+l f_i\}}{\arg \max}~~ \zv^{\dagger}_{i,j} \mathbf{W}[:,l]}\]}
 		\end{itemize}
 	
 		\end{block}}
@@ -520,6 +520,31 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			\end{center}
 		\end{figure}
 	\end{columns}}
+\end{frame}
+
+\begin{frame}{Error Analysis}
+	\begin{block}{Error Events}
+		\begin{itemize}\small
+				\item {\color{blue}$\mathcal{E}_1${-\it Bin Classification}}: Bin is wrongly classified
+				\item {\color{blue}$\mathcal{E}_2${-\it Pos. Identification}}: Position of singleton is identified wrongly, given a singleton
+				\item {\color{blue}$\mathcal{E}_3${-\it Peeling Process}}: Peeling process fails to recover the $L$ significant correlation coefficients, given $\mbb{P}(\mc{E}_1)= \mbb{P}(\mc{E}_2)=0$
+		\end{itemize}
+	\end{block}
+	\begin{block}{Error Probability}
+		\begin{align*}
+		\mbb{P}(\mathcal{E}_{\text{total}}) & \leq &  \mbb{P}(\mathcal{E}_1)~~~~~ & + & \mbb{P}(\mc{E}_2)~~~~~~~~ & + & \mbb{P}(\mc{E}_3)~~~~~~~~\\
+		&\leq & 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}~ & + & 2e^{-N^{\mu+\alpha-1} ~ c_1(\eta)}~ & + &  e^{-c_3 N^{c_4\alpha}}
+		\end{align*}
+		 \[\boxed{	\mbb{P}(\mathcal{E}_{\text{total}}) \rightarrow 0  ~~\text{if}~~  \alpha >1-\mu}\]
+	\end{block}	
+	
+\end{frame}
+
+\begin{frame}{Complexity Analysis}
+	\begin{block}{Sample Complexity}
+	\end{block}
+	\begin{block}{Computational Complexity}
+	\end{block}
 \end{frame}
 
 \begin{frame}\frametitle{Simulation Results}
