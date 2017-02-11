@@ -350,14 +350,14 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	\begin{columns}
 		
 		\column{.47\textwidth}
-		\begin{block}{{\small $\color{red}x_s$:\ Sub-sampled by $P_1=2$ (shifted)}}
+		\begin{block}{{\small $\color{red}\tilde{x}_s$:\ Sub-sampled by $P_1=2$ ({\color{blue}shifted})}}
 			\begin{figure}[t]
 				\centering
 				\includegraphics[width=2.3in]{Xs_shift}
 			\end{figure}
 		\end{block}
 		
-		\begin{block}{{\small$\color{red}z_s$:\ Sub-sampled by $P_2=3$ (shifted)}}
+		\begin{block}{{\small$\color{red}\tilde{z}_s$:\ Sub-sampled by $P_2=3$ ({\color{blue}shifted})}}
 			\begin{figure}[t]
 				\centering
 				\includegraphics[width=2.3in]{Zs_shift}
@@ -542,8 +542,30 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 
 \begin{frame}{Complexity Analysis}
 	\begin{block}{Sample Complexity}
+		\vspace{-10pt}
+		\begin{align*}
+		\text{Total \# of samples required (S)} &= O \left(dBN^{\alpha}\right) =   {\color{blue}O(N^{1-\mu}\log N)}
+		\end{align*}
+		
 	\end{block}
 	\begin{block}{Computational Complexity}
+		\begin{equation*}\label{eqn:Rxy_fourier}
+		\rv = \underset{\color{red}  \RNum{2} } {\mathcal{F}_{N}^{-1}} \ \{   \mathcal{F}_{N}\{\xv\}  \odot \ \underset{\color{red}  \RNum{1}  }{ \mathcal{F}_{N}\{\yv'\}}  \}
+		\end{equation*}
+		\vspace{-10pt}
+	\begin{itemize}
+		\item {\color{blue}Sketch of Query:}\\ \vspace{5pt}
+	 {\small $C_{\color{red}\RNum{1}} \ = \  dB ~ 
+	 ( \underset{\text{Folding} }{\underbrace{N^{\mu}}} + \ \
+	 \underset{\text{Shorter FFTs} }{\underbrace{N^{\alpha} \ \log N^{\alpha}}} \ )
+	 =  {\color{blue} O(\max(N^{1-\mu}\log^2 N ,N^{\mu}\log N)) }$}
+
+		\item {\color{blue}RSIDFT:} \\	{\small$C_{\color{red} \RNum{2}} =  {d B}  \left (
+			\underset{\text{Shorter IFFTs /block/stage} }{\underbrace{ O(N^{\alpha}  \log N^{\alpha})}} \hspace{-3pt}+ \underset{\text{Correlations} }{\underbrace{ L~N^{1-\alpha}}} \right ) = {\color{blue} O(\max(N^{1-\mu}\log^2 N ,N^{\mu+\lambda}\log N)) }$} 
+	\end{itemize}
+	\vspace{10pt}	
+	\[\boxed{C_{\text{total}} = \max(C_{\color{red} \text{ \RNum{1}}},C_{\color{red} \text{ \RNum{2}}}) = {\color{blue} O(\max(N^{1-\mu}\log^2 N ,N^{\mu+\lambda}\log N)) }}\]
+		
 	\end{block}
 \end{frame}
 
