@@ -523,49 +523,36 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \end{frame}
 
 \begin{frame}{Error Analysis}
-	\only<1,3>{\begin{block}{Error Events}
+	\begin{block}{Error Events}
 		\begin{itemize}\small
 				\item {\color{blue}$\mathcal{E}_1${-\it Bin Classification}}: Bin is wrongly classified
 				\item {\color{blue}$\mathcal{E}_2${-\it Pos. Identification}}: Position of singleton is identified wrongly, given a singleton
 				\item {\color{blue}$\mathcal{E}_3${-\it Peeling Process}}: Peeling process fails to recover the $L$ significant correlation coefficients, given $\mbb{P}(\mc{E}_1)= \mbb{P}(\mc{E}_2)=0$
 		\end{itemize}
 	\end{block}
-}
 	\only<1>{\begin{block}{$\mathcal{E}_1${-\it Bin Classification}}
 			\begin{figure}[t]
 			\begin{center}
 				\includegraphics[width=3.5in]{bin_statistics.png} 
 			\end{center}
-		\end{figure}
-		\vspace{-20pt}
-		{\small
-			\begin{align*}
-			\mbb{P}[\mc{E}_1] &\leq& \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~~~& + &
-			\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~& + &
-			\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
-			&=& \mbb{P}[z[1]>\gamma_1] ~& + & (1- \mbb{P}[\gamma_1<z[1]<\gamma_2])  ~& + & \mbb{P}[z[1]<\gamma_2]
-			\end{align*}
+			\vspace{-10pt}
+		\end{figure}{\small
+		\begin{align*}
+		\mbb{P}[\mc{E}_1] &\leq& \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~&+&
+		\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~&+&
+		\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
+		&=& \mbb{P}[Z_{i,j}[1]>\gamma_1] ~&+& (1- \mbb{P}[\gamma_1<Z_{i,j}[1]<\gamma_2])  ~&+& (1- \mbb{P}[Z_{i,j}[1]<\gamma_2])
+		\end{align*}
 		}
-			\vspace{-17pt}
 	\end{block}
 	}
 	
 	\only<2>{\begin{block}{$\mathcal{E}_2${-\it Pos. Identification}}
-			\begin{itemize}
-				\item $\underline{z}_{i,j} =  r[j_p] ~ \wv_{j_p}+ \sum_{k \neq p}n_k \wv_{j_k}$
-				\item Mutual Incoherence property to bound the cross-correlation(noise) term
-				  \begin{itemize}
-				  	\item [-] $\log N$ measurements (shifts) suffices
-				  \end{itemize}
-			\end{itemize}
+			
 		\end{block}
 		
 		\begin{block}{$\mathcal{E}_3${-\it Peeling Process}}
-		\begin{itemize}
-			\item Tools from Coding theory to analyze Sparse Graph Codes
-			\item Density Evolution to quantify Error Probability
-			\item \# of check-nodes is a function of sparsity (query length)
-		\end{itemize}
+		
 		\end{block}
 	}	
 	
@@ -577,7 +564,9 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			\[\boxed{	\mbb{P}(\mathcal{E}_{\text{total}}) \rightarrow 0  ~~\text{if}~~  \alpha >1-\mu}\]
 		\end{block}
 	     }	
-\end{frame}
+	
+	
+	\end{frame}
 
 \begin{frame}{Complexity Analysis}
 	\begin{block}{Sample Complexity}
