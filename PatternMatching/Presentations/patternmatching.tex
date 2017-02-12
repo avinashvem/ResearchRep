@@ -557,16 +557,17 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 				\item $\mbb{P}[\mc{E}_2] = \mbb{P}[\wv_{j_p}^{\dagger}\underline{z}< \wv_{j_k}^{\dagger}\underline{z}]$
 				\item Mutual Incoherence property to bound the cross-correlation(noise) term
 				  \begin{itemize}
-				  	\item [-] $\log N$ measurements (shifts) suffices
+				  	\item [-] $\log N$ measurements (shifts) suffices [PR2014]
 				  \end{itemize}
 			\end{itemize}
-		\end{block}
+		     \end{block}
 		
 		\begin{block}{$\mathcal{E}_3${-\it Peeling Process}}
 		\begin{itemize}
 			\item Tools from Coding Theory to analyze Sparse Graph Codes
 			\item Density Evolution to quantify Error Probability
 			\item \# of check-nodes is a function of sparsity (query length)
+			\item Exponentially decaying error probability- {\small R-FFAST and SAFFRON [PR2014,LPR2015]}
 		\end{itemize}
 		\end{block}
 	}	
@@ -616,7 +617,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			 
 			\resizebox{0.7\textwidth}{!}{\input{sim_results_M_10_7.tex}}	
 				\end{center}
-			\caption{Plot of Probability of Missing a Match vs. Sample Gain for Exact Matching of a substring of length $M=10^5$ from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{5}$ blocks each of length $\tilde{N}=10^7$. The substring was simulated to repeat in $L=10^6$ locations uniformly at random.}
+			\caption{Plot of Probability of Missing a Match vs. Sample Gain for Exact Matching of a substring of length $M=10^5$($\mu=0.41$) from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{5}$ blocks each of length $\tilde{N}=10^7$. The substring was simulated to repeat in $L=10^6$($\lambda=0.5$) locations uniformly at random.}
 	
 \end{figure}}
 
@@ -624,7 +625,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	\begin{center}
 		\resizebox{0.7\textwidth}{!}{\input{sim_results_M_10_3.tex}}	
 	\end{center}
-	\caption{Plot of Probability of Missing a Match vs. Sample Gain for Exact Matching of a substring of length $M=10^3$ from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{6}$ blocks each of length $\tilde{N}=10^6$. The substring was simulated to repeat in $L=10^6$ locations uniformly at random.}
+	\caption{Plot of Probability of Missing a Match vs. Sample Gain for Exact Matching of a substring of length $M=10^3$($\mu=0.25$) from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{6}$ blocks each of length $\tilde{N}=10^6$. The substring was simulated to repeat in $L=10^6$($\lambda=0.5$) locations uniformly at random.}
 	
 \end{figure}}
 
