@@ -523,6 +523,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \end{frame}
 
 \begin{frame}{Error Analysis}
+	
 	\only<1,3>{\begin{block}{Error Events}
 		\begin{itemize}\small
 				\item {\color{blue}$\mathcal{E}_1${-\it Bin Classification}}: Bin is wrongly classified
@@ -538,12 +539,12 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			\end{center}
 		\end{figure}
 		\vspace{-20pt}
-		{\small
-			\begin{align*}
-			\mbb{P}[\mc{E}_1] &\leq& \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~~~& + &
-			\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~& + &
-			\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
-			&=& \mbb{P}[z[1]>\gamma_1] ~& + & (1- \mbb{P}[\gamma_1<z[1]<\gamma_2])  ~& + & \mbb{P}[z[1]<\gamma_2]
+		
+		{\small \begin{align*}
+			\mbb{P}[\mc{E}_1] & \leq & \mbb{P}[\mc{E}_1|\widehat{\mc{H}}_{i,j}=\mc{H}_z]~& + &
+			\quad \mbb{P}[\mc{E}_1|\widehat{\mc{H}}_{i,j}=\mc{H}_s]~~~~~& + &
+			\quad \mbb{P}[\mc{E}_1|\widehat{\mc{H}}_{i,j}=\mc{H}_d \cup \mc{H}_m]\\
+			~& = & \mbb{P}[z[1]>\gamma_1] ~& + & (1- \mbb{P}[\gamma_1<z[1]<\gamma_2])  ~& + & \mbb{P}[z[1]<\gamma_2]~~~~~~
 			\end{align*}
 		}
 			\vspace{-17pt}
@@ -552,7 +553,8 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	
 	\only<2>{\begin{block}{$\mathcal{E}_2${-\it Pos. Identification}}
 			\begin{itemize}
-				\item $\underline{z}_{i,j} =  r[j_p] ~ \wv_{j_p}+ \sum_{k \neq p}n_k \wv_{j_k}$
+				\item $\underline{z} =  r[j_p] ~ \wv_{j_p}+ \sum_{k \neq p}n_k \wv_{j_k}$
+				\item $\mbb{P}[\mc{E}_2] = \mbb{P}[\wv_{j_p}^{\dagger}\underline{z}< \wv_{j_k}^{\dagger}\underline{z}]$
 				\item Mutual Incoherence property to bound the cross-correlation(noise) term
 				  \begin{itemize}
 				  	\item [-] $\log N$ measurements (shifts) suffices
@@ -562,7 +564,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 		
 		\begin{block}{$\mathcal{E}_3${-\it Peeling Process}}
 		\begin{itemize}
-			\item Tools from Coding theory to analyze Sparse Graph Codes
+			\item Tools from Coding Theory to analyze Sparse Graph Codes
 			\item Density Evolution to quantify Error Probability
 			\item \# of check-nodes is a function of sparsity (query length)
 		\end{itemize}
