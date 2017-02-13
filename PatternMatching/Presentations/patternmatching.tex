@@ -165,26 +165,10 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	 	
 	 \end{block}
 }
+\end{frame}
 
 
-\only<2>{\begin{block}{\alert{Sparse Fourier Transform Approach}}
-	 	\begin{itemize}
-	 		\item {\color{blue} \cite{pawar2014robust}}: Robust Sparse Fourier Transform
-	 		\begin{itemize}
-	 			\item[-] Sparse graph code approach
-	 			\item[-] Computational complexity : $O(N \log N)$
-	 		\end{itemize}
-	 		
-	 		\item {\color{blue} \cite{hassanieh2012faster}}: Faster GPS receiver
-	 		\begin{itemize}
-	 			\item[-] Exploited sparsity in Correlation function $R_{XY}$
-	 		\end{itemize}
-	 		
-	 	\end{itemize}	 	
-	\end{block}
-}
-
-\end{frame}	
+	
 %-------------------------------------------------------------------------------------------------------------
 \begin{frame}\frametitle{Motivation}
 	\vspace{-0.4cm}
@@ -295,6 +279,23 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \end{frame}
 %-----------------------------------------
 \begin{frame}\frametitle{Sparse Fourier Transform Approach}
+	 	\begin{itemize}
+	 		\item {\color{blue} \cite{pawar2014robust}}: Robust Sparse Fourier Transform
+	 		\begin{itemize}
+	 			\item[-] Sparse graph code approach
+	 			\item[-] Computational complexity : $O(N \log N)$
+	 		\end{itemize}
+	 		
+	 		\item {\color{blue} \cite{hassanieh2012faster}}: Faster GPS receiver
+	 		\begin{itemize}
+	 			\item[-] Exploited sparsity in Correlation function $R_{XY}$
+	 		\end{itemize}
+	 		
+	 	\end{itemize}	 	
+
+\end{frame}
+%---------------------------------------------------------
+\begin{frame}\frametitle{Sparse Fourier Transform Approach}
 	\begin{figure}[t]
 		\centering
 		\scalebox{0.28}{\input{notional_diag.tex}}
@@ -342,10 +343,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \end{block}
 \end{frame}
 
-
-
-
-	%--------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------
 	\begin{frame}{Aliasing and Sparse Graph Codes}
 		
 \only<1>{  \begin{block}{IDFT Computation($N=6$)}
