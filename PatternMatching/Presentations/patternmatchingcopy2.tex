@@ -44,7 +44,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	\vspace{-8pt}
 	{\small
 	\begin{table}[h!]
-		\label{Table:Notations3}
+		\label{Table:Notations}
 		\begin{center}
 			\begin{tabular}{|c|c|} 	
 				\hline		
@@ -82,10 +82,10 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	\end{frame}	
 	
 %--------------------------------------------- Main Result -------------------------------	
-	 \begin{frame} \frametitle{Main Result}
-
+	 \begin{frame}{Main Result}
 	{\small
 	\begin{table}[h!]
+		\label{Table:Notations}
 		\begin{center}
 			\begin{tabular}{|c|c|} 	
 				\hline		
@@ -104,70 +104,67 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			\end{tabular}
 		\end{center}
 	\end{table}
-    }	
-     	
-    \vspace{-2.5mm}
+    }	 	
+    \vspace{-10mm}
 	 \begin{theorem}
 	 	Assume that a sketch of $\xv$ can be precomputed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M,~ 0 \leq \eta \leq 1/6$) problems, our algorithm has
 	 	\begin{itemize}
 	 		\item \alert{Sketching complexity:} {\color{blue} $O(\frac{N}{M}\log N)=O(N^{1-\mu}\log N)$} \alert{samples}
-	 		\item \alert{Computational complexity:}
+	 		\item \alert{Computational complexity:} 
 	 		{\color{blue}$O(\max(N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N ))$}	 		
 	 		\item a decoder for which $\mbb{P}(\hat{{\mathcal{T}}} \neq \mathcal{T}) \rightarrow 0$ as $N \rightarrow \infty$
 	 	\end{itemize}
 	 \end{theorem}
 	 \pause
-	 \vspace{-0.5mm}
 	 \begin{block}{\alert{Note}}
 	 	When $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$) our algorithm has a {\color{blue}sub-linear time} complexity.
 	 \end{block}	
-\end{frame}
+\end{frame}	
 
 
 \begin{frame} \frametitle{Some Prior Work}
 	\vspace{-0.2cm}
-	 \only<1>{\begin{block}{\alert{Exact Matching}}
+	 \begin{block}{\alert{Exact Matching}}
 	 	
 	 	\begin{itemize}
-	 		\item  {\color{blue} \bf Boyer'77}: First occurrence of the match (only $\tau_1$)	 		
+	 		\item  {\color{blue}\cite{boyer1977fast}}: First occurrence of the match (only $\tau_1$)
+	 		
 	 		\begin{itemize}
 	 			\item[-] Average complexity - $O(N^{1-\mu} \log N)$ (sublinear)
 	 			\item[-] Worst case complexity - $O(N \log N)$
 	 		\end{itemize}
-	 		\item  {\color{blue}\bf Goodrich'05}: BWT, suffix-arrays based indexing
-	 		\begin{itemize}
-	 			\item[-] Time complexity - $O(M + L)$ (sublinear)
-	 			\item[-] Storage Complexity - $O(N~H_k(X) \log^\epsilon N) + o(N)$ bits  (linear)
-	 			\item[-] Read alignment in Bio-informatics community[ {\color{blue}Li'09,Li'10}]
-	 		\end{itemize}	 		
 	 	\end{itemize}
 	 \end{block}
 	\begin{block}{\alert{Approximate Matching}}
 		
 	 	\begin{itemize}
-	 		\item {\color{blue} \bf Chang'94}: Generalization of Boyer'77
+	 		\item {\color{blue} \cite{chang1994approximate}}: Generalization of \cite{boyer1977fast}
 	 		\begin{itemize}
-	 			\item[-] Average time complexity - $O(NK/M \log N)$ (sub-linear only when $K \ll M$ )
+	 			\item[-] Average complexity - $O(NK/M \log N)$ (sub-linear only when $K \ll M$ )
 	 		\end{itemize}
 	 		
-	 			\item {\color{blue} \bf Zhang'03}: Approximate Matching using BWT
-	 			\begin{itemize}
-	 				\item[-] Worst case time complexity: $O(\min\{M(M-K){|\mc{A}|}^k\log \frac{N}{|\mc{A}|} , NM \log \frac{N}{|\mc{A}|}\})$
-	 				\item[-] Complexity grows with $|\mc{A}|$ and $K$
-	 			\end{itemize}
-	 			
-	 		\item {\color{blue} \bf Andoni'13}: $O(N/M^{0.359})$ (sub-linear even when $K = O(M)$)
+	 		\item {\color{blue} \cite{andoni2013shift}}: $O(N/M^{0.359})$ (sub-linear even when $K = O(M)$)
 	 		\begin{itemize}
 	 			\item[-] Combinatorial in nature
 	 		\end{itemize}
 	 	\end{itemize}
-	 	
 	 \end{block}
-}
+
+\begin{block}{\alert{Sparse Fourier Transform Approach}}
+	 	\begin{itemize}
+	 		\item {\color{blue} \cite{hassanieh2012faster}}: Faster GPS receiver
+	 		\begin{itemize}
+	 			\item[-] Exploited sparsity in Correlation function $R_{XY}$
+	 		\end{itemize}
+	 		
+	 		\item {\color{blue} \cite{pawar2014robust}}: Robust Sparse Fourier Transform
+	 		\begin{itemize}
+	 			\item[-] Sparse Graph code Approach
+	 			\item[-] Computational complexity : $O(N \log N)$
+	 		\end{itemize}
+	 	\end{itemize}	 	
+	\end{block}
 \end{frame}
-
-
-	
 %-------------------------------------------------------------------------------------------------------------
 \begin{frame}\frametitle{Motivation}
 	\vspace{-0.4cm}
@@ -278,23 +275,6 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \end{frame}
 %-----------------------------------------
 \begin{frame}\frametitle{Sparse Fourier Transform Approach}
-        \begin{block}{Robust Sparse Fourier Transform - Pawar and Ramchandran'14}
-	 		\begin{itemize}
-	 			\item[-] Sparse graph code approach
-	 			\item[-] Computational complexity : $O(N \log N)$
-	 		\end{itemize}
-	 	\end{block}
-        \begin{block}{Faster GPS receiver - Hassanieh '12}
-	 		\begin{itemize}
-	 			\item[-] Exploited sparsity in Correlation function $R_{XY}$
-                \item[-] Algorithm based on hashing
-                \item[-] In this application, complexity is still $O(N \log N)$
-	 		\end{itemize}		
-	 	\end{block}	 	
-
-\end{frame}
-%---------------------------------------------------------
-\begin{frame}\frametitle{Sparse Fourier Transform Approach}
 	\begin{figure}[t]
 		\centering
 		\scalebox{0.28}{\input{notional_diag.tex}}
@@ -342,7 +322,10 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \end{block}
 \end{frame}
 
-%--------------------------------------------------------------------------------------
+
+
+
+	%--------------------------------------------------------------------------------------
 	\begin{frame}{Aliasing and Sparse Graph Codes}
 		
 \only<1>{  \begin{block}{IDFT Computation($N=6$)}
@@ -426,30 +409,30 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \end{frame}
 
 
-%\begin{frame}\frametitle{RSIDFT Framework}
-%	\begin{columns}
-%		\column[]{0.43\columnwidth}
-%\begin{figure}[t!]
-%	\begin{center}
-%		\resizebox{1.05\textwidth}{0.7\textheight}{\input{FFAST_Robust_PM.tex}}
-%		%	 		\includegraphics[height=7cm]{Figures/FFAST_Robust}
-%		\end{center}	
-%		\label{fig:rsidft}
-%		\vspace{5 pt}
-%		\end{figure}
-%		\column[]{0.53\columnwidth}
-%		\begin{figure}[h!]
-%			\begin{center}
-%				%		\includegraphics[height=7cm]{Figures/Factorgraph}
-%				\resizebox{1.0\textwidth}{0.65\textheight}{\input{Factorgraph_PM.tex}}	
-%			\end{center}	
-%			%\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $d=2$, $B=2$, $N=6$, $f_1 = 2$ and $f_2=3$. The variable nodes (colored gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (uncolored white boxes) represent the binned observation vector $\zv_{i,k}$. The figure also illustrates the relationship between $\zv_{i,k}$ and $\rv$.}\label{fig:factorgraph}
-%			\vspace{5 pt}
-%		\end{figure}
-%		
-%	\end{columns}
-%	
-%\end{frame}
+\begin{frame}\frametitle{RSIDFT Framework}
+	\begin{columns}
+		\column[]{0.43\columnwidth}
+\begin{figure}[t!]
+	\begin{center}
+		\resizebox{1.05\textwidth}{0.7\textheight}{\input{FFAST_Robust_PM.tex}}
+		%	 		\includegraphics[height=7cm]{Figures/FFAST_Robust}
+		\end{center}	
+		\label{fig:rsidft}
+		\vspace{5 pt}
+		\end{figure}
+		\column[]{0.53\columnwidth}
+		\begin{figure}[h!]
+			\begin{center}
+				%		\includegraphics[height=7cm]{Figures/Factorgraph}
+				\resizebox{1.0\textwidth}{0.65\textheight}{\input{Factorgraph_PM.tex}}	
+			\end{center}	
+			%\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $d=2$, $B=2$, $N=6$, $f_1 = 2$ and $f_2=3$. The variable nodes (colored gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (uncolored white boxes) represent the binned observation vector $\zv_{i,k}$. The figure also illustrates the relationship between $\zv_{i,k}$ and $\rv$.}\label{fig:factorgraph}
+			\vspace{5 pt}
+		\end{figure}
+		
+	\end{columns}
+	
+\end{frame}
 
 \begin{frame}\frametitle{RSIDFT-Decoding (Peeling Decoder)}
 \begin{columns}
@@ -469,7 +452,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	    		r_{i,2}[k]\\
 	    		\vdots\\
 	    		r_{i,B}[k]
-	    		\end{bmatrix}
+	    		\end{bmatrix}^{T}
 	    		$
 	    	\end{block}
 	    	\begin{block}{Decoding- 3 steps}	
@@ -482,37 +465,10 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	    \end{block}
 	
 		
-\end{columns}	
-\end{frame}
-
-\begin{frame}\frametitle{Observations}
-\begin{align} \nonumber
-	    		\zv_{i,k} = \begin{bmatrix}
-	    		r_{i,1}[k]\\
-	    		r_{i,2}[k]\\
-	    		\vdots\\
-	    		r_{i,B}[k]
-	    		\end{bmatrix}			
-            = \begin{bmatrix}
-			1 & 1 & \ldots & 1 \\
-			\omega^{k s_2} & \omega^{(k+f_i) s_2} & \ldots & \omega^{(k+(g_i-1)f_i) s_2}   \\
-			\vdots & \vdots & \ddots & \vdots\\
-			\omega^{k s_B} & \omega^{(k+f_i) s_B} & \ldots & \omega^{(k+(g_i-1)f_i) s_B} \\
-			\end{bmatrix} \times
-			\begin{bmatrix}
-			r[k+(0)f_i] \\
-			r[k+(1)f_i] \\
-			\vdots\\
-			r[k+(g_i-1)f_i]
-			\end{bmatrix}
-			\end{align}
-
-			\begin{figure}[t]
-			\begin{center}
-				\includegraphics[width=3.5in]{bin_statistics.png}
-			\end{center}
-		\end{figure}
-
+\end{columns}
+	
+		
+						
 \end{frame}
 
 \begin{frame}\frametitle{Decoder}
@@ -542,6 +498,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \only<2>{\vspace{-5pt} \begin{block}{Position Identification}
 		\begin{itemize}
 			\item 	{\color{blue}Observation:} 	\begin{align} \nonumber
+			\label{Eqn:Generator Equation}
 			\zv_{i,k}= \begin{bmatrix}
 			1 & 1 & \ldots & 1 \\
 			\omega^{k s_2} & \omega^{(k+f_i) s_2} & \ldots & \omega^{(k+(g_i-1)f_i) s_2}   \\
@@ -587,7 +544,6 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \end{frame}
 
 \begin{frame}{Error Analysis}
-	
 	\only<1,3>{\begin{block}{Error Events}
 		\begin{itemize}\small
 				\item {\color{blue}$\mathcal{E}_1${-\it Bin Classification}}: Bin is wrongly classified
@@ -603,36 +559,33 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			\end{center}
 		\end{figure}
 		\vspace{-20pt}
-		
-		{\small \begin{align*}
-			\mbb{P}[\mc{E}_1] & \leq & \mbb{P}[\mc{E}_1|\widehat{\mc{H}}_{i,j}=\mc{H}_z]~& + &
-			\quad \mbb{P}[\mc{E}_1|\widehat{\mc{H}}_{i,j}=\mc{H}_s]~~~~~& + &
-			\quad \mbb{P}[\mc{E}_1|\widehat{\mc{H}}_{i,j}=\mc{H}_d \cup \mc{H}_m]\\
-			~& = & \mbb{P}[z[1]>\gamma_1] ~& + & (1- \mbb{P}[\gamma_1<z[1]<\gamma_2])  ~& + & \mbb{P}[z[1]<\gamma_2]~~~~~~
-			\end{align*}
-		}
-
+%		{\small
+%			\begin{align*}
+%			\mbb{P}[\mc{E}_1] &\leq& \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~~~& + &
+%			\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~& + &
+%			\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
+%			&=& \mbb{P}[z[1]>\gamma_1] ~& + & (1- \mbb{P}[\gamma_1<z[1]<\gamma_2])  ~& + & \mbb{P}[z[1]<\gamma_2]
+%			\end{align*}
+%		}
 			\vspace{-17pt}
 	\end{block}
 	}
 	
 	\only<2>{\begin{block}{$\mathcal{E}_2${-\it Pos. Identification}}
 			\begin{itemize}
-				\item $\underline{z} =  r[j_p] ~ \wv_{j_p}+ \sum_{k \neq p}n_k \wv_{j_k}$
-				\item $\mbb{P}[\mc{E}_2] = \mbb{P}[\wv_{j_p}^{\dagger}\underline{z}< \wv_{j_k}^{\dagger}\underline{z}]$
+				\item $\underline{z}_{i,j} =  r[j_p] ~ \wv_{j_p}+ \sum_{k \neq p}n_k \wv_{j_k}$
 				\item Mutual Incoherence property to bound the cross-correlation(noise) term
 				  \begin{itemize}
-				  	\item [-] $\log N$ measurements (shifts) suffices [Pawar'14]
+				  	\item [-] $\log N$ measurements (shifts) suffices
 				  \end{itemize}
 			\end{itemize}
-		     \end{block}
+		\end{block}
 		
 		\begin{block}{$\mathcal{E}_3${-\it Peeling Process}}
 		\begin{itemize}
-			\item Tools from Coding Theory to analyze Sparse Graph Codes
+			\item Tools from Coding theory to analyze Sparse Graph Codes
 			\item Density Evolution to quantify Error Probability
 			\item \# of check-nodes is a function of sparsity (query length)
-			\item Exponentially decaying error probability- {\small R-FFAST and SAFFRON [Pawar'14, Lee'15]}
 		\end{itemize}
 		\end{block}
 	}	
@@ -682,7 +635,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			
 			\resizebox{0.7\textwidth}{!}{\input{sim_results_M_10_7.tex}}	
 				\end{center}
-			\caption{Plot of Probability of Missing a Match vs. Sample Gain for Exact Matching of a substring of length $M=10^5$($\mu=0.41$) from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{5}$ blocks each of length $\tilde{N}=10^7$. The substring was simulated to repeat in $L=10^6$($\lambda=0.5$) locations uniformly at random.}
+			\caption{Plot of Probability of Missing a Match vs. Sample Gain for Exact Matching of a substring of length $M=10^5$ from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{5}$ blocks each of length $\tilde{N}=10^7$. The substring was simulated to repeat in $L=10^6$ locations uniformly at random.}
 	
 \end{figure}}
 
@@ -690,13 +643,11 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	\begin{center}
 		\resizebox{0.7\textwidth}{!}{\input{sim_results_M_10_3.tex}}	
 	\end{center}
-	\caption{Plot of Probability of Missing a Match vs. Sample Gain for Exact Matching of a substring of length $M=10^3$($\mu=0.25$) from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{6}$ blocks each of length $\tilde{N}=10^6$. The substring was simulated to repeat in $L=10^6$($\lambda=0.5$) locations uniformly at random.}
+	\caption{Plot of Probability of Missing a Match vs. Sample Gain for Exact Matching of a substring of length $M=10^3$ from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{6}$ blocks each of length $\tilde{N}=10^6$. The substring was simulated to repeat in $L=10^6$ locations uniformly at random.}
 	
 \end{figure}}
 
 \end{frame}	
-
-
 
 
 
