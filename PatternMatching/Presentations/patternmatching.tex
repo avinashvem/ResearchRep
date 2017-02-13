@@ -469,7 +469,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	    		r_{i,2}[k]\\
 	    		\vdots\\
 	    		r_{i,B}[k]
-	    		\end{bmatrix}^{T}
+	    		\end{bmatrix}
 	    		$
 	    	\end{block}
 	    	\begin{block}{Decoding- 3 steps}	
@@ -487,7 +487,13 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 
 \begin{frame}\frametitle{Observations}
 \begin{align} \nonumber
-			\zv_{i,k}= \begin{bmatrix}
+	    		\zv_{i,k} = \begin{bmatrix}
+	    		r_{i,1}[k]\\
+	    		r_{i,2}[k]\\
+	    		\vdots\\
+	    		r_{i,B}[k]
+	    		\end{bmatrix}			
+            = \begin{bmatrix}
 			1 & 1 & \ldots & 1 \\
 			\omega^{k s_2} & \omega^{(k+f_i) s_2} & \ldots & \omega^{(k+(g_i-1)f_i) s_2}   \\
 			\vdots & \vdots & \ddots & \vdots\\
