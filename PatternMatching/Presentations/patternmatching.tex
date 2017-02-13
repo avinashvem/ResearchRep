@@ -279,16 +279,17 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \end{frame}
 %-----------------------------------------
 \begin{frame}\frametitle{Sparse Fourier Transform Approach}
-	 	\begin{itemize}
-	 		\item {\color{blue} \cite{pawar2014robust}}: Robust Sparse Fourier Transform
+        \begin{block}{Robust Sparse Fourier Transform - Pawar and Ramchandran'14}
 	 		\begin{itemize}
 	 			\item[-] Sparse graph code approach
 	 			\item[-] Computational complexity : $O(N \log N)$
 	 		\end{itemize}
-	 		
-	 		\item {\color{blue} \cite{hassanieh2012faster}}: Faster GPS receiver
+	 	\end{block}
+        \begin{block}{Faster GPS receiver - Hassanieh '12}
 	 		\begin{itemize}
 	 			\item[-] Exploited sparsity in Correlation function $R_{XY}$
+                \item[-] Algorithm based on hashing
+                \item[-] In this application, complexity is still $O(N \log N)$
 	 		\end{itemize}
 	 		
 	 	\end{itemize}	 	
