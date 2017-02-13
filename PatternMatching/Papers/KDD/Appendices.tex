@@ -9,14 +9,23 @@
 %\end{align*}
 %\end{lemma}
 
-\begin{lemma}[Hoeffding inequality for bounded random variables]
+\begin{lemma}[Hoeffding tail bound]% for bounded random variables]
 \label{Lem:Chernoff}
-Let $X_1, X_2,\ldots, X_n$ be a sequence of independent random variables such that $X_i \in[a_i, b_i]$ and $E[X_i]=\mu_i$ for all $i$. Then for any $\delta>0$:
+Let $X_1, X_2,\ldots, X_n$ be a sequence of independent random variables such that $X_i$ has mean $\mu_i$ and sub-Gaussian parameter $\sigma_i$. Then for any $\delta>0$:
 \begin{align*}
-\text{\textbf{Upper Tail}}: ~&\mbb{P}\left[\sum \left(X_i-\mu_i\right)\geq \delta\right]\leq \exp\left\lbrace-\frac{2\delta^2}{\sum(b_i-a_i)^2}\right\rbrace\\
-\textbf{Lower Tail}: ~&\mbb{P}\left[\sum \left(X_i-\mu_i\right)\leq -\delta\right]\leq \exp\left\lbrace-\frac{2\delta^2}{\sum(b_i-a_i)^2}\right\rbrace
+\text{\textbf{Upper Tail}}: ~&\mbb{P}\left[\sum \left(X_i-\mu_i\right)\geq \delta\right]\leq \exp\left\lbrace-\frac{2\delta^2}{\sum \sigma_i^2}\right\rbrace\\
+\textbf{Lower Tail}: ~&\mbb{P}\left[\sum \left(X_i-\mu_i\right)\leq -\delta\right]\leq \exp\left\lbrace-\frac{2\delta^2}{\sum \sigma_i^2}\right\rbrace
 \end{align*}
+Note that for bounded random variables $X_i\in [a,b]$ the sub-Gaussian parameter is $\sigma_i=\frac{b-a}{2}$ which simplifies whereupon the upper tail Hoeffding bound can be simplified to
+\begin{align}
+%\text{\textbf{Upper Tail}}: ~&
+\mbb{P}\left[\sum_{i=1}^{n} \left(X_i-\mu_i\right)\geq \delta\right]\leq \exp\left\lbrace-\frac{2\delta^2}{n(b-a)^2}\right\rbrace.
+%\textbf{Lower Tail}: ~&\mbb{P}\left[\sum_{i=1}^{n} \left(X_i-\mu_i\right)\leq -\delta\right]\leq \exp\left\lbrace-\frac{2\delta^2}{n\sum(b-a)^2}\right\rbrace
+\label{Eqn:HoeffdingBoundedRV}
+\end{align}
+Similarly the lower tail bound can be written.
 \end{lemma}
+
 
 \begin{lemma}[Tail bounds for noise terms]
 	\label{Lem:tailbounds}
