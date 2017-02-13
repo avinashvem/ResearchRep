@@ -130,34 +130,34 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	 \only<1>{\begin{block}{\alert{Exact Matching}}
 	 	
 	 	\begin{itemize}
-	 		\item  {\color{blue} \bf \cite{boyer1977fast}}: First occurrence of the match (only $\tau_1$)	 		
+	 		\item  {\color{blue} \bf Boyer'77}: First occurrence of the match (only $\tau_1$)	 		
 	 		\begin{itemize}
 	 			\item[-] Average complexity - $O(N^{1-\mu} \log N)$ (sublinear)
 	 			\item[-] Worst case complexity - $O(N \log N)$
 	 		\end{itemize}
-	 		\item  {\color{blue}\bf \cite{goodrich2005indexing}}: BWT, suffix-arrays based indexing
+	 		\item  {\color{blue}\bf Goodrich'05}: BWT, suffix-arrays based indexing
 	 		\begin{itemize}
 	 			\item[-] Time complexity - $O(M + L)$ (sublinear)
 	 			\item[-] Storage Complexity - $O(N~H_k(X) \log^\epsilon N) + o(N)$ bits  (linear)
-	 			\item[-] Read alignment in Bio-informatics community[ {\color{blue}\cite{li2009fast,li2010fast}}]
+	 			\item[-] Read alignment in Bio-informatics community[ {\color{blue}Li'09,Li'10}]
 	 		\end{itemize}	 		
 	 	\end{itemize}
 	 \end{block}
 	\begin{block}{\alert{Approximate Matching}}
 		
 	 	\begin{itemize}
-	 		\item {\color{blue} \bf \cite{chang1994approximate}}: Generalization of \cite{boyer1977fast}
+	 		\item {\color{blue} \bf Chang'94}: Generalization of Boyer'77
 	 		\begin{itemize}
 	 			\item[-] Average time complexity - $O(NK/M \log N)$ (sub-linear only when $K \ll M$ )
 	 		\end{itemize}
 	 		
-	 			\item {\color{blue} \bf {\cite{zhang2003approximate}}}: Approximate Matching using BWT
+	 			\item {\color{blue} \bf Zhang'03}: Approximate Matching using BWT
 	 			\begin{itemize}
 	 				\item[-] Worst case time complexity: $O(\min\{M(M-K){|\mc{A}|}^k\log \frac{N}{|\mc{A}|} , NM \log \frac{N}{|\mc{A}|}\})$
 	 				\item[-] Complexity grows with $|\mc{A}|$ and $K$
 	 			\end{itemize}
 	 			
-	 		\item {\color{blue} \bf \cite{andoni2013shift}}: $O(N/M^{0.359})$ (sub-linear even when $K = O(M)$)
+	 		\item {\color{blue} \bf Andoni'13}: $O(N/M^{0.359})$ (sub-linear even when $K = O(M)$)
 	 		\begin{itemize}
 	 			\item[-] Combinatorial in nature
 	 		\end{itemize}
@@ -280,13 +280,13 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 %-----------------------------------------
 \begin{frame}\frametitle{Sparse Fourier Transform Approach}
 	 	\begin{itemize}
-	 		\item {\color{blue} \cite{pawar2014robust}}: Robust Sparse Fourier Transform
+	 		\item {\color{blue} Pawar'14}: Robust Sparse Fourier Transform
 	 		\begin{itemize}
 	 			\item[-] Sparse graph code approach
 	 			\item[-] Computational complexity : $O(N \log N)$
 	 		\end{itemize}
 	 		
-	 		\item {\color{blue} \cite{hassanieh2012faster}}: Faster GPS receiver
+	 		\item {\color{blue} Hassanieh'12}: Faster GPS receiver
 	 		\begin{itemize}
 	 			\item[-] Exploited sparsity in Correlation function $R_{XY}$
 	 		\end{itemize}
@@ -597,7 +597,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 				\item $\mbb{P}[\mc{E}_2] = \mbb{P}[\wv_{j_p}^{\dagger}\underline{z}< \wv_{j_k}^{\dagger}\underline{z}]$
 				\item Mutual Incoherence property to bound the cross-correlation(noise) term
 				  \begin{itemize}
-				  	\item [-] $\log N$ measurements (shifts) suffices [PR2014]
+				  	\item [-] $\log N$ measurements (shifts) suffices [Pawar'14]
 				  \end{itemize}
 			\end{itemize}
 		     \end{block}
@@ -607,7 +607,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			\item Tools from Coding Theory to analyze Sparse Graph Codes
 			\item Density Evolution to quantify Error Probability
 			\item \# of check-nodes is a function of sparsity (query length)
-			\item Exponentially decaying error probability- {\small R-FFAST and SAFFRON [PR2014,LPR2015]}
+			\item Exponentially decaying error probability- {\small R-FFAST and SAFFRON [Pawar'14, Lee'15]}
 		\end{itemize}
 		\end{block}
 	}	
