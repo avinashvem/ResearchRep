@@ -44,7 +44,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	\vspace{-8pt}
 	{\small
 	\begin{table}[h!]
-		\label{Table:Notations}
+		\label{Table:Notations3}
 		\begin{center}
 			\begin{tabular}{|c|c|} 	
 				\hline		
@@ -86,7 +86,6 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 
 	{\small
 	\begin{table}[h!]
-		\label{Table:Notations}
 		\begin{center}
 			\begin{tabular}{|c|c|} 	
 				\hline		
@@ -427,30 +426,30 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \end{frame}
 
 
-\begin{frame}\frametitle{RSIDFT Framework}
-	\begin{columns}
-		\column[]{0.43\columnwidth}
-\begin{figure}[t!]
-	\begin{center}
-		\resizebox{1.05\textwidth}{0.7\textheight}{\input{FFAST_Robust_PM.tex}}
-		%	 		\includegraphics[height=7cm]{Figures/FFAST_Robust}
-		\end{center}	
-		\label{fig:rsidft}
-		\vspace{5 pt}
-		\end{figure}
-		\column[]{0.53\columnwidth}
-		\begin{figure}[h!]
-			\begin{center}
-				%		\includegraphics[height=7cm]{Figures/Factorgraph}
-				\resizebox{1.0\textwidth}{0.65\textheight}{\input{Factorgraph_PM.tex}}	
-			\end{center}	
-			%\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $d=2$, $B=2$, $N=6$, $f_1 = 2$ and $f_2=3$. The variable nodes (colored gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (uncolored white boxes) represent the binned observation vector $\zv_{i,k}$. The figure also illustrates the relationship between $\zv_{i,k}$ and $\rv$.}\label{fig:factorgraph}
-			\vspace{5 pt}
-		\end{figure}
-		
-	\end{columns}
-	
-\end{frame}
+%\begin{frame}\frametitle{RSIDFT Framework}
+%	\begin{columns}
+%		\column[]{0.43\columnwidth}
+%\begin{figure}[t!]
+%	\begin{center}
+%		\resizebox{1.05\textwidth}{0.7\textheight}{\input{FFAST_Robust_PM.tex}}
+%		%	 		\includegraphics[height=7cm]{Figures/FFAST_Robust}
+%		\end{center}	
+%		\label{fig:rsidft}
+%		\vspace{5 pt}
+%		\end{figure}
+%		\column[]{0.53\columnwidth}
+%		\begin{figure}[h!]
+%			\begin{center}
+%				%		\includegraphics[height=7cm]{Figures/Factorgraph}
+%				\resizebox{1.0\textwidth}{0.65\textheight}{\input{Factorgraph_PM.tex}}	
+%			\end{center}	
+%			%\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $d=2$, $B=2$, $N=6$, $f_1 = 2$ and $f_2=3$. The variable nodes (colored gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (uncolored white boxes) represent the binned observation vector $\zv_{i,k}$. The figure also illustrates the relationship between $\zv_{i,k}$ and $\rv$.}\label{fig:factorgraph}
+%			\vspace{5 pt}
+%		\end{figure}
+%		
+%	\end{columns}
+%	
+%\end{frame}
 
 \begin{frame}\frametitle{RSIDFT-Decoding (Peeling Decoder)}
 \begin{columns}
@@ -483,10 +482,31 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	    \end{block}
 	
 		
-\end{columns}
-	
-		
-						
+\end{columns}	
+\end{frame}
+
+\begin{frame}\frametitle{Observations}
+\begin{align} \nonumber
+			\zv_{i,k}= \begin{bmatrix}
+			1 & 1 & \ldots & 1 \\
+			\omega^{k s_2} & \omega^{(k+f_i) s_2} & \ldots & \omega^{(k+(g_i-1)f_i) s_2}   \\
+			\vdots & \vdots & \ddots & \vdots\\
+			\omega^{k s_B} & \omega^{(k+f_i) s_B} & \ldots & \omega^{(k+(g_i-1)f_i) s_B} \\
+			\end{bmatrix} \times
+			\begin{bmatrix}
+			r[k+(0)f_i] \\
+			r[k+(1)f_i] \\
+			\vdots\\
+			r[k+(g_i-1)f_i]
+			\end{bmatrix}
+			\end{align}
+
+			\begin{figure}[t]
+			\begin{center}
+				\includegraphics[width=3.5in]{bin_statistics.png}
+			\end{center}
+		\end{figure}
+
 \end{frame}
 
 \begin{frame}\frametitle{Decoder}
@@ -516,7 +536,6 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \only<2>{\vspace{-5pt} \begin{block}{Position Identification}
 		\begin{itemize}
 			\item 	{\color{blue}Observation:} 	\begin{align} \nonumber
-			\label{Eqn:Generator Equation}
 			\zv_{i,k}= \begin{bmatrix}
 			1 & 1 & \ldots & 1 \\
 			\omega^{k s_2} & \omega^{(k+f_i) s_2} & \ldots & \omega^{(k+(g_i-1)f_i) s_2}   \\
