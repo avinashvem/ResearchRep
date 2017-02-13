@@ -82,7 +82,8 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	\end{frame}	
 	
 %--------------------------------------------- Main Result -------------------------------	
-	 \begin{frame}{Main Result}
+	 \begin{frame} \frametitle{Main Result}
+
 	{\small
 	\begin{table}[h!]
 		\label{Table:Notations}
@@ -104,8 +105,9 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			\end{tabular}
 		\end{center}
 	\end{table}
-    }	 	
-    \vspace{-10mm}
+    }	
+     	
+    \vspace{-2.5mm}
 	 \begin{theorem}
 	 	Assume that a sketch of $\xv$ can be precomputed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M,~ 0 \leq \eta \leq 1/6$) problems, our algorithm has
 	 	\begin{itemize}
@@ -116,94 +118,74 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	 	\end{itemize}
 	 \end{theorem}
 	 \pause
+	 \vspace{-0.5mm}
 	 \begin{block}{\alert{Note}}
-<<<<<<< HEAD
 	 	Particularly when $L=O(1)$ or $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$) our algorithm has a {\color{blue}sub-linear} time and space complexity.
 	 \end{block}	 
 \end{frame}	 
-=======
-	 	When $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$) our algorithm has a {\color{blue}sub-linear time} complexity.
-	 \end{block}	
-\end{frame}	
->>>>>>> 03b10455a90a15c05f04d1276110e197b264c595
-
 
 \begin{frame} \frametitle{Some Prior Work}
 	\vspace{-0.2cm}
-	 \only<1>{\begin{block}{\alert{Exact Matching}}
-	 	
-	 	\begin{itemize}
-<<<<<<< HEAD
-	 		\item  {\color{blue} \bf \cite{boyer1977fast}}: First occurrence of the match (only $\tau_1$) 
-=======
-	 		\item  {\color{blue}\cite{boyer1977fast}}: First occurrence of the match (only $\tau_1$)
->>>>>>> 03b10455a90a15c05f04d1276110e197b264c595
-	 		
-	 		\begin{itemize}
-	 			\item[-] Average complexity - $O(N^{1-\mu} \log N)$ (sublinear)
-	 			\item[-] Worst case complexity - $O(N \log N)$
-	 		\end{itemize}
-	 		\item  {\color{blue}\bf \cite{goodrich2005indexing}}: BWT, suffix-arrays based indexing
-	 		\vspace{-10pt}
-	 		\begin{itemize}
-	 			\item[-] Time complexity - $O(M + L)$ (sublinear)
-	 			\item[-] Storage Complexity - $O(N~H_k(X) \log^\epsilon N) + o(N)$ bits  (linear)
-	 			\item[-] Read alignment in Bio-informatics community[ {\color{blue}\cite{li2009fast,li2010fast}}]
-	 		\end{itemize}	 		
-	 	\end{itemize}
-	 \end{block}
-	\begin{block}{\alert{Approximate Matching}}
-		
-	 	\begin{itemize}
-	 		\item {\color{blue} \bf \cite{chang1994approximate}}: Generalization of \cite{boyer1977fast}
-	 		\begin{itemize}
-<<<<<<< HEAD
-	 			\item[-] Average time complexity - $O(NK/M \log N)$ (sub-linear only when $K \ll M$ ) 
-	 		\end{itemize}
-	 		
-	 			\item {\color{blue} \bf {\cite{zhang2003approximate}}}: Approximate Matching using BWT
-	 			\begin{itemize}
-	 				\item[-] Worst case time complexity: $O(\min\{M(M-K){|\mc{A}|}^k\log \frac{N}{|\mc{A}|} , NM \log \frac{N}{|\mc{A}|}\})$
-	 				\item[-] Complexity grows with $|\mc{A}|$ and $K$
-	 			\end{itemize}
-	 			
-	 		\item {\color{blue} \bf \cite{andoni2013shift}}: $O(N/M^{0.359})$ (sub-linear even when $K = O(M)$) 
-=======
-	 			\item[-] Average complexity - $O(NK/M \log N)$ (sub-linear only when $K \ll M$ )
-	 		\end{itemize}
-	 		
-	 		\item {\color{blue} \cite{andoni2013shift}}: $O(N/M^{0.359})$ (sub-linear even when $K = O(M)$)
->>>>>>> 03b10455a90a15c05f04d1276110e197b264c595
-	 		\begin{itemize}
-	 			\item[-] Combinatorial in nature
-	 		\end{itemize}
-	 	\end{itemize}
-	 	
-	 \end{block}
-}
-
-
-\only<2>{\begin{block}{\alert{Sparse Fourier Transform Approach}}
-	 	\begin{itemize}
-	 		\item {\color{blue} \cite{pawar2014robust}}: Robust Sparse Fourier Transform
-	 		\begin{itemize}
-<<<<<<< HEAD
-	 			\item[-] Sparse graph code approach
-	 			\item[-] Computational complexity : $O(N \log N)$
-=======
-	 			\item[-] Exploited sparsity in Correlation function $R_{XY}$
->>>>>>> 03b10455a90a15c05f04d1276110e197b264c595
-	 		\end{itemize}
-	 		
-	 		\item {\color{blue} \cite{hassanieh2012faster}}: Faster GPS receiver
-	 		\begin{itemize}
-	 			\item[-] Exploited sparsity in Correlation function $R_{XY}$  
-	 		\end{itemize}
-	 		
-	 	\end{itemize}	 	
-	\end{block}
-}
+	\only<1>{\begin{block}{\alert{Exact Matching}}
+			
+			\begin{itemize}
+				\item  {\color{blue} \bf \cite{boyer1977fast}}: First occurrence of the match (only $\tau_1$) 
+				
+				\begin{itemize}
+					\item[-] Average complexity - $O(N^{1-\mu} \log N)$ (sublinear)
+					\item[-] Worst case complexity - $O(N \log N)$  
+				\end{itemize}
+				\item  {\color{blue}\bf \cite{goodrich2005indexing}}: BWT, suffix-arrays based indexing
+				\vspace{-10pt}
+				\begin{itemize}
+					\item[-] Time complexity - $O(M + L)$ (sublinear)
+					\item[-] Storage Complexity - $O(N~H_k(X) \log^\epsilon N) + o(N)$ bits  (linear)
+					\item[-] Read alignment in Bio-informatics community[ {\color{blue}\cite{li2009fast,li2010fast}}]
+				\end{itemize}	 		
+			\end{itemize}
+		\end{block}
+		\begin{block}{\alert{Approximate Matching}}
+			
+			\begin{itemize}
+				\item {\color{blue} \bf \cite{chang1994approximate}}: Generalization of \cite{boyer1977fast}
+				\begin{itemize}
+					\item[-] Average time complexity - $O(NK/M \log N)$ (sub-linear only when $K \ll M$ ) 
+				\end{itemize}
+				
+				\item {\color{blue} \bf {\cite{zhang2003approximate}}}: Approximate Matching using BWT
+				\begin{itemize}
+					\item[-] Worst case time complexity: $O(\min\{M(M-K){|\mc{A}|}^k\log \frac{N}{|\mc{A}|} , NM \log \frac{N}{|\mc{A}|}\})$
+					\item[-] Complexity grows with $|\mc{A}|$ and $K$
+				\end{itemize}
+				
+				\item {\color{blue} \bf \cite{andoni2013shift}}: $O(N/M^{0.359})$ (sub-linear even when $K = O(M)$) 
+				\begin{itemize}
+					\item[-] Combinatorial in nature
+				\end{itemize}
+			\end{itemize}
+			
+		\end{block}
+	}
+	
+	
+	\only<2>{\begin{block}{\alert{Sparse Fourier Transform Approach}}
+			\begin{itemize}
+				\item {\color{blue} \cite{pawar2014robust}}: Robust Sparse Fourier Transform
+				\begin{itemize}
+					\item[-] Sparse graph code approach
+					\item[-] Computational complexity : $O(N \log N)$
+				\end{itemize}
+				
+				\item {\color{blue} \cite{hassanieh2012faster}}: Faster GPS receiver
+				\begin{itemize}
+					\item[-] Exploited sparsity in Correlation function $R_{XY}$  
+				\end{itemize}
+				
+			\end{itemize}	 	
+		\end{block}
+	}
 \end{frame}
+
 %-------------------------------------------------------------------------------------------------------------
 \begin{frame}\frametitle{Motivation}
 	\vspace{-0.4cm}
