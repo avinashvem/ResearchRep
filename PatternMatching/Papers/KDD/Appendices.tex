@@ -27,7 +27,17 @@ Let us consider $r[\theta_0],r[\theta_1],\ldots ,r[\theta_{g_i-1}]$ where $\thet
 \end{align*}
 \end{lemma}
 \begin{proof}
-Since $\theta_j$ is not one of the matching positions for any $j$, $x[\theta_j+k]\neq y[k]$ and more importantly $x[\theta_j+k]\indep y[k] \forall k$. This implies that $x[\theta_i+k]y[k]=\pm 1$ with equal probability and $\mbb{E}[x[\theta_i+k]y[k]]=0$. Now to show the independence of the sets of random variables $\{x[\theta_i+k]y[k],k\in[0:M-1]\}$ and $\{x[\theta_j+k]y[k],k\in[0:M-1]\}$ for $i\neq j$ we will use the fact that $\mu<\alpha$  from Eqn. \eqref{Eqn:IneqMuAlpha} and thus $M<f_i$, resulting in non-overlapping parts of $\xv$  participating in the correlation coefficients $r[\theta_i]$ and $r[\theta_j]$. Thus the $Mg_i$ random variables involved are shown to be independent and hence we can apply the bounds from Lem. \ref{Lem:Chernoff} to achieve the required result.
+Since $\theta_j$ is not one of the matching positions for any $j$, $x[\theta_j+k]\neq y[k]$ and more importantly $x[\theta_j+k]\indep y[k] ~\forall j,k$. This implies that $x[\theta_j+k]y[k]=\pm 1$ with equal probability and $\mbb{E}[x[\theta_i+k]y[k]]=0$. Let the set of random variables corresponding to a position $\theta_j$ be $S_{j}\coleq \{x[\theta_j+k]y[k],k\in[M]\}$. It is clear that the random variables in the set $S_j$ are all independent with respect to each other due to our i.i.d assumption on the database $\xv$ and $\theta_j$ being a non-matching position. For the case of $\mu<\alpha$ we have $M<f_i$ for large enough $N$ thus resulting in non-overlapping parts of $\xv$  participating in the correlation coefficients $r[\theta_i]$ and $r[\theta_j]$. Hence it can be shown that $S_i\indep S_j~~\forall i,j$ and we can apply the bounds from Lem. \ref{Lem:Chernoff} to achieve the required result.
+
+For the case of $\mu\geq\alpha$, $M>f_i$ for large enough $N$ which results in a coefficient $x[j]$ participating in multiple sets $S_i$. Therefore we pursue an alternate proof method by defining 
+$$
+p_{j,l}\coleq x[\theta_0+jf_i+l]\sum_{k=0}^{\frac{M}{f_i} -1} y[l+kf_i] ~\text{ for } l\in[f_i].
+$$ Now we can show that the required sum
+\begin{align*}
+\sum\limits_{j=0}^{g_i-1}\sum\limits_{k=0}^{M-1}x[\theta_j+k]y[k]=\sum_{j=0}^{g_i-1}\sum_{l=0}^{f_i -1}p_{j,l}
+\end{align*}. We can see that the terms $p_{j,l}$ are independent of each other and thus we can apply the tail bounds for sum of sub-gaussian random variables and arrive at the required result.
+STILL NEEDS TO BE DONE.
+% to show the independence of the sets of random variables and $\{x[\theta_j+k]y[k],k\in[0:M-1]\}$ for $i\neq j$ we will use the fact that $\mu<\alpha$  from Eqn. \eqref{Eqn:IneqMuAlpha} and thus $M<f_i$, resulting in non-overlapping parts of $\xv$  participating in the correlation coefficients $r[\theta_i]$ and $r[\theta_j]$. Thus the $Mg_i$ random variables involved are shown to be independent and hence we can apply the bounds from Lem. \ref{Lem:Chernoff} to achieve the required result.
 \end{proof}
 
 %\begin{remark}
