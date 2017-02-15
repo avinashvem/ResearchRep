@@ -122,7 +122,7 @@ In Fig.~\ref{fig:factorgraph} we represent the relation between the set of obser
 \end{align}
 where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{1-2\eta}{2},\frac{3-4\eta}{2},\frac{5-6\eta}{2})$. Note that for the case of exact matching $\eta=0$.
 \paragraph*{Singleton decoding}
- If a bin node $(i,j)$ is classified as a singleton, we need to identify the position of the non-zero variable node connected to it. This is done by correlating the observation vector $\zv_{i,j}$ with each column of the sensing matrix  $\mb{W}_{i,j} \coleq [\wv^{j},\wv^{j+g_i},\ldots,   \wv^{j+(f_i-1)g_i}]$ and choose the index that maximizes the correlation value.
+ {\color{blue}{(Change to the clustering scheme)}}If a bin node $(i,j)$ is classified as a singleton, we need to identify the position of the non-zero variable node connected to it. This is done by correlating the observation vector $\zv_{i,j}$ with each column of the sensing matrix  $\mb{W}_{i,j} \coleq [\wv^{j},\wv^{j+g_i},\ldots,   \wv^{j+(f_i-1)g_i}]$ and choose the index that maximizes the correlation value.
 \begin{align*}
  \hat{k} = \underset{k\in\{j+l g_i\}}{\argmax}~~ \zv^{\dagger}_{i,j} \wv^{k}
 \end{align*}
@@ -154,7 +154,8 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 \vspace{1.5\gap}
   \For{$(i_0,j_0)\in\msc{N}(\hat{k})$}
 \vspace{\gap}
-	   \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}}$   \hspace{45.5ex} {\it Exact Matching}
+	   \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}} \hspace{32.0 ex}$ 
+	      \hspace{45.5ex} {\it Exact Matching}
 	   \vspace{\gap}
 	   \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}}$   \hspace{6ex} only if $\widehat{\msc{H}}_{i_0,j_0}=\msc{H}_s$ or $\msc{H}_d$ \hspace{14ex} {\it Approximate Matching}
 	   \vspace{\gap}
@@ -187,7 +188,10 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 
 \subsubsection{Choosing $f_i$ and $\alpha$ for various $\mu$}
 \label{subsec:DesignParameters}
+
 For a given value of $\mu$, we will describe how to choose the parameters $d$ and $f_i$.\\
+ {\color{blue}{(Change the choice of parameters to account for the new bound $\alpha > 1- \mu$})}
+ 
  {\it Exact Matching} Find $d\in \mbb{N}\backslash \{1,2\}$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1}]\cup[1-\frac{1}{d-1},1-\frac{1}{d})$\\
 {\it Approximate Matching}: If $\mu\in(\frac{1}{8},\frac{7}{8})$, choose $d=8$. Else find $d\geq 8$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1})\cup(1-\frac{1}{d-1},1-\frac{1}{d})$
 \begin{itemize}
@@ -198,15 +202,17 @@ For a given value of $\mu$, we will describe how to choose the parameters $d$ an
 To summarize our choice of design parameters: In both the exact and approximate matching cases, for any $0<\mu<1$, we choose the down-sampling factors $f_i$ to be approximately equal to $N^{\alpha}$ in all the $d$-stages where $\alpha=\frac{d-1}{d}$ satisfies:
 \begin{equation}
 \label{Eqn:IneqMuAlpha}
-\alpha>\max(\mu,1-\mu).
+\alpha>1-\mu.
 \end{equation}
 
 \subsection{Sketches of $\Xv$ and $\Yv$}
 \label{subsec:skteches}		
  As we have already seen in Sec.~\ref{subsec:RSIDFT} the RSDIFT framework requires the values of $\Rv(=\Xv\odot \Yv)$ only at indices $\mc{S}$ or in other words we need $\Xv$ and $\Yv$ only at the indices $\mc{S}$. We assume that the sketch of $\xv$, $ \Xv[\mc{S}]= \{X[i],i\in \mc{S}\}$ is pre-computed and stored in a database.
 
-\subsubsection*{Computing the sketch of $\yv$}: For every new query $\yv$, only $\{\Yv'[\mc{S}_{i,j}],i\in[d],j\in[B]\}$ needs to be computed where the subsets $\mc{S}_{i,j}$ are defined in Eq. \eqref{Eqn:SamplingSets}. Naively, the FFT algorithm can be used to compute $\Yv'$ and the required subset of coefficients can be taken but this is inefficient and would be of $O(N \log N)$ complexity. Instead, we observe that $\Yv'[\mc{S}_{i,j}]$ is $\Yv'$ shifted by $s_j$ and sub-sampled by a factor of $g_i$. Thus for a given $(i,j)$ this corresponds to, in time domain, a point-wise multiplication by $[1,w_{s_j},w_{s_j}^2,\ldots,w_{s_j}^{N-1}]$ followed by \textit{folding} the signal into $f_i$ number of length $\frac{N}{f_i}$ signals and adding them up resulting in a single length-$n_i$ signal denoted by $\yv'_{i,j}$. Formally the \textit{folding} operation can be described as follows:
+\subsubsection*{Computing the sketch of $\yv$}: For every new query $\yv$, only $\{\Yv'[\mc{S}_{i,j}]$,  $i\in[d],j\in[B]\}$ needs to be computed where the subsets $\mc{S}_{i,j}$ are defined in Eq. \eqref{Eqn:SamplingSets}. Naively, the FFT algorithm can be used to compute $\Yv'$ and the required subset of coefficients can be taken but this is inefficient and would be of $O(N \log N)$ complexity. Instead, we observe that $\Yv'[\mc{S}_{i,j}]$ is $\Yv'$ shifted by $s_j$ and sub-sampled by a factor of $g_i$. Thus for a given $(i,j)$ this corresponds to, in time domain, a point-wise multiplication by $[1,w_{s_j},w_{s_j}^2,\ldots,w_{s_j}^{N-1}]$ followed by \textit{folding} the signal into $f_i$ number of length $\frac{N}{f_i}$ signals and adding them up resulting in a single length-$n_i$ signal denoted by $\yv'_{i,j}$. Formally the \textit{folding} operation can be described as follows:
 	  \begin{equation}
-	  	\yv'_{i,j} = \sum \limits_{m = 0}^{g_i-1} \yv'[mf_i:(m+1)f_i-1] \odot [w_{s_j}^{mf_i},w_{s_j}^{mf_i+1},\ldots, w_{s_j}^{(m+1)f_i-1}],\qquad w_{s_j}=e^{-\frac{j2\pi s_j}{N}}.
+	  	\yv'_{i,j} = \sum \limits_{m = 0}^{g_i-1} \yv'[mf_i:(m+1)f_i-1] \odot [w_{s_j}^{mf_i},w_{s_j}^{mf_i+1},\ldots, w_{s_j}^{(m+1)f_i-1}],
 	  \end{equation}
+	  where, $w_{s_j}=e^{-\frac{j2\pi s_j}{N}}$.
+	  
  Taking $n_i$-point DFT of $\yv'_{i,j}$ produces $\Yv'[\mc{S}_{i,j}]$ i.e. $\Yv'$ sampled only at $\mathcal{S}_{i,j}$ indices which is what we need in branch $(i,j)$. To obtain all the samples in $\mathcal{S}$ required for the RSDIFT framework, the \textit{folding} technique followed by a IDFT needs to be carried out for each $(i,j)$, for $i\in[d],j\in[B]$, a total of $dB$ times $N^{1-\alpha}$-point DFT. 
