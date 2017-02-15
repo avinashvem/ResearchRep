@@ -39,7 +39,7 @@ Recall that $[g_i]$ is used to denote the set $\{0,1,\ldots,g_i-1\}$.
 \begin{proof}
 Since $\theta_j$ is not one of the matching positions for any $j$, $x[\theta_j+k]\neq y[k]$ and more importantly $x[\theta_j+k]\indep y[k] ~\forall j,k$. This implies that $x[\theta_j+k]y[k]=\pm 1$ with equal probability and $\mbb{E}[x[\theta_i+k]y[k]]=0$. Let the set of random variables corresponding to a position $\theta_j$ be $S_{j}\coleq \{x[\theta_j+k]y[k],k\in[M]\}$. It is clear that the random variables in the set $S_j$ are all independent with respect to each other due to our i.i.d assumption on the database $\xv$ and $\theta_j$ being a non-matching position. For the case of $\mu<\alpha$ we have $M<f_i$ for large enough $N$ thus resulting in non-overlapping parts of $\xv$  participating in the correlation coefficients $r[\theta_i]$ and $r[\theta_j]$. Hence it can be shown that $S_i\indep S_j~~\forall i,j$ and we can apply the bounds from Eqn. \eqref{Eqn:HoeffdingBoundedRV} achieve the required result.
 
-For the case of $\mu\geq\alpha$, $M>f_i$ for large enough $N$ which results in a coefficient $x[j]$ participating in multiple correlation coefficients $r[\theta_j]$. Therefore we pursue an alternate proof method by defining 
+For the case of $\mu\geq\alpha$, $M>f_i$ for large enough $N$ which results in a coefficient $x[j]$ participating in multiple correlation coefficients $r[\theta_j]$. Therefore we pursue an alternate method of proof by defining 
 $$
 p_{j,l}\coleq x[\theta_j+l]\sum_{k\in[\frac{M}{f_i}]} y[l+kf_i] ~\text{ for } l\in[f_i],
 $$
