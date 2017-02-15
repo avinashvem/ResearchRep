@@ -34,7 +34,7 @@ For the probabilistic version of the problem, it was shown in \cite{chan2014non,
 
 In \cite{lee2015saffron}, Lee, Pedarsani and Ramchandran proposed a non-adaptive group testing scheme based on \textit{left-regular sparse-graph} codes and an elegant \textit{peeling} based iterative decoder, which are popular tools in channel coding \cite{richardson2008modern}. They refer to the scheme as SAFFRON(\textbf{S}parse-gr\textbf{A}ph codes \textbf{F}ramewrok \textbf{F}or g\textbf{RO}up testi\textbf{N}g), a reference which we will use throughout this paper. The authors proved that using the SAFFRON scheme, $m=c_\epsilon K\log_2 N$ number of tests suffice to identify at least $(1-\epsilon)$ fraction of defective items (the approximate version of GT) w.h.p. The precise value of constant $c_\epsilon$ as a function of the required error floor $\epsilon$ is also given. More importantly the computational complexity of the proposed iterative decoder is only $\mc{O}(K\log N)$. They also showed that with $m=c_\alpha K\log K \log N$ tests  i.e., with an additional $\log K$ factor, the \textit{whole} defective set (the probabilistic version of GT) can be recovered with an asymptotically high probability of $1-\mc{O}(K^{-\alpha})$.
 
-In this work, we propose a non-adaptive GT scheme that is similar to the SAFFRON, but we employ \textit{left-and-right-regular sparse-graph} codes instead of the left-regular sparse-graph codes, and show that we only require $c_\epsilon K\log \frac{N}{K}$ number of tests for an error floor of $\epsilon$ in the approximate GT problem.
+In this work, we propose a non-adaptive GT scheme that is similar to the SAFFRON, but we employ \textit{left-and-right-regular sparse-graph} codes instead of the left-regular sparse-graph codes (similar to the framework we proposed for compressed sensing\cite{vem2016sub}), and show that we only require $c_\epsilon K\log \frac{N}{K}$ number of tests for an error floor of $\epsilon$ in the approximate GT problem.
 % The other novel result of this construction is that for a fixed error floor $\epsilon$ we can achieve these optimal testing and sampling complexities using a fixed and finite value for parameter $\ell$ which is the maximum number of tests any item participates in. In other words we are able to solve efficiently for GT (approximate version) under the constraint that the total number of times any item can be divided\cite{gandikotanearly} is finite (finite divisibility constraint). %And also the first testing scheme for the approximate version that achieves the optimal testing complexity under finite divisibility constraint.
 Although the testing complexity of our scheme has the same asymptotic order $\mc{O}(K\log N)$ as that of \cite{lee2015saffron}, which as far as we are aware is the best known lower bound for approximate GT, it provides a better explicit upper bound of $\Theta(K\log \frac{N}{K})$ with optimal computational complexity and also a significant improvement in the required number of tests for finite values of $K,N$. 
 %To the best of our knowledge, this is the first scheme which meets the lower bound {\textcolor{red}{(We must be careful here since it is not exactly a lower bound but only order optimal lower bound, right?)}) for approximate GT problem with optimal computational complexity. 
@@ -102,7 +102,7 @@ where $\mbf{b}_{i}\in\{0,1\}^{\ceil{\log_{2}r}}$ is the binary expansion vector 
 \subsection*{Decoding}
 Before describing the decoding process let us review some terminology. A bin node is referred to as a \textit{singleton} if there is exactly one non-zero variable node connected, as a \textit{double-ton} if two non-zero variable nodes are connected and a \textit{multi-ton} if more than two non-zero variable nodes. For a double-ton if we know the identity of one of the two non-zero variables nodes leaving the decoder to decode the identity of the other one, the bin is referred to as a \textit{resolvable double-ton}.
 
-First part of the decoder, which we will refer to as bin decoder, will be able to detect and decode the identity of the connected non-zero variable nodes exactly if the bin is a singleton or a resolvable double-ton. If the bin is a multi-ton, the bin decoder will detect it neither as a singleton nor a resolvable double-ton w.h.p. The second part of the decoder which we will refer to as the peeling decoder \cite{li2015subisit}, when given the identities of some of the non-zero variable nodes by the bin decoder, identifies the bins connected to the recovered variable nodes and looks for newly uncovered resolvable double-tons in these bins. This process of recovering new non-zero variable nodes from already discovered non-zero variable nodes proceeds in an iterative manner. For details of the decoder we refer the reader to \cite{lee2015saffron,vem2017regular}. Note that we are not literally peeling off the decoded nodes from the graph because of the \textit{non-linear} OR operation on the non-zero variable nodes at each bin thus preventing us in subtracting the effect of the non-zero node from the measurements of the bin node unlike in the problems of compressed sensing or LDPC codes on binary erasure channel.
+First part of the decoder, which we will refer to as bin decoder, will be able to detect and decode the identity of the connected non-zero variable nodes exactly if the bin is a singleton or a resolvable double-ton. If the bin is a multi-ton, the bin decoder will detect it neither as a singleton nor a resolvable double-ton w.h.p. The second part of the decoder which we will refer to as the peeling decoder \cite{li2015subisit}, when given the identities of some of the non-zero variable nodes by the bin decoder, identifies the bins connected to the recovered variable nodes and looks for newly uncovered resolvable double-tons in these bins. This process of recovering new non-zero variable nodes from already discovered non-zero variable nodes proceeds in an iterative manner. For details of the decoder we refer the reader to \cite{lee2015saffron,vem2017group}. Note that we are not literally peeling off the decoded nodes from the graph because of the \textit{non-linear} OR operation on the non-zero variable nodes at each bin thus preventing us in subtracting the effect of the non-zero node from the measurements of the bin node unlike in the problems of compressed sensing or LDPC codes on binary erasure channel.
 
 \section{Proposed Scheme}
 The main difference between the SAFFRON scheme and our proposed scheme is that we use a left-and-right-regular sparse-graph in the first stage for the binning operation.
@@ -186,7 +186,7 @@ For the pruned graph ensemble $\tilde{\mc{G}}_{\ell,r}(N,K,M)$ it can be shown i
 \end{lemma}
 \vspace{\proofgap}
 \begin{proof}
-See \cite{vem2017regular}.
+See \cite{vem2017group}.
 % \textcolor{red}{In general, it appears that there is a order of limits issue here. We would really like to use a d.d. that is valid for any $K$ and $N$ and then we take the limit for $K, N \rightarrow \infty$. However, here we take the limit to obtain the d.d. The same problem also occurs in our analysis of the multiple access problem etc. But it would be nice to formalize this proof correctly. We should at least make a note of this somewhere. Otherwise, an attentive reviewer may point out this mistake. How to Kannan and co handle this issue?}
 \end{proof}
 %Note that even if our initial ensemble is left-and-right-regular the pruned graph has asymptotically same degree distribution as in the SAFFRON scheme where the initial graph is from left-regular ensemble.
@@ -197,7 +197,7 @@ For the pruned graph ensemble $\tilde{\mc{G}}_{\ell,r}(N, K,M)$ the oracle-based
 \vspace{\proofgap}
 \end{lemma}
 \begin{proof}
-From Lemma. \ref{Lem:EdgeDDPrunedGraph} the edge d.d. coefficients $\rho_1$ and $\rho_2$ are identical to that of the SAFFRON scheme. Thus we can employ the proof same as \cite[Thm.~4.1]{lee2015saffron} where the authors use the density evolution equations based on $\rho_1$ and $\rho_2$ to show the required result. See \cite{vem2017regular} for details.
+From Lemma. \ref{Lem:EdgeDDPrunedGraph} the edge d.d. coefficients $\rho_1$ and $\rho_2$ are identical to that of the SAFFRON scheme. Thus we can employ the proof same as \cite[Thm.~4.1]{lee2015saffron} where the authors use the density evolution equations based on $\rho_1$ and $\rho_2$ to show the required result. See \cite{vem2017group} for details.
 \end{proof}
 
 \begin{table}[h!]
@@ -271,7 +271,7 @@ For $M=c_\alpha K \log K$ and $(\ell,r)=(c_\alpha \log K,\frac{N}{K})$ a random 
 \end{theorem}
 \vspace{\proofgap}
 \begin{proof}
-See \cite{vem2017regular}.%As the number of tests in each bin is $2\log_2 \frac{N}{K}$ it is enough if we show that for the number of bins in the bipartite graph equal to $e(1+\alpha)K\log K$ all the variable nodes in the pruned graph are connected to atleast one singleton bin with high probability.
+See \cite{vem2017group}.%As the number of tests in each bin is $2\log_2 \frac{N}{K}$ it is enough if we show that for the number of bins in the bipartite graph equal to $e(1+\alpha)K\log K$ all the variable nodes in the pruned graph are connected to atleast one singleton bin with high probability.
 %
 %In the pruned graph ensemble, for any particular variable node, the probability that any of the $\ell$ connected bit nodes are not a singleton can be given by $(1-R_1)^\ell$ where $R_1$ is the probability that a bin node in the pruned graph ensemble is a singleton. From Eq. \ref{Eqn:Deg1ChkDistribution} asymptotically the value of $R_1$ approaches
 %\begin{align*}
@@ -374,7 +374,7 @@ Then the overall testing matrix $\mbf{A}$ is defined similar to the noiseless ca
 \begin{figure}
 \centering
 \resizebox{0.9\columnwidth}{2.4in}{\input{\FigPath/noiseless_sims.tex}}
-\caption{We compare the SAFFRON scheme(blue) with the proposed regular-SAFFRON scheme for For $K=100, N=2^{16}$  and various left degrees $\ell\in\{3,5,7\}$. For a given $\ell$ the bin detection size is fixed and we vary the number of bins.}
+\caption{We compare the SAFFRON scheme(blue) with the proposed regular-SAFFRON scheme for $K=100, N=2^{16}$ and various left degrees $\ell\in\{3,5,7\}$. For a given $\ell$ we fix the bin detection size and vary the number of bins.}
 \label{Fig:SimulationNoiseless}
 \end{figure}
 
@@ -412,7 +412,7 @@ The results are shown in Fig.~\ref{Fig:SimulationNoiseless}. We observe that the
 \begin{figure}
 \centering
 \resizebox{0.86\columnwidth}{!}{\input{\FigPath/noisy_sims.tex}}
-\caption{For $K=128, N=2^{32}$ we compare the SAFFRON scheme(blue) \cite{lee2015saffron} with the proposed regular-SAFFRON scheme(red) for a left degree $\ell=12$  . We fix the number of bins and vary the rate of the error control code used.}
+\caption{For $K=128, N=2^{32}$ we compare the SAFFRON scheme(blue) with the proposed regular-SAFFRON scheme(red) for a left degree $\ell=12$. We fix the number of bins and vary the rate of the error control code used.}
 \label{Fig:SimulationNoisy}
 \end{figure}
 
