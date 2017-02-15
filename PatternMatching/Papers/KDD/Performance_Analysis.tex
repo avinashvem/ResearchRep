@@ -20,14 +20,14 @@ The probability of bin classification error at any bin $(i,j)$ can be upper boun
 \begin{proof}
 \begin{align*}
 \mbb{P}[\mc{E}_1]&=\mbb{P}[\msc{H}_z]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~+
-						\quad \mbb{P}[\msc{H}_s]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~+
-						\quad\mbb{P}[\msc{H}_d]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
+						\quad \mbb{P}[\msc{H}_s]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~ \\ & \qquad +
+						\quad\mbb{P}[\msc{H}_d]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m] \notag\\
 				&\leq \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~+
-						\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~+
-						\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
-    			&\leq  e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}+2e^{-\frac{N^{\mu-\alpha}(1-4\eta)^2}{16}}+ 2e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}+e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}\\
+						\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~ \\
+						&\qquad + \quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
+    			&\leq  e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}+2e^{-\frac{N^{\mu-\alpha}(1-4\eta)^2}{16}}\\ & \qquad + 2e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}+e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}\\
     			&\leq 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}\\
-						\end{align*}
+ \end{align*}
 						where the inequalities in the third line are due to Lemmas \ref{Lem:ZerotonClassif}, \ref{Lem:SingletonClassif}, \ref{Lem:DoubletonClassif} and \ref{Lem:MultitonClassif} respectively provided in Appendix \ref{Append:BinClassif}.
 \end{proof}
 
@@ -35,7 +35,8 @@ The probability of bin classification error at any bin $(i,j)$ can be upper boun
 \begin{lemma}
 Given that a bin $(i,j)$ is correctly classified as a singleton, the probability of error in identifying the position of the non-zero variable node can be upper bounded by
 \begin{align*}
-\mbb{P}[\mc{E}_2|\overline{\mc{E}}_1]\leq \exp\left\lbrace-\frac{N^{\mu+\alpha-1}(1-2\eta)^2(c_1^2-1)}{8(c_1^2+1)}\right\rbrace + \exp\left\lbrace-\frac{N^{\mu+\alpha-1} ~ (c_1(1 - 2\eta) - 1)^2}{8(1+ c_1^2)}\right\rbrace
+\mbb{P}[\mc{E}_2|\overline{\mc{E}}_1]\leq & \exp\left\lbrace-\frac{N^{\mu+\alpha-1}(1-2\eta)^2(c_1^2-1)}{8(c_1^2+1)}\right\rbrace\\
+ &\qquad + \quad \exp\left\lbrace-\frac{N^{\mu+\alpha-1} ~ (c_1(1 - 2\eta) - 1)^2}{8(1+ c_1^2)}\right\rbrace
 \end{align*}
 \end{lemma}
 \begin{proof}
@@ -45,11 +46,11 @@ Given that a bin $(i,j)$ is correctly classified as a singleton, the probability
 \subsection{\bf Peeling Process}
 \begin{table}
 \centering
-\begin{tabular}{| c | c | c | c | c | c | c | c | c | }
+\begin{tabular}{| c | c | c | c | c | c | c | c | }
 \hline
-$d$ & $2$& $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ \\ \hline
-$\eta$ & 1.000 & 0.4073 & 0.3237 & 0.2850 & 0.2616 & 0.2456 & 0.2336 & 0.2244 \\ \hline
- $d\eta$ & 2.000 & 1.2219 & 1.2948 & 1.4250 & 1.5696 & 1.7192 & 1.8688 & 2.0196 \\ \hline
+$d$ & $2$& $3$ & $4$ & $5$ & $6$ & $7$ & $8$ \\ \hline
+$\eta$ & 1.000 & 0.4073 & 0.3237 & 0.2850 & 0.2616 & 0.2456 & 0.2336 \\ \hline
+ $d\eta$ & 2.000 & 1.2219 & 1.2948 & 1.4250 & 1.5696 & 1.7192 & 1.8688 \\ \hline
 \end{tabular}
 \vspace{1ex}
 \caption{Constants for various error floor values}

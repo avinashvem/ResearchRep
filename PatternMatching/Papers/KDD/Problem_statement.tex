@@ -9,7 +9,7 @@ We consider the substring/pattern matching problem, which is a problem that has 
 Broadly speaking, these problems are relevant to many applications including text matching, audio/image matching, DNA matching in genomics, metabolomics, etc., searching for signatures of events within large databases. The proposed techniques are particularly relevant now due to the interest in applications involving huge volumes of data. Our proposed approach is most useful in the following situations - (i) the string $\xv$ is available before querying and one time computations such as computing a sketch of $\xv$ can be performed off line and stored, and the complexity of computing the sketch of $\xv$ can be ignored. Then, when queries in the form of $\yv$ appear, one would like to decrease the computational complexity in searching for the string $\yv$. (ii) The string $\xv$ is not centrally available but parts of the string are sensed by different data collecting nodes distributively and communicated to a central server. A search query is presented to the server and the server needs to decide if the string appeared in the data sensed by one or more of the distributed nodes and the time instants where the query appeared. In this case, we would like to minimize the amount of data communicated by the nodes to the server and the computational complexity in searching for the string. Finally, the proposed approach is most useful when the query $\yv$ is not a pattern that can be predicted and, therefore, creating a look-up table to quickly identify commonly-occurring patterns will not be effective.
 %For e.g., $\xv$ is an i.i.d sequence of $\pm 1$ and $\yv$ could be a substring of $\xv$.
 
-A naive approach to searching for a substring $\yv$ in $\xv$ is to compute the cross correlation between $\xv$ and $\yv$ denoted by  $\rv=[r[0], r[1],\ldots, r[N-1]]$
+A naive approach to searching for a substring $\yv$ in $\xv$ is to compute the cross correlation between $\xv$ and $\yv$ denoted by  $\rv=[r[0], r[1],\ldots$ $, r[N-1]]$
 \begin{align}
 \label{Eqn:DefCrossCorrelation}
 r[m]=(\xv*\yv)[m] \defeq \sum_{i=1}^{M} x[m+i-1] y[i]
@@ -21,15 +21,11 @@ Both the exact pattern matching problem and the approximate pattern matching pro
 \section{Our Main Results and Relation to Prior Work}
 \label{sec:mainresults}
 \begin{theorem}
-Assume that a sketch of $\xv$ of size $O(N/M)$ can be computed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M$) problems, with the number of matches $L$ scaling as $O(N^{\lambda})$, our algorithm has
+Assume that a sketch of $\xv$ of size $O(N/M \log N)$ can be computed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M$) problems, with the number of matches $L$ scaling as $O(N^{\lambda})$, our algorithm has
 \begin{itemize}
- \item a sketching function for $\yv$ that computes $O(\max(M,\frac{N}{M})\log N)=O(N^{\max(\mu,1-\mu)}\log N)$ samples
+ \item a sketching function for $\yv$ that computes \\ $O(\frac{N}{M}\log N)$$= O\left(N^{1-\mu}\log N\right)$ samples
  \item a decoder that recovers all the $L$ matching positions with a failure probability that approaches zero asymptotically in $N$
- \item a computational complexity of
- \begin{itemize}
- \item  $O(N^{\max(1-\mu,\mu+\lambda)}\log^2 N)$ for $\mu<0.5$
-  \item  $O(N^{\max(\mu,1-\mu+\lambda)}\log^2 N)$ for $\mu>0.5$
-\end{itemize}
+ \item a computational complexity of \\$O\left(\max\{N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N \}\right)$
  \end{itemize}
 %Particularly when we are interested only in finding a constant number of matches $L=O(1)$ or $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$) which is the extreme case of input string $\xv$ being just the repetition of the query $\yv$, which are both very practical assumptions to make for many real world problems, our algorithm has a {\it sub-linear time complexity}.
 When $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$), which is typically the interesting case, our algorithm has a {\it sub-linear time complexity}.
