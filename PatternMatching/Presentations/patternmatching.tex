@@ -80,6 +80,47 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
     $\mbb{P}(\hat{\underline{\tau}} \neq \underline{\tau}) \rightarrow 0$ as $N \rightarrow \infty$
     \end{block}
 	\end{frame}	
+\begin{frame} \frametitle{Some Prior Work}
+	\vspace{-0.2cm}
+	 \only<1>{\begin{block}{\alert{Exact Matching}}
+	 	
+	 	\begin{itemize}
+	 		\item  {\color{blue} \bf Boyer'77}: First occurrence of the match (only $\tau_1$)	 		
+	 		\begin{itemize}
+	 			\item[-] Average complexity - $O(N^{1-\mu} \log N)$ (sublinear)
+	 			\item[-] Worst case complexity - $O(N \log N)$
+	 		\end{itemize}
+	 		\item  {\color{blue}\bf Goodrich'05}: BWT, suffix-arrays based indexing
+	 		\begin{itemize}
+	 			\item[-] Time complexity - $O(M + L)$ (sublinear)
+	 			\item[-] Storage Complexity - $O(N~H_k(X) \log^\epsilon N) + o(N)$ bits  (linear)
+	 			\item[-] Read alignment in Bio-informatics community[ {\color{blue}Li'09,Li'10}]
+	 		\end{itemize}	 		
+	 	\end{itemize}
+	 \end{block}
+	\begin{block}{\alert{Approximate Matching}}
+		
+	 	\begin{itemize}
+	 		\item {\color{blue} \bf Chang'94}: Generalization of Boyer'77
+	 		\begin{itemize}
+	 			\item[-] Average time complexity - $O(NK/M \log N)$ (sub-linear only when $K \ll M$ )
+	 		\end{itemize}
+	 		
+	 			\item {\color{blue} \bf Zhang'03}: Approximate Matching using BWT
+	 			\begin{itemize}
+	 				\item[-] Worst case time complexity: $O(\min\{M(M-K){|\mc{A}|}^k\log \frac{N}{|\mc{A}|} , NM \log \frac{N}{|\mc{A}|}\})$
+	 				\item[-] Complexity grows with $|\mc{A}|$ and $K$
+	 			\end{itemize}
+	 			
+	 		\item {\color{blue} \bf Andoni'13}: $O\left(N^{1-0.359\mu}\right)$ (sub-linear even when $K = O(M)$)
+	 		\begin{itemize}
+	 			\item[-] Combinatorial in nature
+	 		\end{itemize}
+	 	\end{itemize}
+	 	
+	 \end{block}
+}
+\end{frame}
 	
 %--------------------------------------------- Main Result -------------------------------	
 	 \begin{frame} \frametitle{Main Result}
@@ -124,52 +165,11 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 \end{frame}
 
 
-\begin{frame} \frametitle{Some Prior Work}
-	\vspace{-0.2cm}
-	 \only<1>{\begin{block}{\alert{Exact Matching}}
-	 	
-	 	\begin{itemize}
-	 		\item  {\color{blue} \bf Boyer'77}: First occurrence of the match (only $\tau_1$)	 		
-	 		\begin{itemize}
-	 			\item[-] Average complexity - $O(N^{1-\mu} \log N)$ (sublinear)
-	 			\item[-] Worst case complexity - $O(N \log N)$
-	 		\end{itemize}
-	 		\item  {\color{blue}\bf Goodrich'05}: BWT, suffix-arrays based indexing
-	 		\begin{itemize}
-	 			\item[-] Time complexity - $O(M + L)$ (sublinear)
-	 			\item[-] Storage Complexity - $O(N~H_k(X) \log^\epsilon N) + o(N)$ bits  (linear)
-	 			\item[-] Read alignment in Bio-informatics community[ {\color{blue}Li'09,Li'10}]
-	 		\end{itemize}	 		
-	 	\end{itemize}
-	 \end{block}
-	\begin{block}{\alert{Approximate Matching}}
-		
-	 	\begin{itemize}
-	 		\item {\color{blue} \bf Chang'94}: Generalization of Boyer'77
-	 		\begin{itemize}
-	 			\item[-] Average time complexity - $O(NK/M \log N)$ (sub-linear only when $K \ll M$ )
-	 		\end{itemize}
-	 		
-	 			\item {\color{blue} \bf Zhang'03}: Approximate Matching using BWT
-	 			\begin{itemize}
-	 				\item[-] Worst case time complexity: $O(\min\{M(M-K){|\mc{A}|}^k\log \frac{N}{|\mc{A}|} , NM \log \frac{N}{|\mc{A}|}\})$
-	 				\item[-] Complexity grows with $|\mc{A}|$ and $K$
-	 			\end{itemize}
-	 			
-	 		\item {\color{blue} \bf Andoni'13}: $O(N/M^{0.359})$ (sub-linear even when $K = O(M)$)
-	 		\begin{itemize}
-	 			\item[-] Combinatorial in nature
-	 		\end{itemize}
-	 	\end{itemize}
-	 	
-	 \end{block}
-}
-\end{frame}
 
 
 	
 %-------------------------------------------------------------------------------------------------------------
-\begin{frame}\frametitle{Motivation}
+\begin{frame}\frametitle{Main Idea}
 	\vspace{-0.4cm}
 			\begin{block}{}
 			
@@ -215,6 +215,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 				
 					
 \end{frame}
+
 %--------------------------------------------------------------------------------------
 \def\fracty{0.45}
 \def\fractx{0.8}
@@ -276,23 +277,6 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	%
 	%\end{columns}
 \end{frame}
-%-----------------------------------------
-\begin{frame}\frametitle{Sparse Fourier Transform Approach}
-        \begin{block}{Robust Sparse Fourier Transform - Pawar and Ramchandran'14}
-	 		\begin{itemize}
-	 			\item[-] Sparse graph code approach
-	 			\item[-] Computational complexity : $O(N \log N)$
-	 		\end{itemize}
-	 	\end{block}
-        \begin{block}{Faster GPS receiver - Hassanieh '12}
-	 		\begin{itemize}
-	 			\item[-] Exploited sparsity in Correlation function $R_{XY}$
-                \item[-] Algorithm based on hashing
-                \item[-] In this application, complexity is still $O(N \log N)$
-	 		\end{itemize}		
-	 	\end{block}	 	
-
-\end{frame}
 %---------------------------------------------------------
 \begin{frame}\frametitle{Sparse Fourier Transform Approach}
 	\begin{figure}[t]
@@ -322,17 +306,15 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	 	\end{block}
 \end{frame}
 
-
-%------------------------------------------------------------------
-\begin{frame}{Robust Sparse Inverse Fourier Transform(RSIDFT)}
-\begin{block}{Main Idea}
-	\begin{itemize}
-		\item \alert{Sub-sampling} in frequency corresponds to \alert{aliasing} in time
-		\item Aliased coefficients $\Leftrightarrow$ parity check constraints of \alert{GLDPC codes}
-		\item \alert{CRT} guided sub-sampling induces a code good for \alert{Peeling decoder}
-		\item R-FFAST- proposed by Pawar and Ramchandran 2014
-	\end{itemize}
-\end{block}
+%-----------------------------------------
+\begin{frame}\frametitle{Sparse Fourier Transform Approach}
+        \begin{block}{Robust Sparse Fourier Transform - Pawar and Ramchandran'14}
+	 		\begin{itemize}
+	 			\item[-] Sparse graph code approach
+	 			\item[-] Computational complexity : $O(N \log N)$
+	 		\end{itemize}
+	 	\end{block}
+\pause
 \begin{block}{Key modifications}
    \begin{itemize}
    	\item Optimized for the induced noise model
@@ -340,7 +322,38 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
    	\item Take advantage in decoding algorithm - {\color{blue}sub-linear} time complexity
    \end{itemize}
 \end{block}
+\pause
+        \begin{block}{Faster GPS receiver - Hassanieh '12}
+	 		\begin{itemize}
+	 			\item[-] Exploited sparsity in Correlation function $R_{XY}$
+                \item[-] Algorithm based on hashing
+                \item[-] In this application, complexity is still $O(N \log N)$
+	 		\end{itemize}		
+	 	\end{block}	 	
+
+
 \end{frame}
+
+
+
+%%------------------------------------------------------------------
+%\begin{frame}{Robust Sparse Inverse Fourier Transform(RSIDFT)}
+%\begin{block}{Main Idea}
+%	\begin{itemize}
+%		\item \alert{Sub-sampling} in frequency corresponds to \alert{aliasing} in time
+%		\item Aliased coefficients $\Leftrightarrow$ parity check constraints of \alert{GLDPC codes}
+%		\item \alert{CRT} guided sub-sampling induces a code good for \alert{Peeling decoder}
+%		\item R-FFAST- proposed by Pawar and Ramchandran 2014
+%	\end{itemize}
+%\end{block}
+%\begin{block}{Key modifications}
+%   \begin{itemize}
+%   	\item Optimized for the induced noise model
+%   	\item Correlation peak is always {\color{blue} positive}
+%   	\item Take advantage in decoding algorithm - {\color{blue}sub-linear} time complexity
+%   \end{itemize}
+%\end{block}
+%\end{frame}
 
 %--------------------------------------------------------------------------------------
 	\begin{frame}{Aliasing and Sparse Graph Codes}
@@ -378,7 +391,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			\end{block}
 		\end{columns}}
 
-\only<2>{ \begin{block}{IDFT Computation($N=6$)}
+\only<2>{ \begin{block}{IDFT Computation($N=6 = 3 \times 2$)}
 		\begin{figure}[t]
 			\centering
 			\includegraphics[width=3.1in]{X_DFT}
@@ -414,7 +427,9 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	\end{frame}
 
 \begin{frame}\frametitle{RSIDFT Framework}
-	
+	\begin{itemize}
+    \item $N = f_1 \ f_2 \ldots \ f_d$ where $f_i \approx N^\alpha$
+    \end{itemize}
 		\begin{figure}[t!]
 			\begin{center}
 				\resizebox{0.8\textwidth}{!}{\input{FFAST_Robust_PM.tex}}
@@ -632,7 +647,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 			\item Tools from Coding Theory to analyze Sparse Graph Codes
 			\item Density Evolution to quantify Error Probability
 			\item \# of check-nodes is a function of sparsity (query length)
-			\item Exponentially decaying error probability- {\small R-FFAST and SAFFRON [Pawar'14, Lee'15]}
+			\item Error probability decays with $N$ - {\small R-FFAST and SAFFRON [Pawar'14, Lee'15]}
 		\end{itemize}
 		\end{block}
 	}	
