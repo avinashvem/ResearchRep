@@ -3,7 +3,6 @@
 In this section, we will analyze the sample complexity which is the  number of samples we access from the sketch of the signal $\xv$ stored in the database and the computational complexity as a function of the system parameters.
 
 \subsection{\bf Sample Complexity}
-{\color{blue} Change to distributed framework}
 In each branch of the RSDIFT framework we down-sample the $N$ samples by a factor of $\frac{N}{f_i}$ to get $f_i\approx N^{\alpha}$ samples. As mentioned we repeat this for a random shift in each branch for $B=O(\log N)$ branches in each stage thus resulting in a total of $O(N^{\alpha}\log N)$ samples per block per stage. We repeat this for $d = \frac{1}{1-\alpha}$ such stages resulting in a total of $dN^{\alpha}\log N$ samples per block. So, the total number of samples is given by  
 
 \begin{align*}
@@ -19,7 +18,7 @@ In each branch of the RSDIFT framework we down-sample the $N$ samples by a facto
 
 
 \subsection{\bf Computational Complexity}
-{\color{blue} Change to distributed framework}
+
 As described in Eq.~\ref{eqn:Rxy_fourier}, the computation of $\rv$ involves three steps:
 \begin{enumerate} 
 	\item  Operation - \RNum{1}:
@@ -36,7 +35,7 @@ As described in Eq.~\ref{eqn:Rxy_fourier}, the computation of $\rv$ involves thr
 	
 	\item  Operation - \RNum{3}:
 	
-	As described in Sec.~\ref{subsec:skteches}, in each branch $(i,j)$, we use a folding based technique to compute the sketch of $\yv$, $\mathcal{F}_{N}\{\yv\}$ at points in the set $\mc{S}_{i,j}$. The folding technique involves two steps: folding and adding (aliasing) which has a complexity of $O(M)$ computations , and computing $f_i$-point IDFTs that takes $O(N^\alpha \log N^{\alpha})$ computations. So, for a total of $dB$ branches the number of computations in this step is given by
+	As described in Sec.~\ref{subsec:skteches}, in each branch $(i,j)$, we use a folding based technique to compute the sketch of $\yv$, $\mathcal{F}_{N}\{\yv'\}$ at points in the set $\mc{S}_{i,j}$. The folding technique involves two steps: folding and adding (aliasing) which has a complexity of $O(M)$ computations , and computing $f_i$-point IDFTs that takes $O(N^\alpha \log N^{\alpha})$ computations. So, for a total of $dB$ branches the number of computations in this step is given by
 	
 	\begin{align*}
 	 C_{\RNum{3}} \ &= ~  dB ~ 

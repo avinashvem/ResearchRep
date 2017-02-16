@@ -122,7 +122,7 @@ In Fig.~\ref{fig:factorgraph} we represent the relation between the set of obser
 \end{align}
 where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{1-2\eta}{2},\frac{3-4\eta}{2},\frac{5-6\eta}{2})$. Note that for the case of exact matching $\eta=0$.
 \paragraph*{Singleton decoding}
- {\color{blue}{(Change to the clustering scheme)}}If a bin node $(i,j)$ is classified as a singleton, we need to identify the position of the non-zero variable node connected to it. This is done by correlating the observation vector $\zv_{i,j}$ with each column of the sensing matrix  $\mb{W}_{i,j} \coleq [\wv^{j},\wv^{j+g_i},\ldots,   \wv^{j+(f_i-1)g_i}]$ and choose the index that maximizes the correlation value.
+ {\color{blue}{(Add a note on clustering scheme as extensions)}}If a bin node $(i,j)$ is classified as a singleton, we need to identify the position of the non-zero variable node connected to it. This is done by correlating the observation vector $\zv_{i,j}$ with each column of the sensing matrix  $\mb{W}_{i,j} \coleq [\wv^{j},\wv^{j+g_i},\ldots,   \wv^{j+(f_i-1)g_i}]$ and choose the index that maximizes the correlation value.
 \begin{align*}
  \hat{k} = \underset{k\in\{j+l g_i\}}{\argmax}~~ \zv^{\dagger}_{i,j} \wv^{k}
 \end{align*}
