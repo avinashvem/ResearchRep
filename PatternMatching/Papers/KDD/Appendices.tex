@@ -182,7 +182,7 @@ We will analyze the singleton identification in two separate cases:
 
 \begin{lemma}[Mutual Incoherence Bound for sub-sampled IDFT matrix  [\cite{pawar2014robust},Proposition~A.1]
 \label{lemma:MutualCoherence}
-	The mutual incoherence $\mu_{\text{max}} (\mb{W_{i,k}})$ of the sensing matrix $\mb{W}_{i,k}$ (defined in Eq.~\ref{Eqn:Sensing Matrix}), with $B$ shifts, is upper bounded by
+	The mutual incoherence $\mu_{\text{max}}$ $(\mb{W_{i,k}})$ of the sensing matrix $\mb{W}_{i,k}$ (defined in Eq.~\ref{Eqn:Sensing Matrix}), with $B$ shifts, is upper bounded by
 	
 	\[ \mu_{\text{max}} < 2\sqrt{\frac{\log(5N)}{B}} \] 
 	
@@ -227,7 +227,7 @@ For some constant $c_1 \in \mathbb{R}$ and the choice of $B=4c_1^2\log 5N$,  the
 	&r[j_p] + \frac{1}{B}\sum_{k \neq p} n_k 	\wv_{j_p}^{\dagger}\wv_{j_k} \leq \frac{r[j_p]}{B} ~ \wv_{j_{p'}}^{\dagger}\wv_{j_p}+ n_{p'}+\frac{1}{B}\sum_{k \neq p,p'}n_k\wv_{j_{p'}}^{\dagger} \wv_{j_k} \\
 	&\leftrightarrow \sum_{k \neq p,p'}\alpha_k n_k+\beta n_{p'}\geq  r[j_p]\left(1-\frac{\wv_{j_{p'}}^{\dagger}\wv_{j_p}}{B}\right)\geq M(1-2\eta)(1-\mu_{\text{max}})
 	\end{align*}
-	where $\alpha_k$ and $\beta$ are constants and can be shown to be in the range $\alpha_k\in[-2\mu_\text{max},2\mu_\text{max}]$ and $\beta\in[1-\mu_\text{max},1+\mu_\text{max}]$. Now using the bound given Chernoff Lemma in Lem.~\ref{Lem:Chernoff2} we obtain
+	where $\alpha_k$ and $\beta$ are constants and can be shown to be in the range $\alpha_k\in[-2\mu_\text{max},2\mu_\text{max}]$ and $\beta\in[1-\mu_\text{max},1+\mu_\text{max}]$. Now using the bound given Chernoff Lemma in Lem.~\ref{Lem:tailbounds} we obtain
 	\begin{align*}
 	\mbb{P}[\mc{E}_{21}]&\leq \exp\left\lbrace-\frac{2M(1-2\eta)^2(1-\mu_{\text{max}})^2}{16g_i\mu^2_{\max}+4(1+\mu_{\max})^2}\right\rbrace\\
 	&\leq\exp\left\lbrace-\frac{2M(1-2\eta)^2(1-\mu_{\text{max}})^2}{16(g_i\mu^2_{\max}+1)}\right\rbrace\\
@@ -282,7 +282,7 @@ For some constant $c_1 \in \mathbb{R}$ and the choice of $B=4c_1^2\log 5N$, the 
 	\end{align*}
 	\[~~\geq M(1-2\eta)(1-\mu_{\text{max}}) - 2 \eta M \mu_{\text{max}} = M(1 - 2\eta - \mu_{\text{max}})                         
 	\]
-	where $\alpha_k$ and $\beta$ are constants and can be shown to be in the range $\alpha_k\in[-2\mu_\text{max},2\mu_\text{max}]$ and $\beta\in[1-\mu_\text{max},1+\mu_\text{max}]$. Now using the bound given by Chernoff Lemma in Lem.~\ref{Lem:Chernoff2} we obtain
+	where $\alpha_k$ and $\beta$ are constants and can be shown to be in the range $\alpha_k\in[-2\mu_\text{max},2\mu_\text{max}]$ and $\beta\in[1-\mu_\text{max},1+\mu_\text{max}]$. Now using the bound given by Chernoff Lemma in Lem.~\ref{Lem:tailbounds} we obtain
 	\begin{align*}
 		\mbb{P}[\mc{E}_{22}]&\leq \exp\left\lbrace-\frac{2M(1 - 2\eta - \mu_{\text{max}})^2}{16g_i\mu^2_{\max}+4(1+\mu_{\max})^2}\right\rbrace\\
 		&\leq\exp\left\lbrace-\frac{2M(1 - 2\eta - \mu_{\text{max}})^2}{16(g_i\mu^2_{\max}+1)}\right\rbrace\\
