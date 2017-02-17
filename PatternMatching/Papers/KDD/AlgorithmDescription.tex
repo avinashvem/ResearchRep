@@ -93,7 +93,7 @@ We represent the relation between the set of observation vectors $\{\zv_{i,k},i\
 \subsubsection{Decoder}			
 	Observe from the Tanner graph that the degree of each variable node is $d$ and that of each bin node at stage $i$ is $g_i$. A variable node is referred to as non-zero if it corresponds to a matching position and as zero if it corresponds to a non-matching position. Note that even though the cross-correlation vector value corresponding to a non-matching position is not exactly zero but some negligible noise value we refer to them as zero variable nodes for simplicity. We refer to a bin node as {\it zero-ton} (or $\msc{H}_z$) if the number of non-zero variable nodes connected to the bin node is zero. The {\it singleton ($\msc{H}_s$), double-ton ($\msc{H}_d$) and multi-ton ($\msc{H}_m$)} bin nodes are defined similarly where the number of non-zero variable nodes connected are one, two and greater than two, respectively. The peeling decoder has the following three steps in the decoding process.
 
-\paragraph*{Bin Classification} In this step a bin node is classified as a zero-ton or a singleton or a multi-ton. At bin $(i,j)$ the classification is done based on  comparing the first observation $z_{i,j}[1]$, which corresponds to zero shift, with a predefined threshold. For $z_{i,j}[1]=z$, the classification at bin $(i,j)$, $\widehat{\msc{H}}_{i,j}$, can be written as follows:
+\paragraph*{Bin Classification} In this step a bin node is classified either as a zero-ton or a singleton or a multi-ton. At bin $(i,j)$ the classification is done based on  comparing the first observation $z_{i,j}[1]$, which corresponds to zero shift, with a predefined threshold. For $z_{i,j}[1]=z$, the classification hypothesis at bin $(i,j)$, $\widehat{\msc{H}}_{i,j}$, can be written as follows:
 \begin{align}
 \label{Eqn:BinClassifApprox}
 \widehat{\msc{H}}_{i,j}=
@@ -104,24 +104,25 @@ We represent the relation between the set of observation vectors $\{\zv_{i,k},i\
 \msc{H}_m &      z/M > \gamma_3\\
 \end{cases}
 \end{align}
-where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{1-2\eta}{2},\frac{3-4\eta}{2},\frac{5-6\eta}{2})$. Note that for the case of exact matching $\eta=0$.
+where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{1-2\eta}{2},\frac{3-4\eta}{2},\frac{5-6\eta}{2})$. Note that for the case of exact matching $\eta=K/M=0$.
 \paragraph*{Singleton decoding}
- {\color{blue}{(Add a note on clustering scheme as extensions)}}If a bin node $(i,j)$ is classified as a singleton, we need to identify the position of the non-zero variable node connected to it. This is done by correlating the observation vector $\zv_{i,j}$ with each column of the sensing matrix  $\mb{W}_{i,j} \coleq [\wv^{j},\wv^{j+g_i},\ldots,   \wv^{j+(f_i-1)g_i}]$ and choosing the index that maximizes the correlation value.
+If a bin node $(i,j)$ is classified as a singleton in the bin classification step, we need to identify the position of the non-zero variable node connected to it. This is done by correlating the observation vector $\zv_{i,j}$ with each column of the sensing matrix  $\mb{W}_{i,j} \coleq [\wv^{j},\wv^{j+f_i},\ldots,   \wv^{j+(g_i-1)f_i}]$ and choosing the index that maximizes the correlation value.
 \begin{align*}
- \hat{k} = \underset{k\in\{j+l g_i\}}{\argmax}~~ \zv^{\dagger}_{i,j} \wv^{k}
+ \hat{k} = \underset{k\in\{j+l f_i\}}{\argmax}~~ \zv^{\dagger}_{i,j} \wv^{k}
 \end{align*}
-where $\dagger$ denotes the conjugate transpose. The value of the variable node connected to the singleton bin is set to be:
+where $\dagger$ denotes the conjugate transpose. The value of the variable node connected to the singleton bin is decoded as:
  $$
  \hat{r}[\hat{k}]=M(1-\eta).
  $$
- Note that for the case of exact matching we know the value to be exactly equal to $M$. But in the case of approximate matching, the actual value of $r[k]\in\{M(1-2\eta),\ldots,M-1,M\}$ and our estimate $ \hat{r}[\hat{k}]=M(1-\eta)$ is only approximate. But, this suffices for recovering the positions of matches i.e., the indices of the sparse coefficients in $\rv$.			
-\paragraph*{Peeling Process} The peeling based decoder we employ consists of finding a singleton bin, then identifying the single non-zero variable node connected to the bin, decoding its value and removing ({\it peeling off}) it's contribution from all the bin nodes connected to that variable node. The main idea behind this decoding scheme is that (for appropriately chosen parameters) the peeling a singleton node off will induce at least one more singleton bin and the process of peeling off can be repeated iteratively. Although the main idea is similar for exact matching and the approximate matching scenarios, there are some subtle differences in their implementation.\\
+ Note that for the case of exact matching we know the value to be exactly equal to $M$. But in the case of approximate matching, the actual value of $r[k]\in\{M(1-2\eta),\ldots,M-1,M\}$ and our estimate $\hat{r}[\hat{k}]=M(1-\eta)$ is only approximate. But this suffices for recovering the positions of matches i.e., the indices of the sparse coefficients in $\rv$.			
+
+\paragraph*{Peeling Process} The peeling based decoder we employ consists of finding a singleton bin, then identifying the single non-zero variable node connected to the bin, decoding its value and removing ({\it peeling off}) it's contribution from all the bin nodes connected to that variable node. The main idea behind this decoding scheme is that (for appropriately chosen parameters), at each iteratiob, peeling a singleton node off will induce at least one more singleton bin and the process of peeling off can be repeated iteratively. Although the main idea is similar for exact matching and the approximate matching scenarios, there are some subtle differences in their implementation.\\
 {\it Exact Matching}: In the case of exact matching, we remove the decoded variable node's contribution from all the bin nodes it is connected to.\\
-{\it Approximate Matching}: In this case, similar to the approach in \cite{},  we remove the decoded variable node's contribution only from bins that are originally a singleton or a double-ton. We do not alter the bins which are classified to be multi-tons with degree more than two.
+{\it Approximate Matching}: In this case, similar to the approach in {\color{red}{Add reference}}\cite{},  we remove the decoded variable node's contribution only from bins that are originally a singleton or a double-ton. We do not alter the bins which are classified to be multi-tons with degree more than two.
 
 {\it Note:} The differences in peeling implementation for exact and approximate matching cases is because unlike exact matching the approximate matching may result in non-zero error ($e_1$) between the actual correlation value $r[k]$ and the estimate $\hat{r}[\hat{k}]$, i.e. $e_1 = |r[k]- \hat{r}[\hat{k}]|$ with $0 \leq e_1 \leq \eta M$. This may lead to error propagation if we use the same decoding scheme as in exact matching. Hence to overcome this problem we impose a constraint on the type of bin nodes participating in the peeling process.
 	
-We present the overall recovery algorithm, which comprises of {\it bin classification, singleton decoding} and {\it peeling process}, in the Algorithm. \ref{Algo:decoder} pseudo-code. Note that $\msc{N}(k)$ denote the neighborhood for variable node $k$  i.e., the set of bins connected to $k^{\text{th}}$ variable node.
+We present the overall recovery algorithm, which comprises of {\it bin classification, singleton decoding} and {\it peeling process}, in the Algorithm.\ref{Algo:decoder} pseudo-code. Note that $\msc{N}(k)$ denote the neighborhood for variable node $k$  i.e., the set of bins connected to $k^{\text{th}}$ variable node.
 
 \def\gap{4pt}
 \begin{algorithm}[h!]
@@ -138,12 +139,10 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 \vspace{1.5\gap}
   \For{$(i_0,j_0)\in\msc{N}(\hat{k})$}
 \vspace{\gap}
-	   \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}} \hspace{32.0 ex}$
-	   \hspace{45.5ex} {\it Exact Matching}
+	   \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}}$	   \hspace{5ex} {\it Exact Matching}
 	   \vspace{\gap}
 
-        \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}}$   \hspace{6ex} only if $\widehat{\msc{H}}_{i_0,j_0}=\msc{H}_s$ or $\msc{H}_d$ 	   
-        \hspace{14ex} {\it Approximate Matching}
+        \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}}$   \hspace{2ex} only if $\widehat{\msc{H}}_{i_0,j_0}=\msc{H}_s$ or $\msc{H}_d$ 	 for the case of {\it Approximate Matching}
 	   \vspace{\gap}
 	   \State Re-do the bin classification for $(i_0,j_0)$ and compute $\widehat{\msc{H}}_{i_0,j_0}$
       \EndFor
@@ -159,7 +158,7 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 \vspace{\gap}
 \State{\bf Output:} $(\hat{k},\hat{r}[\hat{k}])$
 \vspace{\gap}
-\State Estimate singleton index to be $ \hat{k} = \underset{k\in\{j+l g_i\}}{\argmax}\  \zv^{\dagger}_{i,j} \wv^{k}$
+\State Estimate singleton index to be $ \hat{k} = \underset{k\in\{j+l f_i\}}{\argmax}\  \zv^{\dagger}_{i,j} \wv^{k}$
 \vspace{\gap}
   \State Estimate the value to be:$$ \hat{r}[\hat{k}]=
    \begin{cases}
@@ -192,14 +191,18 @@ Thus, for both the exact and approximate matching cases, for any $0<\mu<1$, we c
 
 \subsection{Sketches of $\Xv$ and $\Yv$}
 \label{subsec:skteches}		
- As we have already seen in Sec.~\ref{subsec:RSIDFT} the RSIDFT framework requires the values of $\Rv(=\Xv\odot \Yv)$ only at indices $\mc{S}$ or in other words we need $\Xv$ and $\Yv$ only at the indices $\mc{S}$. We assume that the sketch of $\xv$, $ \Xv[\mc{S}]= \{X[i],i\in \mc{S}\}$ is pre-computed and stored in a database.
+ As we have already seen in Sec.~\ref{subsec:RSIDFT} the RSIDFT framework requires the values of $\Rv(=\Xv\odot \Yv)$ only at indices $\mc{S}$ or in other words we need $\Xv$ and $\Yv$ only at the indices in set $\mc{S}$ of cardinality $dBf_i$. We assume that the sketch of $\xv$, $ \Xv[\mc{S}]= \{X[i],i\in \mc{S}\}$ is pre-computed and stored in a database.
 
-\subsubsection*{Computing the sketch of $\yv$}: For every new query $\yv$, only $\{\Yv'[\mc{S}_{i,j}]$,  $i\in[d],j\in[B]\}$ needs to be computed where the subsets $\mc{S}_{i,j}$ are defined in Eq. \eqref{Eqn:SamplingSets}. Naively, the FFT algorithm can be used to compute $\Yv'$ and the required subset of coefficients can be taken but this is inefficient and would be of $O(N \log N)$ complexity. Instead, we observe that $\Yv'[\mc{S}_{i,j}]$ is $\Yv'$ shifted by $s_j$ and sub-sampled by a factor of $g_i$. Thus for a given $(i,j)$ this corresponds to, in time domain, a point-wise multiplication by $[1,w_{s_j},w_{s_j}^2,\ldots,w_{s_j}^{N-1}]$ followed by \textit{folding} the signal into $f_i$ signals each of length $\frac{N}{f_i}$ and adding them up resulting in a single length-$g_i$ signal denoted by $\yv'_{i,j}$. Formally the \textit{folding} operation can be described as follows:
-	  \begin{equation}
-	  	\yv'_{i,j} = \sum \limits_{m = 0}^{g_i-1} \yv'[mf_i:(m+1)f_i-1] \odot [w_{s_j}^{mf_i},w_{s_j}^{mf_i+1},\ldots, w_{s_j}^{(m+1)f_i-1}],
-	  \end{equation}
-	
-	  where, $w_{s_j}=e^{-\frac{j2\pi s_j}{N}}$.
-	
- Taking $n_i$-point DFT of $\yv'_{i,j}$ produces $\Yv'[\mc{S}_{i,j}]$ i.e. $\Yv'$ sampled only at $\mathcal{S}_{i,j}$ indices which is what we need in branch $(i,j)$. To obtain all the samples in $\mathcal{S}$ required for the RSDIFT framework, the \textit{folding} technique followed by a IDFT needs to be carried out for each $(i,j)$, for $i\in[d],j\in[B]$, a total of $dB$ times $N^{1-\alpha}$-point DFT.
-
+\subsubsection*{Computing the sketch of $\yv$}: For every new query $\yv$, only $\{\Yv'[\mc{S}_{i,j}]$,  $i\in[d],j\in[B]\}$ needs to be computed where the subsets $\mc{S}_{i,j}$, defined in Eq. \eqref{Eqn:SamplingSets}, are
+\begin{align}
+	 \mathcal{S}_{i,j} \coleq \{\ s_j + k g_i: k\in[f_i]\}, \quad i\in[d], j\in[B]
+\end{align}
+of cardinality $f_i$. Naively, the FFT algorithm can be used to compute $N$-pt DFT of $\Yv'$ and the required subset of coefficients can be taken but this is inefficient and would be of $O(N \log N)$ complexity. Instead, we observe that $\Yv'[\mc{S}_{i,j}]$ is $\Yv'$ shifted by $s_j$ and sub-sampled by a factor of $g_i$. Thus for a given $(i,j)$ this corresponds to, in time domain, a point-wise multiplication by $[1,w_{s_j},w_{s_j}^2,\ldots,w_{s_j}^{N-1}]$ followed by \textit{folding} the signal into $f_i$ signals each of length $g_i(=\frac{N}{f_i})$ and adding them up resulting in a single length-$g_i$ signal denoted by $\yv'_{i,j}$. Formally the \textit{folding} operation can be described as follows:
+\begin{equation}
+	\yv'_{i,j} = \sum \limits_{m = 0}^{g_i-1} \yv'[mf_i:(m+1)f_i-1] \odot [w_{s_j}^{mg_i},w_{s_j}^{mg_i+1},\ldots, w_{s_j}^{(m+1)g_i-1}],
+\end{equation}	
+where, $w_{s_j}=e^{-\frac{j2\pi s_j}{N}}$. Taking $n_i$-point DFT of $\yv'_{i,j}$ produces $\Yv'[\mc{S}_{i,j}]$ i.e. 
+ \begin{align*}
+	\Yv'[\mc{S}_{i,j}]=\mc{F}_{g_i} \{\yv'_{i,j}\}
+\end{align*}
+which is what we need in branch $(i,j)$. To obtain all the samples in $\mathcal{S}$ required for the RSDIFT framework, the \textit{folding} technique followed by a IDFT needs to be carried out for each $(i,j)$, for $i\in[d],j\in[B]$, a total of $dB$ times $N^{1-\alpha}$-point IDFT.
