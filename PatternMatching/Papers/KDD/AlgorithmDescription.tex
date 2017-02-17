@@ -31,7 +31,7 @@ r[m] \ = \left\{
 \end{equation}
 where $n_m$ is the noise component that is induced due to correlation of two i.i.d. sequence of random variables each taking values from $\mathcal{A} := \{+1,-1\}$. The sparse vector $\rv$ can be computed indirectly using Fourier transform approach as shown below:
 \begin{equation}\label{eqn:Rxy_fourier}
-  \rv = \underset{\text{ \RNum{1} } } {\mathcal{F}_{N}^{-1}} \ \{ \underset{\text{ \RNum{2} } }{  \mathcal{F}_{N}\{\xv\}}  \odot \ \underset{\text{ \RNum{3} } }{ \mathcal{F}_{N}\{\yv'\}}  \}
+  \rv = \underset{\text{ \RNum{3} } } {\mathcal{F}_{N}^{-1}} \ \{ \underset{\text{ \RNum{1} } }{  \mathcal{F}_{N}\{\xv\}}  \odot \ \underset{\text{ \RNum{2} } }{ \mathcal{F}_{N}\{\yv'\}}  \}
 \end{equation}
 where $\mathcal{F}_{N}\{ \cdot \}$ and $\mathcal{F}_{N}^{-1}\{ \cdot \}$ refer to $N$-point discrete Fourier transform and its inverse respectively, $\odot$ is the point-wise multiplication operation and ${ y'[n]} = { y^{*}[-n]}$. Fig.~\ref{fig:notional} presents a notional schematic of our Algorithm. As evident from Eq.~\eqref{eqn:Rxy_fourier}, our algorithm for computing $\rv$ consists of three stages:
 \begin{itemize}
@@ -122,22 +122,22 @@ We represent the relation between the set of observation vectors $\{\zv_{i,k},i\
 \end{align}
 where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{1-2\eta}{2},\frac{3-4\eta}{2},\frac{5-6\eta}{2})$. Note that for the case of exact matching $\eta=0$.
 \paragraph*{Singleton decoding}
- {\color{blue}{(Add a note on clustering scheme as extensions)}}If a bin node $(i,j)$ is classified as a singleton, we need to identify the position of the non-zero variable node connected to it. This is done by correlating the observation vector $\zv_{i,j}$ with each column of the sensing matrix  $\mb{W}_{i,j} \coleq [\wv^{j},\wv^{j+g_i},\ldots,   \wv^{j+(f_i-1)g_i}]$ and choose the index that maximizes the correlation value.
+ {\color{blue}{(Add a note on clustering scheme as extensions)}}If a bin node $(i,j)$ is classified as a singleton, we need to identify the position of the non-zero variable node connected to it. This is done by correlating the observation vector $\zv_{i,j}$ with each column of the sensing matrix  $\mb{W}_{i,j} \coleq [\wv^{j},\wv^{j+g_i},\ldots,   \wv^{j+(f_i-1)g_i}]$ and choosing the index that maximizes the correlation value.
 \begin{align*}
  \hat{k} = \underset{k\in\{j+l g_i\}}{\argmax}~~ \zv^{\dagger}_{i,j} \wv^{k}
 \end{align*}
-where $\dagger$ denotes the conjugate transpose. The value of the variable node connected to the singleton bin is estimated as follows:
+where $\dagger$ denotes the conjugate transpose. The value of the variable node connected to the singleton bin is set to be:
  $$
  \hat{r}[\hat{k}]=M(1-\eta).
  $$
- Note that for the case of exact matching we know the value to be exactly equal to $M$ which is our estimate in the case of exact matching ($\eta=0)$. But in the case of approximate matching the actual value of $r[k]\in\{M(1-2\eta),\ldots,M-1,M\}$ and our estimate $ \hat{r}[\hat{k}]=M(1-\eta)$, the mid-point of the range, although is only approximate it would suffice for our purposes as we are mainly interested in recovering only the positions of matches i.e. the indices of the sparse coefficients in $\rv$.			
-\paragraph*{Peeling Process} The peeling based decoder we employ consists of finding a singleton bin, then identify the single non-zero variable node connected to the bin, decoding its value and removing ({\it peeling off}) it's contribution from all the bin nodes connected to that variable node. The main idea behind this decoding scheme is that hopefully the peeling off operation induces at least one more singleton bin and thus the process of peeling off can be repeated iteratively. Although the main idea is similar for exact matching and the approximate matching scenarios, there are some subtle differences in their implementation.\\
+ Note that for the case of exact matching we know the value to be exactly equal to $M$. But in the case of approximate matching, the actual value of $r[k]\in\{M(1-2\eta),\ldots,M-1,M\}$ and our estimate $ \hat{r}[\hat{k}]=M(1-\eta)$ is only approximate. But, this suffices for recovering the positions of matches i.e., the indices of the sparse coefficients in $\rv$.			
+\paragraph*{Peeling Process} The peeling based decoder we employ consists of finding a singleton bin, then identifying the single non-zero variable node connected to the bin, decoding its value and removing ({\it peeling off}) it's contribution from all the bin nodes connected to that variable node. The main idea behind this decoding scheme is that (for appropriately chosen parameters) the peeling a singleton node off will induce at least one more singleton bin and the process of peeling off can be repeated iteratively. Although the main idea is similar for exact matching and the approximate matching scenarios, there are some subtle differences in their implementation.\\
 {\it Exact Matching}: In the case of exact matching, we remove the decoded variable node's contribution from all the bin nodes it is connected to.\\
-{\it Approximate Matching}: In this case we remove the decoded variable node's contribution only from bins that are originally a singleton or a double-ton. We do not alter the bins which are classified to be multi-tons with degree more than two.
+{\it Approximate Matching}: In this case, similar to the approach in \cite{},  we remove the decoded variable node's contribution only from bins that are originally a singleton or a double-ton. We do not alter the bins which are classified to be multi-tons with degree more than two.
 
 {\it Note:} The differences in peeling implementation for exact and approximate matching cases is because unlike exact matching the approximate matching may result in non-zero error ($e_1$) between the actual correlation value $r[k]$ and the estimate $\hat{r}[\hat{k}]$, i.e. $e_1 = |r[k]- \hat{r}[\hat{k}]|$ with $0 \leq e_1 \leq \eta M$. This may lead to error propagation if we use the same decoding scheme as in exact matching. Hence to overcome this problem we impose a constraint on the type of bin nodes participating in the peeling process.
 	
-We present the overall recovery algorithm, which comprises of {\it bin classification, singleton decoding} and {\it peeling process}, in the Algorithm. \ref{Algo:decoder} pseudo-code. Note that $\msc{N}(k)$ for variable node $k$ denote its neighborhood i.e. the set of bins connected to $k^{\text{th}}$ variable node.
+We present the overall recovery algorithm, which comprises of {\it bin classification, singleton decoding} and {\it peeling process}, in the Algorithm. \ref{Algo:decoder} pseudo-code. Note that $\msc{N}(k)$ denote the neighborhood for variable node $k$  i.e., the set of bins connected to $k^{\text{th}}$ variable node.
 
 \def\gap{4pt}
 \begin{algorithm}[h!]
@@ -155,9 +155,11 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
   \For{$(i_0,j_0)\in\msc{N}(\hat{k})$}
 \vspace{\gap}
 	   \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}} \hspace{32.0 ex}$
-	      \hspace{45.5ex} {\it Exact Matching}
+	   \hspace{45.5ex} {\it Exact Matching}
 	   \vspace{\gap}
-	   \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}}$   \hspace{6ex} only if $\widehat{\msc{H}}_{i_0,j_0}=\msc{H}_s$ or $\msc{H}_d$ \hspace{14ex} {\it Approximate Matching}
+
+        \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}}$   \hspace{6ex} only if $\widehat{\msc{H}}_{i_0,j_0}=\msc{H}_s$ or $\msc{H}_d$ 	   
+        \hspace{14ex} {\it Approximate Matching}
 	   \vspace{\gap}
 	   \State Re-do the bin classification for $(i_0,j_0)$ and compute $\widehat{\msc{H}}_{i_0,j_0}$
       \EndFor
@@ -195,11 +197,10 @@ For a given value of $\mu$, we will describe how to choose the parameters $d$ an
  {\it Exact Matching} Find $d\in \mbb{N}\backslash \{1,2\}$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1}]\cup[1-\frac{1}{d-1},1-\frac{1}{d})$\\
 {\it Approximate Matching}: If $\mu\in(\frac{1}{8},\frac{7}{8})$, choose $d=8$. Else find $d\geq 8$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1})\cup(1-\frac{1}{d-1},1-\frac{1}{d})$
 \begin{itemize}
-\item Find a factorization for signal length $N=\prod_{i=0}^{d-1} \mcl{P}_i$ such that the set of integers $\{\mcl{P}_0,\mcl{P}_1,\ldots,\mcl{P}_{d-1}\}$ are pairwise co-prime and all the $\mcl{P}_i$ are approximately equal
-\item More precisely, let $\mcl{P}_i=\mathbf{F}+O(1) ~\forall i$ for some value $\mathbf{F}$ and choose $f_i=N/\mcl{P}_i$
-\item Note that our choice of design parameters results in $\alpha=1-\frac{1}{d}$ (recall $f_i\approx N^{\alpha}$)
+\item Find a factorization for signal length $N=\prod_{i=0}^{d-1} \mcl{P}_i$ such that the set of integers $\{\mcl{P}_0,\mcl{P}_1,\ldots,\mcl{P}_{d-1}\}$ are pairwise co-prime and all the $\mcl{P}_i$ are approximately equal. More precisely, let $\mcl{P}_i=\mathbf{F}+O(1) ~\forall i$ for some value $\mathbf{F}$ and choose $f_i=N/\mcl{P}_i$. We can add zeros at the end of the vector $\xv$ and increase the length of the vector until we are able to find a factorization that satisfies this property.
+\item Our choice of design parameters results in $\alpha=1-\frac{1}{d}$ (recall $f_i\approx N^{\alpha}$)
 \end{itemize}
-To summarize our choice of design parameters: In both the exact and approximate matching cases, for any $0<\mu<1$, we choose the down-sampling factors $f_i$ to be approximately equal to $N^{\alpha}$ in all the $d$-stages where $\alpha=\frac{d-1}{d}$ satisfies:
+Thus, for both the exact and approximate matching cases, for any $0<\mu<1$, we choose the down-sampling factors $f_i$ to be approximately equal to $N^{\alpha}$ in all the $d$-stages where $\alpha=\frac{d-1}{d}$ satisfies:
 \begin{equation}
 \label{Eqn:IneqMuAlpha}
 \alpha>1-\mu.
@@ -207,7 +208,7 @@ To summarize our choice of design parameters: In both the exact and approximate 
 
 \subsection{Sketches of $\Xv$ and $\Yv$}
 \label{subsec:skteches}		
- As we have already seen in Sec.~\ref{subsec:RSIDFT} the RSDIFT framework requires the values of $\Rv(=\Xv\odot \Yv)$ only at indices $\mc{S}$ or in other words we need $\Xv$ and $\Yv$ only at the indices $\mc{S}$. We assume that the sketch of $\xv$, $ \Xv[\mc{S}]= \{X[i],i\in \mc{S}\}$ is pre-computed and stored in a database.
+ As we have already seen in Sec.~\ref{subsec:RSIDFT} the RSIDFT framework requires the values of $\Rv(=\Xv\odot \Yv)$ only at indices $\mc{S}$ or in other words we need $\Xv$ and $\Yv$ only at the indices $\mc{S}$. We assume that the sketch of $\xv$, $ \Xv[\mc{S}]= \{X[i],i\in \mc{S}\}$ is pre-computed and stored in a database.
 
 \subsubsection*{Computing the sketch of $\yv$}: For every new query $\yv$, only $\{\Yv'[\mc{S}_{i,j}]$,  $i\in[d],j\in[B]\}$ needs to be computed where the subsets $\mc{S}_{i,j}$ are defined in Eq. \eqref{Eqn:SamplingSets}. Naively, the FFT algorithm can be used to compute $\Yv'$ and the required subset of coefficients can be taken but this is inefficient and would be of $O(N \log N)$ complexity. Instead, we observe that $\Yv'[\mc{S}_{i,j}]$ is $\Yv'$ shifted by $s_j$ and sub-sampled by a factor of $g_i$. Thus for a given $(i,j)$ this corresponds to, in time domain, a point-wise multiplication by $[1,w_{s_j},w_{s_j}^2,\ldots,w_{s_j}^{N-1}]$ followed by \textit{folding} the signal into $f_i$ signals each of length $\frac{N}{f_i}$ and adding them up resulting in a single length-$g_i$ signal denoted by $\yv'_{i,j}$. Formally the \textit{folding} operation can be described as follows:
 	  \begin{equation}
