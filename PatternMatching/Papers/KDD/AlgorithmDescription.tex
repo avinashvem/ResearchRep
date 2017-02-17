@@ -4,7 +4,7 @@ In this section, given the input string $\xv$ and the query string $\yv$, we des
 
 
 \begin{figure*}
-  \centering 
+  \centering
 	 	\resizebox{0.95\textwidth}{!}{\input{./Figures/notional_diag.tex}}	
 	\caption{Schematic of the proposed scheme using sparse Fourier transform computation.}\label{fig:notional}
 \end{figure*}
@@ -52,9 +52,9 @@ where $\mathcal{F}_{N}\{ \cdot \}$ and $\mathcal{F}_{N}^{-1}\{ \cdot \}$ refer t
 
 \subsection{Sparse Inverse Discrete Fourier Transform}
 \label{subsec:RSIDFT}	
- In this section we present Robust Sparse Inverse Discrete Fourier Transform(RSIDFT) scheme that exploits sparsity in the cross-correlation signal $\rv$ and efficiently recovers it's $L$ dominant coefficients. The architecture of RSIDFT is similar to that of the FFAST scheme proposed in \cite{pawar2014robust}, but the decoding algorithm has some key modifications to handle the noise model induced in this problem. We will see in Sec.~\ref{subsec:skteches} how the sketches $\Xv$ and $\Yv'$ are computed efficiently but for this section we will focus only on the recovery of the sparse coefficients in $\rv$ given $\Xv$ and $\Yv'$.
+ In this section we present Robust Sparse Inverse Discrete Fourier Transform(RSIDFT) scheme that exploits sparsity in the cross-correlation signal $\rv$ and efficiently recovers it's $L$ dominant coefficients. The architecture of RSIDFT is similar to that of the FFAST scheme proposed in \cite{pawar2014robust}, but the decoding algorithm has some modifications to handle the noise model induced in this problem. We will see in Sec.~\ref{subsec:skteches} how the sketches $\Xv$ and $\Yv'$ are computed efficiently but for this section we will focus only on the recovery of the sparse coefficients in $\rv$ given $\Xv$ and $\Yv'$.
 	  	
-Consider the RSIDFT framework shown in Fig.~\ref{fig:rsidft}. Let $ \Rv =\Xv \odot \Yv'$ be the DFT of the cross-correlation signal of $\xv$ and $\yv$. The framework consists of {\it $d$-stages} with each stage correpsonding to a sub-sampling factor of $\frac{N}{f_i}$. The design scheme for choosing parameters $\{f_1,f_2,\ldots,f_d\}$ for various values of $\mu$ such that $f_i$ divides $N$ and $f_i=N^{\alpha}+O(1) \forall ~i\in[d]$ are given in \ref{subsec:DesignParameters}. In each stage, there are {\it $B= O(\log N)$ branches} with shifts from the set $ \{s_1, s_2, \cdots s_B\} $, where $s_1 =0$ in the first branch and the rest are chosen uniformly at random from $[N]$.
+Consider the RSIDFT framework shown in Fig.~\ref{fig:rsidft}. Let $ \Rv =\Xv \odot \Yv'$ be the DFT of the cross-correlation signal of $\xv$ and $\yv$. We begin by factoring $N$ into $d$ relatively prime factors $\{f_1,f_2,\ldots,f_d\}$, where $d$ is a parameter in the algorithm. The design scheme for choosing $f_i$'s for various values of $\mu$ such that $f_i$ divides $N$ and $f_i=N^{\alpha}+O(1) \forall ~i\in[d]$ are given in \ref{subsec:DesignParameters}. The RSIDFT algorithm consists of {\it $d$-stages} with each stage correpsonding to a sub-sampling factor of $\frac{N}{f_i}$. In each stage, there are {\it $B= O(\log N)$ branches} with shifts from the set $ \{s_1, s_2, \cdots s_B\} $, where $s_1 =0$ in the first branch and the rest are chosen uniformly at random from $[N]$.
 	   	 	
 	 Given the input $\Rv$, in branch $j$ of $i^{\text{th}}$ stage of RSDIFT, referred to as \textit{branch $(i,j)$} for simplicity, RSIDFT sub-samples the signal $\Rv$ at
 \begin{align}
@@ -154,7 +154,7 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 \vspace{1.5\gap}
   \For{$(i_0,j_0)\in\msc{N}(\hat{k})$}
 \vspace{\gap}
-	   \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}} \hspace{32.0 ex}$ 
+	   \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}} \hspace{32.0 ex}$
 	      \hspace{45.5ex} {\it Exact Matching}
 	   \vspace{\gap}
 	   \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}}$   \hspace{6ex} only if $\widehat{\msc{H}}_{i_0,j_0}=\msc{H}_s$ or $\msc{H}_d$ \hspace{14ex} {\it Approximate Matching}
@@ -191,7 +191,7 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 
 For a given value of $\mu$, we will describe how to choose the parameters $d$ and $f_i$.\\
  {\color{blue}{(Change the choice of parameters to account for the new bound $\alpha > 1- \mu$})}
- 
+
  {\it Exact Matching} Find $d\in \mbb{N}\backslash \{1,2\}$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1}]\cup[1-\frac{1}{d-1},1-\frac{1}{d})$\\
 {\it Approximate Matching}: If $\mu\in(\frac{1}{8},\frac{7}{8})$, choose $d=8$. Else find $d\geq 8$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1})\cup(1-\frac{1}{d-1},1-\frac{1}{d})$
 \begin{itemize}
@@ -213,8 +213,8 @@ To summarize our choice of design parameters: In both the exact and approximate 
 	  \begin{equation}
 	  	\yv'_{i,j} = \sum \limits_{m = 0}^{g_i-1} \yv'[mf_i:(m+1)f_i-1] \odot [w_{s_j}^{mf_i},w_{s_j}^{mf_i+1},\ldots, w_{s_j}^{(m+1)f_i-1}],
 	  \end{equation}
-	  
+	
 	  where, $w_{s_j}=e^{-\frac{j2\pi s_j}{N}}$.
-	  
- Taking $n_i$-point DFT of $\yv'_{i,j}$ produces $\Yv'[\mc{S}_{i,j}]$ i.e. $\Yv'$ sampled only at $\mathcal{S}_{i,j}$ indices which is what we need in branch $(i,j)$. To obtain all the samples in $\mathcal{S}$ required for the RSDIFT framework, the \textit{folding} technique followed by a IDFT needs to be carried out for each $(i,j)$, for $i\in[d],j\in[B]$, a total of $dB$ times $N^{1-\alpha}$-point DFT. 
- 
+	
+ Taking $n_i$-point DFT of $\yv'_{i,j}$ produces $\Yv'[\mc{S}_{i,j}]$ i.e. $\Yv'$ sampled only at $\mathcal{S}_{i,j}$ indices which is what we need in branch $(i,j)$. To obtain all the samples in $\mathcal{S}$ required for the RSDIFT framework, the \textit{folding} technique followed by a IDFT needs to be carried out for each $(i,j)$, for $i\in[d],j\in[B]$, a total of $dB$ times $N^{1-\alpha}$-point DFT.
+
