@@ -82,7 +82,7 @@ where we refer to $\mb{W}_{i,k}$ as the sensing matrix at bin $(i,k)$ and is def
 
 \begin{figure}[h!]
 	\begin{center}
-	 	\resizebox{0.49\textwidth}{!}{\input{./Figures/Factorgraph.tex}}	
+	 	\resizebox{0.47\textwidth}{!}{\input{./Figures/Factorgraph.tex}}	
 	\end{center}	
 	\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $N=6$, $f_1=2, f_2=3$ (i.e., $d=2$) and $B=2$. The variable nodes (gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (white squares) represent the binned observation vector $\zv_{i,k}$. The figure illustrates the relationship between $\zv_{i,k}$ and $\rv$.}\label{fig:factorgraph}
 	\vspace{5 pt}
@@ -138,12 +138,14 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 \vspace{1.5\gap}
   \For{$(i_0,j_0)\in\msc{N}(\hat{k})$}
 \vspace{\gap}
-	   \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}} \hspace{32.0 ex}$
-	   \hspace{45.5ex} {\it Exact Matching}
+       \If {\it Exact Matching}
+	   \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}}\hspace{5.5ex} $ \hspace{20.5ex} 
 	   \vspace{\gap}
-
-        \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}}$   \hspace{6ex} only if $\widehat{\msc{H}}_{i_0,j_0}=\msc{H}_s$ or $\msc{H}_d$ 	   
-        \hspace{14ex} {\it Approximate Matching}
+        \Else
+         
+        \State $\zv_{i_0,j_0}\gets\zv_{i_0,j_0}-\hat{r}[\hat{k}]\wv^{\hat{k}}$   \hspace{2ex} only if $~~~~\widehat{\msc{H}}_{i_0,j_0}=\msc{H}_s$ or $\msc{H}_d$ 	   
+        \hspace{14ex} 
+        \EndIf
 	   \vspace{\gap}
 	   \State Re-do the bin classification for $(i_0,j_0)$ and compute $\widehat{\msc{H}}_{i_0,j_0}$
       \EndFor
@@ -203,3 +205,14 @@ Thus, for both the exact and approximate matching cases, for any $0<\mu<1$, we c
 	
  Taking $n_i$-point DFT of $\yv'_{i,j}$ produces $\Yv'[\mc{S}_{i,j}]$ i.e. $\Yv'$ sampled only at $\mathcal{S}_{i,j}$ indices which is what we need in branch $(i,j)$. To obtain all the samples in $\mathcal{S}$ required for the RSDIFT framework, the \textit{folding} technique followed by a IDFT needs to be carried out for each $(i,j)$, for $i\in[d],j\in[B]$, a total of $dB$ times $N^{1-\alpha}$-point DFT.
 
+\subsection{Distributed processing framework}
+We describe a distributed processing framework which enables parallel processing of the algorithm proposed and also point out its advantages.
+
+Given a database(or string) of length $N$, we divide the database into $G=N^\gamma$ blocks each of length $\tilde{N} = N/G$. Now each block can be processed independently (in parallel) using the RSIDFT framework with the new database length reduced from $N$ to $\tilde{N}$. This distributed framework has the following advantages
+\begin{itemize}
+	\item Firstly, this enables parallel computing and hence can be distributed across different workstations.
+	\item Improves the sample and computational complexity by a constant factor.
+	\item Sketch of the database needs to be computed only for a smaller block length and hence requires computation of only a shorter $\tilde{N}$ point FFT.
+	\item Enables localized searches on only a few blocks if we have prior knowledge about where the query could be. Specifically, if we exactly know the number of matching locations, and having encountered the required number of positions from the already run processes (processed blocks), we can terminate rest of the processes.   
+	\item Helps overcome implementation issues with memory and precision as the scale of the problem is reduced. 
+\end{itemize}
