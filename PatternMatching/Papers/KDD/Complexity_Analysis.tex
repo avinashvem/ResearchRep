@@ -1,8 +1,8 @@
 \section{Sample and Computational Complexity}
 \label{Sec:Complexity}
-In this section, we will analyze the sample complexity which is the  number of samples we access from the sketch of the signal $\xv$ stored in the database and the computational complexity as a function of the system parameters.
+In this section, we will analyze the sketching complexity which is the  number of samples we access from the sketch of the signal $\xv$ stored in the database and the computational complexity as a function of the system parameters.
 
-\subsection{\bf Sample Complexity}
+\subsection{\bf Sample Complexity}\label{subsec:SampleComplexity}
 In each branch of the RSDIFT framework we down-sample the $N$ samples by a factor of $\frac{N}{f_i}$ to get $f_i\approx N^{\alpha}$ samples. We repeat this for a random shift in each branch for $B=O(\log N)$ branches in each stage thus resulting in a total of $O(N^{\alpha}\log N)$ samples per block per stage. We repeat this for $d = \frac{1}{1-\alpha}$ such stages resulting in a total of $dN^{\alpha}\log N$ samples per block. So, the total number of samples is given by
 
 \begin{align*}
@@ -10,14 +10,8 @@ In each branch of the RSDIFT framework we down-sample the $N$ samples by a facto
    &=   O(N^{1-\mu}\log N)
 \end{align*}
 
-%\begin{align*}
-%%\text{Total \# of samples required (S)} &=  d \ \underset{\text{Samples per block per stage} }{\underbrace{N^{\alpha}\log N}}\\
-%%   &=   O(N^{\max(\mu,1-\mu)}\log N)
-%\end{align*}
 
-
-
-\subsection{\bf Computational Complexity}
+\subsection{\bf Computational Complexity} \label{subsec:ComputationComplexity}
 
 As described in Eq.~\ref{eqn:Rxy_fourier}, the computation of $\rv$ involves three steps:
 \begin{enumerate}
