@@ -177,20 +177,16 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 \subsubsection{Choosing $f_i$ and $\alpha$ for various $\mu$}
 \label{subsec:DesignParameters}
 
-For a given value of $\mu$, we will describe how to choose the parameters $d$ and $f_i$.\\
- {\color{blue}{(Change the choice of parameters to account for the new bound $\alpha > 1- \mu$})}
-
- {\it Exact Matching} Find $d\in \mbb{N}\backslash \{1,2\}$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1}]\cup[1-\frac{1}{d-1},1-\frac{1}{d})$\\
-{\it Approximate Matching}: If $\mu\in(\frac{1}{8},\frac{7}{8})$, choose $d=8$. Else find $d\geq 8$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1})\cup(1-\frac{1}{d-1},1-\frac{1}{d})$
+For a given value of $\mu$, we will describe how to choose the parameters $d$ and $f_i$. Find a factorization for signal length $N=\prod_{i=0}^{d-1} P_i$ such that the set of integers $\{P_0,P_1,\ldots,P_{d-1}\}$ are pairwise co-prime and all the $P_i$ are approximately equal. More precisely, let $P_i=\mathbf{F}+O(1) ~\forall i$ for some value $\mathbf{F}$. We can add zeros at the end of the vector $\xv$ and increase the length of the vector until we are able to find a factorization that satisfies this property.
 \begin{itemize}
-\item Find a factorization for signal length $N=\prod_{i=0}^{d-1} \mcl{P}_i$ such that the set of integers $\{\mcl{P}_0,\mcl{P}_1,\ldots,\mcl{P}_{d-1}\}$ are pairwise co-prime and all the $\mcl{P}_i$ are approximately equal. More precisely, let $\mcl{P}_i=\mathbf{F}+O(1) ~\forall i$ for some value $\mathbf{F}$ and choose $f_i=N/\mcl{P}_i$. We can add zeros at the end of the vector $\xv$ and increase the length of the vector until we are able to find a factorization that satisfies this property.
-\item Our choice of design parameters results in $\alpha=1-\frac{1}{d}$ (recall $f_i\approx N^{\alpha}$)
+	\item  For $\mu<0.5$: Choose $f_i = N/P_i$. \\
+	{\it Exact Matching:} Find $d\in \mbb{N}\backslash \{1,2\}$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1}]$\\
+	{\it Approximate Matching}: If $\mu\in(\frac{1}{8},\frac{1}{2})$, choose $d=8$. Else find $d\geq 8$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1})$\\
+    \item For $\mu>0.5$: Choose $f_i = P_i$\\
+    {\it Exact Matching:} Find $d\in \mbb{N}\backslash \{1,2\}$ such that $\mu\in(1-\frac{1}{d-1},1-\frac{1}{d}]$\\
+    {\it Approximate Matching}: If $\mu\in(\frac{1}{2},\frac{1}{8})$, choose $d=8$. Else find $d\geq 8$ such that $\mu\in(1-\frac{1}{d-1},1-\frac{1}{d})$\\    	 
 \end{itemize}
-Thus, for both the exact and approximate matching cases, for any $0<\mu<1$, we choose the down-sampling factors $f_i$ to be approximately equal to $N^{\alpha}$ in all the $d$-stages where $\alpha=\frac{d-1}{d}$ satisfies:
-\begin{equation}
-\label{Eqn:IneqMuAlpha}
-\alpha>1-\mu.
-\end{equation}
+Thus, for both the exact and approximate matching cases, for any $0<\mu<1$, we choose the down-sampling factors $f_i$ to be approximately equal to $N^{\alpha}$ where $\alpha > 1- \mu$
 
 \subsection{Sketches of $\Xv$ and $\Yv$}
 \label{subsec:skteches}		
