@@ -1,24 +1,12 @@
 \section{Description Of The Algorithm}
 \label{sec:Algo_desc}
-In this section, given the input string $\xv$ and the query string $\yv$, we describe our algorithm that finds the matching positions $\mathcal{T}\coleq \{\tau_1, \tau_2, \cdots \tau_L\}$ with sample and time complexities that are sub-linear in $N$. The main idea exploits the fact that the correlation vector $\rv$ is sparse (upto some noise) with dominant peaks at $L$ matching positions denoted by $\mc{T}$ and noise components at $N-L$ positions where the strings do not match.
-
-
-\begin{figure*}
+In this section, given the input string $\xv$ and the query string $\yv$, we describe our algorithm that finds the matching positions $\mathcal{T}\coleq \{\tau_1, \tau_2, \cdots \tau_L\}$ with sample and time complexities that are sub-linear in $N$. The main idea exploits the fact that the correlation vector $\rv$ is sparse (upto some noise terms) with dominant peaks at $L$ matching positions denoted by $\mc{T}$ and noise components at $N-L$ positions where the strings do not match.
+\begin{figure*}[t!]
   \centering
 	 	\resizebox{0.95\textwidth}{!}{\input{./Figures/notional_diag.tex}}	
 	\caption{Schematic of the proposed scheme using sparse Fourier transform computation.}\label{fig:notional}
+\label{fig:notional}
 \end{figure*}
-
-
-%\begin{figure}[t!]
-%	\begin{center}
-%	 	\resizebox{0.47\textwidth}{!}{\input{./Figures/notional_diag.tex}}	
-%%		\includegraphics[height=3cm]{Figures/notional_diag}
-%	\caption{Schematic of the proposed scheme using sparse Fourier transform computation.}
-%	\end{center}	
-%    \label{fig:notional}
-%	\vspace{5 pt}
-%\end{figure}
 
 Consider the correlation signal $\rv$ in the case of exact matching:
 \begin{equation} \label{eqn:RXY_sparse}
@@ -40,28 +28,25 @@ where $\mathcal{F}_{N}\{ \cdot \}$ and $\mathcal{F}_{N}^{-1}\{ \cdot \}$ refer t
 \item Computing the IDFT of $\Rv=\Xv \odot \Yv'$ given $\Xv$ and $\Yv'$
 \end{itemize}
 
-
-	 \begin{figure}[t!]
-	 	\begin{center}
-	 	\resizebox{0.45\textwidth}{!}{\input{./Figures/FFAST_Robust.tex}}
-%	 		\includegraphics[height=7cm]{Figures/FFAST_Robust}
-	 	\end{center}	
-	 	\caption{ RSIDFT Framework to compute inverse Fourier Transform of a signal $\Rv$ that is sparse in time domain. }\label{fig:rsidft}
-	\vspace{5 pt}
-	 \end{figure}
-
 \subsection{Sparse Inverse Discrete Fourier Transform}
 \label{subsec:RSIDFT}	
  In this section we present Robust Sparse Inverse Discrete Fourier Transform(RSIDFT) scheme that exploits sparsity in the cross-correlation signal $\rv$ and efficiently recovers it's $L$ dominant coefficients. The architecture of RSIDFT is similar to that of the FFAST scheme proposed in \cite{pawar2014robust}, but the decoding algorithm has some modifications to handle the noise model induced in this problem. We will see in Sec.~\ref{subsec:skteches} how the sketches $\Xv$ and $\Yv'$ are computed efficiently but for this section we will focus only on the recovery of the sparse coefficients in $\rv$ given $\Xv$ and $\Yv'$.
 	  	
-Consider the RSIDFT framework shown in Fig.~\ref{fig:rsidft}. Let $ \Rv =\Xv \odot \Yv'$ be the DFT of the cross-correlation signal of $\xv$ and $\yv$. We begin by factoring $N$ into $d$ relatively prime factors $\{f_1,f_2,\ldots,f_d\}$, where $d$ is a parameter in the algorithm. The design scheme for choosing $f_i$'s for various values of $\mu$ such that $f_i$ divides $N$ and $f_i=N^{\alpha}+O(1) \forall ~i\in[d]$ are given in \ref{subsec:DesignParameters}. The RSIDFT algorithm consists of {\it $d$-stages} with each stage correpsonding to a sub-sampling factor of $\frac{N}{f_i}$. In each stage, there are {\it $B= O(\log N)$ branches} with shifts from the set $ \{s_1, s_2, \cdots s_B\} $, where $s_1 =0$ in the first branch and the rest are chosen uniformly at random from $[N]$.
+Consider the RSIDFT framework shown in Fig.~\ref{fig:rsidft}. Let $ \Rv =\Xv \odot \Yv'$ be the DFT of the cross-correlation signal of $\xv$ and $\yv$. We begin by factoring $N$ into $d$ relatively prime factors $\{f_1,f_2,\ldots,f_d\}$, where $d$ is a parameter in the algorithm. The design scheme for choosing $f_i$'s for various values of $\mu$ such that $f_i$ divides $N$ and $f_i=N^{\alpha}+O(1) \forall ~i\in[d]$ are given in Sec. \ref{subsec:DesignParameters}. The RSIDFT algorithm consists of {\it $d$-stages} with each stage corresponding to a sub-sampling factor of $\frac{N}{f_i}$. In each stage, there are {\it $B= O(\log N)$ branches} with shifts from the set $ \{s_1, s_2, \cdots s_B\} $, where $s_1 =0$ in the first branch and the rest are chosen uniformly at random from $[N]$.
 	   	 	
+\begin{figure}[h!]
+	\begin{center}
+	 	\resizebox{0.45\textwidth}{!}{\input{./Figures/FFAST_Robust.tex}}
+	\end{center}	
+\caption{ RSIDFT Framework to compute inverse Fourier Transform of a signal $\Rv$ that is sparse in time domain. }\label{fig:rsidft}
+\end{figure}
+
 	 Given the input $\Rv$, in branch $j$ of $i^{\text{th}}$ stage of RSDIFT, referred to as \textit{branch $(i,j)$} for simplicity, RSIDFT sub-samples the signal $\Rv$ at
 \begin{align}
 \label{Eqn:SamplingSets}
 	 \mathcal{S}_{i,j} \coleq \{s_j,\ s_j + g_i,\ s_j + 2g_i,\ \cdots s_j + (f_i-1) g_i\}, \quad i\in[d], j\in[B]
 \end{align}
-where $g_i\coleq \frac{N}{f_i}$ to obtain $\Rv_{i,j}\coleq\Rv[\mc{S}_{i,j}]$. The sub-sampling operation is followed by a $f_i$-point IDFT in each branch of stage-$i$ to obtain $ \rv_{i,j}$. Notice that $ \rv_{i,j}$ is an aliased version of $\rv$ due to the property that sub-sampling in Fourier domain is equivalent to aliasing in time domain.
+where $g_i\coleq \frac{N}{f_i}$ to obtain $\Rv_{i,j}\coleq\Rv[\mc{S}_{i,j}]$. The sub-sampling operation is followed by a $f_i$-point IDFT in \textit{branch (i,j)} of stage-$i$ to obtain $ \rv_{i,j}$. Notice that $ \rv_{i,j}$ is an aliased version of $\rv$ due to the property that sub-sampling in Fourier domain is equivalent to aliasing in time domain.
 
 	 Let $\zv_{i,k}\in\mbb{R}^{B}$, for $k\in [f_i]$, be the $k$th \textit{binned} observation vector of stage-$i$ formed by stacking $\rv_{i,j}[k], j\in[B]$, together as a vector i.e.
 \[
@@ -72,7 +57,7 @@ where $g_i\coleq \frac{N}{f_i}$ to obtain $\Rv_{i,j}\coleq\Rv[\mc{S}_{i,j}]$. Th
 	 r_{i,B}[k]
 	 \end{bmatrix}
 \]
-Using the properties of Fourier transfrom, we can write the relationship between the observation vectors $\zv_{i,j}$ at bin $(i,j)$ and sparse vector to be estimated $\rv$ as:
+Note that this gives us a total of $f_i$ binned observation vectors in each stage-$i$. Using the properties of Fourier transform, we can write the relationship between the observation vectors $\zv_{i,k}$ at bin $(i,k)$ and sparse vector to be estimated $\rv$ as: 
 \begin{align}
 	\label{Eqn:Generator Equation}
 	\zv_{i,k}= \mb{W}_{i,k} \times
@@ -97,16 +82,15 @@ where we refer to $\mb{W}_{i,k}$ as the sensing matrix at bin $(i,k)$ and is def
 
 \begin{figure}[h!]
 	\begin{center}
-%		\includegraphics[height=7cm]{Figures/Factorgraph}
-	 	\resizebox{0.45\textwidth}{!}{\input{./Figures/Factorgraph.tex}}	
+	 	\resizebox{0.49\textwidth}{!}{\input{./Figures/Factorgraph.tex}}	
 	\end{center}	
-	\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $d=2$, $B=2$, $N=6$, $f_1 = 2$ and $f_2=3$. The variable nodes (colored gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (uncolored white boxes) represent the binned observation vector $\zv_{i,k}$. The figure also illustrates the relationship between $\zv_{i,k}$ and $\rv$.}\label{fig:factorgraph}
+	\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $N=6$, $f_1=2, f_2=3$ (i.e., $d=2$) and $B=2$. The variable nodes (gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (white squares) represent the binned observation vector $\zv_{i,k}$. The figure illustrates the relationship between $\zv_{i,k}$ and $\rv$.}\label{fig:factorgraph}
 	\vspace{5 pt}
 \end{figure}
  
-We represent the relation between the set of observation vectors $\{\zv_{i,k},i\in[1:d],k\in[f_i]\}$ and $\rv$ using a Tanner graph, an example of which is shown in Fig.~\ref{fig:factorgraph}. The nodes on the left, which we refer to as {\it variable nodes}, represent the $N$ elements of vector $\rv$. Similarly the nodes on the right, which we refer to as {\it bin nodes}, represent the $\sum_{i\leq d} f_i$ sub-sensing signals. We will now describe the decoding algorithm which takes the set of observation vectors $\{\zv_{i,k},i\in[1:d],k\in[f_i]\}$ at $df_i$ bins as input and estimates the $L$-sparse $\rv$.	
+We represent the relation between the set of observation vectors $\{\zv_{i,k},i\in[1:d],k\in[f_i]\}$ and $\rv$ using a Tanner graph, an example of which is shown in Fig.~\ref{fig:factorgraph}. The nodes on the left, which we refer to as {\it variable nodes}, represent the $N$ elements of vector $\rv$. Similarly the nodes on the right, which we refer to as {\it bin nodes}, represent the $\sum_{i\leq d} f_i$ sub-sensing signals. We will now describe the decoding algorithm which takes the set of observation vectors $\{\zv_{i,k},i\in[1:d],k\in[f_i]\}$, each of length $B$, at $df_i$ bins as input and estimates the $L$-sparse $\rv$.	
 
-\subsubsection{Decoder}		
+\subsubsection{Decoder}			
 	Observe from the Tanner graph that the degree of each variable node is $d$ and that of each bin node at stage $i$ is $g_i$. A variable node is referred to as non-zero if it corresponds to a matching position and as zero if it corresponds to a non-matching position. Note that even though the cross-correlation vector value corresponding to a non-matching position is not exactly zero but some negligible noise value we refer to them as zero variable nodes for simplicity. We refer to a bin node as {\it zero-ton} (or $\msc{H}_z$) if the number of non-zero variable nodes connected to the bin node is zero. The {\it singleton ($\msc{H}_s$), double-ton ($\msc{H}_d$) and multi-ton ($\msc{H}_m$)} bin nodes are defined similarly where the number of non-zero variable nodes connected are one, two and greater than two, respectively. The peeling decoder has the following three steps in the decoding process.
 
 \paragraph*{Bin Classification} In this step a bin node is classified as a zero-ton or a singleton or a multi-ton. At bin $(i,j)$ the classification is done based on  comparing the first observation $z_{i,j}[1]$, which corresponds to zero shift, with a predefined threshold. For $z_{i,j}[1]=z$, the classification at bin $(i,j)$, $\widehat{\msc{H}}_{i,j}$, can be written as follows:
