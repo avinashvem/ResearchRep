@@ -1,95 +1,87 @@
 \begin{tikzpicture}
+\def \fsize{\Huge}
 
-\definecolor{brightturquoise}{rgb}{0.03, 0.91, 0.87}
-\definecolor{buff}{rgb}{0.94, 0.86, 0.51}
-\definecolor{caribbeangreen}{rgb}{0.0, 0.8, 0.6}
-\definecolor{celadon}{rgb}{0.67, 0.88, 0.69}
-\definecolor{darktangerine}{rgb}{1.0, 0.66, 0.07}
-\definecolor{darkviolet}{rgb}{0.58, 0.0, 0.83}
-\definecolor{deepskyblue}{rgb}{0.0, 0.75, 1.0}
-\definecolor{amber(sae/ece)}{rgb}{1.0, 0.49, 0.0}
-\definecolor{antiquewhite}{rgb}{0.98, 0.92, 0.84}
-\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
-\definecolor{babyblue}{rgb}{0.54, 0.81, 0.94}
+%\definecolor{brightturquoise}{rgb}{0.03, 0.91, 0.87}
+%\definecolor{buff}{rgb}{0.94, 0.86, 0.51}
+%\definecolor{caribbeangreen}{rgb}{0.0, 0.8, 0.6}
+%\definecolor{celadon}{rgb}{0.67, 0.88, 0.69}
+%\definecolor{darktangerine}{rgb}{1.0, 0.66, 0.07}
+%\definecolor{darkviolet}{rgb}{0.58, 0.0, 0.83}
+%\definecolor{deepskyblue}{rgb}{0.0, 0.75, 1.0}
+%\definecolor{amber(sae/ece)}{rgb}{1.0, 0.49, 0.0}
+%\definecolor{antiquewhite}{rgb}{0.98, 0.92, 0.84}
+%\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+%\definecolor{babyblue}{rgb}{0.54, 0.81, 0.94}
 
-\def\nodewidth{0.8in}
+\def\nodewidth{0.4in}
+\def\cx{-1}
 \tikzstyle{bit} = [circle, draw, thick,fill=gray,opacity=0.7,line width =2, minimum size=\nodewidth]
+\tikzstyle{check} = [rectangle, draw, thick,fill=white, line width =2, minimum size=\nodewidth]
 
 % Variable nodes 
-\node[bit] (v6) at (-7,-6){};
-\node[bit] (v5) at (-7,-2.2) {};
-%\draw[thick,fill=gray,line width =2,opacity=0.7]  (-7,-2.2) node (v5) {} ellipse (1 and 1);
-\draw [thick,fill=gray,line width =2,opacity=0.7]  (-7,1.4) node (v3) {} ellipse (1 and 1);
-\draw  [thick,fill=gray,line width =2,opacity=0.7]  (-7,-9.2) node (v1) {} ellipse (1 and 1);
-\draw  [thick,fill=gray,line width =2,opacity=0.7]  (-7,-12.6) node (v1_1) {} ellipse (1 and 1);
-\draw  [thick,fill=gray,line width =2,opacity=0.7]  (-7,4.9) node (v1_2) {} ellipse (1 and 1);
+\node[bit](v8) at  (-7,-10) {};
+\node[bit](v1) at (-7,-7) {};
+\node[bit] (v6) at (-7,-4){};
+\node[bit] (v5) at (-7,-1) {};
+\node[bit] (v3) at (-7,2) {};
+\node[bit] (v1_2) at (-7,5) {} ;
+
+\node [anchor=east] at (v1_2.west){\Huge $r[0]$};
+\node [anchor=east] at (v3.west){\Huge $r[1]$};
+\node [anchor=east] at (v5.west){\Huge $r[2]$};
+\node [anchor=east] at (v6.west){\Huge $r[3]$};
+\node [anchor=east] at (v1.west){\Huge $r[4]$};
+\node [anchor=east] at (v8.west){\Huge $r[5]$};
 
 %Check nodes
-\draw [thick,line width =2] (1.7,4.5) rectangle (3.7,2.5);
-\draw [thick,line width =2]  (1.7,1.5) node (v8) {} rectangle (3.7,-0.5);
-\draw [thick,line width =2] (1.7,-1.5) rectangle (3.7,-3.5);
-\draw [thick,line width =2] (1.7,-7.3) rectangle (3.7,-9.3);
-\draw [thick,line width =2] (1.7,-10.7) rectangle (3.7,-12.7);
+\node [check](c1) at  (\cx,-8.5) {};
+\node [check](c2) at  (\cx,-5.5) {};
+\node [check](c3) at  (\cx,-2.5){};
+\node [check](c4) at   (\cx,0.5) {};
+\node [check](c5) at (\cx,3.5){};
 
-\node (v2) at (1.7,3.5) {};
-\node (v4) at (1.7,-2.5) {};
-\node (v7) at (1.7,-8.3) {};
-\node (v9) at (1.7,-11.7) {};
-\node (v10) at (0.5,-5.3) {};
-\node (v11) at (4.4,-5.3) {};
+\draw [dashed,line width=1.5pt] (c3)++(-0.5in,-0.5in)-- ++(3,0);
 
-
-
-\node at (-9.6,4.8) {\Huge $r[0]$};
-\node at (-9.6,1.4) {\Huge $r[1]$};
-\node at (-9.6,-2.2) {\Huge $r[2]$};
-\node at (-9.6,-6) {\Huge $r[3]$};
-\node at (-9.6,-9.2) {\Huge $r[4]$};
-\node at (-9.6,-12.6) {\Huge $r[5]$};
-
-
-\draw [dashed] (v10) edge (v11);
-\node [anchor=west] at (4.6,4.2) {\Huge $ \zv_{1,1} = \begin{bmatrix}
-	 r_{1,1}[1] = r[0] w_1^{0} + r[3] w_1^{3}  \\
-	 r_{1,2}[1] = r[0] w_2^{0} + r[3] w_2^{3} \\
+\node [anchor=west] at (c5.east) {\Huge $ \zv_{1,1} = \begin{bmatrix}
+	 r_{1,1}[1] &=& r[0] &+& r[3]  \\
+	 r_{1,2}[1] &=& r[0] w_2^{0} &+& r[3] w_2^{3} \\
 	 \end{bmatrix}$};
 
-\node [anchor=west] at (4.6,1) {\Huge $  \zv_{1,2} = \begin{bmatrix}
-	 r_{1,1}[2] = r[1] w_1^{1} + r[4] w_1^{4}\\
-	 r_{1,2}[2] = r[1] w_2^{1} + r[4] w_2^{4}\\
+\node [anchor=west] at (c4.east) {\Huge $  \zv_{1,2} = \begin{bmatrix}
+	 r_{1,1}[2] &=& r[1] &+& r[4] \\
+	 r_{1,2}[2] &=& r[1] w_2^{1} &+& r[4] w_2^{4}\\
 	 \end{bmatrix}$};
 
-\node [anchor=west] at (4.6,-2) {\Huge $  \zv_{1,3} = \begin{bmatrix}
-	 r_{1,1}[3] = r[2] w_1^{2} + r[5] w_1^{5} \\
-	 r_{1,2}[3] = r[2] w_2^{2} + r[5] w_2^{5} \\
+\node [anchor=west] at (c3.east) {\Huge $  \zv_{1,3} = \begin{bmatrix}
+	 r_{1,1}[3] &=& r[2] &+& r[5]  \\
+	 r_{1,2}[3] &=& r[2] w_2^{2} &+& r[5] w_2^{5} \\
 	 \end{bmatrix}$};
 
-\node [anchor=west] at (4.6,-7.6) {\Huge $  \zv_{2,1} = \begin{bmatrix}
-	 r_{2,1}[1]= r[0] w_1^{0} + r[2] w_1^{2} + r[4] w_1^{4} \\
-	 r_{2,2}[1] = r[0] w_2^{0} + r[2] w_2^{2} + r[4] w_2^{4}\\
+\node [anchor=west] at (c2.east) {\Huge $  \zv_{2,1} = \begin{bmatrix}
+	 r_{2,1}[1]&=& r[0]  &+& r[2]  &+& r[4]  \\
+	 r_{2,2}[1] &=& r[0] w_2^{0} &+& r[2] w_2^{2} &+& r[4] w_2^{4}\\
 	 \end{bmatrix}$};
 
-\node [anchor=west] at (4.6,-11.1){\Huge $  \zv_{2,2} = \begin{bmatrix}
-	 r_{2,1}[2] =  r[1] w_1^{1} + r[3] w_1^{3} + r[5] w_1^{5} \\ \vspace{3pt}
-	 r_{2,2}[2] =  r[1] w_2^{1} + r[3] w_2^{3} + r[5] w_2^{5} \\
+\node [anchor=west] at (c1.east){\Huge $  \zv_{2,2} = \begin{bmatrix}
+	 r_{2,1}[2] &=&  r[1] &+& r[3] &+& r[5] \\ \vspace{3pt}
+	 r_{2,2}[2] &=&  r[1] w_2^{1} &+& r[3] w_2^{3} &+& r[5] w_2^{5} \\
 	 \end{bmatrix}$};
 
 
-\draw[thick,line width =2]  (v1_2) edge (v2);
-\draw[thick,line width =2]  (v1_2) edge (v7);
+\draw[thick,line width =2]  (v1_2) edge (c4.west);
+\draw[thick,line width =2]  (v1_2) edge (c2.west);
 
-\draw[thick,line width =2]  (v3) edge (v9);
-\draw[thick,line width =2]  (v5.east) edge (v4);
-\node[thick,line width =2] (v12) at (1.7,0.5) {};
-\draw[thick,line width =2]  (v3) edge (v12);
-\draw[thick,line width =2]  (v5.east) edge (v7);
+\draw[thick,line width =2]  (v3) edge (c1.west);
+\draw[thick,line width =2]  (v5.east) edge (c3.west);
+\draw[thick,line width =2]  (v3) edge (c5.west);
+\draw[thick,line width =2]  (v5.east) edge (c2.west);
 
-\draw[thick,line width =2]  (v6.east) edge (v2);
-\draw[thick,line width =2]  (v1) edge (v12);
-\draw[thick,line width =2]  (v1_1) edge (v4);
-\draw[thick,line width =2]  (v6.east) edge (v9);
-\draw [thick,line width =2] (v1_1) edge (v9);
-\draw [thick,line width =2] (v1) edge (v7);
-%\node at (6,7) {\color{blue} \Huge$w_j=e^{j \frac{2\pi s_{j}}{N} }$};
-\node at (13,7) { \Huge $w_i^k := \left (  e^{j \frac{2 \pi s_i}{N}}\right )^{k}$};
+\draw[thick,line width =2]  (v6.east) edge (c4.west);
+\draw[thick,line width =2]  (v1) edge (c5.west);
+\draw[thick,line width =2]  (v8.east) edge (c3.west);
+\draw[thick,line width =2]  (v6.east) edge (c1.west);
+\draw [thick,line width =2] (v8.east) edge (c1.west);
+\draw [thick,line width =2] (v1) edge (c2.west);
+\node at (4,7) { \Huge \Huge $w_i^k := \left (  e^{j \frac{2 \pi s_i}{N}}\right )^{k}$};
+
 \end{tikzpicture}
