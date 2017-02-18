@@ -3,34 +3,24 @@
 The table below introduces the notations we adopt throughout this paper.
 \begin{table}[h!]
 \begin{center}
-	\begin{tabular}{|c|c|} 	
+	\begin{tabular}{cc} 	
 		\hline		
 		\textit{Symbol}	    &  \textit{Meaning} \\		
 		\hline
 		$N$           				& Size of the string or database in symbols \\
-		\hline
+	
 		$M$   				        & Length of the query in symbols \\
-\hline
+
         $L$    						&   Number of matches \\
-\hline
 		$\mu$ 				        & Smallest $0<\mu<1$ such that $M =O(N^{\mu})$\\		
-\hline
 		$\lambda$       		& Smallest $0<\lambda<1$ such that $L =ON^\lambda)$\\
-        \hline
         $K$                        &$\max_{\tau}d_{H}(\xv[\tau:\tau+M-1],\yv)$\\
-        \hline
 	    $\eta$             &$\frac{K}{M}$\\
-	    \hline
 $d$           				& Number of stages in the FFAST algorithm \\
-		\hline
 $f_i \approx N^\alpha$     & Length of smaller point IDFT at each stage-$i$\\
-		\hline
 $g_i = N/f_i$     	    &  Sub-sampling factor in Fourier domain for stage-$i$\\
-		\hline
 $B$   					    & Number of shifts (or branches) in each stage \\
-\hline
 $G = N^\gamma$    & Number of blocks (for parallel processing)\\
-		\hline
 $\tilde{N} = N^{1-\gamma}$   & Length of one block (for parallel processing)\\
 		\hline
 	\end{tabular}

@@ -16,19 +16,18 @@ The probability of bin classification error at any bin $(i,j)$ can be upper boun
 \mbb{P}[\mc{E}_1]\leq 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}
 \end{align*} \label{Lem:binclassification}
 \end{lemma}
-
 \begin{proof}
 \begin{align*}
-\mbb{P}[\mc{E}_1]&=\mbb{P}[\msc{H}_z]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~+
-						\quad \mbb{P}[\msc{H}_s]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~ \\ & \qquad +
-						\quad\mbb{P}[\msc{H}_d]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m] \notag\\
-				&\leq \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~+
+%\mbb{P}[\mc{E}_1]&=\mbb{P}[\msc{H}_z]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~+
+%						\quad \mbb{P}[\msc{H}_s]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~ \\ & \qquad +
+%						\quad\mbb{P}[\msc{H}_d]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m] \notag\\
+\mbb{P}[\mc{E}_1] =& \leq \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~+
 						\quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_s]~ \\
 						&\qquad + \quad \mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_d \cup \msc{H}_m]\\
     			&\leq  e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}+2e^{-\frac{N^{\mu-\alpha}(1-4\eta)^2}{16}}\\ & \qquad + 2e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}+e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}\\
     			&\leq 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}\\
  \end{align*}
-						where the inequalities in the third line are due to Lemmas \ref{Lem:ZerotonClassif}, \ref{Lem:SingletonClassif}, \ref{Lem:DoubletonClassif} and \ref{Lem:MultitonClassif} respectively provided in Appendix \ref{Append:BinClassif}.
+{where the inequalities in the third line are due to Lemmas \ref{Lem:ZerotonClassif}, \ref{Lem:SingletonClassif}, \ref{Lem:DoubletonClassif} and \ref{Lem:MultitonClassif} respectively provided in Appendix \ref{Append:BinClassif}.}
 \end{proof}
 
 \subsection{\bf Position Identification}
@@ -44,19 +43,18 @@ Given that a bin $(i,j)$ is correctly classified as a singleton, the probability
 \end{proof}
 
 \subsection{\bf Peeling Process}
-\begin{table}
-\centering
-\begin{tabular}{| c | c | c | c | c | c | c | c | }
-\hline
-$d$ & $2$& $3$ & $4$ & $5$ & $6$ & $7$ & $8$ \\ \hline
-$\delta$ & 1.000 & 0.4073 & 0.3237 & 0.2850 & 0.2616 & 0.2456 & 0.2336 \\ \hline
- $d\delta$ & 2.000 & 1.2219 & 1.2948 & 1.4250 & 1.5696 & 1.7192 & 1.8688 \\ \hline
-\end{tabular}
-\vspace{1ex}
-\caption{Constants for various error floor values}
-\label{Table:EtaValues}
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{ c  c  c  c  c  c  c  c  }
+		\hline
+		$d$ & $2$& $3$ & $4$ & $5$ & $6$ & $7$ & $8$ \\ \hline
+		$\delta$ & 1.000 & 0.4073 & 0.3237 & 0.2850 & 0.2616 & 0.2456 & 0.2336 \\ 
+		$d\delta$ & 2.000 & 1.2219 & 1.2948 & 1.4250 & 1.5696 & 1.7192 & 1.8688 \\ \hline
+	\end{tabular}
+	\vspace{1ex}
+	\caption{Constants for various error floor values}
+	\label{Table:EtaValues}
 \end{table}
-
 To analyze the peeling process alone independently, we refer to a {\it oracle based peeling decoder} which has the accurate classification of all the bins and can accurately  identify the position of the singleton given a singleton bin at any iteration. In other words, oracle based peeling decoder is the peeling part of our decoding scheme but with the assumption that the bin classification and position identification are carried out without any error.
 \begin{lemma}
 [Exact Matching]
@@ -73,6 +71,7 @@ We borrow this result from Pawar and Ramchandran's \cite{pawar2014robust}. Altho
 \item Our problem model is such that the sparse components of the signal space has only positive amplitude and thus our bin processing part (bin classification and position identification) is different when compared to \cite{pawar2014robust}.
 \item The sparsity of the signal $L$ to be recovered is exactly known in the case of \cite{pawar2014robust} whereas we have no information  about $L$ not even the order with which the quantity scales in $N$.
 \end{itemize}
+
 Irrespective of these differences, the Tanner graph representation of the framework and the peeling part of the decoder are identical to that of the robust-FFAST scheme. And thus the limit of the {\it oracle based peeling decoder} for our scheme is identical to that in the robust-FFAST scheme \cite{pawar2014robust}.  With respect to the third difference, in robust-FFAST scheme the authors choose $F^{d-1}=\delta k$ where $k$ is the sparsity of the signal (which is assumed to be known) and show the first assertion of the lemma. They also showed that upto a constant fraction $(1-\varepsilon)$ of $k$-variables node can be recovered with probability of failure that decays exponentially in $N$. In our case, since $L=o(N^{\alpha})$, this result translates to recovering all the $L$ non-zero variable nodes with an exponentially decaying failure  probability.
 \end{proof}
 
@@ -90,11 +89,11 @@ For the approximate matching case, choose parameter $d\geq 8$ as described in Se
 As mentioned earlier, the key difference in the approximate matching case is peeling off variable nodes from only singleton and double-tons. An identical peeling decoder is used and analyzed in the problem of group testing \cite{lee2015saffron} by Lee, Pedarsani and Ramchandran which the authors refer to as SAFFRON scheme. In SAFFRON, the authors claim that for a graph ensemble which has a regular degree of $d$ on the variable nodes and a  Poisson degree distribution on the bins, this peeling decoder with a left degree of $d=8$ and a total number of bins at least equal to $6.13 k$ recovers at least $(1-\varepsilon)$ fraction of the $k$ non-zero variable nodes with exponentially decaying probability. Note that $\frac{6.13}{8}\approx 0.7663$ is approximately the number of bins per stage for $d=8$. We also leverage the result from \cite{pawar2014robust} that the Tanner graph representation of the robust-FFAST (or equivaently RSDIFT framework) has a Poisson degree distribution on the bins. Combining these two results gives us the required results.
 \end{proof}
 
-\begin{theorem}[Overall Probability of Error]
+\begin{theorem}[Overall Probability of Error] \label{thm:OverallErrorProb}
 	The RSIDFT framework succeeds with high probability asymptotically in $N$ if the number of samples in each branch $f_i = N^{\alpha}+O(1)$ satisfies the condition $\alpha > 1-\mu$.
 \end{theorem}
 \begin{proof}
-The overall probability of error $\mbb{P}[\mc{E}_{\text{total}}]$ can be bounded using a union bound on the three error events $\mc{E}_1$, $\mc{E}_2$ and $\mc{E}_3$ given by  	$$
+The overall probability of error $\mbb{P}[\mc{E}_{\text{total}}]$ can be bounded using an union bound on the three error events $\mc{E}_1$, $\mc{E}_2$ and $\mc{E}_3$ given by  	$$
 \mbb{P}[\mc{E}_{\text{total}}] ~\leq~  \mbb{P}[\mc{E}_1] +  \mbb{P}[\mc{E}_2] + \mbb{P}[\mc{E}_3]
 $$
 Using the expressions for error probabilities from Lemmas \ref{Lem:binclassification}, \ref{Lem:posidentification}, \ref{Lem:peeling_exact} and \ref{Lem:peeling_approximate}, we can see that all the terms vanish to zero as $N \rightarrow \infty$ if $\mu+\alpha-1 \geq 0$, i.e. $\alpha \geq 1-\mu$.
