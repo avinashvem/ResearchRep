@@ -29,13 +29,13 @@ where $\mathcal{F}_{N}\{ \cdot \}$ and $\mathcal{F}_{N}^{-1}\{ \cdot \}$ refer t
 
 \subsection{Sparse Inverse Discrete Fourier Transform}
 \label{subsec:RSIDFT}	
- In this section we present Robust Sparse Inverse Discrete Fourier Transform(RSIDFT) scheme that exploits sparsity in the cross-correlation signal $\rv$ and efficiently recovers it's $L$ dominant coefficients. The architecture of RSIDFT is similar to that of the FFAST scheme proposed in \cite{pawar2014robust}, but the decoding algorithm has some modifications to handle the noise model induced in this problem. We will see in Sec.~\ref{subsec:skteches} how the sketches $\Xv$ and $\Yv'$ are computed efficiently but for this section we will focus only on the recovery of the sparse coefficients in $\rv$ given $\Xv$ and $\Yv'$.
+ In this section we present Robust Sparse Inverse Discrete Fourier Transform(RSIDFT) scheme that exploits sparsity in the cross-correlation signal $\rv$ and efficiently recovers its $L$ dominant coefficients. The architecture of RSIDFT is similar to that of the FFAST scheme proposed in \cite{pawar2014robust}, but the decoding algorithm has some modifications to handle the noise model induced in this problem. We will see in Sec.~\ref{subsec:skteches} how the sketches $\Xv$ and $\Yv'$ are computed efficiently but for this section we will focus only on the recovery of the sparse coefficients in $\rv$ given $\Xv$ and $\Yv'$.
 	  	
 Consider the RSIDFT framework shown in Fig.~\ref{fig:rsidft}. Let $ \Rv =\Xv \odot \Yv'$ be the DFT of the cross-correlation signal of $\xv$ and $\yv$. We begin by factoring $N$ into $d$ relatively prime factors $\{f_1,f_2,\ldots,f_d\}$, where $d$ is a parameter in the algorithm. The design scheme for choosing $f_i$'s for various values of $\mu$ such that $f_i$ divides $N$ and $f_i=N^{\alpha}+O(1) \forall ~i\in[d]$ are given in Sec. \ref{subsec:DesignParameters}. The RSIDFT algorithm consists of {\it $d$-stages} with each stage corresponding to a sub-sampling factor of $\frac{N}{f_i}$. In each stage, there are {\it $B= O(\log N)$ branches} with shifts from the set $ \{s_1, s_2, \cdots s_B\} $, where $s_1 =0$ in the first branch and the rest are chosen uniformly at random from $[N]$.
 	   	 	
 \begin{figure}[h!]
 	\begin{center}
-	 	\resizebox{0.45\textwidth}{!}{\input{./Figures/FFAST_Robust.tex}}
+	 	\resizebox{.60\textwidth}{!}{\input{./Figures/FFAST_Robust.tex}}
 	\end{center}	
 \caption{ RSIDFT Framework to compute inverse Fourier Transform of a signal $\Rv$ that is sparse in time domain. }\label{fig:rsidft}
 \end{figure}
@@ -78,7 +78,7 @@ where we refer to $\mb{W}_{i,k}$ as the sensing matrix at bin $(i,k)$ and is def
 		e^{\frac{j2\pi ks_2}{N}},~
 		\cdots,~
 		e^{\frac{j2\pi ks_B}{N}}
-	\end{bmatrix}$
+	\end{bmatrix}^{T}$
 
 \begin{figure}[h!]
 	\begin{center}
@@ -199,7 +199,7 @@ Thus, for both the exact and approximate matching cases, for any $0<\mu<1$, we c
 \end{align}
 of cardinality $f_i$. Naively, the FFT algorithm can be used to compute $N$-pt DFT of $\Yv'$ and the required subset of coefficients can be taken but this is inefficient and would be of $O(N \log N)$ complexity. Instead, we observe that $\Yv'[\mc{S}_{i,j}]$ is $\Yv'$ shifted by $s_j$ and sub-sampled by a factor of $g_i$. Thus for a given $(i,j)$ this corresponds to, in time domain, a point-wise multiplication by $[1,w_{s_j},w_{s_j}^2,\ldots,w_{s_j}^{N-1}]$ followed by \textit{folding} the signal into $g_i(=\frac{N}{f_i})$ signals each of length $f_i$ and adding them up resulting in a single length-$f_i$ signal denoted by $\yv'_{i,j}$. Formally the \textit{folding} operation can be described as follows:
 \begin{equation}
-	\yv'_{i,j} = \sum \limits_{m = 0}^{g_i-1} \yv'[mf_i:(m+1)f_i-1] \odot [w_{s_j}^{mg_i},w_{s_j}^{mg_i+1},\ldots, w_{s_j}^{(m+1)g_i-1}],
+	\yv'_{i,j} = \sum \limits_{m = 0}^{g_i-1} \yv'[mf_i:(m+1)f_i-1] \odot [w_{s_j}^{mf_i},w_{s_j}^{mf_i+1},\ldots, w_{s_j}^{(m+1)f_i-1}],
 \end{equation}	
 where, $w_{s_j}=e^{-\frac{j2\pi s_j}{N}}$. Taking $f_i$-point DFT of $\yv'_{i,j}$ produces $\Yv'[\mc{S}_{i,j}]$ i.e. 
  \begin{align*}

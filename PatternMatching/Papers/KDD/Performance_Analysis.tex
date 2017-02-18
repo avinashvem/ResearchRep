@@ -16,7 +16,6 @@ The probability of bin classification error at any bin $(i,j)$ can be upper boun
 \mbb{P}[\mc{E}_1]\leq 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}
 \end{align*} \label{Lem:binclassification}
 \end{lemma}
-
 \begin{proof}
 \begin{align*}
 %\mbb{P}[\mc{E}_1]&=\mbb{P}[\msc{H}_z]\mbb{P}[\mc{E}_1|\widehat{\msc{H}}_{i,j}=\msc{H}_z]~+
@@ -28,7 +27,7 @@ The probability of bin classification error at any bin $(i,j)$ can be upper boun
     			&\leq  e^{-\frac{N^{\mu-\alpha}(1-2\eta)^2}{8}}+2e^{-\frac{N^{\mu-\alpha}(1-4\eta)^2}{16}}\\ & \qquad + 2e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}+e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}\\
     			&\leq 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}\\
  \end{align*}
-						where the inequalities in the third line are due to Lemmas \ref{Lem:ZerotonClassif}, \ref{Lem:SingletonClassif}, \ref{Lem:DoubletonClassif} and \ref{Lem:MultitonClassif} respectively provided in Appendix \ref{Append:BinClassif}.
+{where the inequalities in the third line are due to Lemmas \ref{Lem:ZerotonClassif}, \ref{Lem:SingletonClassif}, \ref{Lem:DoubletonClassif} and \ref{Lem:MultitonClassif} respectively provided in Appendix \ref{Append:BinClassif}.}
 \end{proof}
 
 \subsection{\bf Position Identification}
@@ -46,10 +45,10 @@ Given that a bin $(i,j)$ is correctly classified as a singleton, the probability
 \subsection{\bf Peeling Process}
 \begin{table}[ht]
 	\centering
-	\begin{tabular}{| c | c | c | c | c | c | c | c | }
+	\begin{tabular}{ c  c  c  c  c  c  c  c  }
 		\hline
 		$d$ & $2$& $3$ & $4$ & $5$ & $6$ & $7$ & $8$ \\ \hline
-		$\delta$ & 1.000 & 0.4073 & 0.3237 & 0.2850 & 0.2616 & 0.2456 & 0.2336 \\ \hline
+		$\delta$ & 1.000 & 0.4073 & 0.3237 & 0.2850 & 0.2616 & 0.2456 & 0.2336 \\ 
 		$d\delta$ & 2.000 & 1.2219 & 1.2948 & 1.4250 & 1.5696 & 1.7192 & 1.8688 \\ \hline
 	\end{tabular}
 	\vspace{1ex}
@@ -72,6 +71,7 @@ We borrow this result from Pawar and Ramchandran's \cite{pawar2014robust}. Altho
 \item Our problem model is such that the sparse components of the signal space has only positive amplitude and thus our bin processing part (bin classification and position identification) is different when compared to \cite{pawar2014robust}.
 \item The sparsity of the signal $L$ to be recovered is exactly known in the case of \cite{pawar2014robust} whereas we have no information  about $L$ not even the order with which the quantity scales in $N$.
 \end{itemize}
+
 Irrespective of these differences, the Tanner graph representation of the framework and the peeling part of the decoder are identical to that of the robust-FFAST scheme. And thus the limit of the {\it oracle based peeling decoder} for our scheme is identical to that in the robust-FFAST scheme \cite{pawar2014robust}.  With respect to the third difference, in robust-FFAST scheme the authors choose $F^{d-1}=\delta k$ where $k$ is the sparsity of the signal (which is assumed to be known) and show the first assertion of the lemma. They also showed that upto a constant fraction $(1-\varepsilon)$ of $k$-variables node can be recovered with probability of failure that decays exponentially in $N$. In our case, since $L=o(N^{\alpha})$, this result translates to recovering all the $L$ non-zero variable nodes with an exponentially decaying failure  probability.
 \end{proof}
 

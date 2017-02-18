@@ -29,7 +29,7 @@ where $\mathcal{F}_{N}\{ \cdot \}$ and $\mathcal{F}_{N}^{-1}\{ \cdot \}$ refer t
 
 \subsection{Sparse Inverse Discrete Fourier Transform}
 \label{subsec:RSIDFT}	
- In this section we present Robust Sparse Inverse Discrete Fourier Transform(RSIDFT) scheme that exploits sparsity in the cross-correlation signal $\rv$ and efficiently recovers it's $L$ dominant coefficients. The architecture of RSIDFT is similar to that of the FFAST scheme proposed in \cite{pawar2014robust}, but the decoding algorithm has some modifications to handle the noise model induced in this problem. We will see in Sec.~\ref{subsec:skteches} how the sketches $\Xv$ and $\Yv'$ are computed efficiently but for this section we will focus only on the recovery of the sparse coefficients in $\rv$ given $\Xv$ and $\Yv'$.
+ In this section we present Robust Sparse Inverse Discrete Fourier Transform(RSIDFT) scheme that exploits sparsity in the cross-correlation signal $\rv$ and efficiently recovers its $L$ dominant coefficients. The architecture of RSIDFT is similar to that of the FFAST scheme proposed in \cite{pawar2014robust}, but the decoding algorithm has some modifications to handle the noise model induced in this problem. We will see in Sec.~\ref{subsec:skteches} how the sketches $\Xv$ and $\Yv'$ are computed efficiently but for this section we will focus only on the recovery of the sparse coefficients in $\rv$ given $\Xv$ and $\Yv'$.
 	  	
 Consider the RSIDFT framework shown in Fig.~\ref{fig:rsidft}. Let $ \Rv =\Xv \odot \Yv'$ be the DFT of the cross-correlation signal of $\xv$ and $\yv$. We begin by factoring $N$ into $d$ relatively prime factors $\{f_1,f_2,\ldots,f_d\}$, where $d$ is a parameter in the algorithm. The design scheme for choosing $f_i$'s for various values of $\mu$ such that $f_i$ divides $N$ and $f_i=N^{\alpha}+O(1) \forall ~i\in[d]$ are given in Sec. \ref{subsec:DesignParameters}. The RSIDFT algorithm consists of {\it $d$-stages} with each stage corresponding to a sub-sampling factor of $\frac{N}{f_i}$. In each stage, there are {\it $B= O(\log N)$ branches} with shifts from the set $ \{s_1, s_2, \cdots s_B\} $, where $s_1 =0$ in the first branch and the rest are chosen uniformly at random from $[N]$.
 	   	 	
@@ -47,7 +47,7 @@ Consider the RSIDFT framework shown in Fig.~\ref{fig:rsidft}. Let $ \Rv =\Xv \od
 \end{align}
 where $g_i\coleq \frac{N}{f_i}$ to obtain $\Rv_{i,j}\coleq\Rv[\mc{S}_{i,j}]$. The sub-sampling operation is followed by a $f_i$-point IDFT in \textit{branch (i,j)} of stage-$i$ to obtain $ \rv_{i,j}$. Notice that $ \rv_{i,j}$ is an aliased version of $\rv$ due to the property that sub-sampling in Fourier domain is equivalent to aliasing in time domain.
 
-	 Let $\zv_{i,k}\in\mbb{R}^{B}$, for $k\in [f_i]$, be the $k$th \textit{binned} observation vector of stage-$i$ formed by stacking $\rv_{i,j}[k], j\in[B]$, together as a vector i.e.
+	 Let $\zv_{i,k}\in\mbb{R}^{B}$, for $k\in [f_i]+1$, be the $k$th \textit{binned} observation vector of stage-$i$ formed by stacking $\rv_{i,j}[k], j\in[B]$, together as a vector i.e.
 \[
 	  \zv_{i,k} = \begin{bmatrix}
 	 r_{i,1}[k],~ 
@@ -78,7 +78,7 @@ where we refer to $\mb{W}_{i,k}$ as the sensing matrix at bin $(i,k)$ and is def
 		e^{\frac{j2\pi ks_2}{N}},~
 		\cdots,~
 		e^{\frac{j2\pi ks_B}{N}}
-	\end{bmatrix}$
+	\end{bmatrix}^{T}$
 
 \begin{figure}[h!]
 	\begin{center}
@@ -113,7 +113,7 @@ If a bin node $(i,j)$ is classified as a singleton in the bin classification ste
 where $\dagger$ denotes the conjugate transpose. The value of the variable node connected to the singleton bin is decoded as:
  $$
  \hat{r}[\hat{k}]=M(1-\eta).
- $$
+ $$\vspace{-3pt}
  Note that for the case of exact matching we know the value to be exactly equal to $M$. But in the case of approximate matching, the actual value of $r[k]\in\{M(1-2\eta),\ldots,M-1,M\}$ and our estimate $\hat{r}[\hat{k}]=M(1-\eta)$ is only approximate. But this suffices for recovering the positions of matches i.e., the indices of the sparse coefficients in $\rv$.			
 
 \paragraph*{Peeling Process} The peeling based decoder we employ consists of finding a singleton bin, then identifying the single non-zero variable node connected to the bin, decoding its value and removing ({\it peeling off}) it's contribution from all the bin nodes connected to that variable node. The main idea behind this decoding scheme is that (for appropriately chosen parameters), at each iteration, peeling a singleton node off will induce at least one more singleton bin and the process of peeling off can be repeated iteratively. Although the main idea is similar for exact matching and the approximate matching scenarios, there are some subtle differences in their implementation.\\
@@ -187,8 +187,18 @@ For a given value of $\mu$, we will describe how to choose the parameters $d$ an
     {\it Exact Matching:} Find $d\in \mbb{N}\backslash \{1,2\}$ such that $\mu\in(1-\frac{1}{d-1},1-\frac{1}{d}]$\\
     {\it Approximate Matching}: If $\mu\in(\frac{1}{2},\frac{1}{8})$, choose $d=8$. Else find $d\geq 8$ such that $\mu\in(1-\frac{1}{d-1},1-\frac{1}{d})$\\    	 
 \end{itemize}
-Thus, for both the exact and approximate matching cases, for any $0<\mu<1$, we choose the down-sampling factors $f_i$ to be approximately equal to $N^{\alpha}$ where $\alpha > 1- \mu$
+Thus, for both the exact and approximate matching cases, for any $0<\mu<1$, we choose the down-sampling factors $f_i$ to be approximately equal to $N^{\alpha}$ where $\alpha > 1- \mu$.
 
+
+\subsubsection{Distributed processing framework}
+Given a database(or string) of length $N$, we divide the database into $G=N^\gamma$ blocks each of length $\tilde{N} = N/G$. Now each block can be processed independently (in parallel) using the RSIDFT framework with the new database length reduced from $N$ to $\tilde{N}$. This distributed framework has the following advantages
+\begin{itemize}
+	\item Firstly, this enables parallel computing and hence can be distributed across different workstations.
+	\item Improves the sample and computational complexity by a constant factor.
+	\item Sketch of the database needs to be computed only for a smaller block length and hence requires computation of only a shorter $\tilde{N}$ point FFT.
+	%\item Enables localized searches on only a few blocks if we have prior knowledge about where the query could be. Specifically, if we exactly know the number of matching locations, and having encountered the required number of positions from the already run processes (processed blocks), we can terminate rest of the processes.   
+	\item Helps overcome implementation issues with memory and precision as the scale of the problem is reduced. 
+\end{itemize}
 \subsection{Sketches of $\Xv$ and $\Yv$}
 \label{subsec:skteches}		
  As we have already seen in Sec.~\ref{subsec:RSIDFT} the RSIDFT framework requires the values of $\Rv(=\Xv\odot \Yv)$ only at indices $\mc{S}$ or in other words we need $\Xv$ and $\Yv$ only at the indices in set $\mc{S}$ of cardinality $dBf_i$. We assume that the sketch of $\xv$, $ \Xv[\mc{S}]= \{X[i],i\in \mc{S}\}$ is pre-computed and stored in a database.
@@ -198,26 +208,26 @@ Thus, for both the exact and approximate matching cases, for any $0<\mu<1$, we c
 	 \mathcal{S}_{i,j} \coleq \{\ s_j + k g_i: k\in[f_i]\}, \quad i\in[d], j\in[B]
 \end{align}
 of cardinality $f_i$. Naively, the FFT algorithm can be used to compute $N$-pt DFT of $\Yv'$ and the required subset of coefficients can be taken but this is inefficient and would be of $O(N \log N)$ complexity. Instead, we observe that $\Yv'[\mc{S}_{i,j}]$ is $\Yv'$ shifted by $s_j$ and sub-sampled by a factor of $g_i$. Thus for a given $(i,j)$ this corresponds to, in time domain, a point-wise multiplication by $[1,w_{s_j},w_{s_j}^2,\ldots,w_{s_j}^{N-1}]$ followed by \textit{folding} the signal into $g_i(=\frac{N}{f_i})$ signals each of length $f_i$ and adding them up resulting in a single length-$f_i$ signal denoted by $\yv'_{i,j}$. Formally the \textit{folding} operation can be described as follows:
-\begin{equation}
-	\yv'_{i,j} = \sum \limits_{m = 0}^{g_i-1} \yv'[mf_i:(m+1)f_i-1] \odot [w_{s_j}^{mg_i},w_{s_j}^{mg_i+1},\ldots, w_{s_j}^{(m+1)g_i-1}],
-\end{equation}	
+\begin{equation*}
+	\yv'_{i,j} = \sum \limits_{m = 0}^{g_i-1} \yv'[mf_i:(m+1)f_i-1] \odot [w_{s_j}^{mf_i},w_{s_j}^{mf_i+1},\ldots, w_{s_j}^{(m+1)f_i-1}],
+\end{equation*}	
 where, $w_{s_j}=e^{-\frac{j2\pi s_j}{N}}$. Taking $f_i$-point DFT of $\yv'_{i,j}$ produces $\Yv'[\mc{S}_{i,j}]$ i.e. 
  \begin{align*}
 	\Yv'[\mc{S}_{i,j}]=\mc{F}_{f_i} \{\yv'_{i,j}\}
 \end{align*}
 which is what we need in branch $(i,j)$. To obtain all the samples in $\mathcal{S}$ required for the RSDIFT framework, the \textit{folding} technique followed by a DFT needs to be carried out for each $(i,j)$, for $i\in[d],j\in[B]$, a total of $dB$ times $N^{\alpha}$-point DFT.
 
-\subsection{Distributed processing framework}
-We describe a distributed processing framework which enables parallel processing of the algorithm proposed and also point out its advantages.
-
-Given a database(or string) of length $N$, we divide the database into $G=N^\gamma$ blocks each of length $\tilde{N} = N/G$. Now each block can be processed independently (in parallel) using the RSIDFT framework with the new database length reduced from $N$ to $\tilde{N}$. This distributed framework has the following advantages
-\begin{itemize}
-	\item Firstly, this enables parallel computing and hence can be distributed across different workstations.
-	\item Improves the sample and computational complexity by a constant factor.
-	\item Sketch of the database needs to be computed only for a smaller block length and hence requires computation of only a shorter $\tilde{N}$ point FFT.
-	\item Enables localized searches on only a few blocks if we have prior knowledge about where the query could be. Specifically, if we exactly know the number of matching locations, and having encountered the required number of positions from the already run processes (processed blocks), we can terminate rest of the processes.   
-	\item Helps overcome implementation issues with memory and precision as the scale of the problem is reduced. 
-\end{itemize}
+%\subsection{Distributed processing framework}
+%We describe a distributed processing framework which enables parallel processing of the algorithm proposed and also point out its advantages.
+%
+%Given a database(or string) of length $N$, we divide the database into $G=N^\gamma$ blocks each of length $\tilde{N} = N/G$. Now each block can be processed independently (in parallel) using the RSIDFT framework with the new database length reduced from $N$ to $\tilde{N}$. This distributed framework has the following advantages
+%\begin{itemize}
+%	\item Firstly, this enables parallel computing and hence can be distributed across different workstations.
+%	\item Improves the sample and computational complexity by a constant factor.
+%	\item Sketch of the database needs to be computed only for a smaller block length and hence requires computation of only a shorter $\tilde{N}$ point FFT.
+%	%\item Enables localized searches on only a few blocks if we have prior knowledge about where the query could be. Specifically, if we exactly know the number of matching locations, and having encountered the required number of positions from the already run processes (processed blocks), we can terminate rest of the processes.   
+%	\item Helps overcome implementation issues with memory and precision as the scale of the problem is reduced. 
+%\end{itemize}
 
 %The following theorem summarizes our main results.
 %\begin{theorem}\label{thm:mainresults}
