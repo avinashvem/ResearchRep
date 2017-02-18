@@ -4,10 +4,8 @@ In this section, we will analyze the sketching complexity which is the  number o
 
 \subsection{\bf Sample Complexity}\label{subsec:SampleComplexity}
 In each branch of the RSDIFT framework we down-sample the $N$ samples by a factor of $\frac{N}{f_i}$ to get $f_i\approx N^{\alpha}$ samples. We repeat this for a random shift in each branch for $B=O(\log N)$ branches in each stage thus resulting in a total of $O(N^{\alpha}\log N)$ samples per block per stage. We repeat this for $d = \frac{1}{1-\alpha}$ such stages resulting in a total of $dN^{\alpha}\log N$ samples per block. So, the total number of samples is given by
-
 \begin{align*}
-\text{Total \# of samples required (S)} &= O \left(dN^{\alpha}\log N\right)\\
-   &=   O(N^{1-\mu}\log N)
+S&= O \left(dN^{\alpha}\log N\right) =   O(N^{1-\mu}\log N)
 \end{align*}
 
 

@@ -50,38 +50,39 @@ where $g_i\coleq \frac{N}{f_i}$ to obtain $\Rv_{i,j}\coleq\Rv[\mc{S}_{i,j}]$. Th
 	 Let $\zv_{i,k}\in\mbb{R}^{B}$, for $k\in [f_i]$, be the $k$th \textit{binned} observation vector of stage-$i$ formed by stacking $\rv_{i,j}[k], j\in[B]$, together as a vector i.e.
 \[
 	  \zv_{i,k} = \begin{bmatrix}
-	 r_{i,1}[k] \\
-	 r_{i,2}[k] \\
-	 \vdots\\
+	 r_{i,1}[k],~ 
+	 r_{i,2}[k],~ 
+	 \cdots,~
 	 r_{i,B}[k]
-	 \end{bmatrix}
+	 \end{bmatrix}^{T}
 \]
 Note that this gives us a total of $f_i$ binned observation vectors in each stage-$i$. Using the properties of Fourier transform, we can write the relationship between the observation vectors $\zv_{i,k}$ at bin $(i,k)$ and sparse vector to be estimated $\rv$ as: 
 \begin{align}
 	\label{Eqn:Generator Equation}
 	\zv_{i,k}= \mb{W}_{i,k} \times
 	\begin{bmatrix}
-		r[k] \\
-		r[k+f_i] \\
-		\vdots\\
+		r[k],~
+		r[k+f_i],~
+		\cdots,~
 		r[k+(g_i-1)f_i]
-	\end{bmatrix}
+	\end{bmatrix}^{T}
 \end{align}
 
 where we refer to $\mb{W}_{i,k}$ as the sensing matrix at bin $(i,k)$ and is defined as
 \begin{align}\label{Eqn:Sensing Matrix}
-	\mb{W}_{i,k} = \left[\wv^{k},\wv^{k+f_i},\ldots, \wv^{k+(g_i-1)f_i}\right] \text{where} ~\wv^{k}=
+	\mb{W}_{i,k} = \left[\wv^{k},\wv^{k+f_i},\ldots, \wv^{k+(g_i-1)f_i}\right]
+\end{align} and
+ $\wv^{k}=
 	\begin{bmatrix}
-		e^{\frac{j2\pi ks_1}{N}}\\
-		e^{\frac{j2\pi ks_2}{N}}\\
-		\vdots\\
+		e^{\frac{j2\pi ks_1}{N}}, ~
+		e^{\frac{j2\pi ks_2}{N}},~
+		\cdots,~
 		e^{\frac{j2\pi ks_B}{N}}
-	\end{bmatrix}
-\end{align}
+	\end{bmatrix}$
 
 \begin{figure}[h!]
 	\begin{center}
-	 	\resizebox{0.47\textwidth}{!}{\input{./Figures/Factorgraph.tex}}	
+	 	\resizebox{0.40\textwidth}{!}{\input{./Figures/Factorgraph.tex}}	
 	\end{center}	
 	\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $N=6$, $f_1=2, f_2=3$ (i.e., $d=2$) and $B=2$. The variable nodes (gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (white squares) represent the binned observation vector $\zv_{i,k}$. The figure illustrates the relationship between $\zv_{i,k}$ and $\rv$.}\label{fig:factorgraph}
 	\vspace{5 pt}
@@ -218,16 +219,16 @@ Given a database(or string) of length $N$, we divide the database into $G=N^\gam
 	\item Helps overcome implementation issues with memory and precision as the scale of the problem is reduced. 
 \end{itemize}
 
-The following theorem summarizes our main results.
-\begin{theorem}\label{thm:mainresults}
-	Assume that a sketch of $\xv$ of size $O(\frac{N}{M} \log N)$ can be computed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M$) problems, with the number of matches $L$ scaling as $O(N^{\lambda})$, our algorithm has
-	\begin{itemize}
-		\item a sketching function for $\yv$ that computes \\ $O(\frac{N}{M}\log N)~=~ O\left(N^{1-\mu}\log N\right)$ samples
-		\item a computational complexity of \\$O\left(\max\{N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N \}\right)$
-		\item a decoder that recovers all the $L$ matching positions with a failure probability that approaches zero asymptotically in $N$		
-	\end{itemize}
-	When $L<O\left(\frac{N}{M}\right)$ (i.e. $\lambda<1-\mu$), which is typically the interesting case, our algorithm has a {\it sub-linear time complexity}.
-\end{theorem}
-\begin{proof}
-	Sec.~\ref{subsec:SampleComplexity} and Sec.~\ref{subsec:ComputationComplexity} analyzes the  sample and computational complexity. Theorem ~\ref{thm:OverallErrorProb} provides the proof for decaying error probability.   
-\end{proof}
+%The following theorem summarizes our main results.
+%\begin{theorem}\label{thm:mainresults}
+%	Assume that a sketch of $\xv$ of size $O(\frac{N}{M} \log N)$ can be computed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M$) problems, with the number of matches $L$ scaling as $O(N^{\lambda})$, our algorithm has
+%	\begin{itemize}
+%		\item a sketching function for $\yv$ that computes \\ $O(\frac{N}{M}\log N)~=~ O\left(N^{1-\mu}\log N\right)$ samples
+%		\item a computational complexity of \\$O\left(\max\{N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N \}\right)$
+%		\item a decoder that recovers all the $L$ matching positions with a failure probability that approaches zero asymptotically in $N$		
+%	\end{itemize}
+%	When $L<O\left(\frac{N}{M}\right)$ (i.e. $\lambda<1-\mu$), which is typically the interesting case, our algorithm has a {\it sub-linear time complexity}.
+%\end{theorem}
+%\begin{proof}
+%	Sec.~\ref{subsec:SampleComplexity} and Sec.~\ref{subsec:ComputationComplexity} analyzes the  sample and computational complexity. Theorem ~\ref{thm:OverallErrorProb} provides the proof for decaying error probability.   
+%\end{proof}
