@@ -10,7 +10,9 @@ if prod(chkProd)~=0
     Eop(Ccon)=repmat(chkProd,1,dc)./E(Ccon);
 else
     nonZeroIdx= chkProd~=0;
+    if ~isempty(find(nonZeroIdx,1))
     Eop(Ccon(nonZeroIdx,:))=repmat(chkProd(nonZeroIdx),1,dc)./ E(Ccon(nonZeroIdx,:));
+    end
     zeroIdx=find(nonZeroIdx==0);
     for i=1:length(zeroIdx)
         cumProd=+1*sign(Parity(zeroIdx(i)));

@@ -6,8 +6,9 @@ global dv dc w L M
 % M=3000;
 % L=16;
 
- m=3; % m = no of check nodes in base protograph at each position
- n=10; %It should be m*dc=n*dv
+G=gcd(dc,dv);
+m=dv/G; % m = no of check nodes in base protograph at each position
+n=dc/G; %It should be m*dc=n*dv
 
 
 Vposn=n*M;
