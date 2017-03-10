@@ -11,8 +11,8 @@ U=2; % Number of users.
 llr_max=20; 
 maxIters=100;
 maxSims=1000;
-chan='noiseless';
-sigVec=0;
+chan='Gaussian';
+sigVec=0.34;
 
 %% For two different graphs
 [Vcon1,Ccon1,eMax]=ECon_SC();

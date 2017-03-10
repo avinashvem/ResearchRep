@@ -2,15 +2,15 @@
 clear all
 global dv dc w L M
 dv=3;
-dc=11;
+dc=6;
 w=3; %Works only for w=3 and dv=3
-M=50;
+M=1000;
 L=16;
 U=2; % Number of users.
 shift=round(4.5*M);
 
 llr_max=20; 
-maxIters=100;
+maxIters=500;
 maxSims=1000;
 
 [Vcon,Ccon,eMax]=ECon_SC();
@@ -25,14 +25,14 @@ shiftPattern=[shift+1:N 1:shift];
 inv_shiftPattern=[N-shift+1:N 1:N-shift];
 
 chan='Gaussian';
-sigVec=[0.34];
+sigVec=[0.82 0.81 0.80];
 for sigIter=1:length(sigVec)
 sig=sigVec(sigIter);
-fprintf('Channel is %s and sig=%f\n',chan,sig');
+fprintf('Channel is %s and sig=%f or EsNo=%3.2f dB\n',chan,sig',10*log10(1/2/sig^2));
 
 num_err=0;  sim_cnt=0; blockErr=0;
 tic
-while blockErr<2 && sim_cnt<maxSims
+while blockErr<10 && sim_cnt<maxSims
 for u=1:U
     c(u,:)=rand(1,N)<0.5;
     E=zeros(1,eMax+1);
@@ -62,6 +62,86 @@ errMat(sigIter,1:3)=[num_err blockErr sim_cnt];
 end
 
 %% ----Simulation Results-----
+
+% (3,6); (N,m)=(8000,4500),M=250 L=16,w=3, rate=0.4375
+%     (bErr,Berr)  #Sims    sig
+%     (4.3e4,50)    196    0.750
+%     (4.6e4,50)    239    0.747
+%     (4.3e4,50)    404    0.744
+%     (3.9e4,50)    481    0.741
+%     (3.0e4,50)    741    0.738
+%     (2.5e4,39)   1000    0.735
+%     (1.5e4,24)   1000    0.732
+%      (5e3,10)     782    0.729
+%      (5e3,6)     1000    0.726
+%      (2e3,3)     1000    0.723
+%      (294,2)      38     0.73
+%       (0,0)      1000    0.72
+%       (0,0)      1000    0.71
+
+% (3,6); (N,m)=(32000,1800),M=1000 L=16,w=3, rate=0.4375
+% (bErr,Berr) #Sims  sig
+% (3.2e5,50)     55   0.790
+% (2.8e5,50)    171   0.780
+% (2.3e5,45)   1000   0.770
+% (1.0e5,18)   1000   0.767
+% (4.0e4,8)    1000   0.764
+% (2.0e4,4)    1000   0.762
+% (7006,1)     1000   0.760
+%   (0,0)      1000   0.756
+
+% (3,6); (N,m)=(96000,54000),M=3000 L=16,w=3, rate=0.4375
+%   (bErr,Berr) #Sims  sig
+%     (N,2)        2   0.80
+%   (6800,2)       2   0.77
+%    (1178,2)    411   0.76
+%      (0,0)    1050   0.75
+%      (0,0)     600   0.70
+
+
+
+
+% (3,9); (N,m)=(7200,2700),M=150 L=16,w=3, rate=0.625
+% (bErr,Berr) #Sims  sig
+% (4.7e4,40)    107   0.50
+% (4.7e4,40)    199   0.49
+% (4.7e4,40)    674   0.48
+% (4.7e4,50)    788   0.48
+% (1.0e4,22)   1000   0.47
+% (6.2e3,12)   1000   0.46
+% (4.7e3,8)    1000    0.45
+% (2.3e3,4)    1000    0.44
+% (1080,2)     1000    0.43
+% (1614,2)     1000    0.42
+
+% (3,9); (N,m)=(30240,11340),M=630 L=16,w=3, rate=0.625
+% (bErr,Berr) #Sims    sig
+%    (0,0)     1000   0.49
+ 
+% (3,9); (N,m)=(33600,12600),M=700 L=16,w=3, rate=0.625 
+% (bErr,Berr) #Sims  sig
+%  (265,2)      2   0.500
+% (3.7e2,2)     2   0.490
+% (1400,2)    473   0.480
+% (1241,1)    1e3   0.477
+%  (0,0)      1e3   0.470
+
+% (3,9); (N,m)=(96000,36000),M=2000 L=16,w=3, rate=0.625 
+%(bErr,Berr) #Sims  sig
+%  (8e3,2)      2   0.500
+% (1249,2)     92   0.490
+%  (0,0)      1e3   0.480
+% (199,2)     765   0.486
+%  (0,0)      1e3   0.483
+
+
+
+
+
+% dv=3, dc=4,L=16,w=3, rate=0.156
+% M   (N,m)*1e2  (bErr,Berr) #Sims  sig
+%100   (64,54)    (18,1)      1000  1.20
+
 % dv=3, dc=9,L=16,w=3
 % M    (N,m)      (bErr,Berr) #Sims  sig
 % 50 (2400,900)     (0,0)      500   0

@@ -56,7 +56,7 @@ for i=1:maxIters
     %Update at bit node (message to MAC node)
     V1_btoc=V1_fromChecks;  V2_btoc=V2_fromChecks;
     
-    if max(E1_prev-E1)<0.00001 && max(E2_prev-E2)<0.00001
+    if max(E1_prev-E1)<0.001 && max(E2_prev-E2)<0.001
        break 
     end   
 end

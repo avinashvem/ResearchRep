@@ -17,3 +17,8 @@ if U==2
    end
 end
 end
+
+
+%log  [p G(y-2,sig)+(1-p) G(y,sig)]/[p G(y,sig)+(1-p) G(y+2,sig)]
+%log  [exp(l) exp(-(y-2)^2/2/sig^2)+ exp(-y^2/2/sig^2)]/[exp(l) exp(-y^2/2/sig^2)+ exp(-(y+2)^2/2/sig^2)]
+%log  [exp(l) exp((2y-2)/sig^2)+ 1]/[exp(l) + exp((-2y-2)/sig^2)]
