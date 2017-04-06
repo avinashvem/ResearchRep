@@ -220,7 +220,28 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 %------------------------------------------------------------------------------------------------------------
 \begin{frame}\frametitle{Big data applications}
 \begin{block}{Metabolomics}
-Suppose a database of genomes contains a sequence $\vec{x}$ of length $N=10^{12}$. Consider a metabolomics application where we perform partial reads of DNA sequences of organisms in an environment, and we wish to query whether this organism appears in the database. With current sequencing technology, we can read DNA sequences of length $M=1000$ to $M = 100000$ in length (e.g., Oxford Nanopore technology can provide long reads) and the reads are typically in error with a small probability.
+\begin{itemize}
+  \item Suppose a database of genomes contains a sequence $\vec{x}$ of length $N=10^{6}-10^{12}$
+  \item $M=1000$ to $M = 100000$ gives $\mu = 0.25$ to $\mu = 0.42$
+\end{itemize}
+
+  \begin{figure}[h]
+  \includegraphics[width=4.0in]{genomebiology}
+  \end{figure}
+
+\url{http://www.biology-pages.info/G/GenomeSizes.html}
+\end{block}
+
+\end{frame}
+%------------------------------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Big data applications}
+\begin{block}{Metabolomics}
+\begin{itemize}
+  \item Suppose a database of genomes contains a sequence $\vec{x}$ of length $N=10^{12}$.
+  \item DNA sequences of length $M=1000$ to $M = 100000$ in length (e.g., Oxford Nanopore technology can provide long reads)
+  \item $\mu = 0.25$ to $\mu = 0.42$
+\end{itemize}
+
 \url{http://www.biology-pages.info/G/GenomeSizes.html}
 \end{block}
 \pause
