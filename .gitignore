@@ -15,3 +15,8 @@
 *.synctex
 PatternMatching/Presentations/ITA_2017_annotated.pdf
 PatternMatching/Presentations/ITA_2017.pdf
+PatternMatching/Presentations/ITA_2017_bkp.pdf
+*.xml
+PatternMatching/Presentations/ITA_2017-blx.bib
+*.pdf
+PatternMatching/Papers/KDD/kdd_main.pdf
