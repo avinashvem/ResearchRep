@@ -1,0 +1,71 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=2.521in,
+height=1.566in,
+at={(0.758in,0.481in)},
+scale only axis,
+xmin=-10,
+xmax=80,
+xlabel style={font=\color{white!15!black}},
+xlabel={\large Frequency (in Hz)},
+ymin=-0.5,
+ymax=5,
+ylabel style={font=\color{white!15!black}},
+ylabel={\large Amplitude},
+axis background/.style={fill=white}
+]
+\addplot[ycomb, color=mycolor1, mark=o, mark options={solid, mycolor1}, forget plot, line width=1.5pt] table[row sep=crcr] {%
+-1	-1.71714494475358e-16\\
+1	-3.32192326632562e-17\\
+3	2\\
+5	6.36756194043996e-16\\
+7	-6.25200772111643e-16\\
+9	3\\
+11	6.07803629907803e-16\\
+13	-4.10086171541976e-16\\
+15	4.83533902924616e-16\\
+17	-1.88743231204658e-16\\
+19	1.37717742738638e-16\\
+21	-5.94035344108608e-17\\
+23	-8.94276053284954e-17\\
+25	-8.55195277126423e-16\\
+27	-2.87785699436618e-16\\
+29	3.29917032992949e-16\\
+31	1.13935019992171e-16\\
+33	-2.05609274391086e-16\\
+35	-2.1773379717422e-16\\
+37	-1.0981336702209e-16\\
+39	1.12627716491805e-17\\
+41	-3.72817859003741e-17\\
+43	1.07796053793514e-16\\
+45	1.9349711122778e-16\\
+47	5.84810875724067e-16\\
+49	1.96021674545667e-16\\
+51	2.37506161653534e-16\\
+53	-6.08834920049603e-17\\
+55	3.61933111657454e-16\\
+57	-8.63052867720239e-17\\
+59	-8.67258401635857e-17\\
+61	2.54904711428452e-16\\
+63	-2.77381552564259e-16\\
+65	-6.55357268942932e-16\\
+67	7.15686418621269e-16\\
+69	6.96077568672224e-18\\
+71	-7.82525462565175e-17\\
+73	9.84049406607401e-17\\
+};
+\addplot[forget plot, color=white!15!black] table[row sep=crcr] {%
+-10	0\\
+80	0\\
+};
+\end{axis}
+\end{tikzpicture}%
