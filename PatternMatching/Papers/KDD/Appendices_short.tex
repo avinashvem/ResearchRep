@@ -1,5 +1,5 @@
 \appendix
-\section{Chernoff Bounds}
+%\section{Chernoff Bounds}
 
 
 %\begin{lemma}[Hoeffding tail bound]% for bounded random variables]
@@ -20,22 +20,22 @@
 %\end{lemma}
 
 
-\begin{lemma}[Tail bounds for noise terms]
-	\label{Lem:tailbounds}
-Let us consider $r[\theta_0],r[\theta_1],\ldots ,r[\theta_{g_i-1}]$ where $\theta_j=\theta_0+jf_i$ and $\theta_j \notin \{\tau_1,\ldots, \tau_L\}$ is not one of the matching positions for any $j$. Then for any $\delta>0$:\\
-{\bf Upper Tail:}
-\begin{align*}
-\mbb{P}\left[ \left(\frac{1}{M}\sum\limits_{j\in[g_i]}\sum\limits_{k\in[M]}x[\theta_j+k]y[k]\right)\geq \delta\right]\leq \exp\left\lbrace-\frac{M\delta^2}{2g_i}\right\rbrace
-\end{align*}
-{\bf Lower Tail:}
-\begin{align*}
-\mbb{P}\left[ \left(\frac{1}{M}\sum\limits_{j\in[g_i]}\sum\limits_{k\in[M]}x[\theta_j+k]y[k]\right)\geq \delta\right]\leq \exp\left\lbrace-\frac{M\delta^2}{2g_i}\right\rbrace\\
-\end{align*}
-Recall that $[g_i]$ is used to denote the set $\{0,1,\ldots,g_i-1\}$.
-\end{lemma}
-\begin{proof}
-The detailed proof is provided in our longer version \cite{nagaraj2017pattern} (Lemma 7)
-\end{proof}
+%\begin{lemma}[Tail bounds for noise terms]
+%	\label{Lem:tailbounds}
+%Let us consider $r[\theta_0],r[\theta_1],\ldots ,r[\theta_{g_i-1}]$ where $\theta_j=\theta_0+jf_i$ and $\theta_j \notin \{\tau_1,\ldots, \tau_L\}$ is not one of the matching positions for any $j$. Then for any $\delta>0$:\\
+%{\bf Upper Tail:}
+%\begin{align*}
+%\mbb{P}\left[ \left(\frac{1}{M}\sum\limits_{j\in[g_i]}\sum\limits_{k\in[M]}x[\theta_j+k]y[k]\right)\geq \delta\right]\leq \exp\left\lbrace-\frac{M\delta^2}{2g_i}\right\rbrace
+%\end{align*}
+%{\bf Lower Tail:}
+%\begin{align*}
+%\mbb{P}\left[ \left(\frac{1}{M}\sum\limits_{j\in[g_i]}\sum\limits_{k\in[M]}x[\theta_j+k]y[k]\right)\geq \delta\right]\leq \exp\left\lbrace-\frac{M\delta^2}{2g_i}\right\rbrace\\
+%\end{align*}
+%Recall that $[g_i]$ is used to denote the set $\{0,1,\ldots,g_i-1\}$.
+%\end{lemma}
+%\begin{proof}
+%The detailed proof is provided in our longer version \cite{nagaraj2017pattern} (Lemma 7)
+%\end{proof}
 %-------------------------------------------------
 %\begin{proof}
 %Since $\theta_j$ is not one of the matching positions for any $j$, $x[\theta_j+k]\neq y[k]$ and more importantly $x[\theta_j+k]\indep y[k] ~\forall j,k$. This implies that $x[\theta_j+k]y[k]=\pm 1$ with equal probability and $\mbb{E}[x[\theta_i+k]y[k]]=0$. Let the set of random variables corresponding to a position $\theta_j$ be $S_{j}\coleq \{x[\theta_j+k]y[k],k\in[M]\}$. It is clear that the random variables in the set $S_j$ are all independent with respect to each other due to our i.i.d assumption on the database $\xv$ and $\theta_j$ being a non-matching position. For the case of $\mu<\alpha$ we have $M<f_i$ for large enough $N$ thus resulting in non-overlapping parts of $\xv$  participating in the correlation coefficients $r[\theta_i]$ and $r[\theta_j]$. Hence it can be shown that $S_i\indep S_j~~\forall i,j$ and we can apply the bounds from Eqn. \eqref{Eqn:HoeffdingBoundedRV} achieve the required result.
@@ -82,14 +82,14 @@ Given that the bin $(i,j)$ is a zero-ton, the classification error can be bounde
 \mbb{P}[\mc{E}_1|\msc{H}_z]\leq e^{-\frac{N^{\mu+\alpha-1}(1-2\eta)^2}{8}}
 \end{align*}
 \end{lemma}
-\begin{proof}
-The above expression can be derived by observing that a bin is not classified as zero-ton if $\frac{Z[1]}{M}\geq\frac{1-2\eta}{2}$. Let us denote the probability of this event as $p_{z1}$ which can be bounded as:
-\begin{align*}
-p_{z1}=&\mbb{P}\left[\frac{Z[1]}{M}\geq\frac{1-2\eta}{2}\right]\\
-&\leq e^{-\frac{Mg_i(1-2\eta)^2}{8g_i^{2}}} \approx e^{-\frac{N^{\mu+\alpha-1}(1-2\eta)^2}{8}}
-\end{align*} 
-where the second bound is due to Eqn. \eqref{Eqn:BinCombination} and Lemma.~\ref{Lem:tailbounds}. The approximation in the third line is from our design that all the $g_i$ are chosen such that $g_i\approx N^{1-\alpha}$ and $M=N^{\mu}.$
-\end{proof}
+%\begin{proof}
+%The above expression can be derived by observing that a bin is not classified as zero-ton if $\frac{Z[1]}{M}\geq\frac{1-2\eta}{2}$. Let us denote the probability of this event as $p_{z1}$ which can be bounded as:
+%\begin{align*}
+%p_{z1}=&\mbb{P}\left[\frac{Z[1]}{M}\geq\frac{1-2\eta}{2}\right]\\
+%&\leq e^{-\frac{Mg_i(1-2\eta)^2}{8g_i^{2}}} \approx e^{-\frac{N^{\mu+\alpha-1}(1-2\eta)^2}{8}}
+%\end{align*} 
+%where the second bound is due to Eqn. \eqref{Eqn:BinCombination} and Lemma.~\ref{Lem:tailbounds}. The approximation in the third line is from our design that all the $g_i$ are chosen such that $g_i\approx N^{1-\alpha}$ and $M=N^{\mu}.$
+%\end{proof}
 
 \begin{lemma}[singleton]
 \label{Lem:SingletonClassif}
@@ -153,7 +153,7 @@ Given that the bin $(i,j)$ is a multi-ton, the classification error can be bound
 \end{lemma}
 
 \begin{proof}
-	The proof for Lemmas ~\ref{Lem:SingletonClassif},~\ref{Lem:DoubletonClassif}, ~\ref{Lem:MultitonClassif} follows similar lines as in Lemma~\ref{Lem:ZerotonClassif}. For a detailed proof refer to our longer version \cite{nagaraj2017pattern} (Lemmas 9,10,11).
+	The proof for Lemmas  ~\ref{Lem:ZerotonClassif} ~\ref{Lem:SingletonClassif},~\ref{Lem:DoubletonClassif}, ~\ref{Lem:MultitonClassif} follows similar lines as in Lemma~\ref{Lem:ZerotonClassif}. For a detailed proof refer to our longer version \cite{janakiraman2017sub} (Lemmas 9,10,11).
 \end{proof}
 %-------------------------------------------------------------------------------
 %\begin{proof}
@@ -246,7 +246,7 @@ For some constant $c_1 \in \mathbb{R}$ and the choice of $B=4c_1^2\log 5N$, the 
 \end{lemma}
 
 \begin{proof}
-	The proof for Lemmas ~\ref{Lem:Pos1} and ~\ref{Lem:Pos2} can be found in our longer version\cite{nagaraj2017pattern} (Lemma 14,15).
+	The proof for Lemmas ~\ref{Lem:Pos1} and ~\ref{Lem:Pos2} can be found in our longer version\cite{janakiraman2017sub} (Lemma 14,15).
 \end{proof}
 %---------------------------------------------------------------------------------
 %\begin{proof}
