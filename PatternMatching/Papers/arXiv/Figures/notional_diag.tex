@@ -1,0 +1,36 @@
+\begin{tikzpicture}
+
+\def\nodewidth{1in}
+\def\fsize{\Huge}
+\tikzstyle{block} = [rectangle, draw, thick,opacity=0.7,line width =2, minimum size=\nodewidth]
+\tikzstyle{opnode} = [rectangle, draw, thick,opacity=0.7,line width=1, minimum size=0.2in]
+
+\node[block] (r1) at (-8.7,3){\fsize \bf Folding};
+\node[block] (r2) at (-1.75,3) {\fsize \bf $f_i$-FFT};
+\node[opnode] (r3) at (3,3) {\fsize \bf $\odot$};
+\node[block,align=center] (r4) at (8.6,3) {\fsize \bf \begin{tabular}{l}
+$f_i$-IDFT \\ 
+~~ \& \\ 
+binning
+\end{tabular}};
+\node[block] (r5) at (15.1,3) {\fsize \bf Decoder};
+\node[block] (r6) at (-2,-1.5) {\fsize \bf Sketch of $\xv$};
+
+
+\draw[<-, thick, line width=2] (r1.west)--node[midway, above]{\fsize $\yv'=\yv^*[-n]$}
+node[midway, below]{\fsize $\yv'\in\mathbb{R}^N$}+(-6,0);
+\draw[->, thick, line width=2] (r1.east)--node[midway, above]{\fsize $\yv'_{i,j}\in\mathbb{R}^{f_i}$}(r2.west);
+\draw[->, thick, line width=2] (r2.east)--node[midway, above]{\fsize $\Yv'[\mc{S}]$}(r3.west);
+\draw[->, thick, line width=2] (r3.east)--node[midway, above]{\fsize $\Rv_{i,j}$}
+node[midway,below]{\fsize \bf $=\Rv[\mathcal{S}_{i,j}]$}(r4.west);
+\draw[->, thick, line width=2] (r4.east)--node[midway, above]{\fsize $\zv_{i,j}$}(r5.west);
+\draw[->, thick, line width=2] (r5.east)--node[midway, above]{\fsize $\{\tau_1, \tau_2 \cdots, \tau_L \}$}+(8,0);
+\draw[->, thick, line width=2] let \p1=(r6),\p2= (r3) in (r6.east)--(\x2,\y1)--node[midway, right]{\fsize \bf $X[\mathcal{S}]$}  (r3.south);
+
+
+
+\draw [dashed, line width =2, color=blue] (-11,6) rectangle (0,0.5);
+\node[color= red] at (-6,6.5) {\fsize \bf  Sketch of $\yv$ computation};
+\draw [dashed, line width =2, color=blue]  (6.1,6.2) rectangle (17.6,0);
+\node [color = red] at (12,6.9) {\fsize \bf RSIDFT};
+\end{tikzpicture}

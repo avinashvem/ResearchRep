@@ -3,7 +3,7 @@
 In this section, given the input string $\xv$ and the query string $\yv$, we describe our algorithm that finds the matching positions $\mathcal{T}\coleq \{\tau_1, \tau_2, \cdots \tau_L\}$ with sample and time complexities that are sub-linear in $N$. The main idea exploits the fact that the correlation vector $\rv$ is sparse (upto some noise terms) with dominant peaks at $L$ matching positions denoted by $\mc{T}$ and noise components at $N-L$ positions where the strings do not match.
 \begin{figure*}[t!]
   \centering
-	 	\resizebox{0.95\textwidth}{!}{\input{./Figures/notional_diag.tex}}	
+	 	\resizebox{0.95\textwidth}{!}{\input{notional_diag.tex}}	
 	\caption{Schematic of the proposed scheme using sparse Fourier transform computation.}\label{fig:notional}
 \end{figure*}
 
@@ -35,7 +35,8 @@ Consider the RSIDFT framework shown in Fig.~\ref{fig:rsidft}. Let $ \Rv =\Xv \od
 	   	 	
 \begin{figure}[h!]
 	\begin{center}
-	 	\resizebox{0.45\textwidth}{!}{\input{./Figures/FFAST_Robust.tex}}
+%	 	\resizebox{0.9\textwidth}{!}{\input{./Figures/FFAST_robust1}}
+	 	\includegraphics[scale=0.9]{FFAST_robust1}
 	\end{center}	
 \caption{ RSIDFT Framework to compute inverse Fourier Transform of a signal $\Rv$ that is sparse in time domain. }\label{fig:rsidft}
 \end{figure}
@@ -82,7 +83,7 @@ where we refer to $\mb{W}_{i,k}$ as the sensing matrix at bin $(i,k)$ and is def
 
 \begin{figure}[h!]
 	\begin{center}
-	 	\resizebox{0.40\textwidth}{!}{\input{./Figures/Factorgraph.tex}}	
+	 	\resizebox{0.70\textwidth}{!}{\input{Factorgraph.tex}}	
 	\end{center}	
 	\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $N=6$, $f_1=2, f_2=3$ (i.e., $d=2$) and $B=2$. The variable nodes (gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (white squares) represent the binned observation vector $\zv_{i,k}$. The figure illustrates the relationship between $\zv_{i,k}$ and $\rv$.}\label{fig:factorgraph}
 	\vspace{5 pt}
