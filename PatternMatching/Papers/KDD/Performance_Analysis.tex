@@ -1,13 +1,10 @@
 \section{Performance Analysis}
 \label{sec:analysis}
 \def\vgap{2pt}
-In this section, we will analyze the overall probability of error involved in finding the correct matching positions. This can be done by analyzing the following three error events independently and then using a union bound to bound the total probability of error.
-
-\begin{itemize}
-	\item $\mathcal{E}_1${-\it Bin Classification}: Event that a bin is wrongly classified.
-	\item $\mathcal{E}_2${-\it Position Identification}: Given a bin is correctly identified as a singleton, event that the position of singleton is identified incorrectly.
-	\item $\mathcal{E}_3${-\it Peeling Process}: Given the classification of all the bins and the position identification of singletons in each iteration is accurate, event that the peeling process fails to recover the $L$ significant correlation coefficients.
-\end{itemize}
+In this section, we will analyze the overall probability of error involved in finding the correct matching positions. This can be done by analyzing the following three error events independently and then using a union bound to bound the total probability of error.\\
+ $\mathcal{E}_1${-\it Bin Classification}: Event that a bin is wrongly classified.\\
+$\mathcal{E}_2${-\it Position Identification}: Given a bin is correctly identified as a singleton, event that the position of singleton is identified incorrectly.\\
+$\mathcal{E}_3${-\it Peeling Process}: Given the classification of all the bins and the position identification of singletons in each iteration is accurate, event that the peeling process fails to recover the $L$ significant correlation coefficients.
 
 \subsection{\bf Bin Classification}
 \begin{lemma}
@@ -66,11 +63,12 @@ For the exact matching case, choose $F^{d-1}=\delta N^\alpha$ where $\delta$ is 
 \end{lemma}
 \begin{proof}
 We borrow this result from Pawar and Ramchandran's \cite{pawar2014robust}. Although our RSDIFT framework and their robust-FFAST scheme have three main differences:
-\begin{itemize}
-\item We are computing smaller IDFT's to recover a sparse bigger IDFT whereas in \cite{pawar2014robust} the same is true for DFT instead of IDFT.
-\item Our problem model is such that the sparse components of the signal space has only positive amplitude and thus our bin processing part (bin classification and position identification) is different when compared to \cite{pawar2014robust}.
-\item The sparsity of the signal $L$ to be recovered is exactly known in the case of \cite{pawar2014robust} whereas we have no information  about $L$ not even the order with which the quantity scales in $N$.
-\end{itemize}
+
+(i) We are computing smaller IDFT's to recover a sparse bigger IDFT whereas in \cite{pawar2014robust} the same is true for DFT instead of IDFT.
+
+(ii) Our problem model is such that the sparse components of the signal space has only positive amplitude and thus our bin processing part (bin classification and position identification) is different when compared to \cite{pawar2014robust}.
+
+(iii) The sparsity of the signal $L$ to be recovered is exactly known in the case of \cite{pawar2014robust} whereas we have no information  about $L$ not even the order with which the quantity scales in $N$.
 
 Irrespective of these differences, the Tanner graph representation of the framework and the peeling part of the decoder are identical to that of the robust-FFAST scheme. And thus the limit of the {\it oracle based peeling decoder} for our scheme is identical to that in the robust-FFAST scheme \cite{pawar2014robust}.  With respect to the third difference, in robust-FFAST scheme the authors choose $F^{d-1}=\delta k$ where $k$ is the sparsity of the signal (which is assumed to be known) and show the first assertion of the lemma. They also showed that upto a constant fraction $(1-\varepsilon)$ of $k$-variables node can be recovered with probability of failure that decays exponentially in $N$. In our case, since $L=o(N^{\alpha})$, this result translates to recovering all the $L$ non-zero variable nodes with an exponentially decaying failure  probability.
 \end{proof}

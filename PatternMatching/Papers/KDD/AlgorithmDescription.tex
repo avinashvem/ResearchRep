@@ -120,7 +120,7 @@ where $\dagger$ denotes the conjugate transpose. The value of the variable node 
 {\it Exact Matching}: In the case of exact matching, we remove the decoded variable node's contribution from all the bin nodes it is connected to.\\
 {\it Approximate Matching}: In this case, similar to the approach in \cite{lee2015saffron},  we remove the decoded variable node's contribution only from bins that are originally a singleton or a double-ton. We do not alter the bins which are classified to be multi-tons with degree more than two.
 
-{\it Note:} The differences in peeling implementation for exact and approximate matching cases is because unlike exact matching the approximate matching may result in non-zero error ($e_1$) between the actual correlation value $r[k]$ and the estimate $\hat{r}[\hat{k}]$, i.e. $e_1 = |r[k]- \hat{r}[\hat{k}]|$ with $0 \leq e_1 \leq \eta M$. This may lead to error propagation if we use the same decoding scheme as in exact matching. Hence to overcome this problem we impose a constraint on the type of bin nodes participating in the peeling process.
+%{\it Note:} The differences in peeling implementation for exact and approximate matching cases is because unlike exact matching the approximate matching may result in non-zero error ($e_1$) between the actual correlation value $r[k]$ and the estimate $\hat{r}[\hat{k}]$, i.e. $e_1 = |r[k]- \hat{r}[\hat{k}]|$ with $0 \leq e_1 \leq \eta M$. This may lead to error propagation if we use the same decoding scheme as in exact matching. Hence to overcome this problem we impose a constraint on the type of bin nodes participating in the peeling process.
 	
 We present the overall recovery algorithm, which comprises of {\it bin classification, singleton decoding} and {\it peeling process}, in the Algorithm.\ref{Algo:decoder} pseudo-code. Note that $\msc{N}(k)$ denote the neighborhood for variable node $k$  i.e., the set of bins connected to $k^{\text{th}}$ variable node.
 
@@ -196,8 +196,8 @@ Given a database(or string) of length $N$, we divide the database into $G=N^\gam
 	\item Firstly, this enables parallel computing and hence can be distributed across different workstations.
 	\item Improves the sample and computational complexity by a constant factor.
 	\item Sketch of the database needs to be computed only for a smaller block length and hence requires computation of only a shorter $\tilde{N}$ point FFT.
-	%\item Enables localized searches on only a few blocks if we have prior knowledge about where the query could be. Specifically, if we exactly know the number of matching locations, and having encountered the required number of positions from the already run processes (processed blocks), we can terminate rest of the processes.   
-	\item Helps overcome implementation issues with memory and precision as the scale of the problem is reduced. 
+	\item Enables localized searches on only a few blocks if we have prior knowledge about where the query could be. %Specifically, if we exactly know the number of matching locations, and having encountered the required number of positions from the already run processes (processed blocks), we can terminate rest of the processes.   
+	\item Helps overcome implementation issues with memory and precision as scale of the problem is reduced. 
 \end{itemize}
 \subsection{Sketches of $\Xv$ and $\Yv$}
 \label{subsec:skteches}		
