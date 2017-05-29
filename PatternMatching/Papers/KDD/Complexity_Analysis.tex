@@ -16,7 +16,7 @@ As described in Eq.~\ref{eqn:Rxy_fourier}, the computation of $\rv$ involves thr
 \textit{Operation - \RNum{1}}:
 	Since we assume that the sketch of database $\xv$, $\mathcal{F}_{N}\{\xv\}$, is pre-computed, we do not include this in computational complexity.
 
-\tetit{Operation - \RNum{2}:}
+\textit{Operation - \RNum{2}:}
 	As described in Sec.~\ref{subsec:skteches}, in each branch $(i,j)$, we use a folding based technique to compute the sketch of $\yv$, $\mathcal{F}_{N}\{\yv'\}$ at points in the set $\mc{S}_{i,j}$. The folding technique involves two steps: folding and adding (aliasing) which has a complexity of $O(M)$ computations , and computing $f_i$-point DFTs that takes $O(N^\alpha \log N^{\alpha})$ computations. So, for a total of $dB$ branches the number of computations in this step is given by
 	
 	\begin{align*}
@@ -35,8 +35,6 @@ As described in Eq.~\ref{eqn:Rxy_fourier}, the computation of $\rv$ involves thr
 	\\
 	&=  O(\max(N^{1-\mu}\log^2 N ,N^{\mu+\lambda}\log N)).
 	\end{align*}
-
-\end{enumerate}
 
 Thus, the total number of computations, $C = \max\{C_{\RNum{2}},C_{\RNum{3}}\} $, is given by
   \begin{align*}
