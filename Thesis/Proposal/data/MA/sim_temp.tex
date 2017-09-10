@@ -1,0 +1,150 @@
+\begin{tikzpicture}
+\def\fsize{\large}
+\pgfplotsset{every y tick label/.append style={font=\fsize}}
+\pgfplotsset{every x tick label/.append style={font=\fsize}}
+
+\begin{axis}[%
+width=5.2in,
+height=5in,
+scale only axis,
+xmin=25,
+xmax=300,
+xtick = {50,100,...,300},
+xlabel={\fsize{Number of active users $\Ka$}},
+ylabel={\fsize{Required $E_b\backslash N_0$ in dB}},
+xmajorgrids,
+xminorgrids,
+ymin=-1,
+ymax=25,
+ytick = {-5,0,...,30},
+yminorticks=true,
+ymajorgrids,
+yminorgrids,
+line width=3.0pt,
+legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell align=left,font=\fsize}
+]
+
+\node[] at (axis cs: 100,7.5696) {\LARGE $X$};
+
+\addplot [color=black,solid,dashed]
+  table[row sep=crcr]{
+  25     0.25\\
+ 50     0.3\\
+ 75     0.35\\
+100     0.4\\
+125     0.45\\
+150     0.5\\
+175    0.55\\
+200  0.60\\
+225 0.95\\
+250 1.25\\
+275 1.55\\
+300 1.8\\
+};
+\addlegendentry{Random Coding \cite{polyanskiy2017perspective} };
+
+\addplot [color=red,solid,mark=diamond,mark size=4.0]
+  table[row sep=crcr]{
+  25   3.9849  \\
+  50   5.6396\\
+  75   6.2855  \\
+100  6.7952 \\
+125  7.5262 \\
+150  8.3122 \\
+175  9.1418 \\
+200  10.103 \\
+225  11.062 \\
+250  12.279 \\
+275 13.296 \\
+300 14.6648 \\
+};
+\addlegendentry{$T=2$};
+
+\addplot [color=blue,solid,mark=square,mark size=3.0]
+  table[row sep=crcr]{
+ 25 3.18\\
+ 50 3.52\\
+ 75 4.64\\
+100 5.61\\
+125 5.85\\
+150 6.46\\
+175 6.72\\
+200 7.41\\
+ 225 7.6772\\
+ 250 8.3217\\
+ 275 8.8428\\
+ 300 9.3520 \\
+};
+\addlegendentry{$T=4$};
+
+\addplot [color=blue,dotted]
+  table[row sep=crcr]{
+ 25 2.8815\\
+ 50 3.2015\\
+ 75 4.3960\\
+100 5.30\\
+125 5.5533\\
+150 6.1838\\
+175 6.4562\\
+200 7.1900\\
+ 225 7.4664\\
+ 250 8.1394\\
+ 275 8.6810\\
+ 300 9.2079 \\
+};
+\addlegendentry{$T=4$,ML-CS};
+
+\addplot [color=green,mark=triangle,mark size=2.0]
+  table[row sep=crcr]{
+ 25 3.7732\\
+ 50 4.25\\
+ 75 4.8287\\
+100 5.7503\\
+125 6.5344\\
+150 7.0391\\
+175 7.2288\\
+200 7.7171\\
+ 225 7.9514 \\
+250 8.3968\\
+275 8.8358\\
+300  9.6524\\
+};
+\addlegendentry{$T=5$};
+
+\addplot [color=orange,solid,mark=triangle,mark size=3.0]
+table[row sep=crcr]{
+25 5.9675\\
+50 7.33\\
+75 8.3433\\
+100 9.1555\\
+125 9.8708\\
+150 10.679\\
+175 11.275\\
+200 12.052 \\
+225 12.61860 \\
+250 13.3702 \\
+275 13.934\\
+300 14.816\\
+ };
+\addlegendentry{$T=1$}; %After Yury's correction
+
+
+
+\addplot [color=blue,dashed]
+  table[row sep=crcr]{
+  25   7.50 \\
+   35   7.30 \\
+  50   8.75 \\
+  100 11.7 \\
+  150 14.50\\
+%175  6.7814 \\
+200  18\\
+%225  7.6838 \\
+250  21\\
+%275  8.4960 \\
+300 23\\
+};
+\addlegendentry{OP-Exact\cite{ordentlich2017low}};
+
+\end{axis}
+\end{tikzpicture}

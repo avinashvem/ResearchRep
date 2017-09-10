@@ -1,0 +1,111 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  New template code for TAMU Theses and Dissertations starting Fall 2012.  
+%  For more info about this template or the 
+%  TAMU LaTeX User's Group, see http://www.howdy.me/.
+%
+%  Author: Wendy Lynn Turner 
+%	 Version 1.7
+%  Last updated 3/24/2014
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%       TABLE OF CONTENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% single-space sections in Table of Contents  - commented in version 1.7
+%\renewcommand{\cftsecafterpnum}{\vskip0.5\baselineskip}
+%\renewcommand{\cftsubsecafterpnum}{\vskip0.5\baselineskip}
+%\renewcommand{\cftsubsubsecafterpnum}{\vskip0.5\baselineskip}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\phantomsection
+\addcontentsline{toc}{chapter}{TABLE OF CONTENTS}  
+
+\begin{singlespace}
+\renewcommand\contentsname{\normalfont} {\centerline{TABLE OF CONTENTS}}
+
+%\setcounter{tocdepth}{4} % This puts \subsubsection[]{×} in your List of Tables.  The default is 3.
+
+
+%%%%%%%%%%%%%  Adds Page above the page number in TOC
+\setlength{\cftaftertoctitleskip}{1em}
+\renewcommand{\cftaftertoctitle}{%
+\hfill{\normalfont {Page}\par}}
+
+
+
+\tableofcontents
+
+\end{singlespace}
+
+\pagebreak{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                           LIST OF FIGURES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\phantomsection
+\addcontentsline{toc}{chapter}{LIST OF FIGURES}  
+
+\renewcommand{\cftloftitlefont}{\center\normalfont\MakeUppercase}
+
+\setlength{\cftbeforeloftitleskip}{-12pt} %% Positions the LOF title vertically to match the chapter titles
+\renewcommand{\cftafterloftitleskip}{12pt}
+
+
+\renewcommand{\cftafterloftitle}{%
+\\[4em]\mbox{}\hspace{2pt}FIGURE\hfill{\normalfont Page}\vskip\baselineskip}
+
+\begingroup
+
+
+\begin{center}
+\begin{singlespace}
+%% These values make the lof table entries appear double spaced between.
+\setlength{\cftbeforechapskip}{0.4cm}
+\setlength{\cftbeforesecskip}{0.30cm}
+\setlength{\cftbeforesubsecskip}{0.30cm}
+\setlength{\cftbeforefigskip}{0.4cm}
+\setlength{\cftbeforetabskip}{0.4cm} 
+
+\listoffigures
+
+\end{singlespace}
+\end{center}
+
+\pagebreak{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                           lIST OF TABLES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\phantomsection
+\addcontentsline{toc}{chapter}{LIST OF TABLES}  
+
+\renewcommand{\cftlottitlefont}{\center\normalfont\MakeUppercase}
+
+\setlength{\cftbeforelottitleskip}{-12pt} %% Positions the LOT title vertically to match the chapter titles
+
+\renewcommand{\cftafterlottitleskip}{12pt}
+
+
+\renewcommand{\cftafterlottitle}{%
+\\[4em]\mbox{}\hspace{4pt}TABLE\hfill{\normalfont Page}\vskip\baselineskip}
+
+\begin{center}
+\begin{singlespace}
+
+%% These values make the lot table entries appear double spaced between.
+\setlength{\cftbeforechapskip}{0.4cm}
+\setlength{\cftbeforesecskip}{0.30cm}
+\setlength{\cftbeforesubsecskip}{0.30cm}
+\setlength{\cftbeforefigskip}{0.4cm}
+\setlength{\cftbeforetabskip}{0.4cm}
+
+\listoftables 
+
+\end{singlespace}
+\end{center}
+\endgroup
+\pagebreak{}  % Need this for the pagenumbering to be correct. 

@@ -1,0 +1,173 @@
+% This file was created by matlab2tikz v0.4.7 running on MATLAB 7.14.
+% Copyright (c) 2008--2014, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% Minimal pgfplots version: 1.3
+% 
+% The latest updates can be retrieved from
+%   http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
+% where you can also make suggestions and rate matlab2tikz.
+% 
+\begin{tikzpicture}
+\def\fsize{\Large}
+
+\begin{axis}[%
+width=7.2971708223972in,
+height=4.87099759405074in,
+xmin=0.24,
+xmax=0.72,
+xmajorgrids,
+xtick={0.16,0.20,...,0.8},
+xlabel={\fsize $\alpha=\frac{M•}{\Ka}$},
+ymode=log,
+ymin=1e-07,
+ymax=1,
+yminorticks=false,
+ymajorgrids,
+ylabel={\fsize User Error Rate},
+yminorgrids,
+line width=1.5pt,
+mark size=3.5pt,
+legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align=left,font=\normalsize}
+]
+
+\node[] at (axis cs: 0.267,5e-4) {\fsize $T=4$};
+\node[] at (axis cs: 0.28,1e-6) {$\alpha^*_{\text{DE}}$};
+\node[] at (axis cs: 0.36,1e-6) {$500$};
+\node[] at (axis cs: 0.335,4e-7) {$1000$};
+\node[right] at (axis cs: 0.282,2e-7) {$3000$};
+
+
+\node[] at (axis cs: 0.59,1e-6) {$\alpha^*_{\text{DE}}$};
+\node[] at (axis cs: 0.575,5e-4) {\fsize $T=2$};
+\node[] at (axis cs: 0.705,2.5e-4) {$500$};
+\node[] at (axis cs: 0.695,4e-5) {$1000$};
+\node[right] at (axis cs: 0.66,5e-6) {$3000$};
+\node[right] at (axis cs: 0.625,6e-7) {$10000$};
+
+\addplot [color=blue,solid,mark=triangle]
+  table[row sep=crcr]{
+0.58	0.446855769230769\\
+0.6	0.281691729323308\\
+0.62	0.103645655877342\\
+0.64	0.0225469613259669\\
+0.66	0.00281948757763975\\
+0.68	0.00057567726737338\\
+0.7	0.000146973130462933\\
+0.72	0.00015425828775533\\
+%0.74	0.000138459944035651\\
+};
+%\addlegendentry{$(T,\lambda,\Ka)=(2,0,500)$};
+%\addlegendentry{$\Ka=500$};
+
+\addplot [color=red,solid,mark=asterisk,mark options=solid]
+  table[row sep=crcr]{
+0.58	0.445524509803922\\
+0.6	0.233573333333333\\
+0.62	0.0437690582959641\\
+0.64	0.00172267248545303\\
+0.66	7.60343481654957e-05\\
+0.68	4.21380449980933e-05\\
+%0.7	3.98492524403806e-05\\
+%0.72	3.09173107773079e-05\\
+%0.74	2.93069123570536e-05\\
+};
+%\addlegendentry{$(T,\lambda,\Ka)=(2,0,1000)$};
+%\addlegendentry{$\Ka=10^3$};
+
+\addplot [color=black,solid,mark=circle,mark options=solid]
+  table[row sep=crcr]{
+0.58	0.45552736318408\\
+0.6	0.200620588235294\\
+0.62	0.00219567231339333\\
+0.64	5.59111903411393e-06\\
+0.66	5.48796389541606e-06\\
+%0.68	4.02e-06\\
+};
+%\addlegendentry{$(T,\lambda,\Ka)=(2,0,3000)$};\\
+%\addlegendentry{$\Ka=3\times 10^3)$};
+
+\addplot [color=green,solid,mark=square,mark options=solid]
+  table[row sep=crcr]{
+0.58	    0.2324    \\
+0.60     0.1444\\
+0.61	    0.0022\\
+0.615	1.009e-4\\
+0.62		6.12e-7\\
+};
+%\addlegendentry{$(T,\lambda,\Ka)=(2,0,10000)$};
+%\addlegendentry{$\Ka=10^4$};
+
+
+\addplot [color=black,dotted]
+  table[row sep=crcr]{
+0.5975	5.00e-2 \\
+0.5975	1.00e-2 \\
+0.5975	5.00e-3 \\
+0.5975	1.00e-3 \\
+0.5975	5.00e-4 \\
+0.5975	1.00e-4 \\
+0.5975	5.00e-5 \\
+0.5975	1.00e-5 \\
+0.5975	5.00e-6 \\
+0.5975	1.00e-6 \\
+0.5975	1.00e-7 \\
+};
+%\addlegendentry{$\alpha_{\text{DE}}$ for $(T,\lambda)=(2,0)$};
+
+
+
+%%%%%%%%%-----------------------%----------------------------------
+\addplot [color=blue,solid,mark=diamond]
+  table[row sep=crcr]{
+0.29   0.522000000000000\\
+0.31  0.063631578947368\\
+0.33  0.000242494494030\\
+0.34  5.6200e-6\\
+0.35  0.000000800000000\\
+   };
+%\addlegendentry{$(T,\lambda,\Ka)=(4,0,500)$};
+%\addlegendentry{$\Ka=500$};
+
+\addplot [color=red,solid,mark=asterisk,mark options=solid]
+  table[row sep=crcr]{
+0.2900    0.3920\\
+0.3100    0.0039\\
+0.3200    3.295189e-5\\
+0.3250    1.000e-7\\
+    };
+%\addlegendentry{$(T,\lambda,\Ka)=(4,0,1000)$};
+%\addlegendentry{$\Ka=10^3$};
+
+\addplot [color=black,solid,mark=o,mark options=solid]
+  table[row sep=crcr]{
+0.2900    0.3198\\
+0.30        2.5202e-2\\
+0.305      3.88695e-4\\
+0.307      5.4376e-5\\
+%0.309      2.70211e-5\\
+0.310     1.370211e-5\\
+0.312     1.02e-8\\
+    };
+%\addlegendentry{$(T,\lambda,\Ka)=(4,0,3000)$};
+%\addlegendentry{$\Ka=3\times 10^3$};
+
+
+\addplot [color=black,dotted]
+  table[row sep=crcr]{
+0.2949	5.00e-2 \\
+0.2949	1.00e-2 \\
+0.2949	5.00e-3 \\
+0.2949	1.00e-3 \\
+0.2949	5.00e-4 \\
+0.2949	1.00e-4 \\
+0.2949	5.00e-5 \\
+0.2949	1.00e-5 \\
+0.2949	5.00e-6 \\
+0.2949	1.00e-6 \\
+0.2949	5.00e-7 \\
+0.2949	1.00e-7 \\
+};
+%\addlegendentry{$\alpha_{\text{DE}}$ for $(T,\lambda)=(4,0)$};
+
+\end{axis}
+\end{tikzpicture}

@@ -1,0 +1,36 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  New template code for TAMU Theses and Dissertations starting Fall 2016.  
+%
+%
+%  Author: Sean Zachary Roberson
+%  Version 3.17.06
+%  Last Updated: 6/15/2017
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                           ABSTRACT 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter*{ABSTRACT}
+\addcontentsline{toc}{chapter}{ABSTRACT} % Needs to be set to part, so the TOC doesnt add 'CHAPTER ' prefix in the TOC.
+
+\pagestyle{plain} % No headers, just page numbers
+\pagenumbering{roman} % Roman numerals
+\setcounter{page}{2}
+
+\indent The broad theme of this work is the application of iterative algorithms, that closely resemble peeling decoder in the overall philosophy, to problems that are enormous in scale but whose actual parameters of interest are sparse in nature. Specifically this thesis focuses on the massive multiple access, compressed sensing and group testing problems. In all of these problems the total number of parameters are very large, where the parameters for the respective problems correspond to the number of users present in the system, the length of the signal to be compressed and the number of items that are to be tested for defects. However, the number of actual parameters of interest are fairly small in comparison, where the parameters of interest in the respective problems correspond to the number of users that are active at any given time, the number of dimensions with significant signal power and the number of defective items present. The proposed design schemes attempt to explore this sparse nature of the parameters of interest. The main components common to all the proposed schemes are: (i) A variant of a sparse bipartite Tanner graph is used as the basis for designing the interaction strategy between the parameters of interest (ii) An iterative algorithm similar to peeling decoder is used for recovering those parameters of interest. Both these tools are popular in channel coding literature \cite{richardson2008modern} but are not as widely used in the respective areas of study and this thesis is a step in that direction to bridge the gap.
+
+The contributions of this thesis can be categorized into four parts:
+\begin{enumerate}
+\item The first part considers the unsourced version of the massive multiple access problem, which will be referred to as unsourced MAC. In the unsourced MAC problem setup, a large number of devices are present in the system where each device has a brief message to communicate to a central receiver sporadically. Distinguishing from the traditional MAC is the fact that the receiver is interested only in the set of messages transmitted and disinterested in the source of the respective messages thus the term \textit{unsourced}. Due to the sporadic nature of the data to be transmitted, the number of active devices at any particular time is fairly small. The main components of the proposed coding scheme for the unsourced MAC are: (i) The transmitted message consists of two parts. The first part chooses an interleaver for a low density parity check (LDPC) type code. For encoding the first part, a code that is designed to be decoded efficiently by a compressed sensing type decoder is chosen (ii) The second part of the message is encoded by the LDPC code for which the interleaver is chosen by the first part of the message. A joint message passing type decoder designed for the T-user binary input real adder channel is used to decode the interfering LDPC codewords at each slot. (iii) Each user repeats the transmitted codeword in multiple time slots where the repetition pattern is determined solely by the message being encoded. Thus this scheme is amenable to a successive interference cancellation decoder where a codeword decoded at any one slot can be removed  (\textit{peeling-off}) from all other slots it was transmitted in. This coding scheme improves upon the practical coding scheme introduced by Ordentlich and Polyanskiy in \cite{ordentlich2017low} which is the best when compared to the other multiple access solutions available in literature such as treat interference as noise (TIN) and slotted-ALOHA. The proposed coding scheme is only $\approx 6$dB away from the achievable limit based on random Gaussian coding and the ideal joint typical decoder which has exponential complexity and is impractical.
+The unsourced MAC is followed by the consideration of uncoordinated MAC problem wherein no power constraints are imposed on the individual users. In the non-asymptotic case i.e. when the number of users is fixed and finite, an analytic expression is found to compute the error performance of the successive interference cancellation scheme as a function of the random access strategy employed by each user. The analytic expression proposed is verified to be accurate through simulations. This provides a possible solution path, using gradient ascent approach, to derive a random access strategy that is optimal in terms of the total throughput achievable.
+
+\item In the second part, the design of construction-D lattices for the interference channel is considered. The proposed construction scheme uses spatially-coupled low-density parity check (LDPC) codes \cite{felstrom1999time,kudekar2011threshold}. The fact that these codes achieve the channel capacity on the class of binary memory-less symmetric channels is leveraged to achieve the Poltyrev limit for lattices. The lattice codes derived from this class of lattices are shown to provide excellent performance for the symmetric Gaussian interference channel. The simulation results demonstrate that the proposed lattice codes under the low-complexity multistage belief propagation decoder can perform within 1.02dB (discounting the 1.53dB shaping loss) of the Shannon limit for the symmetric interference channel 
+
+\item The third part considers the design of a family of sensing matrices for the problem of support recovery in compressed sensing. In the proposed design scheme the sensing matrix when represented using graph structure has a close resemblance to the left and right regular LDPC codes. An iterative algorithm similar to the peeling decoder is employed for the recovery of the sparse signal. The proposed design scheme enables to achieve the number of measurements and decoding complexity that match the best possible lower bounds upto a constant.% that are order optimal in the number of measurements and decoding complexity.
+  
+
+\item In the fourth part testing schemes for the non-adaptive group testing problem are considered. Similar to the compressed sensing, the testing scheme resembles left and right regular bipartite graph in structure and the algorithm for recovering the defective items is similar to a peeling decoder. With the proposed testing scheme the number of tests required is order optimal and more importantly the recovery algorithm has only a sub-linear time complexity.
+\end{enumerate} 
+\pagebreak{}

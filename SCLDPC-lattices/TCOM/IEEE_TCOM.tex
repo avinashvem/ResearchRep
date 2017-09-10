@@ -1,30 +1,119 @@
-\documentclass[journal,twocolumn]{IEEEtran}
-
+% Also note that the "draftcls" or "draftclsnofoot", not "draft", option should be used if it is desired that the figures are to be displayed in draft mode.
+\documentclass[journal,draftcls,onecolumn,12pt,twoside]{IEEEtran}
+\normalsize
 \input{../../bib/Preamble.tex}
-\input{../SCLDPC.def}
+\input{SCLDPC.def}
 
-\parindent=20pt
-\parskip=8pt
-\def \figures_path{../figures}
+
+% *** CITATION PACKAGES ***
+%
+%\usepackage{cite}
+% cite.sty was written by Donald Arseneau
+% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
+% \cite{} output to follow that of IEEE. Loading the cite package will
+% result in citation numbers being automatically sorted and properly
+% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
+% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
+% \cite will automatically add leading space, if needed. Use cite.sty's
+% noadjust option (cite.sty V3.8 and later) if you want to turn this off.
+% cite.sty is already installed on most LaTeX systems. Be sure and use
+% version 4.0 (2003-05-27) and later if using hyperref.sty. cite.sty does
+% not currently provide for hyperlinked citations.
+% The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
+% The documentation is contained in the cite.sty file itself.
+
+
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
 
 \begin{document}
-\title{Spatially-Coupled Low-Density Parity-Check Lattices with Applications}
-\author{\S Avinash Vem,\dag Yu-Chih Huang,\S Krishna R. Narayanan, Henry D. Pfister\\
-Department of Electrical and Computer Engineering \\
-Texas A\&M University\\
-{\tt\small {\{vemavinash@gmail.com, jerry.yc.huang@gmail.com, krn@ece.tamu.edu, hpfister@tamu.edu\}} }}
+%
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\title{Spatially-Coupled Low Density Parity Check Lattices with Applications}
 
+
+% author names and IEEE memberships
+% note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
+% a structure at a ~ so this keeps an author's name from being broken across
+% two lines.
+% use \thanks{} to gain access to the first footnote area
+% a separate \thanks must be used for each paragraph as LaTeX2e's \thanks
+% was not built to handle multiple paragraphs
+%
+
+\author{Avinash Vem, Krishna R. Narayanan,Yu-Chih Huang and Henry D. Pfister% <-this % stops a space
+\thanks{The authors A. Vem and K. R. Narayanan are with the Department of Electrical and Computer Engineering,  Texas A\&M University. Their work was supported by the National Science Foundation under Grant CCF XXX}% <-this % stops a space
+\thanks{The author Y.-C. Huang is with the Department of Communication Engineering at National Taipei University.}
+\thanks{The author Henry D. Pfister is with the Department of Electrical and Computer Engineering at Duke University.}
+}
+
+% note the % following the last \IEEEmembership and also \thanks - 
+% these prevent an unwanted space from occurring between the last author name
+% and the end of the author line. i.e., if you had this:
+% 
+% \author{....lastname \thanks{...} \thanks{...} }
+%                     ^------------^------------^----Do not want these spaces!
+%
+% a space would be appended to the last name and could cause every name on that
+% line to be shifted left slightly. This is one of those "LaTeX things". For
+% instance, "\textbf{A} \textbf{B}" will typeset as "A B" not "AB". To get
+% "AB" then you have to do: "\textbf{A}\textbf{B}"
+% \thanks is no different in this regard, so shield the last } of each \thanks
+% that ends a line with a % and do not let a space in before the next \thanks.
+% Spaces after \IEEEmembership other than the last one are OK (and needed) as
+% you are supposed to have spaces between the names. For what it is worth,
+% this is a minor point as most people would not even notice if the said evil
+% space somehow managed to creep in.
+
+
+
+% The paper headers
+\markboth{IEEE Transactions on Communications}%
+{Submitted paper}
+% The only time the second header will appear is for the odd numbered pages
+% after the title page when using the twoside option.
+% 
+% *** Note that you probably will NOT want to include the author's ***
+% *** name in the headers of peer review papers.                   ***
+% You can use \ifCLASSOPTIONpeerreview for conditional compilation here if
+% you desire.
+
+% If you want to put a publisher's ID mark on the page you can do it like
+% this:
+%\IEEEpubid{0000--0000/00\$00.00~\copyright~2007 IEEE}
+% Remember, if you use this you must call \IEEEpubidadjcol in the second
+% column for its text to clear the IEEEpubid mark.
+
+
+% make the title area
 \maketitle
 
 
 \begin{abstract}
-We propose a new class of lattices constructed using Construction-D where the underlying linear codes are nested binary spatially-coupled low-density parity-check codes (SC-LDPC) codes with uniform left and right degrees. By leveraging the results demonstrating the optimality of spatially-coupled codes for binary input memoryless channels and Forney {\em et al.}'s earlier results on the optimality of Construction-D, we show that the proposed lattices achieve the Poltyrev limit under multistage belief propagation decoding. Lattice codes constructed from these lattices are shown to provide excellent performance for the three user symmetric interference channel and bi-directional relay channel. They can also be naturally used in applications such as integer-forcing and compute-and-forward.
+We propose a new class of lattices constructed using Construction-D where the underlying linear codes are nested binary spatially-coupled low-density parity-check codes (SC-LDPC) codes with uniform left and right degrees. By leveraging recent results on the optimality of spatially-coupled codes for binary input memoryless channels and Forney {\em et al.}'s earlier results on the optimality of construction D, we show that the proposed lattices achieve the Poltyrev limit under multistage belief propagation decoding. Lattice codes constructed from these lattices are shown to provide excellent performance for the three user symmetric interference channel and bi-directional relay channel. They can also be naturally used in applications such as integer-forcing and compute-and-forward.
 \end{abstract}
+
+% IEEEtran.cls defaults to using nonbold math in the Abstract.
+% This preserves the distinction between vectors and scalars. However,
+% if the journal you are submitting to favors bold math in the abstract,
+% then you can use LaTeX's standard command \boldmath at the very start
+% of the abstract to achieve this. Many IEEE journals frown on math
+% in the abstract anyway.
+
+% Note that keywords are not normally used for peerreview papers.
+\begin{IEEEkeywords}
+Construction-D, Lattices
+\end{IEEEkeywords}
 
 \section{Introduction}
 Lattice codes obtained from nested lattices have been shown to be optimal coding solutions to several problems in information theory \cite{erez05}. In most of these cases, the underlying lattices are constructed using Construction-A and it has been shown that such lattices are simultaneously good for shaping (Roger's good) and for channel coding (Poltyrev good) \cite{erez05}. There are two important drawbacks in using optimal lattices constructed using Construction-A. On the theoretical side, the use of non-binary codes makes it difficult to prove the optimality of these lattices and lattice codes under practical decoding algorithms such as belief propagation (BP) decoding and so far, we are not aware of any results showing the optimality of Construction-A lattices under BP decoding. On the practical side, optimal lattices constructed from Construction-A typically require the underlying linear codes to work over large fields and hence, result in formidable decoding complexity, even with BP decoding.
 
-In this paper, we propose a class of lattices constructed using Construction-D \cite{BarnesSloane83} where the underlying linear codes are nested binary spatially-coupled low density parity check codes (SC-LDPC) codes with uniform left and right degrees. By using the result that regular SC-LDPC codes can universally achieve capacity under BP decoding for the class of binary memoryless symmetric (BMS) channels \cite{kudekaruniversal,kumar2013threshold} and by leveraging Forney {\em et al}'s result \cite{forney2000}, we show that the proposed lattices allow us to achieve the Poltyrev limit under multistage BP decoding. We refer to the proposed lattices as SC-LDPC lattices. Density evolution thresholds show that the proposed SC-LDPC lattices can 	approach the Poltyrev limit to within 0.2 dB under multistage BP decoding. Very recently, binary polar codes have been used in conjunction with Construction-D to obtain Poltyrev-good lattices in \cite{YanLingWu13}. The focus of this paper is on the use of SC-LDPC codes.
+In this paper, we propose a class of lattices constructed using Construction-D \cite{BarnesSloane83} where the underlying linear codes are nested binary spatially-coupled low density parity check codes (SC-LDPC) codes with uniform left and right degrees. By using the result that regular SC-LDPC codes can universally achieve capacity under BP decoding for the class of binary memoryless symmetric (BMS) channels  \cite{kudekaruniversal,kumar2013threshold} and by leveraging Forney {\em et al}'s result \cite{forney2000}, we show that the proposed lattices allow us to achieve the Poltyrev limit under multistage BP decoding. We refer to the proposed lattices as SC-LDPC lattices. Density evolution thresholds show that the proposed SC-LDPC lattices can approach the Poltyrev limit to within 0.2 dB under multistage BP decoding. Very recently, binary polar codes have been used in conjunction with Construction-D to obtain Poltyrev-good lattices in \cite{YanLingWu13}. The focus of this paper is on the use of SC-LDPC codes.
 
 We then construct lattice codes from this class of lattices and apply them to the symmetric interference channel \cite{jafar10}.  Recently, it has been pointed out in \cite{Estela13} that there is a natural connection between lattices generated by Construction-D (or Construction-D$^\prime$) and the interference alignment scheme in \cite{jafar10}. Thus, one can directly implement interference alignment by replacing the
 Barnes-Wall lattices in \cite{Estela13} by our proposed SC-LDPC lattices. Simulation results show that this replacement
@@ -38,9 +127,9 @@ A lattice $\Lmb$ is a discrete set of points in Euclidean space that form an add
 \begin{equation}
 \Lmb^{(n)} =\{\lmb\in\R^{n}:\lmb=\mathbf{M}\mbf{u},\mbf{u}\in \Z^{m}\}
 \end{equation}
-where $\mathbf{M}\in\R^{n \times m}$ is full-rank and is called the generator matrix of the lattice. Throughout this paper, whenever a lattice $\Lmb$ is used without the superscript, it is understood that the lattice is contained in the $n$-dimensional Euclidean space i.e., $\Lmb\subset \R^{n}$. For a given lattice $\Lmb$, we denote the \tit{quantizer} with respect to the lattice as $Q_{\Lmb}$,  \tit{modulo} operation with respect to the lattice as $\mod \Lmb$,  \tit{fundamental Voronoi region} as $\mc{V}_{\Lmb}$ and the \tit{fundamental volume} defined as the volume of any fundamental region as Vol$(\Lmb)$\cite{erez2004achieving}.
+where $\mathbf{M}\in\R^{n \times m}$ is full-rank and is called the generator matrix of the lattice. Throughout this paper, whenever a lattice $\Lmb$ is used without the superscript, it is understood that the lattice is contained in the $n$-dimensional Euclidean space i.e., $\Lmb\subset \R^{n}$. For a given lattice $\Lmb$, we denote the \textit{quantizer} with respect to the lattice as $Q_{\Lmb}$,  \textit{modulo} operation with respect to the lattice as $\mod \Lmb$,  \textit{fundamental Voronoi region} as $\mc{V}_{\Lmb}$ and the \textit{fundamental volume} defined as the volume of any fundamental region as Vol$(\Lmb)$\cite{erez2004achieving}.
 
-Assume that some lattice point $\mbf{\lmb}\in\Lmb$ is transmitted through an additive white Gaussian noise (AWGN) channel of variance $\sigma^{2}$ and denote the noise vector by $\mbf{z}$. The \textit{volume-to-noise ratio}(VNR) of $\Lmb$, $\alpha^{2}(\Lmb,\sigma^{2})$, is defined as:
+Assume that some $\mbf{\lmb}\in\Lmb$ is transmitted through an additive white Gaussian noise (AWGN) channel of variance $\sigma^{2}$ and denote the noise vector by $\mbf{z}$. The \textit{volume-to-noise ratio}(VNR) of $\Lmb$, $\alpha^{2}(\Lmb,\sigma^{2})$, is defined as:
 \begin{equation}\label{Eqn:VNRDefinition}
 \alpha^{2}(\Lmb,\sigma^{2})=\frac{\text{Vol}(\Lmb)^{2/n}}{2\pi e\sigma^{2}}.
 \end{equation}
@@ -75,12 +164,12 @@ where ``$+$" denotes is in $\R^{n}$.  Since the generator vectors $\mbf{g}_{1},\
 \subsubsection*{Multistage Decoder}
 We will briefly describe the multistage decoding that can be used to decode a Construction-D lattice over any additive channel. Let $\lmb\in\Lmb$, where $\Lmb$ is as defined in \eqref{Eqn:ConstrD}, be transmitted through an AWGN channel and $\mathbf{y}=\lmb+\mathbf{z}$ is received where $\mathbf{z}\sim\mathcal{N}(0,\sigma^{2} \mbf{I}_{n})$. Let $\mc{D}_{i}$ be the component decoder corresponding to $\mc{C}_{i}$ which, given any $\mbf{x}\in\R^{n}$, maps it to a codeword in $\mc{C}_{i}$, i.e., $\mc{D}_{i}(\mbf{x})\in\mc{C}_{i}$. Let the initialization be $\hat{\mathbf{y}}_{0}=\mathbf{y}$.
 \begin{itemize}
-\item \tit{Step} 1: At stage $i, $ $1\leq i\leq r$, $\hat{\mathbf{y}}_{i-1}\mod 2$ is decoded to a codeword  $\hat{\mathbf{x}}_{i}\in \mathcal{C}_{i}$. Also, the corresponding information bits  $\{\hat{\alpha}_{i1},\hat{\alpha}_{i2},\ldots, \hat{\alpha}_{ik_{i}}\}\in \{0,1\}^{k_{i}}$ that generate $\hat{\mathbf{x}}_{i}$, are computed.
-\item \tit{Step} 2: Compute $\hat{\mathbf{y}}_{i}= \frac{1}{2} \cdot(\hat{\mathbf{y}}_{i-1}-\sum_{1\leq i\leq k_{i}}\hat{\alpha}_{ij}\mathbf{g}_j)$. Go to \tit{Step} 1.
+\item \textit{Step} 1: At stage $i, $ $1\leq i\leq r$, $\hat{\mathbf{y}}_{i-1}\mod 2$ is decoded to a codeword  $\hat{\mathbf{x}}_{i}\in \mathcal{C}_{i}$. Also, the corresponding information bits  $\{\hat{\alpha}_{i1},\hat{\alpha}_{i2},\ldots, \hat{\alpha}_{ik_{i}}\}\in \{0,1\}^{k_{i}}$ that generate $\hat{\mathbf{x}}_{i}$, are computed.
+\item \textit{Step} 2: Compute $\hat{\mathbf{y}}_{i}= \frac{1}{2} \cdot(\hat{\mathbf{y}}_{i-1}-\sum_{1\leq i\leq k_{i}}\hat{\alpha}_{ij}\mathbf{g}_j)$. Go to \textit{Step} 1.
 %\vspace{2pt}
-\item \tit{Step} 3: At $(r+1)^{\text{th}}$ stage of decoding, $\hat{\mathbf{y}}_{r}$ is decoded to the closest $\mathbf{q}\in\Z^{n}$ with respect to the Euclidean norm.
+\item \textit{Step} 3: At $(r+1)^{\text{th}}$ stage of decoding, $\hat{\mathbf{y}}_{r}$ is decoded to the closest $\mathbf{q}\in\Z^{n}$ with respect to the Euclidean norm.
 %\vspace{2pt}
-\item \tit{Output}: Decoded lattice point $\hat{\mathbf{\lmb}}\in\Lmb$ is given by
+\item \textit{Output}: Decoded lattice point $\hat{\mathbf{\lmb}}\in\Lmb$ is given by
 \begin{align}
     \hat{\mathbf{\lmb}}=2^{r}\mathbf{q}+\sum_{1\leq i\leq r}2^{i-1}\sum_{1\leq j\leq k_{i}}\hat{\alpha}_{ij}\mathbf{g}_{j}.
 \end{align}
@@ -131,7 +220,7 @@ Observe that choosing $\mc{G}_{1}$ uniformly at random from the $(d_{c},d_{v}^{1
 
 \begin{figure}[t]
 \centering
-\resizebox {\columnwidth} {!} {
+\resizebox {0.7\columnwidth} {!} {
 \input{../figures/Basegraph.tex}
 }
 \caption{A example Tanner graph from the $(3,6)$, $L=3$, $w=2$ CU-SC-LDPC ensemble. Removal of all the type $\mc{T}_{1}$ check nodes i.e the filled nodes, results in a $(2,6)$ CU-SC-LDPC protograph, see Fig.\ref{BaseGraph_sup}. }
@@ -141,8 +230,8 @@ Observe that choosing $\mc{G}_{1}$ uniformly at random from the $(d_{c},d_{v}^{1
 
 \begin{figure}[b]
 \centering
-\resizebox {\columnwidth} {!} {
-\input{\figures_path/Basegraph_sup.tex}
+\resizebox {0.7\columnwidth} {!} {
+\input{../figures/Basegraph_sup.tex}
 }
 \caption{A $(2,6)$ SC-LDPC sub-graph of the ($3,6$) SC-LDPC graph shown in Fig.\ref{Basegraph}.}
 \label{BaseGraph_sup}
@@ -190,7 +279,7 @@ The above implies $\mbf{h}^{T}_{c}\cdot \mbf{x}\equiv 0 \mod 2, \hspace{0.2cm} \
 One can obtain a sequence of nested linear codes $\mc{C}_1\subseteq\mc{C}_2\subseteq \ldots\subseteq\mc{C}_r$ by repeatedly performing the above operation, starting from $\mc{C}_{r}$. We observe that in this construction, unlike the previous construction, for any code $\mc{C}_{2}$ from the $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble, choice for deriving a sub-code is not unique. The non-uniqueness arises from the fact that for each check node `$c$' the number of choices for the partition $\Pi_{c}$ is not unique and any partition will result in a valid sub-code. We call the set of all $n$-tuples of codes $(\mc{C}_{1},\mc{C}_{2},\ldots,\mc{C}_{r})$, where $\mc{C}_{1}\subseteq \ldots\subseteq\mc{C}_{r}$ derived from the above construction as $(d_{v},d_{c}^{1},\ldots,d_{c}^{r})$ VC-SC-LDPC ensemble of nested codes. Here VC refers to \textit{variable-constant} since the variable degree remains constant across the nested sequence of codes. From here after when a nested chain of codes is referred to as SC-LDPC and no distinction between the constructions CU-SC-LDPC or VC-SC-LDPC is made, we mean that the statement is valid for both the constructions. 
 
 \begin{Remark}\label{Rmk:EquivNestedConstr2}
-Note that, given a code $\mc{C}_{2}$ from the $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble, deriving a sub-code $\mc{C}_{1}$ is equivalent to choosing a set of partitions: $\{\Pi_{c}: \tx{`}c\text{' is a check node in } \mc{C}_{2}\}$ uniformly at random. Therefore we can say that in this construction, for any choice of $\mc{C}_{2}$ there are equal number of choices for $\mc{C}_{1}$ from the $(d_{v},d_{c}^{1},L,w)$ SC-LDPC ensemble which are all equal likely.
+Note that, given a code $\mc{C}_{2}$ from the $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble, deriving a sub-code $\mc{C}_{1}$ is equivalent to choosing a set of partitions: $\{\Pi_{c}: \tx{`}c\text{' is a check node in } \mc{C}_{2}\}$ uniformly at random. Therefore we can say that in this construction, for any choice of $\mc{C}_{2}$ there are equal number of choices for $\mc{C}_{1}$ from the $(d_{v},d_{c}^{1},L,w)$ SC-LDPC ensemble which are all equal likely. ({\color{red}{I use this fact later in one of the proofs, but not sure about where to place this remark}}).
 \end{Remark}
 
 
@@ -365,13 +454,6 @@ In the proof of Theorem \ref{Thm:Poltyrev_good1}, using Lemma~\ref{Lemma:NestedG
 Although lattices based on both the constructions have shown to be Poltyrev-good, both have their own pros and cons (advantages and disadvantages?). The parameters $(d_{c},d_{v}^{1},\ldots,d_{v}^{r})$ in the CU-SC-LDPC construction admit any set of natural numbers and thus give greater flexibility in constructing codes of desired rates at each level and thus provides the ability to match the capacity of the effective AMGN channel with a greater accuracy. But on the flip side this results in higher degree profiles, as explained in Example~\ref{Ex:ConstrD.1}, and hence making the decoding more complex.  Whereas in the case of VC-SC-LDPC construction, the parameters only admit sets of the form $(d_{v},q_{1}d_{c},q_{2}d_{c},\ldots,q_{r}d_{c})$, $q_{i}\in\N$, which is not very flexible when it comes to  matching a given rate-tuple. But as we seen in Examples~\ref{Ex:ConstrD.1} and~\ref{Ex:ConstrD.2}, in certain specific cases of desired rates, VC-SC-LDPC offers nested sequence of codes of considerably low complex degree profiles compared to the CU-SC-LDPC construction.
 \end{Discussion}
 
-\begin{figure}[!ht]
-\centering
-\includegraphics[trim={0 6cm 0 6cm},clip,width=\columnwidth]{\figures_path/Cap_integer_coset_lattice.pdf}
-\caption{Channel capacity of the AMGN channel}
-\label{Fig:AMGNCapacity}
-\end{figure}
-
 \begin{Remark}[Comparison with LDPC lattices]
     LDPC codes have been adopted as underlying codes for constructing lattices in \cite{sadeghi06} where the so-called LDPC lattices have been proposed and analyzed. Our SC-LDPC lattices differ from LDPC lattices in the following ways. Firstly, LDPC lattices are constructed based on Construction-D$^{\prime}$ \cite{BarnesSloane83} in contrast to Construction-D adopted here. Secondly, our decoding algorithm is a multistage BP decoding which only works over $\mbb{F}_2$, on the contrary, since constructed based on Construction-D$^{\prime}$, LDPC lattices have to consider BP algorithm on the joint Tanner graph \cite{Banihashemi01} (i.e., joint decoding). Last but not least, since there are no analytical evidence that LDPC codes under BP decoding would achieve capacity, LDPC lattices have not been shown Poltyrev-good to the best of our knowledge while for the proposed SC-LDPC lattices, Theorems~\ref{Thm:Poltyrev_good1} and~\ref{Thm:Poltyrev_good2} serves as constructive evidence.
 \end{Remark}
@@ -382,13 +464,19 @@ Although lattices based on both the constructions have shown to be Poltyrev-good
 
 In this subsection, we explain the design of SC-LDPC lattices that approach the Poltyrev limit with examples. Before the design principles  let's analyze the decoding error probability.
 
-
 Let the number of levels required be $r+1$, with $r$ coded levels using nested SC-LDPC codes and the last level being uncoded using the $\Z_{2^r}^{n}$ lattice. The design criteria depend mainly on the target error probability and the dimension of the lattice. For illustration let the  target block error probability be $\approx10^{-4}$ and the number of dimensions be $n=2 \times 10^{5}$.
 As we use multistage decoding the average probability of decoding error $\tx{P}(\Lmb,\sigma^{2})$ can be union bounded by the sum of block error probabilities at individual levels. Assuming the constituent SC-LDPC code at each level is operating below the BP threshold\cite{richardson2008modern}, the average probability of decoding error of the lattice is dominated by the performance of the last (uncoded) level since the class of LDPC codes have a very sharply decaying error probability profiles below the BP threshold. Let's recall that  $\tx{P}(\Z_{2^r}^{n},\sigma^{2})$ is the block error probability for the last level. Similar to \eqref{Eqn:Ineq-UncodedLevel}, using union bound,
 \begin{align}
 \tx{P}(\Z_{2^r}^{n},\sigma_{\tx{r+1}}^{2})&\leq n\tx{P}(\Z_{2^r},\sigma^{2})=n\left(2Q\left(\frac{0.5}{\sigma_{r+1}}\right)	\right).
 \label{Eqn:ZLatticeProb}
 \end{align}
+
+%\begin{figure}[!ht]
+%\centering
+%\includegraphics[width=4in]{../figures/Cap_integer_coset_lattice.eps}
+%\caption{Channel capacity of the AMGN channel}
+%\label{Fig:AMGNCapacity}
+%\end{figure}
 
 Plugging in the values of $n$ and the target error probability in \eqref{Eqn:ZLatticeProb} gives us $\sigma_{r+1}= 0.0804$. Now moving to the next level i.e., level $r$, $\sigma_{r}=2\sigma_{r+1}=0.1608$. The capacity of the effective AMGN channel observed in this level of the multi-stage decoding is $\tx{C}_{\tx{AMGN}}(\sigma^{2}_{r})=0.9923$, see Fig. \ref{Fig:AMGNCapacity}. For the details on computing the capacity of the AMGN channel see \cite{forney2000}.  Similarly proceeding, $\sigma_{r-1}=2\sigma_{r}=0.3217$, $\tx{C}_{\tx{AMGN}}(\sigma^{2}_{r-1})=0.5726$, $\sigma_{r-2}=2\sigma_{r-1}=0.6434$, $\tx{C}_{\tx{AMGN}}(\sigma^{2}_{r-2})=0.0242$. Observe that the capacity for level $r-2$ is almost zero which renders coding for this level unnecessary albeit at the cost of a very small increase in VNR (due to the rate loss) of $0.145$dB $(=20\log_{10}2^{0.0242})$. Hence $r=2$ i.e., two coded levels suffice. We use ($30,14,3$) CU-SC-LDPC ensemble with $L=32, w=4$ for the first two levels and $\Z_{4}^{n}$ lattice for the last level which results in nested SC-LDPC codes of rates $0.5333$ and $0.9$ ($0.49$ and $0.89$ including rate-loss due to boundary effects of coupling) matching closely the capacities of first two levels i.e. $0.5726$ and $0.99$.
 \begin{table}
@@ -467,8 +555,8 @@ where the mod operation is over $\mc{B}$ instead of $[0,4)$. The dither vector a
 
 \begin{figure*}[t]
 \centering
-\resizebox{0.65\textwidth}{!}{
-\input{\figures_path/SIC_decoder.tex}
+\resizebox{0.6\textwidth}{!}{
+\input{../figures/SIC_decoder.tex}
 }
 \caption{System flow for the 3-user Symmetric Gaussian Interference channel at receiver 1.}
 \label{Fig:SIC_decoder}
@@ -516,7 +604,7 @@ In Fig.~\ref{Fig:ShapingLoss}, we plot the achievable rate as a function of $P/\
 \centering
 \setlength\figureheight{0.6\columnwidth}
 \setlength\figurewidth{0.8\columnwidth}
-\input{\figures_path/ShapingLoss_Final.tex}
+\input{../figures/ShapingLoss_Final}
 \caption{Gap between the Shannon capacity and the sum-capacity of a 4-level Construction-D lattice code(hypercube shaping) under multi-stage decoding. The DE thresholds for various SC-LDPC lattice codes with a maximum check node degree of $60$ are also given.}	
 \label{Fig:ShapingLoss}	
 \end{figure}
@@ -580,7 +668,73 @@ The additive group structure of the lattice and the fact that $x_{1},x_{2}\in \L
 % 									&=\left[(a\lmb_{1}+b\lmb_{2})\mod 5\right]\mod \Lmb_{S}+z\mod \Lmb_{S}\\
 %   \end{align*}
 %   and there is no guarantee that $(a\lmb_{1}+b\lmb_{2})\mod 5\in \Lmb_{C}\cap \Z_{5}^{N}$ and hence in decoding $a x_{1}+bx_{2}\mod \Lmb_{S}$ we loose the error performance protection afforded by the SC LDPC codes in the Coded Lattice $\Lmb_{C}.$
+%   
 %   Hence as of now, the shaping loss of 1.53dB looks unavoidable tif we want to avoid the zero divisor problem.
+
+\appendices
+\section{Proof of the First Zonklar Equation}
+Appendix one text goes here.
+
+% use section* for acknowledgement
+\section*{Acknowledgment}
+The authors would like to thank...
+
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+
+
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtranTCOM}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+%
+% biography section
+% 
+% If you have an EPS/PDF photo (graphicx package needed) extra braces are
+% needed around the contents of the optional argument to biography to prevent
+% the LaTeX parser from getting confused when it sees the complicated
+% \includegraphics command within an optional argument. (You could create
+% your own custom macro containing the \includegraphics command to make things
+% simpler here.)
+%\begin{biography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
+% or if you just want to reserve a space for a photo:
+
+
+
+% You can push biographies down or up by placing
+% a \vfill before or after them. The appropriate
+% use of \vfill depends on what kind of text is
+% on the last page and whether or not the columns
+% are being equalized.
+
+%\vfill
+
+% Can be used to pull up biographies so that the bottom of the last one
+% is flush with the other column.
+%\enlargethispage{-5in}
+
+% that's all folks
 \bibliographystyle{ieeetr}
 \bibliography{../../bib/journal_full.bib,../../bib/bib_central.bib}
 \end{document}
+
+
+

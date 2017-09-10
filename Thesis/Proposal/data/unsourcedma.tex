@@ -1,0 +1,670 @@
+\documentclass[final,onecolumn,12pt]{IEEEtran}
+\input{preamble}
+\def\Ktot{K_{\text{tot}}}
+\def\Ka{K_{\text{a}}}
+\def\dmin{d_{\mathrm{min}}}
+\def\wmin{w_{\text{min}}}
+\def\wmax{w_{\text{max}}}
+\def\Pr{\mathrm{Pr}}
+\def\hFBL{\mathsf{h}_{\text{FBL}}}
+
+\newif\iflonger
+\longerfalse
+
+\begin{document}
+\title{{A User-Independent Serial Interference Cancellation Based Coding Scheme for the Unsourced Random Access Gaussian Channel}}
+\author{\dag Avinash Vem, \dag Krishna R. Narayanan, \S Jun Cheng and \dag Jean-Francois Chamberland \\
+\dag Department of Electrical and Computer Engineering, Texas A\&M University\\
+\S Department of Electrical Engineering, Doshisha University\\
+{\tt\small {\{vemavinash@tamu.edu,krn@tamu.edu, jcheng@doshisha.ac.jp,chmbrlnd@tamu.edu\}} }
+\thanks{The work of K. R. Narayanan and J.-F. Chamberland was funded in part by the National Science Foundation under Grant CCF 16. }}
+
+
+\maketitle	
+
+\begin{abstract}
+We propose a novel coding scheme for the unsourced multiple access channel model introduced by Polyanskiy~\cite{polyanskiy17}.
+This new paradigm is composed of four main ingredients: (i) the transmission period is partitioned into sub-blocks, thereby instituting a slotted framework; (ii) The message (data) is split into two parts and one part chooses an interleaver for a low density parity check (LDPC) type code. This part of the message is encoded using spreading sequences or codewords that are designed to be decoded by a compressed sensing type decoder; (iii) The other part of the message is encoded using a low density parity check (LDPC) type code and decoded using a joint message passing decoding algorithm designed for the $T$-user binary input real adder channel;
+(iv) users repeat their codeword in multiple sub-blocks, with the transmission pattern being a deterministic function of message content and independent of the identity of the user. When this coding scheme is combined with successive interference cancellation, the ensuing communication infrastructure can offer significant performance improvements compared to the recently proposed coding scheme in \cite{ordentlich17} and results in the best performing coding scheme to date.
+\end{abstract}
+
+\begin{IEEEkeywords}
+$T$-user adder channel, Slotted ALOHA, Interference Cancellation
+\end{IEEEkeywords}
+%--------------------------------------------------------------------------
+\section{Introduction}
+In~\cite{polyanskiy17}, Polyanskiy introduced an interesting and timely multiple access problem; throughout, we refer to this new formulation as the unsourced multiple access channel model (MAC). In this setting, a very large number, $\Ktot$, of users in a wireless network operate in an uncoordinated fashion. Out of the $\Ktot$ users, a subset of $\Ka$ users are active at any time; and each of them wishes to communicate a $B$-bit message to a central base station. The base station is interested only in recovering the list of messages without regard to the identity of the user who transmitted a particular message. In addition to this, the interest is typically in the case when $B$ is small.
+
+The unsourced, uncoordinated nature of the problem and the small block lengths represent a substantial departure from the traditional multiple access channel and, consequently, has important implications both on the fundamental limits as well as the design of pragmatic low-complexity coding schemes. Due to small block lengths, information rates do not provide reasonable benchmarks and finite block length bounds are more meaningful. In \cite{polyanskiy17}, Polyanskiy provides bounds on the performance of finite-length codes for this channel model.
+%
+The design of coding schemes is also very challenging for this setting. Almost all well-known low-complexity coding solutions for the traditional MAC channel such as code-division multiple access, rate-splitting \cite{rimoldi1996rate}, and interleave-division multiple access \cite{ping2006interleave}, implicitly assume some form of coordination between the users and that some parameters of the coding scheme such as the spreading sequence, code rates, time sharing parameters, Tanner graph of the code, etc., are user dependent. When the message length is small, establishing such coordination becomes inefficient; this renders well-known coding solutions tailored to the traditional MAC inadequate for the unsourced MAC. Ordentlich and Polyanskiy describe the first low-complexity coding paradigm for the unsourced MAC~\cite{ordentlich17}. In their scheme, a transmission period is partitioned into smaller sub-blocks and users randomly pick one sub-block to transmit in. The encoding structure employed by each user is a concatenated code where the inner code is designed to recover the modulo-$p$ sum of codewords transmitted by users and the outer code is designed to decode multiple users given the modulo-$p$ sum of their codewords. Succinctly, the inner code operates in the spirit of integer-forcing \cite{zhan2014integer}, whereas the outer code is an optimal code for the $T$-user modulo-$p$ multiple access channel~\cite{mathys1990class}.
+
+While Ordentlich and Polyanskiy have contributed an important first step in finding practical schemes for the unsourced MAC, there remains a substantial gap between the performance of their proposed scheme and the capacity limit derived in~\cite{polyanskiy17}. Indeed, they point to this gap and discuss possibilities for improving its performance. In \cite[Section~III.A]{ordentlich17}, they discuss the possibility of improving their scheme by decoding the $T$ messages using the real sum from the channel output instead of first reducing the output of the channel to modulo-$p$ operations. However, in the unsourced MAC, each user is forced to use the same codebook and they remark that ``the task of designing low complexity capacity approaching same-codebook schemes for the real binary adder seems quite challenging.'' Another important limitation that is not discussed in \cite{ordentlich17} is that their scheme does not admit iterative cancellation and, hence, successive interference cancellation is not considered.
+Therefore, when more than $T$-users transmit in a slot, this slot is not utilized in the decoding process. As a result, their scheme uses a large number of slots in order to ensure that every user is received in a time slot that contains at most $T$-users, resulting in poor spectral efficiency.
+
+The main contribution of this paper is to propose, analyze and optimize a new coding architecture that overcomes these drawbacks and substantially improves performance when compared to the state-of-the-art.
+Key features of our scheme are summarized as follows.
+\begin{itemize}
+\item \textbf{User Symmetry:} Active users employ the same coding scheme, with transmitted signals determined solely by the message to be transmitted and is independent of the identity of the user. To be precise, no parameter of the encoding scheme such as the interleaver and spreading sequence are unique to a transmitter.
+\item \textbf{Binary-input, real-adder channel:}
+The proposed coding scheme is tailored to the binary-input real-adder channel.
+The information message is split into two parts.
+The first portion picks an interleaver for an LDPC code, and the second part is encoded using this LDPC code.
+Bits associated with the first portion are communicated using a compressed sensing scheme.
+The second part is decoded using a message passing decoder that jointly recovers up to $T$ messages within a slot.
+\item \textbf{Successive interference cancellation:} Active users repeat their codewords in several slots. The repetition patterns are selected based on message bits. This scheme facilitates interference cancellation within the slotted structure, and therefore renders obsolete the over-provisioning of slots to avoid undue collisions with more than $T$ users.
+\end{itemize}
+While \cite{ordentlich17} also incorporates the user symmetry aspect described above, our scheme differs from theirs in the other features highlighted above.
+
+\section{System Model and Notation}
+\label{Sec:SystemModel}
+Let $\Ktot$ and $\Ka$ denote the total number of users in the network and the number of active users, respectively.  Each user has $B$ bits of information (or, one of $M \coleq 2^B$ indices) to be encoded and transmitted within a block of $N$ uses of the channel. Let $W_i \in [1:M]$ be a random variable that represents the message index of the $i$-th user and let $w_i$ be a realization of the random variable $W_i$. Throughout this paper $[a:b]$ denotes the set of integers from $a$ to $b$, both inclusive. We first assume that $W_i$ is uniformly distributed over the set $[1:M]$ and that for any pair of users $i$ and $j$, $W_i$ and $W_j$ are independent of each other.  Without loss of generality we assume that the set of indices of the active users is $[1:\Ka]$ and let $\mc{W}\coleq\{w_1,w_2,\ldots,w_{\Ka}\}$ denote the set of transmitted messages.
+
+The observed signal vector at the receiver corresponding to the $N$ channel uses can be written as
+\begin{equation}
+\yv = \sum_{i=1}^{\Ktot} \xv_{i} + \zv,
+\end{equation}
+where $\xv_i$ is a signal of dimension $N$ transmitted by the user~$i$, and the additive noise is characterized by $\zv \sim \mc{N}(0,\mb{I}_N)$. For convenience, we also introduce boolean indicators indexed by $i$, where $s_i =1$ if user~$i$ is active and $s_i = 0$ otherwise. We impose an average power constraint on the transmitted vectors when averaged over all possible message indices, i.e., $\frac{1}{M}\sum_{w} ||\xv(w)||^2\leq NP$.  The receiver produces a list of messages $\mc{L}(\vec{y}) = \{\hat{w}_1,\hat{w}_2,\ldots,\hat{w}_{\Ka} \}$. As in \cite{ordentlich17}, the probability of error is defined as
+\begin{equation}\label{eqn:proboferrordefinition}
+  P_e = \max_{|(s_1,\ldots,s_{\Ktot})| = \Ka} \frac{1}{\Ka} \sum_{i=1}^{\Ktot} s_i \Pr\left( w_i \notin \mc{L}(\vec{y}) \right)
+\end{equation}
+where $|\cdot|$ denotes the Hamming weight. The objective is to design low-complexity encoding and decoding schemes such that $P_e \leq \epsilon$, where $\epsilon$ is a target error probability.
+
+\section{Description of the Proposed Scheme}
+The overall schematic of the proposed scheme is shown in Fig.~\ref{fig:overallscheme}. In our proposed scheme, the $N$ channel uses which are available for communication are split into $V$ sub-blocks (also referred to as slots throughout the paper), each of length $\tilde{N}=N/V$ channel uses. The encoding operation at the $i$-th user takes place in two steps.
+
+\begin{figure}[h]
+  \centering
+  \resizebox{0.9\textwidth}{!}{\input{../Figures/system_diagram}}
+  \caption{Schematic of the proposed scheme}
+  \label{fig:overallscheme}
+\end{figure}
+
+\subsection{Transmission policy across sub-blocks - message based repetition}
+\label{sec:Txpolicy_TannerGraph}
+Each user uses an identical codebook $\tilde{\mc{C}}$ of rate $\tilde{R}$ and length $\tilde{N}$. The user encodes the message index $w_i$ into a codeword $\vec{\tilde{c}}_{w_i} \in \tilde{\mc{C}}$ and modulates $\vec{\tilde{c}}_{w_i}$ into $\vec{\tilde{x}}_{w_i}$. In the following discussion, we will refer to $\vec{\tilde{c}}_{w_i}$ as the transmitted codeword and the reader should assume that the codeword is modulated appropriately and transmitted. Each user also chooses a repetition parameter $\ell_{w_i}=g(w_i)$ using a function $g:[1:M] \rightarrow [1:V]$ and repeats their codeword $\vec{\tilde{c}}_{w_i}$, $\ell_{w_i}$ times by choosing $\ell_{w_i}$ sub blocks from $[1:V]$ based on the message $w_i$ and transmits during these sub blocks. It is important to note that $\ell_{w_i}$ as well as the slots where the codeword is repeated are deterministic functions of the message index and do not depend on the identity of the user. As shown in Fig.~\ref{fig:overallscheme}, a Tanner graph $G$ can be used to visualize the repetition of the codewords where the left nodes correspond to users and the right nodes corresponds to sub-blocks. The degree of the left nodes is determined by $\ell_{w_i}$ and choosing $w_i$ uniformly at random induces a distribution on $\ell_{w_i}$ through the function $g$.  Let the left degree distribution (d.d) from node perspective be $L(x) = \sum_{{i=1}}^{{l_{\max}}} L_i x^i$, where $L_i$ denotes the fraction of user (left) nodes that are connected to $i$ slot(right) nodes. Similarly let the left d.d from edge perspective be denoted by $\lambda(x) = \sum_{{i=1}}^{{l_{\max}}} \lambda_i x^{i-1}$, where $\lambda_i$ denotes the fraction of edges in $G$ that are connected to left nodes connected to $i-1$ other edges. The two distributions $L(x)$ and $\lambda(x)$ are related as $L(x)=\frac{L'(x)}{L'(1)}$. We choose the mapping $g$ such that a desired left d.d. $L(x)$ (or equivalently $\lambda(x)$) is obtained.
+
+During the $j$-th sub-block, let $\mc{N}_j$ denote the set of users who transmit. During the $n$-th use of the channel within the $j$-th sub-block, the $i$-th user transmits  symbols of positive power if $i \in \mc{N}_j$. Otherwise, the $i$-th user remains silent. The received signal during the $j$-th sub-block is given by
+\begin{equation}
+\vec{\tilde{y}}_j = \sum_{i\in \mc{N}_j} \vec{\tilde{x}}_{w_i} + \vec{\tilde{z}}_j.
+\end{equation}
+
+\subsection{Transmission policy within each sub block - same codebook schemes for the $T$-user real output channel}
+There are two components in the proposed transmission scheme within each sub-block: a good sensing matrix for a $T$-sparse robust compressed sensing (CS) problem and a good channel code for the $T$-user binary-input real-adder channel that is decodable with low computational complexity. The $B$ bits to be transmitted are split into two groups of size $B_{\mathrm{p}}$ and $B_{\mathrm{c}} = B-B_{\mathrm{p}}$ bits, respectively. For convenience, we define $M_{\mathrm{p}} \coleq 2^{B_{\mathrm{p}}}$ and $M_{\mathrm{c}} \coleq 2^{B_{\mathrm{c}}}$. The main idea is to use a linear code $\mc{C}$ to encode $B_{\mathrm{c}}$ bits, which we refer to as channel coding message index/bits; and to use the remaining $B_{\mathrm{p}}$ bits, which we refer to as preamble message index/bits, to pick a permutation of the codeword encoded through the channel coding message bits. Typically, we want $B_{\mathrm{p}} \ll B_{\mathrm{c}}$.
+
+The codebook $\tilde{\mc{C}}$ is constructed as follows. We begin with a good linear block code such as a low density parity check (LDPC) code or a spatially-coupled low density parity check (SCLDPC) code $\mc{C}$ of rate $\tilde{R}=\frac{B_\mathrm{c}}{\tilde{N}-J}$ and length $N'\coleq \tilde{N}-J$. As an example, we will consider the case when $\mc{C}$ is chosen uniformly at random from the $(\sf{l,r,w},N')$ SCLDPC ensemble\cite{kudekar2011threshold}. Let the modulated codewords of ${\mc{C}}$ be denoted by $\{\cv_1,\cv_2,\ldots,\cv_{M_\mathrm{c}} \}$, where $\cv_{w} = [c_{w}(1),c_{w}(2),\ldots,c_{w}(N')]$,  $c_{w}(i)\in\{\pm\sqrt{P_1}\}~\forall i$ satisfying the power constraint
+\begin{align}
+||\vec{c}_w||_2^2\leq N'P_1
+\label{eqn:mac_powerconstraint}
+\end{align}
+denotes the modulated SCLDPC codeword corresponding to message index $w$. For the second part of the encoder let $\mathbf{A}\in\{-\sqrt{P_2},+\sqrt{P_2}\}^{J\times M_\mathrm{p}}$ denote a sensing matrix that can recover the sum of any $T$ columns of $\mathbf{A}$ with low error probability. Let $f:[1:M_\mathrm{p}] \rightarrow [1:N'!]$ denote a hash function which maps $B_\mathrm{p}$  preamble message bits into an integer $\tau_w = f(w)$ such that $\tau_w$ is uniformly distributed over possible permutations of length $N'$, $[1:N'!]$. Note that here the integer $\tau_w$ chooses the permutation $\pi_{\tau_w}\in S_{N'}$ of the encoded codeword from $\mc{C}$ before transmission where $S_{N'}$ is the symmetric group.
+
+Let $\vec{\tilde{\mathrm{c}}}_w$ be the codeword corresponding to message index $w=(w_{\mathrm{p}},w_{\mathrm{c}})$, where the indices $w_{\mathrm{p}},w_{\mathrm{c}}$ correspond to the preamble and coding message indices respectively. $\vec{\tilde{\mathrm{c}}}_w$ is obtained by first permuting the  codeword of the SCLDPC code $\cv_{w_\mathrm{c}}$ according to permutation $\pi_{\tau_{w_\mathrm{p}}}=[\pi_{\tau_{w_\mathrm{p}}}^1,\pi_{\tau_{w_\mathrm{p}}}^2,\ldots, \pi_{\tau_{w_\mathrm{p}}}^{N'}]$ and then inserting the $w_\mathrm{p}$th column from the compressed sensing matrix $\mathbf{A}$ at the beginning of the permuted codeword i.e.,
+\begin{equation}\label{eqn:codeconstruction1}
+  \vec{\tilde{\mathrm{c}}}_w = [\vec{a}_{w_\mathrm{p}},c_{w_\mathrm{c}}(\pi_{\tau_{w_\mathrm{p}}^1}),c_{w_\mathrm{c}}(\pi_{\tau_{w_\mathrm{p}}^1}),\ldots,c_{w_\mathrm{c}}(\pi_{\tau_{w_\mathrm{p}}})].
+\end{equation}
+
+The overall encoding process is shown in the Fig.~\ref{fig:encodingscheme}.
+\begin{figure}[h!]
+  \centering
+  \resizebox{0.55\textwidth}{!}{\input{../Figures/UnsMAC_encoder.tex}}
+  \caption{At any user, for a message bit sequence  $w=(w_\mathrm{p},w_\mathrm{c})$ the schematic shows the encoder and the final transmitted codeword $\vec{\tilde{c}}_w$.}
+  \label{fig:encodingscheme}
+\end{figure}
+The main idea here is that permuting the codeword $\cv_{w_\mathrm{c}}$ decorrelates the multiple access interference from users even though they use identical linear codes and results in a performance that is similar to that obtained by using different codes for the different users. This is similar to interleave-division multiple access scheme that was originally proposed in \cite{ping2006interleave}. The overall code is non-linear because of the random permutations for different codewords and $\vec{a}_{w_\mathrm{p}}$ being appended at the beginning; however, if $\vec{a}_{w_\mathrm{p}}$ is identified (and consequently also $w_\mathrm{p}$) and removed at the receiver, then the permutations can be determined and decoding the users  can be accomplished using a belief propagation decoder that works on the joint graph of the two users.
+\iflonger
+Several generalizations of this scheme are possible. It is possible to use different shifts of codeword instead of permutations of the codeword. We can also think of a more general scheme where the messages are binned in to $M_\mathrm{p}$ bins each with $M_1$ messages. Within each bin, the messages are encoded by a linear code and a permutation is chosen based on the bin index that the message falls in. In these cases, the $M_\mathrm{p}$ bits will have to be first conveyed through spreading sequences or shifts of a synchronization sequence. By choosing $M_\mathrm{p}$ to be fairly small, the complexity of demodulating/decoding these $M_\mathrm{p}$ bits can be kept to be fairly small. For clarity of exposition, we will use the shift based scheme in the rest of paper. In the special case when $V=1$ and we choose different interleavers or permutations of the code symbols, the proposed scheme becomes identical to interleave division multiple access (IDMA) \cite{ping2006interleave}. In this case, however, $M_\mathrm{p}$ will be reasonably large and efficient multi-user detection is needed to detect the $B_\mathrm{p}$ bits first. This will be considered in a future study.
+\fi
+
+\subsection{Decoder}
+The overall decoder has two components - a decoder for the $T$-user Gaussian multiple access(GMAC) channel and a successive interference canceler that works across sub-blocks. Let $R_j=|\mc{N}_j|$ denote the number of codewords transmitted during the $j$-th sub-block. The decoder observes the received signal during each sub-block and first estimates $R_j, \forall j \in [1:V]$. A simple estimate can be obtained by observing the energy of the received signal during each sub-block, but more sophisticated estimates based on decoding can be obtained, if necessary. 
+\iflonger
+If $R_j < T$, then the compressed sensing decoder $h(\yv_j[1:J],\mathbf{A},R_j)$, given
+\[
+\vec{y}_{j}[1:J]=\sum_{i\in\mc{N}_j} \vec{a}_{w_{i,2}}+z_{j}[1:J], %\qquad j\leq J
+\label{eq:cross_correlation}
+\]
+estimates the set of the preamble message indices denoted by $\mc{T}_2\coleq\{\hat{w}_{i,2}:i\in\mc{N}_j\}$ for the $R_j$ users transmitted in $j$th sub-block. We explain the workings of the compressed sensing decoder $h(\vec{y},\mathbf{A},T)$ in Sec. \ref{sec:CS_decoder}. Once the preamble message indices $\hat{w}_{i,2}$'s are estimated which gives the set of permutations $\pi_{\tau_{\hat{w}_{i,2}}}$ employed on the SCLDPC codewords at the respective users, the set of $R_j$ coding message indices $\mc{T}_1\coleq\{\hat{w}_{i,1}:i\in\mc{N}_j\}$ are decoded using a message passing decoder on the joint Tanner graph described in Sec. \ref{sec:BP_GMAC}. Once the messages transmitted during the $j$th sub-block are decoded, then other sub-blocks where the codewords were repeated can be obtained using the function $g(w_i=(w_{i,1},w_{i,2}))$. Then the codeword is subtracted or `peeled off' from the received signal during those slots, $R_j$ is updated for those slots and the process is repeated until either all the users are decoded or, no sub-blocks with less than $T$ codewords remain.\\
+\fi
+
+\subsubsection{Compressed Sensing Decoder}
+\label{sec:CS_decoder}
+The first $J$ received symbols in the $j$th sub-block can be written in matrix vector form as
+\begin{equation}
+\label{eq:cross_correlation}
+\vec{y}_{j}[1:J] = \mathbf{A}\vec{b}+z_{j}[1:J]
+\end{equation}
+where $\mathbf{A} \in \mathbb{R}^{J \times M_\mathrm{p}}$ is the sensing matrix and $\vec{b} \in \{0,1\}^{M_\mathrm{p}}$ is a $T$-sparse vector that indicates the set of transmitted messages during the $j$th slot. Our proposed receiver to recover $\vec{b}$ from $\vec{y}_{j}[1:J]$ exploits the sparsity of $\vec{b}$ as well as the fact that the non-zero entries of $\vec{b}$ are positive integers (particularly, 1's). The latter aspect makes our proposed receiver different from many standard compressed sensing reconstruction algorithms.
+
+We first run a non-negative least squares (or non-negative $\ell_1$-regularized LASSO) algorithm that gives us an estimate $\hat{\vec{b}}$ of $\vec{b}$. But these algorithms do not guarantee an output signal either of the required sparsity or with elements strictly from the set $\{0,1\}$ (as we know apriori from the problem). To address this, we perform a hard thresholding operation on each element of $\hat{\vec{b}}$ and form a list of non-negative indices
+$\mc{N}_{\text{list}}=\{i:\hat{b}_i>\eta_{Th}\}$. The value of parameter $\eta_{Th}$ is chosen such that the list size is larger than $T$. We then implement a maximum likelihood decoder within the above list of indices to find the set of $T$ indices that best explain the received vector $\yv$ i.e.,
+\begin{equation}
+\widehat{\mc{N}}=\argmin_{S\subseteq\mc{N}_{\text{list}},|S|=T}||\vec{y}-\sum_{i\in S}\vec{a}_i||^2_2.
+\label{eq:CS_jointdecoder}
+\end{equation}
+As one can observe as we decrease the value of the threshold $\eta_{Th}$ the list size increases which increases the complexity of the MMSE estimator in Eq. \eqref{eq:CS_jointdecoder} whereas if we increase the value of the threshold the list size decreases and the performance worsens. Clearly for a given SNR the value of the threshold $\eta_{Th}$ needs to be optimized. The CS decoder outputs the set of message indices $\widehat{\mc{N}}$, where $|\widehat{\mc{N}}|=T$, to the message passing decoder.
+
+\subsubsection{Message Passing for Gaussian MAC}
+\label{sec:BP_GMAC}
+We describe the decoding process for $T=2$ which can be generalized to larger values of $T$ in a straight forward manner. Consider a sub-block $j$ with only two users transmitting and let us assume their message indices are $w^1=(w^1_\mathrm{p},w^1_\mathrm{c})$ and $w^2=(w^2_\mathrm{p},w^2_\mathrm{c})$ respectively. Note that the estimates of preamble message indices $\{w^1_\mathrm{p},w^2_\mathrm{p}\}$ are available at the message passing decoder, output from the CS decoder. Assuming appropriate demodulation is performed before the decoding step the received signal in terms of the SC-LDPC codewords can be given by:
+\begin{align*}
+\vec{\tilde{y}}_j= &[\vec{a}_{w^1_\mathrm{p}},c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^1}),c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^2}),\ldots,c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^{N'}})]+\\
+&[\vec{a}_{w^2_\mathrm{p}},c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^1}),c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^2}),\ldots,c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^{N'}})]+z_j
+\end{align*}
+
+\begin{figure}[h!]
+  \centering
+  \resizebox{0.5\textwidth}{!}{\input{../Figures/decodergraph_permutation.tex}}
+  \caption{Schematic showing the joint Tanner graph}
+  \label{fig:decodergraph}
+\end{figure}
+
+Recall that $N'=\tilde{N}-J$ where $\tilde{N}$ is the number of channel uses in a sub-block. First we separate the channel coding part of the received vector by considering only the last $N'$ values of the $\tilde{N}$ sized received vector i.e.,
+\begin{align*}
+\yv'= &[\vec{a}_{w^1_\mathrm{p}},c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^1}),c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^2}),\ldots,c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^{N'}})]+\\
+&[\vec{a}_{w^2_\mathrm{p}},c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^1}),c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^2}),\ldots,c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^{N'}})]+z_j
+\end{align*}
+which is input to the joint belief propagation(BP) decoder. As we can observe, the code bits/symbols in each codeword are permuted according to a random permutation (chosen according to the second part of the message index) before being transmitted across the GMAC channel. Therefore in the joint BP decoder we need to apply these permutations and their inverses on the messages whenever they are being sent to and from the MAC nodes respectively. The schematic of the joint Tanner Graph of the two users is shown in Fig. \ref{fig:decodergraph}.\\
+%As we can observe, the synchronization sequence can occur at different locations in the two codewords depending on the values $\tau_{w_1}$ and $\tau_{w_2}$. This is shown in Fig. \ref{fig:decodergraph} of the combined Tanner Graph of the two users where the nodes corresponding to the synchronization bits  are represented using shaded bit(circular) nodes.
+
+Given the received signal $\yv'$ the joint BP decoder proceeds iteratively in a similar manner to that of a single user AWGN channel coding problem apart from an extra step of messages being sent to and received from the MAC node in each iteration. Throughout this sub-section we use superscript to distinguish between users $1$ and $2$.
+\begin{itemize}
+\item $u^{1}_{i,\text{MAC}},u^{1}_{i,j}$: Messages passed from the bit node corresponding to $i^{\text{th}}$ code bit of user $1$ to the corresponding MAC node and  SCLDPC check node $j$ respectively.
+\item $v^{1}_{j,i}$: Message passed from SCLDPC check node $j$ of user $1$ to the bit node $i$ of user $1$
+\item $v^{1}_{\text{MAC},i}$: Message passed from $i^{\text{th}}$ MAC node to the connected bit node of user $1$.
+\end{itemize}
+The messages for user $2$ are defined similarly. Refer to Fig. \ref{fig:BP_computationgraph} for a graphical representation of the messages.
+%Let $u^{1}_{i,\text{MAC}},u^{1}_{i,j}$ denote the messages passed from the bit node corresponding to $i^{\text{th}}$ code bit of user $1$ to the corresponding MAC node and  SC-LDPC check node $j$ respectively. Similarly, let $v^{1}_{j,i}$ denote the message passed from SC-LDPC check node $j$ of user $1$ to the bit node $i$ of user $1$ connected to the respective check node. Also let $v^{1}_{\text{MAC},i}$ denote the message passed from $i^{th}$ MAC node to the connected bit node of user $1$.
+%If the bit node $i$ corresponds to a bit from the synchronization sequence it passes a fixed message of
+%\begin{equation*}
+%v^{1}_{i,\text{MAC}}=\text{sign}(s_{i-\tau_{w_1}})\text{LLR\_MAX}
+%\end{equation*}
+%in all the iterations where LLR-MAX is a fixed large value for the log-likelihood ratio.
+
+\begin{figure}[h!]
+  \centering
+  \resizebox{0.75\textwidth}{!}{\input{../Figures/BP_graphs.tex}}
+  \caption{ Message passing rules at individual nodes on the joint Tanner graph of two users. The message passing rules at the check nodes of the SCLDPC code are identical to the single user channel coding case.}
+  \label{fig:BP_computationgraph}
+\end{figure}
+
+Bit Node:
+\begin{align*}
+u^{1}_{i,j}&=v^{1}_{\text{MAC},i}+ \sum_{j'\neq j,j'\in \mathcal{N}(i)} v^{1}_{j',i}\\
+u^{1}_{i,\text{MAC}}&=\sum_{j\in \mathcal{N}(i)} v^{1}_{j,i}
+\end{align*}
+
+LDPC Check Node:
+\begin{align*}
+v^{1}_{j,i}&=2~\tanh^{-1}\left( \prod_{i'\neq i} \tanh\left(\frac{u^{1}_{i',j}}{2}\right)\right)\\
+\end{align*}
+
+MAC Node:
+\begin{align}
+\label{Eqn:MACnodeBP}
+v^{1}_{\text{MAC},i}&=h(u^{2}_{i,\text{MAC}},y_{i,\text{ch}})\\
+v^{2}_{i,\text{MAC}}&=h(u^{1}_{i,\text{MAC}},y_{i,\text{ch}}) ~~~\text{ where}\notag\\
+h(l,y)&=\log \frac{1+e^{l}e^{2(y-1)/\sigma^2}}{e^{l}+e^{-2(y+1)/\sigma^2}}.\notag
+\end{align}
+The function $h(l,y|\sigma^2)$ can be seen as the log-likelihood of variable $x_2$ when $y=x_1+x_2+z$, $x_1,x_2\in\{-1,+1\}$ when the log-likelihood ratio of variable $x_1$ is known to be $l$ and $z\sim \mc{N}(0,\sigma^2)$.
+%In  Eqns. \ref{Eqn:MACnodeBP} the nodes $i,i'$ and $i''$ are related as follows. $i$th code bit in the SC-LDPC code is connected to $i'$ MAC node (or equivalently $i'$ position in the received vector) where $i'=i+\tau_{w_1}+J mod \tilde{N}$. And similarly $i'=i''+\tau_{w_2}+J mod \tilde{N}$.
+
+\section{Choice of Parameters and Analysis}
+In this section we will look at the parameters of the different components of the proposed and how each of them affect the overall performance. As described in Sec. \ref{Sec:SystemModel} let $\epsilon$ be the maximum per user error probability i.e. we are interested in decoding on an average $(1-\epsilon)$ fraction of the $K_a$ active users successfully. Let us define the following error events before we analyze the per user error probability $P_e$. At any fixed slot $j$ the events $\mc{E}_{1j}$, $\mc{E}_{2j}, \mc{E}_{3j}$ are defined as:
+\begin{itemize}
+\item $ \mc{E}_{1j}:$ Event that at least two users pick the same preamble message index%, i.e., $\exists ~p,q : \tau_{w_{p,2}} = \tau_{w_{q,2}}, ~ p,q\in\mc{N}_j $
+\item $ \mc{E}_{2j}:$ Event that the CS decoder does not decode the preamble message index $w_{i,2}$  correctly for at least one user i.e., $\exists~ i \in\mc{N}_j : w_{i,2} \notin \widehat{\mc{N}}_j $
+\item $ \mc{E}_{3j}:$  Event that the MAC channel decoder fails to recover the remaining users, if less than or equal to $T$, in the slot
+\item $\mc{E}_{\text{SIC}}:$ Event that a random active user is not recovered by the symmetric interference cancellation process
+\end{itemize}
+The per user error probability $P_e=\Pr(\mc{E}_{\text{SIC}})$ can be upper bounded as following:
+\begin{align}
+P_e &= \Pr(\cap_{i,j}\mc{E}^c_{ij})\Pr\left(\mc{E}_{\text{SIC}}|\bigcap_{i,j}\mc{E}^c_{ij}\right)+ \Pr\left(\bigcup_{i,j}\mc{E}_{ij}\right)\Pr(\mc{E}_{\text{SIC}}|\cup_{i,j}\mc{E}_{ij})\notag\\
+&\leq \Pr\left(\mc{E}_{\text{SIC}}|\bigcap_{i,j}\mc{E}^c_{ij}\right)+ \Pr\left(\bigcup_{i,j}\mc{E}_{ij}\right)\notag\\
+&=\Pr\left(\mc{E}_{T\text{-peeling}}\right)+\Pr\left(\bigcup_{i,j}\mc{E}_{ij}\right)\notag\\
+&\leq\Pr\left(\mc{E}_{T\text{-peeling}}\right)+\sum_{j} (\Pr (\mc{E}_{1j})  + \Pr (\mc{E}_{2j})+ \Pr (\mc{E}_{3j}))\notag\\
+&=\Pr\left(\mc{E}_{T\text{-peeling}}\right)+V\left(\Pr(\mc{E}_1)+\Pr(\mc{E}_2)+\Pr(\mc{E}_3) \right) \label{eqn:errPrb_split}
+\end{align}
+where we refer to the SIC process under the assumption that the preamble collision, CS decoder error and the MAC channel decoder error do not occur in any of the slots as $T$-peeling or ideal SIC process. In other words $T$-peeling is an iterative process in which at any slot if there are less than or equal to $T$-users connected we assume those $T$-users are decoded and their contributions are subtracted off (peeled off from the slot nodes) from the other slots in which these users have transmitted. Thus the event $\mc{E}_{\text{SIC}}$ conditioned on $\cap_{i,j}\mc{E}^c_{ij}$ is equivalent to the event a random user is not recovered under the $T$-peeling process which is denoted $\mc{E}_{T\text{-peeling}}$. The multiplicative factor $V$ in the upper bound of $P_e$ in Eqn. \eqref{eqn:errPrb_split} union bounds the total number of instances(slots) a preamble collision ($\mc{E}_1$) or a compressed sensing decoder error ($\mc{E}_2$) or a MAC channel decoder error ($\mc{E}_3$) can occur.
+
+%$\mc{E}_4|\epsilon_0$ is the event that the SIC process does not recover atleast $(1-\epsilon_0)$ fraction of the all the users' messages.
+%Let theFor a fixed number of active users $K_a$, maximum number of users jointly decoded at a sub-block $T$, total number of channel uses $n$ and the number of bits transmitted by each user $B$, let $P_e$ denote the probability that a user is not decoded successfully. Then $P_e$ can be upper bounded by  %of the error event where atleast $(1-\epsilon)$ fraction of the users are not decoded successfully. A standard union bound on the probability of error $P_e$ is given by
+%We denote $\mc{E}_1$ to be the event where at least two messages get hashed to the same shift, i.e., $\exists i,j$ s.t. $\tau_{w_i} = \tau_{w_j}$. According to our decoding process, since we can detect hash collisions with high probability, we simply use $V(1+P\left(\mc{E}_1\right)$ slots and the slots that are determined to contain hash collisions are not used for the $T$-user decoding.
+\subsection{Hash Collision}
+\begin{lemma}
+$\Pr \left(\mc{E}_{1}\right)\approx \frac{T(T-1)}{2M_\mathrm{p}}$	
+\label{lem:hashCollision}\\
+\end{lemma}
+\begin{proof}
+Let us consider the event $\mc{E}_{1j}^c$ where the $R_j$ users in slot $j$ picked a unique preamble message index (or equivalently a unique permutation). Note that in total there are $M_\mathrm{p}$ possible preamble indices for each user.
+\begin{align}
+\Pr(\mc{E}_{1j}^c)&=\frac{M_\mathrm{p}(M_\mathrm{p}-1)\ldots(M_\mathrm{p}-(R_j-1))}{M_\mathrm{p}^{R_j}}\notag\\
+\implies \Pr(\mc{E}_{1j})&=1-\prod_{i=0}^{R_j-1}(1-\frac{i}{M_\mathrm{p}})\notag\\
+&\approx \frac{R_j(R_j-1)}{2M_\mathrm{p}}.\label{eqn:Hashcollision}
+\end{align}
+According to the encoding scheme each user chooses the slot randomly according to the message index and hence the degree distribution for the slots is non-uniform. But we observe that the CS and the channel decoders are run on a slot only when the remaining number of connections are estimated to be less than $T$ and hence we can approximate the number of connections to $T$ to get a uniform upper bound  across the slots. Substituting $T$ for $R_j$ in Eqn. \eqref{eqn:Hashcollision} completes the proof.
+\end{proof}
+
+\subsection{Compressed sensing problem and design choices}
+Now we discuss our choice of parameters for $T, B_\mathrm{c}, B_\mathrm{p}$ and the sensing matrix $\mathbf{A}$. First let us start with the sensing matrix and the recovery of the sparse signal that aids in recovering the set of preamble message indices. In this paper the typical values considered for $T$  are $\{2,4\}$. A low probability of error for event $\mc{E}_2$, for such low values of $T$, translates to  designing a sensing matrix $\mathbf{A}$ where we require: 
+\begin{enumerate}
+\item A large minimum distance in the Euclidean space between distinct $T$-sums of columns and 
+\item a minimal number of $T$-sets of columns whose sum is identical.
+\end{enumerate} 
+Before we formalize the above mentioned notions, we would like to note that, for the choice of $\mathbf{A}$, we considered the superimposed codes proposed by authors Fan, Darnell and Honary for the multiaccess binary adder channel \cite{fan1995superimposed}. In this work the authors consider binary codes and show that every constant weight code with weight $w$ and maximum correlation $c$ corresponds to a subclass of disjunctive code of order $T<\frac{w}{c}$. In other words, for any $T<\frac{w}{c}$ sum of any $T$ codewords from this code results in a distinct output. Although the superimposed codes solve the second requirement we mentioned above they do not consider the first requirement i.e., the larger minimum distance of the resulting signal space of $T$-sums of codewords which is also critical to obtain a low probability of decoding error values. We defer the discussion of these results and our result relaxing the constraint of \textit{constant weight} to appendix.
+
+In the following subsection we introduce lattice and derive upper bounds on $\Pr(\mc{E}_2)$ based on maximum-likelihood decoder for lattices.
+% We consider superimposed codes for the multiaccess binary adder channel \cite{fan1995superimposed} for the choice of $\mathbf{A}$ which exactly fits our purpose. In this work authors Fan, Darnell and Honary consider binary codes for the multiple access real adder channel and show that every constant weight code with weight $w$ and maximum correlation $c$ corresponds to a subclass of disjunctive code of order $T<\frac{w}{c}$. In other words, for any $T<\frac{w}{c}$ sum of any $T$ codewords from this code results in a distinct output and thus this class of constant weight codes serve as a good choice for our sensing matrix $\mathbf{A}$. \\
+\begin{definition}
+A lattice $\Lambda$ in $n$-dimensional Euclidean space $\Lambda\subset \mathbb{R}^{n}$ can be defined as:
+% is a discrete set of points in Euclidean space that form an additive group. More precisely an $m$-dimensional lattice $\Lmb^{(n)}\subset \R^{n}$ can be defined as:
+\begin{equation}
+\Lambda =\{\lambda\in\mathbb{R}^{n}:\lambda=\mathbf{G}\mathbf{u},\mathbf{u}\in \mathbb{Z}^{m}\}
+\end{equation}
+where $\mathbf{M}\in\mathbb{R}^{n \times m}$ is called the generator matrix of the lattice. We define the minimum distance $\dmin(\Lambda)$ of the lattice $\Lambda$ as 
+\[
+\dmin(\Lambda)\defeq \min_{\lambda_1, \lambda_2\in\Lambda } ||\lambda_1-\lambda_2||_2.
+\]
+\end{definition}
+
+Let the set of codewords/columns of $\mb{A}$ be denoted by $\mc{C}$ and $\mc{C}\subseteq \mc{C}_{\text{lin}}$ where $\mc{C}_{\text{lin}}$ is a binary linear code. We can then observe that the set of $T$-sums of codewords is a subset of lattice formed from $\mc{C}_{\text{lin}}$ ie..,
+\begin{align*}
+\sum_{j=1}^{T}\vec{a}_{i_j}&\in \Lambda ~~ i_j\in[1:M_\mathrm{p}]
+\end{align*}
+where $\Lambda =\{\mathbf{G}\mathbf{u},\mb{u}\in \mbb{Z}^{m}\}, \mb{G}$ is the generator matrix of the binary code $\mc{C}_{\text{lin}}$. Now that the connection between the $T$-sums of the binary code and the lattice in which they are contained in is established we formalize the two requirements on $\mb{A}$ mentioned above.
+%\begin{definition}
+%For a given binary code $\mc{C}$ and fixed $T$, we define the parameter 
+%\[
+%\beta_T(\mc{C})\defeq |\{S:\exists S' \text{ s.t.} \sum_{i\in S}\vec{c}_i= \sum_{i\in S'}\vec{c}_i, |S|=|S'|=T,S\neq S'\}|,
+%\]
+%which counts the number of subsets of size $T$ whose sum is not unique in the set of $T$-sums of codewords from $\mc{C}$. The second requirement mentioned above translates to minimizing $\beta_T(\mc{C})$.
+%\label{Def:disjunctive_parameter_Tsum}
+%\end{definition}
+
+%\begin{definition}
+%For a given binary code $\mc{C}$ and fixed $T$, we define the minimum distance parameter
+%\[
+%\dmin(\mc{C},T)\defeq \min_{S\neq S',|S|=|S'|=T} ||\sum_{i\in S}\vec{a}_i-\sum_{i\in S'}\vec{a}_i||_2,
+%\]
+%which counts the minimum Euclidean distance between the $T$-sums of codewords. Note that $\beta_T(\mc{C})>0$ implies $\dmin(\mc{C},T)=0$ and $\beta_T(\mc{C})=0$ implies $\dmin(\mc{C},T)\geq \dmin(\Lambda)$.
+%\label{Def:dmin_Tsum}
+%\end{definition}
+
+\begin{definition}
+For a given binary code $\mc{C}$ and fixed $T$, for a set subset $S$ of size $T$, we define the indicator parameter
+\[
+\beta_T(S) \defeq \mathbf{1}[\exists S' \text{ s.t. }~ u(S)= u(S'), |S'|=T,S'\neq S],
+\]
+where $u(S)\coleq \sum_{i\in S}\vec{c}_i$ and $\beta_T(S)$ indicates if the $T$ sum of codewords for the index set $S$ is unique in the set of $T$-sums of codewords from $\mc{C}$. The second requirement mentioned above translates to minimizing $\beta_T(\mc{C})$. Similarly we define $\beta_T(\mc{C})\defeq \sum_{S\subset [1:|\mc{C}|]}\beta_T(S)$ counts the total number of subsets whose sum is not unique in the set of $T$-sums of codewords from $\mc{C}$.
+\label{Def:disjunctive_parameter_Tsum}
+\end{definition}
+
+\begin{definition}
+For a given binary code $\mc{C}$, fixed $T$, we define the minimum Euclidean distance of a set $S$ in the space of  $T$-sums of codewords as
+\[
+%\dmin(\mc{C},T)\defeq \min_{S\neq S',|S|=|S'|=T} \left|\left|\sum_{i\in S}\vec{a}_i-\sum_{i\in S'}\vec{a}_i \right|\right|_2,
+\dmin(S;\mc{C})\defeq \min_{S\neq S',|S|=|S'|=T} \left|\left| u(S)-u(S') \right|\right|_2.
+\]
+\label{Def:dmin_Tsum}
+\end{definition}
+
+%\begin{definition}
+%For a given binary code $\mc{C}$ and fixed $T$, we define the minimum Euclidean distance between $T$-sums of codewords as
+%\[
+%%\dmin(\mc{C},T)\defeq \min_{S\neq S',|S|=|S'|=T} \left|\left|\sum_{i\in S}\vec{a}_i-\sum_{i\in S'}\vec{a}_i \right|\right|_2,
+%\dmin(\mc{C},T)\defeq \min_{S\neq S',|S|=|S'|=T} \left|\left| u(S)-u(S') \right|\right|_2,
+%\]
+%%which counts the minimum Euclidean distance between the $T$-sums of codewords. Note that $\beta_T(\mc{C})>0$ implies $\dmin(\mc{C},T)=0$ and $\beta_T(\mc{C})=0$ implies $\dmin(\mc{C},T)\geq \dmin(\Lambda)$.
+%\label{Def:dmin_Tsum}
+%\end{definition}
+\vspace*{-3mm}
+%We will upper bound the probability of decoding error for the CS problem in terms of the parameters defined in Def.~\ref{Def:disjunctive_parameter_Tsum} and \ref{Def:dmin_Tsum}.
+%We observe that the set of $T$-sums of codewords is a subset of lattice formed from $\mc{C}_{\text{lin}}$ ie.., $\sum_{j=1}^{T}\vec{a}_{i_j}\in \Lambda ~ i_j\in[1:M_\mathrm{p}]$,
+%\begin{align*}
+%\sum_{j=1}^{T}\vec{a}_{i_j}&\in \Lambda ~~ i_j\in[1:M_\mathrm{p}]
+%\end{align*}
+%where $\Lambda =\{\mathbf{G}\mathbf{u},\mb{u}\in \mbb{Z}^{m}\}, \mb{G}$ is the generator matrix of the binary code $\mc{C}_{\text{lin}}$. 
+Also the following relation combining the three quantities above can be observed:
+\begin{equation}
+\dmin(S;\mc{C}) \begin{cases} \geq  \dmin(\Lambda) &~~\text{if } \beta_T(S)=0 \\
+=0 & \mbox{otherwise.}  \end{cases}
+\label{eqn:LatticeTsumconnection}
+\end{equation}
+
+
+We will upper bound the probability of decoding error for the CS problem in terms of the parameters defined in Def.~\ref{Def:disjunctive_parameter_Tsum} and \ref{Def:dmin_Tsum}.
+\begin{lemma}
+Let $\mc{C}\subseteq \mc{C}_{\text{lin}}$, where $\mc{C}_{\text{lin}}$ is a linear code containing $\mc{C}$, be a binary code with parameters $(n,M,\dmin)$. The probability of error of the bounded distance decoder in decoding $\vec{z}=\sum_{i\in S,|S|= T}\vec{c}_i+\vec{n}$ where $\vec{n}\sim \mc{N}(0,\sigma^2 \mathbf{I})$ can be upper bounded by
+\[
+Pr(\mc{E}_2)\leq \frac{\beta_T(\mc{C})}{\binom{|\mc{C}|}{T}}+ \left(\frac{e\dmin^2(\Lambda)}{4\sigma^2 N}e^{\frac{-\dmin(\Lambda)^2}{4\sigma^2 N}}\right)^{N/2}
+%\exp\left(-\frac{\dmin^2(\mc{C},T)}{2\sigma^2} \right),
+\]
+where $N$ is the blocklength of the code $\mc{C}$.
+%$K(\Lambda)$ is the maximum number of lattice points that are at a distance $\dmin(\Lambda)$ from any given point in the lattice.
+%\[
+%\beta_T(\mc{C})=|\{S:\exists S' \text{ s.t.} \sum_{i\in S}\vec{c}_i= \sum_{i\in S'}\vec{c}_i, |S|=|S'|=T,S\neq S'\}|.
+%\]
+%Here $\dmin(\Lambda)$ is the minimum distance of the lattice $\Lambda$ formed using $\mc{C}_{\text{lin}}$ and
+\label{Lem:CS_UpperBound}
+\end{lemma}
+\begin{proof}
+We recall that the error event $\mc{E}_2$ is defined as the event in which the CS decoder fails to decode the set $S$ exactly from
+\[
+\yv=\sum_{i\in S}\vec{a}_i+\vec{z}
+\]
+where $|S|=T$. When we condition event $\mc{E}_2$ on the $T$-sum of vectors from $S$ not being unique, which happens with probability $\frac{\beta_T(\mc{C})}{\binom{|\mc{C}|}{T}}$ the first part of the bound is obtained. If we assume that the $T$-sum of vectors from $S$ is unique, then the probability of error in decoding the set $S$ under bounded distance decoding can be upper bounded by  $\Pr \left[\left|\left|\vec{z}\right|\right|\geq \frac{\dmin(\Lambda)}{2}\right]$ which is equivalent to
+\begin{align*}
+ \Pr\left[ \sum_{i=1}^{N}z^2_i \geq \frac{\dmin^2(\Lambda)}{4\sigma^2}\right]
+\end{align*}
+where $z_i\sim \mc{N}(0,1)$. The result is obtained by using the right tail bounds of Chi-squared$•$ distribution.
+\end{proof}
+
+We should note that it is not easy to compute the values of $\beta_T(\mc{C})$ especially for higher values of $T$ or $M_\mathrm{p}$. Following the constant weight code argument in \cite{fan1995superimposed} we provide upper bounds, in terms of the minimum and maximum Hamming weights of the binary code $\mc{C}$, on the values of $T$ for which $\beta_T(\mc{C})=0$.
+\begin{lemma}
+A binary code $\mc{C}$ with parameters $(n,M,\dmin,\wmax)$ is also a disjunctive code of order $(n,M,T)$ for all $T$ satisfying
+\begin{align}
+T<\frac{\wmin}{\wmax-\dmin/2}.
+\label{eqn:mac_CS_mainbound}
+\end{align}
+where $\wmin$ and $\wmax$ respectively are the minimum and maximum Hamming weights of all codewords in the code. Note that the values of $\dmin$ and $\wmin$ are not necessarily equal for non-linear codes.
+\label{lem:mac_CS_mainbound}
+\end{lemma}
+The proof is provided in Appendix. We look at an example of sensing matrix $\mb{A}$ based on BCH code to consider how the results so far impact the probability of decoding error.
+\begin{example}
+Consider a binary BCH code $\mc{C}$ with parameters $(n,k,\dmin)=(63,10,27)$. Let the subset $\mc{C}_0\subset \mc{C}$ be obtained via the following decomposition:
+\[
+\mc{C}=\mc{C}_0 \cup \mc{C}_1 ~~\text{ such that } c\in \mc{C}_0 \iff \bar{c}\in\mc{C}_1,
+\]
+where $\bar{c}=\mathbf{1}\oplus c$ is the one's complement of $c$. For the code $\mc{C}_0\backslash \mathbf{0}$, $\mathbf{0}$ being the all-zero codeword, the weight and distance parameters are computed to be $(\wmin,\wmax,\dmin)=(27,36,27)$ for which the bound in Eqn. \eqref{eqn:mac_CS_mainbound} is $T\leq 1$. But numerically we observe that this code produces unique outputs from the MAC adder channel atleast upto values of $T=3$. The parameters $\beta_T(\mc{C}_0)$ and $\dmin(\mc{C}_0,T)$ are computed numerically for $T\leq 1$ and are given by :
+%minimum Euclidean distance between the $T$-sums of the codewords from $\mc{C}_0$ is 
+\begin{center}
+\begin{tabular}{ c c c }
+T  &  $\dmin$& $\beta_T(\mc{C})$\\
+\hline\hline
+1	&	$\sqrt{27}$	& 0\\
+2	& $\sqrt{27}$ & 0\\
+3  &  $\sqrt{27}$& 0 .
+\end{tabular}
+\end{center}
+\label{Ex:BCH_halfcode}
+\end{example}
+
+\subsection{Channel coding problem}
+In the following subsection we will look at the analysis of the $T$-GMAC channel coding problem and the bounds on performance. Although the information theoretic limits for the multiple access problem especially the symmetric rate region are well known these do not prove to be very useful for our purposes. It is because even though the block lengths we are interested in are considerably large the information length (or equivalently the code size for each user) is small. Therefore we will be considering the finite length performance especially we will use the finite length random coding bounds for the Gaussian multiple access channel derived by Polyanskiy \cite{polyanskiy17}. The following lemma is identical to Thm. 1 in \cite{polyanskiy17} except for the difference that we are interested in the case where error is declared if atleast one of the users messages is not in the decoded set (see event $\mc{E}_{3j}$) in contrast to \cite{polyanskiy17} where the error probability is defined similar to Eqn. \eqref{eqn:proboferrordefinition}.
+\begin{lemma}
+There exists an $(N',M_1)$ random-access code for $T$-user satisfying the power constraint $P$ (see Eqn. \eqref{eqn:mac_powerconstraint}) with the probability of error under maximum-likelihood decoder bounded by
+\begin{align}
+P (\mc{E}_3)&\leq \hFBL(N',M_\mathrm{c},T,P)\coleq	\sum_{t=1}^{T} \min(p_t,q_t)+p_0,
+\label{eqn:FBLbounds}
+\end{align}
+where
+\begin{align*}
+p_0 &=\frac{\binom{T}{2}}{M_\mathrm{c}}+T \Pr\left(\sum_{j=1}^{N'} Z_j^2>\frac{N'P}{P'}\right)\\
+p_t&=e^{-N'E(t)}\\
+E(t)&=\max_{0\leq \rho,\rho_1\leq 1}-\rho\rho_1tR_1-\rho_1R_2+E_0(\rho,\rho_1)\\
+E_0&=\rho_1 a+\frac{1}{2}\log (1-2b\rho_1)\\
+a&=\frac{\rho}{2}\log(1+2P't\lambda)+\frac{1}{2}\log(1+2P't\mu)\\
+b&=\rho\lambda-\frac{\mu}{1+2P't\mu},\mu=\frac{\rho\lambda}{1+2P't\lambda}\\
+\lambda&=\frac{P't-1+\sqrt{D}}{4(1+\rho_1\rho)P't}\\
+D&=(P't-1)^2+4P't\frac{1+\rho\rho_1}{1+\rho}\\
+R_1&=\frac{1}{N'}\log M_\mathrm{c}-\frac{1}{N'}\log(t!)
+\end{align*}
+\begin{align*}
+R_2&=\frac{1}{N'}\log \binom{T}{t}\\
+q_t&=\inf_\gamma \Pr[I_t\leq \gamma]+\exp\{N'(R_1+R_2)-\gamma\}.
+\end{align*}
+and
+\begin{align*}
+I_t&=\min_{|S_0|=t,S_0\subseteq [T]}N'C_t+\frac{\log e}{2}\left(\frac{||\sum_{i\in S_0} \vec{c}_i+\vec{z}||_2^2}{1+P't}-||\vec{z}||_2^2\right)\\
+C_t &=\frac{1}{2}\log (1+P't)\\
+\vec{z}&\sim \mc{N}(0,\mathbf{I}_{N'}).
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+In \cite{polyanskiy17}, author Y. Polyanskiy considers the $T$-user GMAC problem with power constraint $P$ according to Eqn. \eqref{eqn:mac_powerconstraint}. Let $W$ be the set of messages of size $T$, chosen by the users uniformly without replacement and $\hat{W}$ be the set of messages of size $T$ output by the decoder. The author considers a random Gaussian codebook generated from Gaussian process $\mc{N}(0,P'\mathbf{I}_n)$,  $(P'<P)$, and maximum-likelihood decoder and shows that
+\begin{align}
+\Pr(|W\backslash \hat{W}|=t)=\min(p_t,q_t).
+\label{Eqn:Polyanskiy_miniresult}
+\end{align}
+It was also shown that $p_0$ is the total variation distance of a random variable of maximum value $1$ when the measure under which a) the messages are sampled \textit{independently} rather than \textit{without replacement} and b) the codeword is set to zero-vector if the total power of the random codeword is larger than $nP$ is replaced by the measure considered in showing Eqn. \eqref{Eqn:Polyanskiy_miniresult} i.e., messages sampled independently and disregarding the strict power constraint on each codeword. These results along with the observation that
+\begin{align*}
+\Pr(\mc{E}_3)&=1-\prod_{i=1}^{t}\left(1-\Pr(\hat{w}_i\notin\hat{W})\right)+p_0\\
+					&\leq\sum_{t=1}^{T} \Pr(|S\backslash\hat{S}|=t)
+\end{align*}
+completes the proof.
+\end{proof}
+
+\subsection{Symmetric Interference Cancellation}
+\label{sec:SICanalysis}
+In the channel coding literature for LDPC codes on binary erasure channel and sparse signals via Tanner graphs literature the symmetric interference cancellation is traditionally studied under the name of peeling decoder which is an iterative process in which if a right node (slot in our case) is connected to only one left node (user) the corresponding left node and all its connections are peeled off from the bipartite graph. This is essentially the symmetric interference cancellation process described in Sec. \ref{Sec:SystemModel} except that we peel off the connections from a right node if the number of variable nodes connected is less than or equal to $T$ instead of $1$. Although density evolution methods are well studied to predict the performance of such decoding processes all the existing density evolution methods are for values of $T=1$. Before we address this issue let us define the considered peeling process precisely.
+\begin{definition}[$T$-peeling]
+\label{def:T-peeling_process}
+We define an ideal SIC decoder as the decoder in which at each slot, if the number of users transmitted and are still undecoded is less than or equal to $T$, then the remaining undecoded users in that slot are decoded with zero error. In other words in the ideal SIC process there are no hash collisions in any slot and the channel and sparse signal decoders are assumed to be zero-error. This process proceeds iteratively until all the users are decoded or there are no slots with undecoded users less than or equal to $T$. We also refer to this as $T$-peeling process.
+\end{definition}
+
+\begin{lemma}[Density Evolution (DE)]
+Let the left and right degree distributions (d.d.) of the bipartite graph from the edge perspective be $\lambda(x)$ and $\rho(x)$. Then let $x_{t}$ be the probability that an edge in the graph, in iteration $t$ of the $T$-peeling process, is connected to a left node that is undecoded yet. Then the recurrence relation for $x_t$ corresponding to the $T$-peeling process is given by
+\begin{align}
+y_{t}&=\left[\sum_{r=1}^{T} \rho_r +\sum_{r>T} \rho_r\left( \sum_{t=0}^{T-1}\binom{r-1}{t}(1-x_t)^{r-1-t} x_t^{t}\right) \right],\label{eqn:DE_Tpeeling_check}\\
+x_{t+1}&=\lambda(1-y_t).\label{eqn:DE_Tpeeling_bit}
+\end{align}
+\label{lem:DE_Tpeeling}
+\end{lemma}
+\begin{proof}
+In the context of low density parity check(LDPC) codes the bipartite graph corresponds to the parity check matrix where the left and right nodes represent the bits of the codeword and the parity check equations respectively. If we consider an LDPC code under binary erasure channel where each bit is erased with probability $\epsilon$, under the assumption that the bipartite graph is a tree, the probability that a random edge in the graph is an erasure in iteration $t$ of the peeling process is given by \cite{richardson2008modern}
+\begin{align}
+y_{t}&=\sum_{r=1}^{r_{\max}} \rho_r (1-x_t)^{r-1}, \label{eqn:DE_LDPC_check}\\
+x_{t+1}&=\epsilon \lambda(1-y_t).\label{eqn:DE_LDPC_bit}
+\end{align}
+Eqn. \eqref{eqn:DE_LDPC_check} is due to the observation that all the incoming messages at a check node are independent, due to the tree assumption, and the outgoing message on an edge from a check node of degree $r$ is a non-erasure if and only if all the incoming messages are non-erasures. For degree distributions with finite maximum degree on the left and right it is shown that a graph chosen randomly from the ensemble $(N,\lambda,\rho)$ is a tree with probability approaching $1$ asymptotically in blocklength of the code.
+
+Now if we consider an edge $e$ connected to check node of degree $r$ in the $T$-peeling process, the outgoing message is a non-erasure if and only if there are at most $T-1$ erasures in the remaining $r-1$ incoming edges. Thus the probability that the outgoing message from a check node of degree $r$ is non-erasure, denoted by $y_{t,r}$, if the incoming message on the remaining $r-1$ edges is an erasure with probability $x_t$ is equal to
+%$1-\binom{r-1}{t}(1-x_t)^{r-1-t} x_t^{t}$ if $r>T$ else it is equal to $0$.
+\begin{align*}
+y_{t,r}&=\sum_{t=0}^{T-1}\binom{r-1}{t}(1-x_t)^{r-1-t} x_t^{t}  ~&\text{if } r>T\\
+&=1 ~&\text{else if } r\leq T.
+\end{align*}
+Averaging over all edges where an edge is connected to a check node of degree $r$ with probability $\rho_r$ gives us Eqn. \eqref{eqn:DE_Tpeeling_check}.
+\end{proof}
+
+Let $L(x)=\sum_{i=1}^{l_{\max}} L_i x^i$ be the left d.d according to which the the users choose their repetition parameters as described in Sec. \ref{sec:Txpolicy_TannerGraph} i.e., $\Pr(L_{w}=i)=L_i$. Also let the average left degree of this distribution be $l_{\text{avg}}=\sum_i iL_i$. Then according to our transmission policy the right d.d. $R(x)$ is Binomial distributed with parameters $(\Ka l_{\text{avg}},1/V)$  and in the limit $\Ka\rightarrow \infty$ $R(x)$ can be approximated as Poisson distribution with parameter $r_{\text{avg}}=\frac{\Ka l_{\text{avg}}}{V}$. Thus, asymptotically in $\Ka$, it can be seen that $R(x)=e^{-r_{\text{avg}}(1-x)}$ and $\rho(x)=R'(x)/R'(1)=e^{-r_{\text{avg}}(1-x)}$. For more details refer to \cite{narayanan2012iterative}.
+
+%Let the left d.d from node  and edge perspective be $L(x)$ and $\lambda(x)$ respectively.
+\begin{lemma} For $V=\alpha K_a$ where $\alpha$ is fixed the asymptotic performance of our transmission scheme under the ideal SIC decoding process can be characterized by %and in the limit $\Ka\rightarrow\infty$, the SIC process recovers atleast $(1-\epsilon_0)$ fraction of the users with high probability for values of
+\begin{align*}
+\lim_{\Ka\rightarrow \infty} \Pr(\mc{E}_{\text{SIC}}(\Ka,T))&=L(1-y_{\infty})\notag\\
+\text{ where } y_{\infty} &=\lim_{t\rightarrow\infty} y_t,
+\end{align*}
+and $\Pr(\mc{E}_{\text{SIC}}(\Ka,T))$ is the probability that the ideal SIC process does not recover a user given there  are $K_a$ users. Here the initial condition is $x_0=1$ and the evolution of $x_t,y_t$ is given by the DE relationship in Lem. \ref{lem:DE_Tpeeling}.
+\label{lem:asymptotic_SIC}
+\end{lemma}
+
+\begin{figure}[h!]
+  \centering
+  \resizebox{0.6\textwidth}{!}{\input{../Figures/Tpeeling_DEvBP.tex}}
+  \caption{$\alpha^*_{\text{DE}}$ is the density evolution threshold computed for $L(x)=x^2$ and $T=\{2,4\}$ from Lemmma. \eqref{lem:DE_Tpeeling}. We validate the threshold behavior by evaluating the $T$-peeling performance via Monte Carlo simulations for increasing blocklengths. We observe that the simulations indeed confirm the threshold behavior for values of $\alpha$ above the DE threshold.}
+  \label{fig:DEvBP}
+\end{figure}
+
+As we can see from Eqns. \eqref{eqn:DE_Tpeeling_bit} and \eqref{eqn:DE_Tpeeling_check} that $x_t=0$ is a fixed point if and only if $\lambda_0=0$. This leads us to the following result characterizing he threshold behavior of the system.
+\begin{definition}[Density Evolution Threshold]
+If $L_1=0$ we define the density evolution threshold $\alpha^*_{\text{DE}}$ to be
+\[
+\alpha^*_{\text{DE}}\defeq \inf \{\alpha: \lim_{\Ka\rightarrow \infty} \Pr(\mc{E}_{\text{SIC}}(\Ka,T))=0\}.
+\]
+\label{def:DE_threshold}
+\end{definition}
+
+We validate the threshold behavior via simulations.  For a fixed left d.d $L(x)=x^2$ we first compute the density evolution thresholds according to Def.~\ref{def:DE_threshold} to be $0.5975$ and $0.2949$ for $T=2,4$ respectively. We then perform Monte Carlo simulations where each time a random graph is chosen as described in Sec. \ref{sec:Txpolicy_TannerGraph} for increasing values of $\Ka$ and plot the performance as we incrase the number of slots. The results are presented in Fig.~\ref{fig:DEvBP}. In both the cases the threshold behavior can be clearly seen that as $\Ka$ increases the probability of a user not being decoded decreases sharply for values of $\alpha>\alpha_{\text{DE}}^*$ and remains fairly constant for values of $\alpha\leq\alpha_{\text{DE}}^*$.
+
+\section{Numerical Results}
+In this section we evaluate the overall performance of the proposed scheme and compare with the other schemes known in the literature. In \cite{ordentlich17} apart from proposing a low complexity coding scheme for the uncoordinated Gaussian multiple access the authors Ordentlich and Polyanskiy also compare the performance of their proposed scheme with ALOHA, treating inference as noise (TIN), and the random coding achievability bounds. To make the comparison fair and convenient we pick the same parameters. We fix the number of bits each user intend to transmit $B=100$,  total number of channel uses $n=30,000$, total number of active users $\Ka\in [25:300]$ and the maximum per user error probability $P_e\leq \epsilon=0.05$.
+
+\begin{remark}
+Note that in Lemma. \ref{lem:hashCollision} the probability of preamble message collision scales only as $\Pr(\mc{E}_1)\propto 1/M_\mathrm{p}$ and if the desired error probability is less than $0.05$ which requires $V\Pr(\mc{E}_1)\ll 0.05$ which in turn requires $M_\mathrm{p}$ to be a large value. Therefore we try to circumvent this issue by not counting a preamble collision in a slot as an error instead we modify the scheme where sparse signal decoder outputs a collision if the output set of messages of size $T$ do not sufficiently explain the received vector i.e., if
+\[
+||\vec{y}-\sum_{i\in\widehat{\mc{N}}}\vec{a}_i||_2^2 >J/2
+\]
+then we do not decode this slot in this iteration. In our numerical simulations we update the definitions of $\mc{E}_{T\text{-peeling}}$ and $\mc{E}_2$ accordingly where $\mc{E}_{T\text{-peeling}}$ corresponds to the peeling process where a slot is not peeled off if it has atleast two users connected with identical preamble messages and $\mc{E}_2$  corresponds to the CS decoder error event where two or more users may have colliding preambles. With that the upper bound for error probability is modified to
+\begin{align}
+P_e\leq \Pr(\mc{E}_{T\text{-peeling}})+V\left(\Pr(\mc{E}_2)+\Pr(\mc{E}_3)\right).
+\label{eqn:errPrb_split_modified}
+\end{align}
+\end{remark}
+
+ With the parameters $B,n,\Ka,P_e$ fixed our proposed scheme has the following design parameters:
+\begin{enumerate}
+\item The maximum number of users to be jointly decoded at a slot $T\in\{2,4\}$.
+\item From Eqn. \ref{eqn:errPrb_split_modified} we want $\Pr(\mc{E}_{T\text{-peeling}})+V\left(\Pr(\mc{E}_2)+\Pr(\mc{E}_3)\right)\leq 0.05$. Therefore we set the target error probabilities for the individual events as $\Pr(\mc{E}_{T\text{-peeling}})\leq \epsilon_0=0.04$ and $\Pr(\mc{E}_i)\leq 0.01/2/V$, $i=1,2$.
+\item  The left d.d is chosen to be $L(x)=\lambda x+(1-\lambda)x^2$. Although in Sec. \ref{sec:SICanalysis}we remarked that if the minimum left degree is one then zero is not a fixed point for the DE equations or in other words, in the asymptotic regime, we will have error floors rather than threshold behavior. But the effects of a minimum left degree of one in the finite number of users regime are not very clear. The free parameter is chosen from the set $\lambda\in\{0,0.1,\ldots,0.9,1\}$.
+\item We choose $B_\mathrm{p}=9$ and $B_\mathrm{c}=B-B_\mathrm{p}=91$. Note that $M_\mathrm{p}=2^{B_\mathrm{p}}=512$ is the size of the sensing matrix.
+\item Let $\mc{C}_0$ be the binary code of size $2^9$ described in Ex.~\ref{Ex:BCH_halfcode}.
+% Let binary code $\mc{C}$ be the BCH$(63,10)$ code of size $1024$. We obtain a subset of size $M_\mathrm{p}$ by the following decomposition
+%\[
+%\mc{C}=\mc{C}_1\cup \mc{C}_2 ~~\text{ such that } c\in \mc{C}_1 \iff \bar{c}\in\mc{C}_2,
+%\]
+%where $\bar{c}=\mathbf{1}\oplus c$ i.e., the one's complement of $c$.
+We choose the sensing matrix of size $J\times M_\mathrm{p}=63\times 512$ as
+\begin{align}
+\mathbf{A}=[\vec{a}_1,\vec{a}_2,\ldots,\vec{a}_{M_\mathrm{p}}],
+\label{eqn:sensingMatrix_defn}
+\end{align}
+where $\vec{a}_i=\sqrt{P_2}(1-2\vec{c}_i), \vec{c}_i\in\mc{C}_1$, i.e., $a_{ij}\in\{-\sqrt{P_2},\sqrt{P_2}\}$.
+\end{enumerate}
+
+\vspace{2pt}
+For a fixed $T$ the performance of the overall scheme i.e., the minimum $E_b/N_0$ required for achieving $P_e\leq\epsilon$ is computed as following:
+\begin{align}
+\frac{E_b}{N_0}=\min_{\lambda} \frac{(2-\lambda)(JP_2+N'P_1)}{2B}
+\label{eqn:EbN0_computation}
+\end{align}
+where
+\begin{align}
+P_2&\coleq \arg\min_{P_2}~\Pr(\mc{E}_3)\leq \frac{\epsilon-\epsilon_0}{2V}\label{eqn:PrE3_sims}\\
+P_1&\coleq \arg\min_{P_1}~\hFBL(N',B_\mathrm{c},T,P_1))\leq \frac{\epsilon-\epsilon_0}{2V}\qquad (\text{see Eqn. }\eqref{eqn:FBLbounds})  \label{eqn:PrFBL_sims}\\
+N'&\coleq\tilde{N}-J\notag\\
+\tilde{N}&\coleq\left\lfloor \frac{n}{V}\right\rfloor \notag\\
+V&\coleq \arg\min_{V}~\Pr(\mc{E}_{T\text{-peeling}}(\Ka,V,T))\leq \epsilon_0\label{eqn:PrESIC_sims}.
+\end{align}
+A remark on how we compute $\Pr(\mc{E}_3)$ is in order. With the sensing matrix fixed, as described in Eqn. \eqref{eqn:sensingMatrix_defn}, the bound given in Lem.~\ref{Lem:CS_UpperBound} is firstly difficult to compute especially the parameters $K(\Lambda),\beta_T(\Lambda)$ and secondly it is not very tight in the non-asymptotic regime when compared with the results obtained through numerical simulations. Specifically, for simulations, we choose $T$ random preamble message indices independently from the available $M_\mathrm{p}$ indices and form the measurement vector. Then we use a two-stage decoder as already described in Sec. \ref{sec:CS_decoder} where for the first stage we employ a non-negative least squares algorithm and compute the probability of error $\Pr(\mc{E}_3)$ in Eqn. \eqref{eqn:PrE3_sims} from atleast $10^5$ simulations. Similarly for $\Pr(\mc{E}_{T\text{-peeling}})$ in Eqn. \eqref{eqn:PrESIC_sims} we rely on numerical simulations where we implement the $T$-peeling process described earlier in Def. \ref{def:T-peeling_process}. The results are presented in Fig. \ref{fig:simulationresults30000}.
+
+In Fig.~\ref{fig:simulationresults30000} the curves labelled $T=2$, $T=4$ correspond to the performance of our proposed scheme assuming the existence of a coding scheme for the $T$-user multiple access channel that achieves the finite block length(FBL) bounds in \cite{polyanskiy17}. The curve labelled 4-fold ALOHA is the performance of the 4-fold ALOHA scheme from \cite{ordentlich17} which also assumes exactly the same code. It can be seen that for large values of $\Ka$, our proposed scheme with $T=4$ substantially outperforms the 4-fold ALOHA and this gain is due to the SIC. The curve labelled OP-Exact is a reproduction of the results from \cite{ordentlich17} of the practical scheme introduced there. The x mark represents our proposed scheme where for the channel coding part instead of the FBL bounds we use the actual simulation results. We use a rate-1/4 $(364,91)$ LDPC code obtained from repeating every coded bit of (3,6) LDPC code twice and a message passing decoder for $T=2$. It can be seen that the simulation results with the $(3,6)$ LDPC code are only 0.5~dB away from the curve corresponding to $T=2$ showing that the pragmatic coding scheme can perform close to the finite length bounds. It can also be seen that our proposed scheme provides substantial gain over the results in \cite{ordentlich17}. The performance of OP-Exact is already substantially better than many other multiple access schemes and our proposed scheme can potentially provide more than 14~dB improvement over OP-Exact for large values of $\Ka$ and is only about 7~dB away from Polyanskiy's FBL bound \cite{polyanskiy17}. The slope of the $T=4$ curve also is much closer to the finite block length bound which is encouraging for larger values of $K_a$. 
+
+
+%\subsection*{Further comments:}
+%\begin{enumerate}
+%\item In bounding the error probability of GMAC decoder in Eqn. \eqref{eqn:PrFBL_sims} we employ the finite blocklength bounds instead of the actual simulations using the LDPC codes as described in encoding section. As we can see from Fig. \ref{fig:BP_simulations} these family of codes at moderate blocklengths $8\times 10^3-10^5$ under the computationally efficient parallel BP decoder have performance very close to the Shannon limit. But as widely known these codes are not the best choice of codes at the blocklengths in consideration for the problem i.e., $\approx 300-1000$.
+%\item
+ In the proposed encoding scheme, for $L(x)=\lambda x+(1-\lambda)x^2$ each user may transmit once or twice depending on the message index chosen. We need to point out that the power constraint employed is an average over all the message indices i.e
+\[
+\mathbb{E}_{w}\left[||\tilde{\vec{c}}_w||_2^2\right]=(2-\lambda)P.
+\]
+%We also present the results when the power constraint is uniform across all the codewords in the code. Fig. XXX
+%\end{enumerate}
+
+
+\begin{figure}[h]
+\centering
+ \resizebox{0.6\textwidth}{!}{\input{../Figures/sim_temp.tex}}
+  \caption{Minimum $E_b/N_0$ required as a function of number of users. The parameters chosen are $\epsilon_0=0.04$ and $\epsilon=0.05$.  This results in a total $\Pr_e\leq 0.05(=\epsilon)$ similar to Fog. \ref{fig:simulationresults30000}.}
+  \label{fig:simulationresults_new}
+%\end{minipage}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+ \resizebox{0.6\textwidth}{!}{\input{../Figures/sim_results_30000_0.04_0.01.tex}}
+  \caption{Minimum $E_b/N_0$ required as a function of number of users. For the cases $ T=2,4$ and the $4$-fold ALOHA, the parameters chosen are $\epsilon_0=0.04$ and $\epsilon=0.05$.  This results in a total $\Pr_e\leq 0.05(=\epsilon)$.}
+  \label{fig:simulationresults30000}
+%\end{minipage}
+\end{figure}
+
+
+%\begin{figure}[h]
+%  \centering
+%  \resizebox{0.65\textwidth}{!}{\input{../Figures/LDPC_two_users.tex}}
+%  \caption{Simulation results for two user Gaussian MAC channel where both the users employ the same LDPC code book where each codeword is interleaved according to a random permutation chosen based on the message. The results are presented for rates-$1/6$ and $1/4$. We first construct a $(3,6)$ rate-$1/2$ code via Progressive Edge Growth algorithm \cite{hu2001progressive} that maximizes the girth of the Tanner graph. Then we achieve the lower rate $1/4,1/6$ codes by repeating the codewords two and three times respectively.
+%}
+%  \label{fig:BP_simulations}
+%\end{figure}
+
+\bibliographystyle{ieeetr}
+\bibliography{IEEEabrv,MACcollision}
+
+\appendix
+\section{Disjunctive codes}
+In the following subsection we first present the main results from \cite{fan1995superimposed} that enabled the authors to show that constant weight codes are a subclass of disjunctive code. Then we follow it up with our result where we relax the constant weight constraint on the code to \textit{nearly} constant weight.
+\begin{definition}
+The maximum correlation $c$ of a binary code $\mc{C}$ is defined as
+\[
+c=\max_{\vec{c}_i,\vec{c}_j\in \mc{C},~i\neq j} < \vec{c}_i,\vec{c}_j>.
+\]
+\end{definition}
+
+\begin{definition}
+A binary vector $\vec{c}=[c(1),c(2),\ldots,c(n)]$ is said to be included in a vector  $\vec{z}=[z(1),z(2),\ldots,z(n)]$ if and only if $z(i)\geq c(i)~\forall i$.
+\end{definition}
+
+\begin{definition}
+A binary code $\mc{C}$ with length $n$, size $M$ is said to be a disjunctive code of order $T$ if each subset $S\subset \mc{C}$ with size $|S|\leq T$ has the property that the vector $\vec{z}$ includes only those codewords in $\mc{C}$ that belong to $S$ where
+\begin{equation}
+\vec{z}=\sum_{\vec{c}_i\in S}\vec{c}_i
+\label{eqn:mac_adder}
+\end{equation}
+is the output of the multiple access real adder channel. We denote a disjunctive code by $D(n,M,T)$.
+\end{definition}
+
+\begin{definition}
+A constant weight(CW) binary code is one in which all the codewords have equal weight $w$. For a CW code, the minimum distance $d_{\text{min}}$ and the maximum correlation $c$ are related as
+\[
+2c=2w-\dmin.
+\]
+We denote a constant code by parameters CW$(n,M,w,c)$ where $n, M$ are blocklength and size of the code respectively.
+\end{definition}
+\begin{lemma}[\cite{fan1995superimposed} Theorem 1]
+\label{lem:fandisjunctive_code}
+A constant weight binary code $\mc{C}$ with parameters $(n,M,w,c)$ is also a disjunctive code of order $(n,M,T)$ for all $T$ satisfying
+\[
+T<\frac{w}{c}.
+\]
+\end{lemma}
+
+\begin{example}
+Consider a Reed-Solomon code $RS(n,k,\dmin)=RS(7,3,5)$. As described in \cite{fan1995superimposed} we construct a constant weight code by mapping each symbol in a codeword from GF($2^3$) to a length $8$ binary vector of weight one
+\begin{align*}
+0&\rightarrow 10000000\\
+1&\rightarrow 01000000\\
+&\cdots	\\
+7&\rightarrow 00000001.
+\end{align*}
+Note that this code has parameters $n=56,M=2^9, w=7,\dmin=10$ which implies $c=w-\dmin/2=2$. Thus any $T$-sum of the codewords from this CW code is unique for all $T\leq 3<\frac{w}{c}$.
+\end{example}
+
+Now we relax the constant weight constraint in Lemma. \ref{lem:fandisjunctive_code} and give the corresponding bounds on the disjunctive code parameters.
+
+\begin{lemma}
+\label{lem:maxCorr_nonconstwtcode}
+For a binary code $\mc{C}$ with parameters $(n,M,\dmin,\wmax)$, where $\wmax$ is the maximum Hamming weight of all the codewords in the code, the maximum correlation between any two codewords can be given by
+\[
+c\leq \wmax-\dmin/2.
+\]
+\end{lemma}
+\begin{proof}
+For any two codewords $\vec{c}_i, \vec{c}_j\in\mc{C}$ the relationship between correlation, Hamming distance and sum of Hamming weights can be given by
+\[
+d_H(\vec{c}_i,\vec{c}_j)+2c(\vec{c}_i,\vec{c}_j)=w_H(\vec{c}_i)+w_H(\vec{c}_j)
+\]
+where $d_H$ and $w_H$ are the Hamming distance and weights respectively. By substituting the lower and upper bounds $\dmin$ and $\wmax$ for the two parameters gives us the required upper bound on maximum correlation of any two codewords of the binary code.
+\end{proof}
+\begin{proof}[Proof of Lem.~\ref{lem:mac_CS_mainbound}]
+Without loss of generality consider a set $S=\{\vec{c}_1,\vec{c}_2,\ldots, \vec{c}_T\}$ of codewords of size $T$ and let the output of the real adder multiple access channel, given by Eqn. \eqref{eqn:mac_adder}, be $\vec{z}$. Let us consider codeword $\vec{c}_e\in\mc{C}\backslash S$ and look at the event in which $\vec{z}$ does not include $\vec{c}_e$. Let $s_{ie}\coleq\{k:c_{i}(k)=c_{e}(k)=1\}~\forall i\leq T$ and  $s_{e}=\{k: c_{e}(k)=1\}$. Since $\vec{z}=\sum_{i\leq T}\vec{c}_i\implies z(k)\geq 1 ~\forall k\in \cup s_{ie}$. Hence the condition that needs to be satisfied for $\vec{z}$ to not include $\vec{c}_e$ is that $\exists k: k\in s_e\backslash \cup s_{ie}$ which translates to
+\begin{align}
+ |\cup s_{ie}|< |s_e|.\label{eqn:subsetineq_CSproof}
+\end{align}
+%\cup s_{ie} &\subset s_e \notag\\
+The inequality in Eq. \eqref{eqn:subsetineq_CSproof} is satisfied when $\sum_i c(\vec{c}_i,\vec{c}_e)<w_H(c_e)$ which is implied by the condition $Tc_{\max}<\wmin$ and from Lemma. \ref{lem:maxCorr_nonconstwtcode} the required result follows.
+\end{proof}
+
+\end{document} 

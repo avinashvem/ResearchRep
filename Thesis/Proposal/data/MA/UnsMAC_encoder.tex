@@ -1,0 +1,31 @@
+\begin{tikzpicture}
+
+\def\fsize{\normalsize}
+\def\fsizes{\scriptsize}
+\def\ext{1}
+%Message node and final codeword Rectangle
+\node[font=\fsize,draw,rectangle] (msg) at (3,1) {\fsizes $w=(w_c,w_p)$};
+\node[rectangle, draw, minimum width=2.7in,thick] (codeword) at (3+0.5\ext,1+2*\ext) {\fsizes $\pi_{\tau_{w_p}}(\vec{c}_{w_c})$};
+%$c_{w}(\pi_{\tau_{w_p}^1}),c_{w}(\pi_{\tau_{w_p}^2}),\ldots,c_{w}(\pi_{\tau_{w_p}})$};
+
+
+% From messages to Ch. Encoder and Compressive Sensing Encoder
+\draw [->] (msg.east) -- +(0:\ext) node[midway, above] {\fsizes $w_c$} node[draw, inner sep=5pt,at end, anchor= west] (encoder) {\fsizes Ch. Encoder} ;
+\draw [->] (msg.west) -- +(0:-\ext) node[midway, above] {\fsizes  $w_p$} node[draw, inner sep=5pt,at end, anchor= east] (CSencoder) {\fsizes $\mathbf{A}$}; %{Sensing Matrix $\mathbf{A}$};
+
+%From Encoder to north
+\path (encoder.north)-- +(90:0.6*\ext) node[draw, rectangle,fill=white](CWperm){\fsizes Permute};
+\draw[->] (encoder.north)-- (CWperm.south) node[midway,right]{\fsizes $\vec{c}_{w_c}$};
+\draw[->](CWperm.north)-- (CWperm.north |- codeword.south) node[midway, right]{\fsizes $\pi_{\tau_{w_p}}(\vec{c}_{w_c})$};
+
+%From CSEncoder to north
+\draw[->](CSencoder.north)-- (CSencoder.north |- codeword.south) node[midway, left]{\fsizes  $\vec{a}^T_{w_p}$};
+
+%Partitioning the Tx codeword block
+\path let \p{A}=(codeword) in (3-1.7*\ext,\y{A})node (partition){} -- (partition |- codeword.north);
+\draw (partition |- codeword.north) -- (partition |- codeword.south) ;
+\node () at (partition -| CSencoder) {\fsizes $\vec{a}_{w_p}$};
+\node [above] at (codeword.north) {$\vec{\tilde{c}}_{w}$};
+
+\draw [->] (msg.north) -- (msg.north |- CWperm.west)node[midway,left]{\fsizes $w_p$} -- (CWperm.west) node[midway,above] {\fsizes $\pi_{\tau_{w_p}}=f(w_p)$};
+\end{tikzpicture} 

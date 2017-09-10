@@ -1,56 +1,5 @@
-\documentclass[conference,twocolumn]{IEEEtran}
+%We consider the problem of non-adaptive group testing of $N$ items out of which $K$ or less items are known to be defective. We propose a testing scheme based on left-{\em and}-right-regular sparse-graph codes and a simple iterative decoder. We show that for any arbitrarily small $\epsilon>0$ our scheme requires only $m=\ceps K\log \frac{c_1N}{K}$ tests to recover $(1-\epsilon)$ fraction of the defective items with high probability (w.h.p) i.e., with probability approaching $1$ asymptotically in $N$ and $K$, where the value of constants $\ceps$ and $\ell$ are a function of the desired error floor $\epsilon$ and constant $c_1=\frac{\ell}{\ceps}$ (observed to be approximately equal to 1 for various values of $\epsilon$). More importantly the iterative decoding algorithm has a sub-linear computational complexity of $\mc{O}(K\log \frac{N}{K})$ which is known to be optimal. Also for $m=c_2 K\log K\log \frac{N}{K}$ tests our scheme recovers the \textit{whole} set of defective items w.h.p. These results are valid for both noiseless and noisy versions of the problem as long as the number of defective items scale sub-linearly with the total number of items, i.e., $K=o(N)$. The simulation results validate the theoretical results by showing a substantial improvement in the number of tests required when compared to the testing scheme based on left-regular sparse-graphs.
 
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{fontenc,enumerate}
-\usepackage{blindtext,color}
-\usepackage{etoolbox}
-\usepackage{graphicx}
-\usepackage{tikz,pgfplots}
-\usetikzlibrary{arrows,shapes,chains,matrix,positioning,scopes,patterns,fit}
-\usetikzlibrary{decorations.markings,decorations.pathmorphing,backgrounds}
-\usetikzlibrary{external}
-\usepackage{psfrag,epsfig,epsf,latexsym,hhline,multirow}
-\usepgflibrary{shapes}
-\pgfplotsset{compat=newest}
-\pgfplotsset{plot coordinates/math parser=false}
-\interdisplaylinepenalty=2500
-
-\newcommand{\mc}[1]{\mathcal{#1}}
-\newcommand{\mbf}[1]{\mathbf{#1}}
-\newcommand{\coleq}{\mathrel{\mathop:}=}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\tx}[1]{\text{#1}}
-\newcommand{\abs}[1]{\lvert{#1}\rvert}
-\newcommand{\iid}{i.\@i.\@d.\ }
-\newcommand{\ceil}[1]{\lceil{#1}\rceil}
-\newcommand{\floor}[1]{\lfloor{#1}\rfloor}
-
-\theoremstyle{definition}\newtheorem{lemma}{Lemma}
-\theoremstyle{definition}\newtheorem{proposition}[lemma]{Proposition}
-\theoremstyle{definition}\newtheorem{theorem}[lemma]{Theorem}
-\theoremstyle{definition}\newtheorem{corollary}[lemma]{Corollary}
-\newtheorem{definition}[lemma]{Definition}
-\newtheorem{Example}[lemma]{Example}
-\newtheorem{Remark}[lemma]{Remark}
-
-\DeclareMathOperator{\diag}{diag}
-\DeclareMathOperator{\var}{var}
-
-\setlength{\parindent}{20pt}
-\parskip=5pt
-\def\ceps{c_{\epsilon}}
-
-\begin{document}
-\title{Group Testing using left-and-right-regular sparse-graph codes}
-\author{Avinash Vem, Nagaraj T. Janakiraman, Krishna R. Narayanan\\
-Department of Electrical and Computer Engineering \\
-Texas A\&M University\\
-{\tt\small {\{vemavinash,tjnagaraj,krn\}@tamu.edu} }}
-
-\maketitle
-\begin{abstract}
-We consider the problem of non-adaptive group testing of $N$ items out of which $K$ or less items are known to be defective. We propose a testing scheme based on left-{\em and}-right-regular sparse-graph codes and a simple iterative decoder. We show that for any arbitrarily small $\epsilon>0$ our scheme requires only $m=\ceps K\log \frac{c_1N}{K}$ tests to recover $(1-\epsilon)$ fraction of the defective items with high probability (w.h.p) i.e., with probability approaching $1$ asymptotically in $N$ and $K$, where the value of constants $\ceps$ and $\ell$ are a function of the desired error floor $\epsilon$ and constant $c_1=\frac{\ell}{\ceps}$ (observed to be approximately equal to 1 for various values of $\epsilon$). More importantly the iterative decoding algorithm has a sub-linear computational complexity of $\mc{O}(K\log \frac{N}{K})$ which is known to be optimal. Also for $m=c_2 K\log K\log \frac{N}{K}$ tests our scheme recovers the \textit{whole} set of defective items w.h.p. These results are valid for both noiseless and noisy versions of the problem as long as the number of defective items scale sub-linearly with the total number of items, i.e., $K=o(N)$. The simulation results validate the theoretical results by showing a substantial improvement in the number of tests required when compared to the testing scheme based on left-regular sparse-graphs.
-\end{abstract}
 
 \section{Introduction}
 The problem of Group Testing (GT) refers to testing a large population of $N$ items for $K$ defective items (or sick people) where grouping multiple items together for a single test is possible. The output of the test is \textit{negative} if all the grouped items are non-defective or else the output is \textit{positive.} In the scenario when $K \ll N$, the objective of GT is to design the testing scheme such that the total number of tests $m$ to be performed is minimized.
@@ -126,9 +75,9 @@ Before describing the decoding process let us review some terminology. A bin is 
 The overall group testing decoder comprises of these two decoders working in conjunction as follows. In the first and foremost step, given the $m$ tests output, the bin decoder is applied on the $M$ bins and the set of variable nodes that are connected to singletons are decoded and output. We denote the decoded set of non-zero variable nodes as $\mc{D}$. Now in an iterative manner, at each iteration, a variable node from $\mc{D}$ is considered and the bin decoder is applied on the bins connected to this variable node.
 The main idea is that if one of these bins is detected as a resolvable double-ton thus resulting in decoding a new non-zero variable node. The considered variable node in the previous iteration is moved from $\mc{D}$ to a set of peeled off variable nodes $\mc{P}$ and the newly decoded non-zero variable node in the previous iteration, if any, will be placed in set $\mc{D}$ and continue to the next iteration. The decoder is terminated when $\mc{D}$ is empty and is declared successful if the set $\mc{P}$ equals the set of defective items. 
 
-\begin{Remark}
+\begin{remark}
  Note that we are not literally peeling off the decoded nodes from the graph because of the \textit{non-linear} OR operation on the non-zero variable nodes at each bin thus preventing us in subtracting the effect of the non-zero node from the measurements of the bin node unlike in the problems of compressed sensing or LDPC codes on binary erasure channel.
-\end{Remark}
+\end{remark}
 
 Now we state the series of lemmas and theorems from \cite{lee2015saffron} that enabled the authors to show that their SAFFRON scheme with the described peeling decoder solves the group testing problem with $c\cdot K\log N$ tests and $\mc{O}(K\log N)$ computational complexity.
 
@@ -196,7 +145,7 @@ We define $\mc{G}_{\ell,r}(N,M)$ to be the ensemble of left-and-right-regular gr
  \end{align}
 Note that $\mbf{A}_i$ is defined by placing the $r$ columns of $\mbf{U}$ at the $r$ non-zero indices of $\mbf{t}_i$ and the remaining are padded with zero columns. We can observe that the total number of tests for this scheme is $m=M\times h$ where $h=2p\log_2 r$.
 
-\begin{Example}\label{exmp:tensor}
+\begin{example}\label{exmp:tensor}
 Let us look at an example for $(N,M)=(6,3)$ and $(\ell,r)=(2,4)$. Then the adjacency matrix $\mbf{T}_G$ of a graph $G\in\mathcal{G}_{2,4}(6,3)$ and a signature matrix $\mbf{U}\in \{0,1\}^{4\times 3}$ for $p=1$ and $\log_2 r = 2$ are given by
  \[
  \mbf{T}_G = \begin{bmatrix}
@@ -238,11 +187,11 @@ Then, the measurement matrix $\bf A	$ with $m = 2pM\ceil{\log_2 r}=12$ tests is 
 1 & 0 & 0 & 0 & 1 & 0\\
 \end{bmatrix}
  \]
- \end{Example}
+ \end{example}
 
 
 \begin{figure*}[t!]
-\centering \scalebox{1}{\input{difference_in_schemes.tex}}
+\centering \scalebox{1}{\input{data/GT/difference_in_schemes.tex}}
 \caption{Illustration of the main differences between SAFFRON \cite{lee2015saffron} on the left and our regular-SAFFRON scheme on the right. In both the schemes the peeling decoder on sparse graph requires $\Theta(K)$ bins. But for the bin decoder part, in SAFFRON scheme the right degree is a random variable with a maximum value of $N$ and thus requires $\Theta(\log N)$ tests at each bin. Whereas our scheme based on right-regular sparse graph has a constant right degree of $\Theta(\frac{N}{K})$ and thus requires only $\Theta(\log \frac{N}{K})$ tests at each bin. Thus we can improve the number of tests from $\Theta (K\log N)$ to $\Theta(K\log \frac{N}{K})$.}
 \end{figure*}
 
@@ -464,7 +413,7 @@ The results are shown in Fig.~\ref{Fig:SimulationNoiseless}. We observe that the
 
 \begin{figure}[t!]
 \centering
-\resizebox{\columnwidth}{!}{\input{noiseless_sims.tex}}
+\resizebox{\columnwidth}{!}{\input{data/GT/noiseless_sims.tex}}
 \caption{MonteCarlo simulations for $K=100, N=2^{16}$. We compare the SAFFRON scheme \cite{lee2015saffron} with the proposed regular SAFFRON scheme for various left degrees $\ell\in\{3,5,7\}$. 
 The plots in blue indicate the SAFFRON scheme and the plots in red indicate our regular SAFFRON scheme based on left-and-right-regular bipartite graphs.}
 \label{Fig:SimulationNoiseless}
@@ -482,7 +431,7 @@ The results are shown in Fig. \ref{Fig:SimulationNoisy}. Note that for the above
 
 \begin{figure}[t!]
 \centering
-\input{noisy_sims.tex}
+\input{data/GT/noisy_sims.tex}
 \caption{MonteCarlo simulations for $K=128, N=2^{32}$. We compare the SAFFRON scheme with the proposed regular-SAFFRON scheme for a left degree $\ell=12$. We fix the number of bins and vary the rate of the error control code used. The plots in blue indicate the SAFFRON scheme\cite{lee2015saffron} and the plots in red indicate the regular-SAFFRON scheme based on left-and-right-regular bipartite graphs.}
 \label{Fig:SimulationNoisy}
 \end{figure}
@@ -490,6 +439,6 @@ The results are shown in Fig. \ref{Fig:SimulationNoisy}. Note that for the above
 \section{Conclusion}
 We addressed the Group Testing problem for $K$ defective items out of $N$ items. Using left-\emph{and}-right-regular sparse-graph codes we propose a new construction for the testing matrix based on that of Lee et al., \cite{lee2015saffron}. We show that this improves the testing complexity upon the previous results for the approximate version of the Group Testing problem and achieves asymptotically vanishing error probability under sub-linear time, order optimal, computational complexity. We also show that the proposed scheme with a variant of the original decoder has a testing complexity that is only $\log K$ factor away from the lower bound for the probabilistic version of the Group Testing problem with order optimal computational complexity.
 
-\bibliographystyle{ieeetr}
-\bibliography{journal_abbr,sparseestimation,grouptesting}
-\end{document} 
+%\bibliographystyle{ieeetr}
+%\bibliography{journal_abbr,sparseestimation,grouptesting}
+%\end{document} 
