@@ -12,23 +12,23 @@
 \tikzstyle{vertRectangle} = [rectangle, draw, opacity=0.7,line width =2, minimum width=\nodewidth, minimum height=12*\nodewidth]
 \tikzstyle{opnode} = [rectangle, draw, thick,opacity=0.7,line width=1, minimum size=0.2in]
 
-\node[block] (r11) at (0,0){\fsize \textbf{Encoder} $\tilde{\mc{C}}$};
+\node[block] (r11) at (-0.5,0){\fsize \textbf{Encoder} $\mc{C}$};
 \node[block] (r21) at (\xr,0) {\fsize \begin{tabular}{c}
 Repeat \\
-$L_{w_1}$ times
+$\ell_{w_1}$ times
 \end{tabular}};
 
-\node[block] (r12) at (0,-\ya){\fsize \textbf{Encoder} $\tilde{\mc{C}}$};
+\node[block] (r12) at (-0.5,-\ya){\fsize \textbf{Encoder} $\mc{C}$};
 \node[block] (r22) at (\xr,-\ya) {\fsize \begin{tabular}{c}
 Repeat \\
-$L_{w_i}$ times
+$\ell_{w_i}$ times
 \end{tabular}};
 
-\node[block] (r13) at (0,-3*\ya){\fsize \textbf{Encoder} $\tilde{\mc{C}}$};
+\node[block] (r13) at (-0.5,-3*\ya){\fsize \textbf{Encoder} $\mc{C}$};
 \node[block] (r23) at (\xr,-3*\ya) {\fsize 
 \begin{tabular}{c}
 Repeat \\
-$L_{w_{K_a}}$ times
+$\ell_{w_{K_a}}$ times
 \end{tabular}};
 
 \node[vertRectangle] (r3) at (\xslots,-1.5*\ya){\fsize \bf Slots};
@@ -44,13 +44,13 @@ across slots.
 };
 
 \draw[<-, thick, line width=2] (r11.west)--node[midway, above]{\fsize $w_1$}+(-\xoffs,0);
-\draw[->, thick, line width=2] (r11.east)--node[midway, above]{\fsize $\vec{\tilde{x}}_{w_1}$}(r21.west);
+\draw[->, thick, line width=2] (r11.east)--node[midway, above]{\fsize $\xv_{w_1}$}(r21.west);
 
 \draw[<-, thick, line width=2] (r12.west)--node[midway, above]{\fsize $w_i$}+(-\xoffs,0);
-\draw[->, thick, line width=2] (r12.east)--node[midway, above]{\fsize $\vec{\tilde{x}}_{w_i}$}(r22.west);
+\draw[->, thick, line width=2] (r12.east)--node[midway, above]{\fsize $\xv_{w_i}$}(r22.west);
 
 \draw[<-, thick, line width=2] (r13.west)--node[midway, above]{\fsize $w_{K_a}$}+(-\xoffs,0);
-\draw[->, thick, line width=2] (r13.east)--node[midway, above]{\fsize $\vec{\tilde{x}}_{w_{K_a}}$}(r23.west);
+\draw[->, thick, line width=2] (r13.east)--node[midway, above]{\fsize $\xv_{w_{K_a}}$}(r23.west);
 
 \draw[transform canvas={yshift=-\nodewidth},thick] (r3.north west) -- (r3.north east);
 \draw[transform canvas={yshift=-2*\nodewidth},thick] (r3.north west) -- (r3.north east);

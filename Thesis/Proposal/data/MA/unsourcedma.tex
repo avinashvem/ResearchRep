@@ -1,6 +1,8 @@
 \newif\iflonger
 \longerfalse
 
+\def\Figurespath{./data/MA}
+
 We propose a novel coding scheme for the unsourced multiple access channel model introduced by Polyanskiy~\cite{polyanskiy2017perspective}.
 This new paradigm is composed of four main ingredients: (i) the transmission period is partitioned into sub-blocks, thereby instituting a slotted framework; (ii) The message (data) is split into two parts and one part chooses an interleaver for a low density parity check (LDPC) type code. This part of the message is encoded using spreading sequences or codewords that are designed to be decoded by a compressed sensing type decoder; (iii) The other part of the message is encoded using a low density parity check (LDPC) type code and decoded using a joint message passing decoding algorithm designed for the $T$-user binary input real adder channel;
 (iv) users repeat their codeword in multiple sub-blocks, with the transmission pattern being a deterministic function of message content and independent of the identity of the user. When this coding scheme is combined with successive interference cancellation, the ensuing communication infrastructure can offer significant performance improvements compared to the recently proposed coding scheme in \cite{ordentlich2017low} and results in the best performing coding scheme to date.
@@ -30,158 +32,203 @@ The second part is decoded using a message passing decoder that jointly recovers
 \end{itemize}
 While \cite{ordentlich2017low} also incorporates the user symmetry aspect described above, our scheme differs from theirs in the other features highlighted above.
 
-\section{System Model and Notation}
-\label{Sec:SystemModel}
-Let $\Ktot$ and $\Ka$ denote the total number of users in the network and the number of active users, respectively.  Each user has $B$ bits of information (or, one of $M \coleq 2^B$ indices) to be encoded and transmitted within a block of $N$ uses of the channel. Let $W_i \in [1:M]$ be a random variable that represents the message index of the $i$-th user and let $w_i$ be a realization of the random variable $W_i$. Throughout this paper $[a:b]$ denotes the set of integers from $a$ to $b$, both inclusive. We first assume that $W_i$ is uniformly distributed over the set $[1:M]$ and that for any pair of users $i$ and $j$, $W_i$ and $W_j$ are independent of each other.  Without loss of generality we assume that the set of indices of the active users is $[1:\Ka]$ and let $\mc{W}\coleq\{w_1,w_2,\ldots,w_{\Ka}\}$ denote the set of transmitted messages.
 
-The observed signal vector at the receiver corresponding to the $N$ channel uses can be written as
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|c|l|}
+\hline
+Notation & Parameter represented\\
+\hline
+$\Ktot$ & Total number of users in the system\\
+$\Ka$ & Number of active users\\
+$\tilde{N}$ &  Number of channel uses per frame\\
+$\epsilon$ & Maximum decoding probability of error, per active user\\
+$V$ & Number of slots each frame is divided into\\
+$N$ & Number of channel uses per slot i.e. $N=\tilde{N}/V$\\
+$B$ & Number of message bits each active user wants to transmit\\
+$\Np,\Nc$ & Channel uses allocated for preamble and channel coding respectively.\\
+		& Note that  $\Np+\Nc=N$ \\
+$\Bp,\Bc$ & Message bits transmitted by the preamble and channel coding \\
+       & components respectively. Note that $\Bp+\Bc=B$\\
+\hline
+\end{tabular}
+\caption{Important parameters encountered in this chapter along with the notation used are listed above.}
+\label{table:notaiton}
+\end{table}
+
+The observed signal vector at the receiver corresponding to the $\tilde{N}$ channel uses can be written as
 \begin{equation}
 \yv = \sum_{i=1}^{\Ktot} \xv_{i} + \zv,
 \end{equation}
-where $\xv_i$ is a signal of dimension $N$ transmitted by the user~$i$, and the additive noise is characterized by $\zv \sim \mc{N}(0,\mbf{I}_N)$. For convenience, we also introduce boolean indicators indexed by $i$, where $s_i =1$ if user~$i$ is active and $s_i = 0$ otherwise. We impose an average power constraint on the transmitted vectors when averaged over all possible message indices, i.e., $\frac{1}{M}\sum_{w} ||\xv(w)||^2\leq NP$.  The receiver produces a list of messages $\mc{L}(\vec{y}) = \{\hat{w}_1,\hat{w}_2,\ldots,\hat{w}_{\Ka} \}$. As in \cite{ordentlich2017low}, the probability of error is defined as
+where $\xv_i$ is a signal of dimension $\tilde{N}$ transmitted by the user~$i$, and the additive noise is characterized by $\zv \sim \mc{N}(0,\mathbf{I}_{\tilde{N}})$. For convenience, we also introduce boolean indicators indexed by $i$, where $s_i =1$ if user~$i$ is active and $s_i = 0$ otherwise. We impose an average power constraint on the transmitted vectors when averaged over all possible message indices, i.e., $\frac{1}{M}\sum_{w} ||\xv(w)||^2\leq \tilde{N}P$.  The receiver produces a list of messages $\mc{L}(\yv) = \{\hat{w}_1,\hat{w}_2,\ldots,\hat{w}_{\Ka} \}$. As in \cite{ordentlich2017low}, the probability of decoding error, per active user, is defined as
 \begin{equation}\label{eqn:proboferrordefinition}
-  P_e = \max_{|(s_1,\ldots,s_{\Ktot})| = \Ka} \frac{1}{\Ka} \sum_{i=1}^{\Ktot} s_i \Pr\left( w_i \notin \mc{L}(\vec{y}) \right)
+  P_e = \max_{|(s_1,\ldots,s_{\Ktot})| = \Ka} \frac{1}{\Ka} \sum_{i=1}^{\Ktot} s_i \Pr\left( w_i \notin \mc{L}(\yv) \right)
 \end{equation}
-where $|\cdot|$ denotes the Hamming weight. The objective is to design low-complexity encoding and decoding schemes such that $P_e \leq \epsilon$, where $\epsilon$ is a target error probability.
+where $|\cdot|$ denotes the Hamming weight. The objective of this work is to design low-complexity encoding and decoding schemes such that $P_e \leq \epsilon$ for a given per user target error probability $\epsilon$.
 
 \section{Description of the Proposed Scheme}
-The overall schematic of the proposed scheme is shown in Fig.~\ref{fig:overallscheme}. In our proposed scheme, the $N$ channel uses which are available for communication are split into $V$ sub-blocks (also referred to as slots throughout the paper), each of length $\tilde{N}=N/V$ channel uses. The encoding operation at the $i$-th user takes place in two steps.
+The overall schematic of the proposed scheme is shown in Fig.~\ref{fig:overallscheme}. In our proposed scheme, the $\tilde{N}$ channel uses which are available for communication are split into $V$ sub-blocks (also referred to as slots throughout the paper), each of length $N=\tilde{N}/V$ channel uses. The encoding operation at the $i$-th user takes place in two steps.
 
 \begin{figure}[h]
   \centering
-  \resizebox{0.9\textwidth}{!}{\input{data/MA/system_diagram}}
+  \resizebox{0.9\textwidth}{!}{\input{\Figurespath/system_diagram}}
   \caption{Schematic of the proposed scheme}
   \label{fig:overallscheme}
 \end{figure}
 
 \subsection{Transmission policy across sub-blocks - message based repetition}
 \label{sec:Txpolicy_TannerGraph}
-Each user uses an identical codebook $\tilde{\mc{C}}$ of rate $\tilde{R}$ and length $\tilde{N}$. The user encodes the message index $w_i$ into a codeword $\vec{\tilde{c}}_{w_i} \in \tilde{\mc{C}}$ and modulates $\vec{\tilde{c}}_{w_i}$ into $\vec{\tilde{x}}_{w_i}$. In the following discussion, we will refer to $\vec{\tilde{c}}_{w_i}$ as the transmitted codeword and the reader should assume that the codeword is modulated appropriately and transmitted. Each user also chooses a repetition parameter $\ell_{w_i}=g(w_i)$ using a function $g:[1:M] \rightarrow [1:V]$ and repeats their codeword $\vec{\tilde{c}}_{w_i}$, $\ell_{w_i}$ times by choosing $\ell_{w_i}$ sub blocks from $[1:V]$ based on the message $w_i$ and transmits during these sub blocks. It is important to note that $\ell_{w_i}$ as well as the slots where the codeword is repeated are deterministic functions of the message index and do not depend on the identity of the user. As shown in Fig.~\ref{fig:overallscheme}, a Tanner graph $G$ can be used to visualize the repetition of the codewords where the left nodes correspond to users and the right nodes corresponds to sub-blocks. The degree of the left nodes is determined by $\ell_{w_i}$ and choosing $w_i$ uniformly at random induces a distribution on $\ell_{w_i}$ through the function $g$.  Let the left degree distribution (d.d) from node perspective be $L(x) = \sum_{{i=1}}^{{l_{\max}}} L_i x^i$, where $L_i$ denotes the fraction of user (left) nodes that are connected to $i$ slot(right) nodes. Similarly let the left d.d from edge perspective be denoted by $\lambda(x) = \sum_{{i=1}}^{{l_{\max}}} \lambda_i x^{i-1}$, where $\lambda_i$ denotes the fraction of edges in $G$ that are connected to left nodes connected to $i-1$ other edges. The two distributions $L(x)$ and $\lambda(x)$ are related as $L(x)=\frac{L'(x)}{L'(1)}$. We choose the mapping $g$ such that a desired left d.d. $L(x)$ (or equivalently $\lambda(x)$) is obtained.
+For the code word to be transmitted in a sub-block each user uses an identical code book (not-necessarily linear) $\mc{C}$ of rate $\frac{B}{N}$ and length $N$. Given the message index to be transmitted is $w_i$ the user encodes it into a codeword $\cv_{w_i} \in \mc{C}$ and modulates $\cv_{w_i}$ into $\vec{x}_{w_i}$. In the following discussion, we will refer to $\cv_{w_i}$ as the transmitted codeword and the reader should assume that the codeword is modulated appropriately and transmitted. Each user also chooses a repetition parameter $\ell_{w_i}=g(w_i)$ using a function $g:[1:M] \rightarrow [1:V]$ and repeats their codeword $\cv_{w_i}$, $\ell_{w_i}$ times by choosing $\ell_{w_i}$ sub blocks from $[1:V]$ based on the message $w_i$ and transmits during these sub blocks. It is important to note that $\ell_{w_i}$ as well as the slots where the codeword is repeated are deterministic functions of the message index and do not depend on the identity of the user. As shown in Fig.~\ref{fig:overallscheme}, a Tanner graph $G$ can be used to visualize the repetition of the codewords where the left nodes correspond to users and the right nodes corresponds to sub-blocks. The degree of the left nodes is determined by $\ell_{w_i}$ and choosing $w_i$ uniformly at random induces a distribution on $\ell_{w_i}$ through the function $g$.  Let the left degree distribution (d.d) from node perspective be $L(x) = \sum_{{i=1}}^{{l_{\max}}} L_i x^i$, where $L_i$ denotes the fraction of user (left) nodes that are connected to $i$ slot(right) nodes. Similarly let the left d.d from edge perspective be denoted by $\lambda(x) = \sum_{{i=1}}^{{l_{\max}}} \lambda_i x^{i-1}$, where $\lambda_i$ denotes the fraction of edges in $G$ that are connected to left nodes connected to $i-1$ other edges. The two distributions $L(x)$ and $\lambda(x)$ are related as $L(x)=\frac{L'(x)}{L'(1)}$. We choose the mapping $g$ such that a desired left d.d. $L(x)$ (or equivalently $\lambda(x)$) is obtained.
 
-During the $j$-th sub-block, let $\mc{N}_j$ denote the set of users who transmit. During the $n$-th use of the channel within the $j$-th sub-block, the $i$-th user transmits  symbols of positive power if $i \in \mc{N}_j$. Otherwise, the $i$-th user remains silent. The received signal during the $j$-th sub-block is given by
+During the $j$-th sub-block, let $\mc{N}_j$ denote the set of users who transmit. During the $j$-th sub-block, the $i$-th user transmits symbols of positive power if $i \in \mc{N}_j$. Otherwise, the $i$-th user remains silent. The received signal during the $j$-th sub-block is given by
 \begin{equation}
-\vec{\tilde{y}}_j = \sum_{i\in \mc{N}_j} \vec{\tilde{x}}_{w_i} + \vec{\tilde{z}}_j.
+\yv_j = \sum_{i\in \mc{N}_j} \xv_{w_i} + \zv_j.
 \end{equation}
 
-\subsection{Transmission policy within each sub block - same codebook schemes for the $T$-user real output channel}
-There are two components in the proposed transmission scheme within each sub-block: a good sensing matrix for a $T$-sparse robust compressed sensing (CS) problem and a good channel code for the $T$-user binary-input real-adder channel that is decodable with low computational complexity. The $B$ bits to be transmitted are split into two groups of size $B_{\mathrm{p}}$ and $B_{\mathrm{c}} = B-B_{\mathrm{p}}$ bits, respectively. For convenience, we define $M_{\mathrm{p}} \coleq 2^{B_{\mathrm{p}}}$ and $M_{\mathrm{c}} \coleq 2^{B_{\mathrm{c}}}$. The main idea is to use a linear code $\mc{C}$ to encode $B_{\mathrm{c}}$ bits, which we refer to as channel coding message index/bits; and to use the remaining $B_{\mathrm{p}}$ bits, which we refer to as preamble message index/bits, to pick a permutation of the codeword encoded through the channel coding message bits. Typically, we want $B_{\mathrm{p}} \ll B_{\mathrm{c}}$.
+\subsection{Transmission policy within a sub-block - same code book scheme for the $T$-user multiple access}
+There are two components to the code $\mc{C}$ used in the proposed transmission scheme within each sub-block: a good sensing matrix for a $T$-sparse robust compressed sensing (CS) problem and a good channel code for the $T$-user binary-input real-adder channel that is decodable with low computational complexity. The $B$ bits to be transmitted are split into two groups of size $B_{\mathrm{p}}$ and $B_{\mathrm{c}} = B-B_{\mathrm{p}}$ bits, respectively. For convenience, we define $M_{\mathrm{p}} \coleq 2^{B_{\mathrm{p}}}$ and $M_{\mathrm{c}} \coleq 2^{B_{\mathrm{c}}}$. The main idea is to use a linear code $\mc{C}_{\textrm{c}}$ good for multiple access channel coding to encode $B_{\mathrm{c}}$ message bits which we refer to as channel coding message bits. The remaining $B_{\mathrm{p}}$ bits, which we refer to as preamble message bits, are used to pick a permutation of the codeword belonging to the channel code $\mc{C}_{\textrm{c}}$ encoded using the $\Bc$ channel coding message bits. Typically, we want $B_{\mathrm{p}} \ll B_{\mathrm{c}}$.
 
-The codebook $\tilde{\mc{C}}$ is constructed as follows. We begin with a good linear block code such as a low density parity check (LDPC) code or a spatially-coupled low density parity check (SCLDPC) code $\mc{C}$ of rate $\tilde{R}=\frac{B_\mathrm{c}}{\tilde{N}-J}$ and length $N'\coleq \tilde{N}-J$. As an example, we will consider the case when $\mc{C}$ is chosen uniformly at random from the $(\sf{l,r,w},N')$ SCLDPC ensemble\cite{kudekar2011threshold}. Let the modulated codewords of ${\mc{C}}$ be denoted by $\{\cv_1,\cv_2,\ldots,\cv_{M_\mathrm{c}} \}$, where $\cv_{w} = [c_{w}(1),c_{w}(2),\ldots,c_{w}(N')]$,  $c_{w}(i)\in\{\pm\sqrt{P_1}\}~\forall i$ satisfying the power constraint
+For the channel coding part of the code book $\mc{C}$ we begin with a good linear block code such as a low density parity check (LDPC) code or a spatially-coupled low density parity check (SCLDPC) code $\mc{C}_\text{c}$ of rate $\frac{B_\mathrm{c}}{\Nc}$ and length $\Nc$. As an example, we will consider the case when $\mc{C}_{\text{c}}$ is chosen uniformly at random from the $(\sf{l,r,w},\Nc)$ SCLDPC ensemble \cite{kudekar2011threshold}. Let the modulated codewords of $\mc{C}_{\text{c}}$ be denoted by $\{\cv_1,\cv_2,\ldots,\cv_{M_\mathrm{c}} \}$, where $\cv_{w} = [c_{w}(1),c_{w}(2),\ldots,c_{w}(\Nc)]$,  $c_{w}(i)\in\{\pm\sqrt{\Pc}\}~\forall i$ satisfying the power constraint
 \begin{align}
-||\vec{c}_w||_2^2\leq N'P_1
+||\cv_w||_2^2= \Nc \Pc
 \label{eqn:mac_powerconstraint}
 \end{align}
-denotes the modulated SCLDPC codeword corresponding to message index $w$. For the second part of the encoder let $\mathbf{A}\in\{-\sqrt{P_2},+\sqrt{P_2}\}^{J\times M_\mathrm{p}}$ denote a sensing matrix that can recover the sum of any $T$ columns of $\mathbf{A}$ with low error probability. Let $f:[1:M_\mathrm{p}] \rightarrow [1:N'!]$ denote a hash function which maps $B_\mathrm{p}$  preamble message bits into an integer $\tau_w = f(w)$ such that $\tau_w$ is uniformly distributed over possible permutations of length $N'$, $[1:N'!]$. Note that here the integer $\tau_w$ chooses the permutation $\pi_{\tau_w}\in S_{N'}$ of the encoded codeword from $\mc{C}$ before transmission where $S_{N'}$ is the symmetric group.
+denotes the modulated SCLDPC codeword corresponding to message index $w$. 
 
-Let $\vec{\tilde{\mathrm{c}}}_w$ be the codeword corresponding to message index $w=(w_{\mathrm{p}},w_{\mathrm{c}})$, where the indices $w_{\mathrm{p}},w_{\mathrm{c}}$ correspond to the preamble and coding message indices respectively. $\vec{\tilde{\mathrm{c}}}_w$ is obtained by first permuting the  codeword of the SCLDPC code $\cv_{w_\mathrm{c}}$ according to permutation $\pi_{\tau_{w_\mathrm{p}}}=[\pi_{\tau_{w_\mathrm{p}}}^1,\pi_{\tau_{w_\mathrm{p}}}^2,\ldots, \pi_{\tau_{w_\mathrm{p}}}^{N'}]$ and then inserting the $w_\mathrm{p}$th column from the compressed sensing matrix $\mathbf{A}$ at the beginning of the permuted codeword i.e.,
-\begin{equation}\label{eqn:codeconstruction1}
-  \vec{\tilde{\mathrm{c}}}_w = [\vec{a}_{w_\mathrm{p}},c_{w_\mathrm{c}}(\pi_{\tau_{w_\mathrm{p}}^1}),c_{w_\mathrm{c}}(\pi_{\tau_{w_\mathrm{p}}^1}),\ldots,c_{w_\mathrm{c}}(\pi_{\tau_{w_\mathrm{p}}})].
-\end{equation}
+For the second part of the encoder let $\mathbf{A}\in\{-\sqrt{\Pp},+\sqrt{\Pp}\}^{\Np\times M_\mathrm{p}}$ denote a sensing matrix that can recover the sum of any $T$ columns of $\mathbf{A}$ with low error probability. Let $f:[1:M_\mathrm{p}] \rightarrow [1:\Nc!]$ denote a hash function which maps $B_\mathrm{p}$  preamble message bits into an integer $\tau_w = f(w)$ such that $\tau_w$ is uniformly distributed over $[1:\Nc!]$ denoting all possible permutations of length $\Nc$. Note that here the integer $\tau_w$ chooses the permutation $\pi_{\tau_w}\in S_{\Nc}$ of the encoded codeword from $\mc{C}_{\text{c}}$ before transmission where $S_{\Nc}$ is the symmetric group.
 
-The overall encoding process is shown in the Fig.~\ref{fig:encodingscheme}.
+The description of the overall encoder for code book $\mc{C}$ combining the above two components can be described as following. Let $w= (\wpdash,\wc)$ be the message index to be encoded, where the indices $\wpdash$ and $\wc$ correspond to the preamble and coding message indices respectively. We first encode the message index $\wc$ to the codeword $\cv_{\wc}\in\mc{C}_{c}$ followed by permuting it according to permutation $\pi_{\tau_{\wpdash}}=[\pi_{\tau_{\wpdash}}^1,\pi_{\tau_{\wpdash}}^2,\ldots, \pi_{\tau_{\wpdash}}^{\Nc}]$. The final code word $\cv_{w}$ is then obtained by inserting the $\wpdash$th column from the compressed sensing matrix $\mathbf{A}$ at the beginning of the permuted codeword i.e.,
+\begin{align}
+  \cv_w &= [\av_{\wpdash},\pi_{\tau_{\wpdash}}(\cv_{\wc})]  \qquad \qquad \text{ where }  \av_{\wpdash} \in \mathbf{A}, \cv_{\wc}\in\mathcal{C}_{\text{c}} \notag \\
+&= [\av_{\wpdash},c_{\wc}(\pi_{\tau_{\wpdash}}^1),c_{\wc}(\pi_{\tau_{\wpdash}}^2),\ldots,c_{\wc}(\pi^{\Nc}_{\tau_{\wpdash}})]\label{eqn:codeconstruction1}.
+\end{align}
+The overall encoding process is summarized in Fig.~\ref{fig:encodingscheme}.
+
 \begin{figure}[h!]
   \centering
-  \resizebox{0.55\textwidth}{!}{\input{data/MA/UnsMAC_encoder.tex}}
-  \caption{At any user, for a message bit sequence  $w=(w_\mathrm{p},w_\mathrm{c})$ the schematic shows the encoder and the final transmitted codeword $\vec{\tilde{c}}_w$.}
+  \resizebox{0.7\textwidth}{!}{\input{\Figurespath/UnsMAC_encoder.tex}}
+  \caption{Schematic depicting the overall encoding scheme in a sub-block given the message index $w=(\wpdash,\wc)$. The final code word transmitted in a sub-block is given by $\cv_w=[\av_{\wpdash},\pi_{\tau_{\wpdash}}(\cv_{\wc})]$.}
   \label{fig:encodingscheme}
 \end{figure}
-The main idea here is that permuting the codeword $\cv_{w_\mathrm{c}}$ decorrelates the multiple access interference from users even though they use identical linear codes and results in a performance that is similar to that obtained by using different codes for the different users. This is similar to interleave-division multiple access scheme that was originally proposed in \cite{ping2006interleave}. The overall code is non-linear because of the random permutations for different codewords and $\vec{a}_{w_\mathrm{p}}$ being appended at the beginning; however, if $\vec{a}_{w_\mathrm{p}}$ is identified (and consequently also $w_\mathrm{p}$) and removed at the receiver, then the permutations can be determined and decoding the users  can be accomplished using a belief propagation decoder that works on the joint graph of the two users.
+
+The main idea here is that permuting the codeword $\cv_{\wc}$ decorrelates the multiple access interference from users even though they use identical linear codes and results in a performance that is similar to that obtained by using different codes of identical rates for the different users. This is similar to interleave-division multiple access scheme that was originally proposed in \cite{ping2006interleave}. The overall code is non-linear because of the random permutations for different codewords and $\av_{\wpdash}$ being appended at the beginning. However, if $\av_{\wpdash}$ is identified (and consequently also $\wpdash$) and removed at the receiver, then the permutations can be determined and decoding the users  can be accomplished using a belief propagation decoder that works on the joint graph of the two users.
 \iflonger
 Several generalizations of this scheme are possible. It is possible to use different shifts of codeword instead of permutations of the codeword. We can also think of a more general scheme where the messages are binned in to $M_\mathrm{p}$ bins each with $M_1$ messages. Within each bin, the messages are encoded by a linear code and a permutation is chosen based on the bin index that the message falls in. In these cases, the $M_\mathrm{p}$ bits will have to be first conveyed through spreading sequences or shifts of a synchronization sequence. By choosing $M_\mathrm{p}$ to be fairly small, the complexity of demodulating/decoding these $M_\mathrm{p}$ bits can be kept to be fairly small. For clarity of exposition, we will use the shift based scheme in the rest of paper. In the special case when $V=1$ and we choose different interleavers or permutations of the code symbols, the proposed scheme becomes identical to interleave division multiple access (IDMA) \cite{ping2006interleave}. In this case, however, $M_\mathrm{p}$ will be reasonably large and efficient multi-user detection is needed to detect the $B_\mathrm{p}$ bits first. This will be considered in a future study.
 \fi
 
 \subsection{Decoder}
-The overall decoder has two components - a decoder for the $T$-user Gaussian multiple access(GMAC) channel and a successive interference canceler that works across sub-blocks. Let $R_j=|\mc{N}_j|$ denote the number of codewords transmitted during the $j$-th sub-block. The decoder observes the received signal during each sub-block and first estimates $R_j, \forall j \in [1:V]$. A simple estimate can be obtained by observing the energy of the received signal during each sub-block, but more sophisticated estimates based on decoding can be obtained, if necessary. 
-\iflonger
-If $R_j < T$, then the compressed sensing decoder $h(\yv_j[1:J],\mathbf{A},R_j)$, given
-\[
-\vec{y}_{j}[1:J]=\sum_{i\in\mc{N}_j} \vec{a}_{w_{i,2}}+z_{j}[1:J], %\qquad j\leq J
-\label{eq:cross_correlation}
-\]
-estimates the set of the preamble message indices denoted by $\mc{T}_2\coleq\{\hat{w}_{i,2}:i\in\mc{N}_j\}$ for the $R_j$ users transmitted in $j$th sub-block. We explain the workings of the compressed sensing decoder $h(\vec{y},\mathbf{A},T)$ in Sec. \ref{sec:CS_decoder}. Once the preamble message indices $\hat{w}_{i,2}$'s are estimated which gives the set of permutations $\pi_{\tau_{\hat{w}_{i,2}}}$ employed on the SCLDPC codewords at the respective users, the set of $R_j$ coding message indices $\mc{T}_1\coleq\{\hat{w}_{i,1}:i\in\mc{N}_j\}$ are decoded using a message passing decoder on the joint Tanner graph described in Sec. \ref{sec:BP_GMAC}. Once the messages transmitted during the $j$th sub-block are decoded, then other sub-blocks where the codewords were repeated can be obtained using the function $g(w_i=(w_{i,1},w_{i,2}))$. Then the codeword is subtracted or `peeled off' from the received signal during those slots, $R_j$ is updated for those slots and the process is repeated until either all the users are decoded or, no sub-blocks with less than $T$ codewords remain.\\
-\fi
+The overall decoder has two components - a decoder for the $T$-user Gaussian multiple access(GMAC) channel that works within a sub-block and a serial interference canceler that works across sub-blocks. Note that $T$ is a design parameter of choice. The code book $\mc{C}$ within a sub-block is designed such that if $T$ or less users transmit simultaneously within a sub-block the set of the respective transmitted code words can be decoded with low probability of error. 
 
-\subsubsection{Compressed Sensing Decoder}
+In the following sub-sections we first describe the SIC decoding process that works across sub-blocks followed by the decoding process within each sub-block.
+
+\subsubsection{Decoding process across sub-blocks (SIC)}
+The SIC decoder first estimates the number of users transmitted in each sub-block. Let $R_j=|\mc{N}_j|$ denote the number of users that have transmitted during the $j$-th sub-block. Given $\vec{y}_j$ is the received vector during sub-block $j$, a simple estimate for $R_j$ based on energy test is given by %  can be obtained by observing the energy of the received signal during each sub-block. 
+\begin{align*}
+\hat{R}_{j}= \left[\frac{||\yv_j||^2}{\Nc\Pc+\Np\Pp}\right]
+\end{align*} 
+where $[\cdot ]$ denotes the nearest integer function. Although the simple energy based estimate is adequate for the scope of this paper more sophisticated estimates based on GMAC decoding can be obtained, if necessary. 
+
+For any sub-block $j$, if $\hat{R}_{j}<=T$ the $T$-user GMAC decoder within the sub-block, which is described in the following sub-section, outputs the set of messages transmitted during the $j$-th sub-block. Given the decoded set of messages $\{w_i, i \in \mc{N}_j\}$, for each decoded message $w_i$:
+\begin{itemize}
+\item the sub-blocks where the codeword is repeated can be obtained using the function $g(w_i)$,
+% For each decoded message in sub-block $j$,
+\item  the codeword corresponding to message $w_i$ is subtracted or `peeled off' from the received signal in the corresponding repeated sub-blocks and
+\item  in each of the repeated sub-blocks, the estimate $\hat{R}_k$ ($k$ being the sub-block) is updated (reduced by one) to account for the subtraction of one interfering codeword.
+\end{itemize} 
+The above process is repeated until either all the $\Ka$ messages are decoded or no sub-blocks with less than $T$ codewords remain.\\
+
+\subsubsection{Decoding process within a sub-block}
+The received signal $\yv_j$ in sub-block $j$ is
+\begin{align*}
+\yv_j&=\sum_{i\in\mc{N}_j}\xv_{w_i}+\zv_j ~~\qquad \\
+&=\sum_{i\in\mc{N}_j} [\av_{\wpdash_i} ~~\pi_{\tau_{\wpdash_i}}(\cv_{\wc_i})] +\zv_j.
+\end{align*} 
+As discussed earlier, since the codebook $\mc{C}$ employed within the sub-block is designed for $T$-user GMAC channel the decoder aims to recover the set of messages $\{w_i=(\wpdash_i,\wc_i),i\in\mc{N}_j\}$ and the set of transmitted codewords $\{\xv_{w_i},i\in\mc{N}_j\}$ if $|\mc{N}|_j<=T$. There are two components to this GMAC decoder: (i) the first component, referred to as compressed sensing (CS) decoder, decodes the set of preamble message indices and (ii) the second component, referred to as the channel coding decoder, given the set of preamble message indices by the CS decoder, decodes the set of channel coding message indices.
+
+\paragraph*{Compressed Sensing (CS) Decoder}
 \label{sec:CS_decoder}
-The first $J$ received symbols in the $j$th sub-block can be written in matrix vector form as
-\begin{equation}
+The input to the compressed sensing decoder is the preamble component of the received signal given by
+\begin{align*}
+\vec{y_{j}}^{\mathrm{p}}\coleq \vec{y}_{j}[1:\Np]&=\sum_{i\in\mc{N}_j} \av_{w^{\mathrm{p}}_i}+\vec{\mathrm{z}}_{j}[1:\Np]\\
+&= \mathbf{A}\vec{b}_j+\zv_{j}^{\mathrm{p}}
 \label{eq:cross_correlation}
-\vec{y}_{j}[1:J] = \mathbf{A}\vec{b}+z_{j}[1:J]
-\end{equation}
-where $\mathbf{A} \in \mathbb{R}^{J \times M_\mathrm{p}}$ is the sensing matrix and $\vec{b} \in \{0,1\}^{M_\mathrm{p}}$ is a $T$-sparse vector that indicates the set of transmitted messages during the $j$th slot. Our proposed receiver to recover $\vec{b}$ from $\vec{y}_{j}[1:J]$ exploits the sparsity of $\vec{b}$ as well as the fact that the non-zero entries of $\vec{b}$ are positive integers (particularly, 1's). The latter aspect makes our proposed receiver different from many standard compressed sensing reconstruction algorithms.
+\end{align*}
+where $\mathbf{A}$ is the sensing matrix and $\vec{b}_j \in \{0,1\}^{M_\mathrm{p}}$ is a $|R_j|$-sparse vector that indicates the set of transmitted messages during sub-block $j$. Our proposed decoder to recover $\vec{b}_j$ from $\vec{y_{j}}^{\mathrm{p}}$ exploits the sparsity of $\vec{b}_j$ as well as the fact that the non-zero entries of $\vec{b}_j$ are all equal to one. The latter aspect makes the design of the decoder different from many standard compressed sensing reconstruction algorithms.
 
-We first run a non-negative least squares (or non-negative $\ell_1$-regularized LASSO) algorithm that gives us an estimate $\hat{\vec{b}}$ of $\vec{b}$. But these algorithms do not guarantee an output signal either of the required sparsity or with elements strictly from the set $\{0,1\}$ (as we know apriori from the problem). To address this, we perform a hard thresholding operation on each element of $\hat{\vec{b}}$ and form a list of non-negative indices
-$\mc{N}_{\text{list}}=\{i:\hat{b}_i>\eta_{Th}\}$. The value of parameter $\eta_{Th}$ is chosen such that the list size is larger than $T$. We then implement a maximum likelihood decoder within the above list of indices to find the set of $T$ indices that best explain the received vector $\yv$ i.e.,
+We consider two options for the choice of compressed sensing decoder. 
+
+\textit{List decoder}: In the list decoder we first run a non-negative least squares %(or non-negative $\ell_1$-regularized LASSO)
+algorithm that gives us an estimate $\hat{\vec{b}}_j$ of $\vec{b}_j$. But this does not guarantee an output signal either of the required sparsity or with elements strictly from the set $\{0,1\}$ (as we know apriori from the problem). To address this, we perform a hard thresholding operation on each element of $\hat{\vec{b}}_j$ and form a list of non-negative indices $\mc{W}_{\text{list}}=\{i:\hat{\vec{b}}_j(i)>\eta_{Th}\}$. The value of parameter $\eta_{Th}$ is chosen such that the list size is larger than $T$. We then implement a maximum likelihood decoder within the above list of indices to find the set of $R_j$ indices that best explain the received vector $\vec{y_j}^{\mathrm{p}}$ i.e.,
 \begin{equation}
-\widehat{\mc{N}}=\argmin_{S\subseteq\mc{N}_{\text{list}},|S|=T}||\vec{y}-\sum_{i\in S}\vec{a}_i||^2_2.
+\widehat{\mc{W}}_j^{\mathrm{p}}=\argmin_{S\subseteq\mc{W}_{\text{list}},|S|=R_j}||\yv_j^{\mathrm{p}}-\sum_{i\in S}\av_i||^2_2.
 \label{eq:CS_jointdecoder}
 \end{equation}
-As one can observe as we decrease the value of the threshold $\eta_{Th}$ the list size increases which increases the complexity of the MMSE estimator in Eq. \eqref{eq:CS_jointdecoder} whereas if we increase the value of the threshold the list size decreases and the performance worsens. Clearly for a given SNR the value of the threshold $\eta_{Th}$ needs to be optimized. The CS decoder outputs the set of message indices $\widehat{\mc{N}}$, where $|\widehat{\mc{N}}|=T$, to the message passing decoder.
+As one can observe as we decrease the value of the threshold $\eta_{Th}$ the list size increases which increases the complexity of the MMSE estimator in Eq. \eqref{eq:CS_jointdecoder} whereas if we increase the value of the threshold the list size decreases and the performance worsens. Clearly for a given SNR the value of the threshold $\eta_{Th}$ needs to be optimized. The CS decoder outputs the set of preamble message indices $\widehat{\mc{W}}_j^{\mathrm{p}}$, where $|\widehat{\mc{W}}_j^{\mathrm{p}}|=R_j$, to the channel coding decoder.
 
-\subsubsection{Message Passing for Gaussian MAC}
+\textit{Correlation decoder}:
+%estimates the set of the preamble message indices denoted by $\mc{T}_2\coleq\{\hat{w}_{i,2}:i\in\mc{N}_j\}$ for the $R_j$ users transmitted in $j$th sub-block. We explain the workings of the compressed sensing decoder $h(\vec{y},\mathbf{A},T)$ in Sec. \ref{sec:CS_decoder}. Once the preamble message indices $\hat{w}_{i,2}$'s are estimated which gives the set of permutations $\pi_{\tau_{\hat{w}_{i,2}}}$ employed on the SCLDPC codewords at the respective users, the set of $R_j$ coding message indices $\mc{T}_1\coleq\{\hat{w}_{i,1}:i\in\mc{N}_j\}$ are decoded using a message passing decoder on the joint Tanner graph described in Sec. \ref{sec:BP_GMAC}.
+%
+%
+%The first $J$ received symbols in the $j$th sub-block can be written in matrix vector form as
+%\begin{equation}
+%\label{eq:cross_correlation}
+%\vec{y}_{j}[1:J] = \mathbf{A}\vec{b}+z_{j}[1:J]
+%\end{equation}
+
+\paragraph*{Channel coding Decoder}
 \label{sec:BP_GMAC}
-We describe the decoding process for $T=2$ which can be generalized to larger values of $T$ in a straight forward manner. Consider a sub-block $j$ with only two users transmitting and let us assume their message indices are $w^1=(w^1_\mathrm{p},w^1_\mathrm{c})$ and $w^2=(w^2_\mathrm{p},w^2_\mathrm{c})$ respectively. Note that the estimates of preamble message indices $\{w^1_\mathrm{p},w^2_\mathrm{p}\}$ are available at the message passing decoder, output from the CS decoder. Assuming appropriate demodulation is performed before the decoding step the received signal in terms of the SC-LDPC codewords can be given by:
+We employ joint belief propagation (BP) decoder for decoding the channel coding part of the received signal. To keep it simple we describe the decoder assuming $R_j=2$ which can be be generalized to larger values of $R_j$ in a straight forward manner. Without loss of generality let the two message indices be $w_1=(w_1^\mathrm{p},w_1^\mathrm{c})$ and $w_2=(w_2^\mathrm{p},w_2^\mathrm{c})$ respectively. Note that the estimates of preamble message indices $\{w_1^\mathrm{p},w_2^\mathrm{p}\}$ are available at the channel coding decoder, output from the CS decoder. Assuming appropriate demodulation is performed before the decoding step the channel coding part of the received signal, which can be written as
 \begin{align*}
-\vec{\tilde{y}}_j= &[\vec{a}_{w^1_\mathrm{p}},c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^1}),c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^2}),\ldots,c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^{N'}})]+\\
-&[\vec{a}_{w^2_\mathrm{p}},c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^1}),c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^2}),\ldots,c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^{N'}})]+z_j
+\vec{\mathrm{y}_j}^{\mathrm{c}}\coleq  \yv_j[\Np+1:N] &=\sum_{i\in\{1,2\}} \pi_{\tau_{w_i^\mathrm{p}}}(\cv_{w_i^{\mathrm{c}}}) +\zv_j[\Np+1:\Nc],
 \end{align*}
+is input to the joint BP decoder. As we can observe, the codeword before being transmitted across the GMAC channel is permuted according to a permutation chosen as a function of the preamble message index. Therefore in the joint BP decoder we need to apply the permutations and their inverses on the messages whenever they are being sent to and from the MAC nodes respectively. The schematic of the joint Tanner Graph of the two users is shown in Fig. \ref{fig:decodergraph}.
 
-\begin{figure}[h!]
+%= &[\av_{w^1_\mathrm{p}},c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^1}),c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^2}),\ldots,c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^{N'}})]+\\
+%&[\av_{w^2_\mathrm{p}},c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^1}),c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^2}),\ldots,c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^{N'}})]+z_j 
+%Recall that $N'=\tilde{N}-J$ where $\tilde{N}$ is the number of channel uses in a sub-block. First we separate the channel coding part of the received vector by considering only the last $N'$ values of the $\tilde{N}$ sized received vector i.e.,
+%\begin{align*}
+%\yv'= &[\av_{w^1_\mathrm{p}},c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^1}),c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^2}),\ldots,c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^{N'}})]+\\
+%&[\av_{w^2_\mathrm{p}},c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^1}),c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^2}),\ldots,c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^{N'}})]+z_j
+%\end{align*}
+%As we can observe, the synchronization sequence can occur at different locations in the two codewords depending on the values $\tau_{w_1}$ and $\tau_{w_2}$. This is shown in Fig. \ref{fig:decodergraph} of the combined Tanner Graph of the two users where the nodes corresponding to the synchronization bits  are represented using shaded bit(circular) nodes.
+
+\begin{figure}[!ht]
   \centering
-  \resizebox{0.5\textwidth}{!}{\input{data/MA/decodergraph_permutation.tex}}
-  \caption{Schematic showing the joint Tanner graph}
+  \resizebox{0.65\textwidth}{!}{\input{\Figurespath/decodergraph_permutation.tex}}
+  \caption{Schematic showing the joint Tanner graph, of the channel coding component, for two users with message indices $w_1$ and $w_2$. In the SC-LDPC code $\pi_{\text{SCLDPC}}$ refers to a random permutation of the edge connections from  check nodes to bit nodes. The square and circle shaped node refer to the check and bit nodes respectively. For more details refer to \cite{kudekar2011threshold}. We introduce multiple access (MAC) node denoting the sum over the multiple access channel. For e.g., $k$-th MAC node is represented by $\vec{\mathrm{y}}_j^{\mathrm{c}}[k]=\sum_{i\in\{1,2\}}\cv_{w_i^{\mathrm{c}}}[\pi^k_{\tau_{w_i^\mathrm{p}}}]+\zv_{j}[k]$.}
   \label{fig:decodergraph}
 \end{figure}
 
-Recall that $N'=\tilde{N}-J$ where $\tilde{N}$ is the number of channel uses in a sub-block. First we separate the channel coding part of the received vector by considering only the last $N'$ values of the $\tilde{N}$ sized received vector i.e.,
-\begin{align*}
-\yv'= &[\vec{a}_{w^1_\mathrm{p}},c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^1}),c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^2}),\ldots,c_{w^1_\mathrm{c}}(\pi_{\tau_{w^1_\mathrm{p}}^{N'}})]+\\
-&[\vec{a}_{w^2_\mathrm{p}},c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^1}),c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^2}),\ldots,c_{w^2_\mathrm{c}}(\pi_{\tau_{w^2_\mathrm{p}}^{N'}})]+z_j
-\end{align*}
-which is input to the joint belief propagation(BP) decoder. As we can observe, the code bits/symbols in each codeword are permuted according to a random permutation (chosen according to the second part of the message index) before being transmitted across the GMAC channel. Therefore in the joint BP decoder we need to apply these permutations and their inverses on the messages whenever they are being sent to and from the MAC nodes respectively. The schematic of the joint Tanner Graph of the two users is shown in Fig. \ref{fig:decodergraph}.\\
-%As we can observe, the synchronization sequence can occur at different locations in the two codewords depending on the values $\tau_{w_1}$ and $\tau_{w_2}$. This is shown in Fig. \ref{fig:decodergraph} of the combined Tanner Graph of the two users where the nodes corresponding to the synchronization bits  are represented using shaded bit(circular) nodes.
-
-Given the received signal $\yv'$ the joint BP decoder proceeds iteratively in a similar manner to that of a single user AWGN channel coding problem apart from an extra step of messages being sent to and received from the MAC node in each iteration. Throughout this sub-section we use superscript to distinguish between users $1$ and $2$.
+Given the received signal $\vec{\mathrm{y}}_j^{\mathrm{c}}$ the joint BP decoder proceeds iteratively in a similar manner to that of a single user AWGN channel decoding apart from an extra step of messages being sent to and received from the MAC node in each iteration. We use the following notation for the messages passed in the joint BP decoder:
 \begin{itemize}
-\item $u^{1}_{i,\text{MAC}},u^{1}_{i,j}$: Messages passed from the bit node corresponding to $i^{\text{th}}$ code bit of user $1$ to the corresponding MAC node and  SCLDPC check node $j$ respectively.
-\item $v^{1}_{j,i}$: Message passed from SCLDPC check node $j$ of user $1$ to the bit node $i$ of user $1$
-\item $v^{1}_{\text{MAC},i}$: Message passed from $i^{\text{th}}$ MAC node to the connected bit node of user $1$.
+\item $u^{1}_{i,\text{MAC}},u^{1}_{i,j}$: messages passed from $i$-th bit node of user $1$ to the corresponding MAC node and  SCLDPC check node $j$ respectively
+\item $v^{1}_{j,i}$: message passed from SCLDPC check node $j$ to bit node $i$ of user $1$
+\item $v^{1}_{\text{MAC},i}$: message passed to $i^{\text{th}}$ bit node from corresponding MAC node of user $1$.
 \end{itemize}
-The messages for user $2$ are defined similarly. Refer to Fig. \ref{fig:BP_computationgraph} for a graphical representation of the messages.
-%Let $u^{1}_{i,\text{MAC}},u^{1}_{i,j}$ denote the messages passed from the bit node corresponding to $i^{\text{th}}$ code bit of user $1$ to the corresponding MAC node and  SC-LDPC check node $j$ respectively. Similarly, let $v^{1}_{j,i}$ denote the message passed from SC-LDPC check node $j$ of user $1$ to the bit node $i$ of user $1$ connected to the respective check node. Also let $v^{1}_{\text{MAC},i}$ denote the message passed from $i^{th}$ MAC node to the connected bit node of user $1$.
-%If the bit node $i$ corresponds to a bit from the synchronization sequence it passes a fixed message of
-%\begin{equation*}
-%v^{1}_{i,\text{MAC}}=\text{sign}(s_{i-\tau_{w_1}})\text{LLR\_MAX}
-%\end{equation*}
-%in all the iterations where LLR-MAX is a fixed large value for the log-likelihood ratio.
+The messages for user $2$ are defined similarly. Refer to Fig. \ref{fig:BP_computationgraph} for a graphical representation of the messages. The message passing rules in the joint message passing decoder can be summarized as following.
 
-\begin{figure}[h!]
-  \centering
-  \resizebox{0.75\textwidth}{!}{\input{data/MA/BP_graphs.tex}}
-  \caption{ Message passing rules at individual nodes on the joint Tanner graph of two users. The message passing rules at the check nodes of the SCLDPC code are identical to the single user channel coding case.}
-  \label{fig:BP_computationgraph}
-\end{figure}
-
-Bit Node:
+bit node:
 \begin{align*}
 u^{1}_{i,j}&=v^{1}_{\text{MAC},i}+ \sum_{j'\neq j,j'\in \mathcal{N}(i)} v^{1}_{j',i}\\
 u^{1}_{i,\text{MAC}}&=\sum_{j\in \mathcal{N}(i)} v^{1}_{j,i}
 \end{align*}
-
-LDPC Check Node:
+SCLDPC check node:
 \begin{align*}
-v^{1}_{j,i}&=2~\tanh^{-1}\left( \prod_{i'\neq i} \tanh\left(\frac{u^{1}_{i',j}}{2}\right)\right)\\
+v^{1}_{j,i}&=2~\tanh^{-1}\left( \prod_{i'\neq i} \tanh\left(\frac{u^{1}_{i',j}}{2}\right)\right).
 \end{align*}
-
-MAC Node:
+MAC node:
 \begin{align}
-\label{Eqn:MACnodeBP}
-v^{1}_{\text{MAC},i}&=h(u^{2}_{i,\text{MAC}},y_{i,\text{ch}})\\
+v^{1}_{\text{MAC},i}&=h(u^{2}_{i,\text{MAC}},y_{i,\text{ch}})\label{Eqn:MACnodeBP} \\
 v^{2}_{i,\text{MAC}}&=h(u^{1}_{i,\text{MAC}},y_{i,\text{ch}}) ~~~\text{ where}\notag\\
 h(l,y)&=\log \frac{1+e^{l}e^{2(y-1)/\sigma^2}}{e^{l}+e^{-2(y+1)/\sigma^2}}.\notag
 \end{align}
 The function $h(l,y|\sigma^2)$ can be seen as the log-likelihood of variable $x_2$ when $y=x_1+x_2+z$, $x_1,x_2\in\{-1,+1\}$ when the log-likelihood ratio of variable $x_1$ is known to be $l$ and $z\sim \mc{N}(0,\sigma^2)$.
-%In  Eqns. \ref{Eqn:MACnodeBP} the nodes $i,i'$ and $i''$ are related as follows. $i$th code bit in the SC-LDPC code is connected to $i'$ MAC node (or equivalently $i'$ position in the received vector) where $i'=i+\tau_{w_1}+J mod \tilde{N}$. And similarly $i'=i''+\tau_{w_2}+J mod \tilde{N}$.
+\begin{figure}[!ht]
+  \centering
+  \resizebox{0.75\textwidth}{!}{\input{\Figurespath/BP_graphs.tex}}
+  \caption{ Message passing rules at individual nodes on the joint Tanner graph of two users. The message passing rules at the check nodes of the SCLDPC code are identical to the single user channel coding case.}
+  \label{fig:BP_computationgraph}
+\end{figure}
 
 \section{Choice of Parameters and Analysis}
 In this section we will look at the parameters of the different components of the proposed and how each of them affect the overall performance. As described in Sec. \ref{Sec:SystemModel} let $\epsilon$ be the maximum per user error probability i.e. we are interested in decoding on an average $(1-\epsilon)$ fraction of the $K_a$ active users successfully. Let us define the following error events before we analyze the per user error probability $P_e$. At any fixed slot $j$ the events $\mc{E}_{1j}$, $\mc{E}_{2j}, \mc{E}_{3j}$ are defined as:

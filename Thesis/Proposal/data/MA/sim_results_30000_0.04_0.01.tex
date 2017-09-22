@@ -25,13 +25,12 @@ ytick = {-5,0,...,30},
 yminorticks=true,
 ymajorgrids,
 yminorgrids,
-line width=3.0pt,
 legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell align=left,font=\fsize}
 ]
 
-\node[] at (axis cs: 100,7.5696) {\LARGE $X$};
+\node[] at (axis cs: 100,7.5696) {\Large $X$};
 
-\addplot [color=black,solid,dashed]
+\addplot [color=black,solid,dashed, line width=2.0pt]
   table[row sep=crcr]{
   25     0.25\\
  50     0.3\\
@@ -48,26 +47,7 @@ legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell al
 };
 \addlegendentry{Random Coding \cite{polyanskiy2017perspective} };
 
-
-
-%\addplot [color=green,solid]
-%  table[row sep=crcr]{
-%  25   1.44  \\% 13
-%  50   1.88  \\% 27
-%  75   2.40  \\% 39
-% 100   3.27 \\%  52
-% 125   4.43 \\%  68
-% 150   5.30 \\%  80
-% 175   6.42 \\%  93
-% 200   7.36\\%  106
-% 225   8.39\\%  120
-% 250   9.72 \\% 135
-% 275  10.80 \\% 149
-% 300  11.80 \\% 162
-%};
-%\addlegendentry{5-fold ALOHA};
-
-\addplot [color=magenta,dotted]
+\addplot [color=magenta,dotted,line width=2.0pt]
   table[row sep=crcr]{
   25   2.26  \\
   50   2.88  \\
@@ -84,7 +64,7 @@ legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell al
   };
 \addlegendentry{4-fold ALOHA \cite{ordentlich2017low}};
 
-\addplot [color=red,solid,mark=diamond,mark size=4.0]
+\addplot [color=red,solid,mark=diamond,mark size=3.2,line width=2.0pt]
   table[row sep=crcr]{
   25   3.5820  \\
   50   5.2585 \\
@@ -101,7 +81,7 @@ legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell al
 };
 \addlegendentry{$T=2$};
 
-\addplot [color=blue,solid,mark=square,mark size=3.0]
+\addplot [color=blue,solid,mark=square,mark size=2.6,line width=2.0pt]
   table[row sep=crcr]{
  25 3.1608  \\
  50 3.8064 \\ %lambda=1.0
@@ -118,7 +98,7 @@ legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell al
 };
 \addlegendentry{$T=4$};
 
-\addplot [color=orange,solid,mark=triangle,mark size=3.0]
+\addplot [color=orange,solid,mark=triangle,mark size=3.0,line width=2.0pt]
   table[row sep=crcr]{
  25 3.1608  \\
  50 3.8064 \\
@@ -137,7 +117,7 @@ legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell al
 
 
 
-\addplot [color=blue,dashed]
+\addplot [color=blue,dashed,line width=2.0pt]
   table[row sep=crcr]{
   25   7.50 \\
    35   7.30 \\

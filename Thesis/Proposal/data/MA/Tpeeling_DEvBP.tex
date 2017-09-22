@@ -11,38 +11,38 @@
 \def\fsize{\Large}
 
 \begin{axis}[%
-width=7.2971708223972in,
-height=4.87099759405074in,
-xmin=0.24,
-xmax=0.72,
+width=9in,
+height=6in,
+xmin=0.22,
+xmax=0.75,
 xmajorgrids,
-xtick={0.16,0.20,...,0.8},
-xlabel={\fsize $\alpha=\frac{M•}{\Ka}$},
+xtick={0.25,0.30,...,0.75},
+xlabel={\LARGE $\alpha=\frac{V}{\Ka}$},
 ymode=log,
 ymin=1e-07,
 ymax=1,
 yminorticks=false,
 ymajorgrids,
 ylabel={\fsize User Error Rate},
-yminorgrids,
+%yminorgrids,
 line width=1.5pt,
 mark size=3.5pt,
-legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align=left,font=\normalsize}
+legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align=left,font=\fsize}
 ]
 
 \node[] at (axis cs: 0.267,5e-4) {\fsize $T=4$};
-\node[] at (axis cs: 0.28,1e-6) {$\alpha^*_{\text{DE}}$};
-\node[] at (axis cs: 0.36,1e-6) {$500$};
-\node[] at (axis cs: 0.335,4e-7) {$1000$};
-\node[right] at (axis cs: 0.282,2e-7) {$3000$};
+\node[] at (axis cs: 0.28,1e-6) {\fsize $\alpha^*_{\text{DE}}$};
+%\node[] at (axis cs: 0.36,1e-6) {\fsize $500$};
+%\node[] at (axis cs: 0.335,4e-7) {\fsize $1000$};
+%\node[right] at (axis cs: 0.282,2e-7) {\fsize $3000$};
 
 
-\node[] at (axis cs: 0.59,1e-6) {$\alpha^*_{\text{DE}}$};
+\node[] at (axis cs: 0.585,1e-6) {\fsize $\alpha^*_{\text{DE}}$};
 \node[] at (axis cs: 0.575,5e-4) {\fsize $T=2$};
-\node[] at (axis cs: 0.705,2.5e-4) {$500$};
-\node[] at (axis cs: 0.695,4e-5) {$1000$};
-\node[right] at (axis cs: 0.66,5e-6) {$3000$};
-\node[right] at (axis cs: 0.625,6e-7) {$10000$};
+%\node[] at (axis cs: 0.705,2.5e-4) {\fsize $500$};
+%\node[] at (axis cs: 0.695,4e-5) {\fsize $1000$};
+%\node[right] at (axis cs: 0.66,5e-6) {\fsize $3000$};
+\node[right] at (axis cs: 0.625,6e-7) {\fsize $\Ka=10000$};
 
 \addplot [color=blue,solid,mark=triangle]
   table[row sep=crcr]{
@@ -56,10 +56,9 @@ legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align
 0.72	0.00015425828775533\\
 %0.74	0.000138459944035651\\
 };
-%\addlegendentry{$(T,\lambda,\Ka)=(2,0,500)$};
-%\addlegendentry{$\Ka=500$};
+\addlegendentry{$\Ka=500$};
 
-\addplot [color=red,solid,mark=asterisk,mark options=solid]
+\addplot [color=red,solid,mark=asterisk,mark options=solid,mark size=3.0]
   table[row sep=crcr]{
 0.58	0.445524509803922\\
 0.6	0.233573333333333\\
@@ -71,20 +70,19 @@ legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align
 %0.72	3.09173107773079e-05\\
 %0.74	2.93069123570536e-05\\
 };
-%\addlegendentry{$(T,\lambda,\Ka)=(2,0,1000)$};
-%\addlegendentry{$\Ka=10^3$};
+\addlegendentry{$\Ka=1000$};
 
-\addplot [color=black,solid,mark=circle,mark options=solid]
+\addplot [color=black,solid,mark=o,mark options=solid]
   table[row sep=crcr]{
 0.58	0.45552736318408\\
 0.6	0.200620588235294\\
 0.62	0.00219567231339333\\
 0.64	5.59111903411393e-06\\
 0.66	5.48796389541606e-06\\
-%0.68	4.02e-06\\
+0.68	4.02e-06\\
 };
 %\addlegendentry{$(T,\lambda,\Ka)=(2,0,3000)$};\\
-%\addlegendentry{$\Ka=3\times 10^3)$};
+\addlegendentry{$\Ka=3000$};
 
 \addplot [color=green,solid,mark=square,mark options=solid]
   table[row sep=crcr]{
@@ -117,7 +115,7 @@ legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align
 
 
 %%%%%%%%%-----------------------%----------------------------------
-\addplot [color=blue,solid,mark=diamond]
+\addplot [color=blue,solid,mark=triangle]
   table[row sep=crcr]{
 0.29   0.522000000000000\\
 0.31  0.063631578947368\\
@@ -138,7 +136,7 @@ legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align
 %\addlegendentry{$(T,\lambda,\Ka)=(4,0,1000)$};
 %\addlegendentry{$\Ka=10^3$};
 
-\addplot [color=black,solid,mark=o,mark options=solid]
+\addplot[color=black,solid,mark=o,mark options=solid]
   table[row sep=crcr]{
 0.2900    0.3198\\
 0.30        2.5202e-2\\
