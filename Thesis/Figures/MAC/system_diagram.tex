@@ -1,0 +1,99 @@
+\begin{tikzpicture}
+
+\def\nodewidth{0.5in}
+\def\fsize{\Large}
+\def\sfsize{\normalsize}
+\def\xoffs{3.25cm}
+\def\ya{3.5}
+\def\xr{4}
+\def\xslots{11}
+\def\xdec{18}
+\tikzstyle{block} = [rectangle, draw, thick, opacity=0.7,line width =2, minimum size=\nodewidth]
+\tikzstyle{vertRectangle} = [rectangle, draw, opacity=0.7,line width =2, minimum width=\nodewidth, minimum height=12*\nodewidth]
+\tikzstyle{opnode} = [rectangle, draw, thick,opacity=0.7,line width=1, minimum size=0.2in]
+
+\node[block] (r11) at (-0.5,0){\fsize \textbf{Encoder} $\mc{C}$};
+\node[block] (r21) at (\xr,0) {\fsize \begin{tabular}{c}
+Repeat \\
+$\ell(w_1)$ times
+\end{tabular}};
+
+\node[block] (r12) at (-0.5,-\ya){\fsize \textbf{Encoder} $\mc{C}$};
+\node[block] (r22) at (\xr,-\ya) {\fsize \begin{tabular}{c}
+Repeat \\
+$\ell(w_i)$ times
+\end{tabular}};
+
+\node[block] (r13) at (-0.5,-3*\ya){\fsize \textbf{Encoder} $\mc{C}$};
+\node[block] (r23) at (\xr,-3*\ya) {\fsize 
+\begin{tabular}{c}
+Repeat \\
+$\ell(w_{K})$ times
+\end{tabular}};
+
+\node[vertRectangle] (r3) at (\xslots,-1.5*\ya){\fsize \bf Slots};
+\node[vertRectangle,align=center] (r4) at (\xdec,-1.5*\ya){\fsize \bf \begin{tabular}{c}
+Up to T-users\\
+jointly decoded \\ 
+ in each slot\\
++ \\ 
+Serial Interference \\
+Cancellation (SIC) \\
+across slots.
+\end{tabular}
+};
+
+\draw[<-, thick, line width=2] (r11.west)--node[midway, above]{\fsize $w_1=(w_1^{\mathrm{p}},w_1^{\mathrm{c}})$}+(-\xoffs,0);
+\draw[->, thick, line width=2] (r11.east)--node[midway, above]{\fsize $\xv_{w_1}$}(r21.west);
+
+\draw[<-, thick, line width=2] (r12.west)--node[midway, above]{\fsize $w_i=(w_i^{\mathrm{p}},w_i^{\mathrm{c}})$}+(-\xoffs,0);
+\draw[->, thick, line width=2] (r12.east)--node[midway, above]{\fsize $\xv_{w_i}$}(r22.west);
+
+\draw[<-, thick, line width=2] (r13.west)--node[midway, above]{\fsize $w_{K}=(w_K^{\mathrm{p}},w_K^{\mathrm{c}})$}+(-\xoffs,0);
+\draw[->, thick, line width=2] (r13.east)--node[midway, above]{\fsize $\xv_{w_{K}}$}(r23.west);
+
+\draw[transform canvas={yshift=-\nodewidth},thick] (r3.north west) -- (r3.north east);
+\draw[transform canvas={yshift=-2*\nodewidth},thick] (r3.north west) -- (r3.north east);
+\draw[transform canvas={yshift=-3*\nodewidth},thick] (r3.north west) -- (r3.north east);
+\draw[transform canvas={yshift=\nodewidth}] (r3.south west) -- (r3.south east);
+\node [below=0.3*\nodewidth of r3.north](s1) {\fsize Slot 1};
+\node [below=1.3*\nodewidth of r3.north](s2) {\fsize Slot 2};
+\node [below=2.3*\nodewidth of r3.north](s3) {\fsize Slot 3};
+\node [above=0.3*\nodewidth of r3.south](s4) {\fsize Slot V};
+\node [below=3.5*\nodewidth of r3.north]() {\Huge $\vdots$};
+\node [above=3.5*\nodewidth of r3.south]() {\Huge $\vdots$};
+
+
+\begin{scope}[very thick,decoration={
+    markings,
+    mark=at position 0.5 with {\arrow{>}}}
+    ] 
+\draw[transform canvas={yshift=-0.5*\nodewidth},postaction={decorate}] (r3.north east) -- (r4.north west);
+\draw[transform canvas={yshift=-1.5*\nodewidth},postaction={decorate}] (r3.north east) -- (r4.north west);
+\draw[transform canvas={yshift=-2.5*\nodewidth},postaction={decorate}] (r3.north east) -- (r4.north west);
+\draw[transform canvas={yshift=0.5*\nodewidth},postaction={decorate}] (r3.south east) -- (r4.south west);
+\end{scope}
+
+\draw[<-, thick] (r3.north west)++(0,-2.5*\nodewidth)--node[midway,above] {\fsize $\xv_{w_1}$} (r21.east);
+\draw[<-, thick] (r3.north west)++(0,-9.5*\nodewidth)--node[pos=0.85,above] {\fsize $\xv_{w_1}$} (r21.east);
+\path (r21.east) -- ++(5:0.5cm) coordinate(r21a) 
+		  (r21.east) -- ++(320:0.5cm) coordinate(r21b) ;
+%\draw[<->,thick] (r21a) to [bend left=30] (r21b) node [right] {\fsize $L_{w_1}$};
+
+\draw[<-, thick] (r3.north west)++(0,-2.5*\nodewidth)--(r22.east);
+\draw[<-, thick] (r3.north west)++(0,-1.5*\nodewidth)--(r22.east);
+\draw[<-, thick] (r3.north west)++(0,-8.5*\nodewidth)--(r22.east);
+\path (r22.east) -- ++(25:0.5cm) coordinate(r22a) 
+		  (r22.east) -- ++(335:0.5cm) coordinate(r22b) ;
+%\draw[<->,thick] (r22a) to [bend left=30] (r22b) node [right] {\fsize $L_{w_i}$};
+
+
+\draw[<-, thick] (r3.north west)++(0,-0.5*\nodewidth)--(r23.east);
+\draw[<-, thick] (r3.north west)++(0,-6.5*\nodewidth)--(r23.east);
+\path (r23.east) -- ++(22:0.5cm) coordinate(r23a) 
+		  (r23.east) -- ++(55:0.5cm) coordinate(r23b) ;
+%\draw[<->] (r23a) to [bend right=30] (r23b) node [right] {\fsize $L_{w_{K_a}}$};
+
+
+\draw[->, thick, line width=2] (r4.east)--node[midway, above]{\fsize $\widehat{w}_1,\ldots, \widehat{w}_{K_a}$}+(\xoffs,0);
+\end{tikzpicture}

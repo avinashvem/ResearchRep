@@ -1,0 +1,78 @@
+\begin{tikzpicture}
+\def\horzgap{0.25in}; %Horizontal gap between nodes/levels
+\def \gapVN{0.15in}; %vertical gap between nodes
+\def \gapCN{0.2in}; %Horizontal gap between nodes
+
+\def \textoffs{0.12in}; %Offset for writing text above a node
+\def\nodewidth{0.05in};
+\def\nodewidthA{0.05in};
+\def \edgewidth{0.02in};
+\def\ext{0.2in};
+
+\def \n {8};
+\def\ldeg{3};
+\def \m {4};
+\def\rdeg{6};
+\def\langle{40};%120 degrees/3
+\def\langle{20};%120 degrees/6
+
+\tikzstyle{check} = [rectangle, draw,line width=0.05mm,  inner sep=0mm, fill=black, minimum height=\nodewidthA, minimum width=\nodewidthA]
+\tikzstyle{checksm} = [rectangle, draw, line width=0.05mm, inner sep=0mm, fill=blue,minimum height=\edgewidth,minimum width=\edgewidth]
+
+\tikzstyle{bit} = [circle, draw,line width=0.05mm, inner sep=0mm, fill=red, minimum size=\nodewidthA]
+\tikzstyle{bitsm} = [circle, draw, very thin, inner sep=0mm,fill=red, minimum size=\edgewidth]
+\tikzstyle{edgesock} = [circle, inner sep=0mm, minimum size=\edgewidth,draw, fill=white]     
+
+                          
+\foreach \vn in {1,...,6}{
+ \node[bit] (vn\vn) at (0,\vn*\gapVN) {};
+}
+
+\foreach \cn in {1,...,4}{
+\node[check] (cn\cn) at (\horzgap,\cn*\gapCN) {};
+}
+
+\draw[line width=0.05mm] (vn6.east)--(cn4.west);
+\draw[line width=0.05mm] (vn3.east)--(cn4.west);
+\draw[line width=0.05mm] (vn1.east)--(cn4.west);
+
+\draw[line width=0.05mm] (vn2.east)--(cn3.west);
+\draw[line width=0.05mm] (vn4.east)--(cn3.west);
+\draw[line width=0.05mm] (vn5.east)--(cn3.west);
+
+\draw[line width=0.05mm] (vn2.east)--(cn3.west);
+\draw[line width=0.05mm] (vn4.east)--(cn3.west);
+\draw[line width=0.05mm] (vn5.east)--(cn3.west);
+
+\draw[line width=0.05mm] (vn6.east)--(cn2.west);
+\draw[line width=0.05mm] (vn5.east)--(cn2.west);
+\draw[line width=0.05mm] (vn3.east)--(cn2.west);
+
+\draw[line width=0.05mm] (vn1.east)--(cn1.west);
+\draw[line width=0.05mm] (vn2.east)--(cn1.west);
+\draw[line width=0.05mm] (vn4.east)--(cn1.west);
+
+\onslide<2->
+{
+\def\moveX {1.5*\nodewidth};
+\foreach \cn in {1,2,3,4}{
+\path (cn\cn) ++(\moveX,\nodewidth) node (bitnA\cn) [bitsm] {};
+\path (cn\cn) ++(\moveX,0*\nodewidth) node (bitnB\cn) [bitsm] {};
+\path (cn\cn) ++(\moveX,-1*\nodewidth) node (bitnC\cn) [bitsm] {};
+
+\def\moveXA {2*\nodewidth};
+\path (bitnB\cn) ++(\moveXA,0.25*\moveXA) node (checknB\cn) [checksm] {};
+\path (bitnC\cn) ++(\moveXA,0.25*\moveXA) node (checknC\cn) [checksm] {};
+
+\draw[very thin] (bitnA\cn.east)--(checknB\cn.west);
+\draw[very thin] (bitnA\cn.east)--(checknC\cn.west)node[pos=0.5,above,scale=0.3]{\tiny{-1}} ;
+\draw[very thin] (bitnB\cn.east)--(checknB\cn.west) node[pos=0.1,above,scale=0.3]{\tiny{-1}};
+\draw[very thin] (bitnB\cn.east)--(checknC\cn.west);
+\draw[very thin] (bitnC\cn.east)--(checknB\cn.west) node[pos=0.5,below,scale=0.3]{\tiny{-1}};
+\draw[very thin] (bitnC\cn.east)--(checknC\cn.west) node[pos=0.5,below,scale=0.3]{\tiny{-1}};
+}
+
+}%onslide<2->
+\end{tikzpicture}
+
+%

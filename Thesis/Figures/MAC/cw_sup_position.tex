@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+
+\def\fsize{\normalsize}
+\def\fsizes{\scriptsize}
+\def\ext{1}
+\def\yoffs{-1.5cm}
+
+%Message node and final codeword Rectangle
+\node[rectangle, draw,minimum width=2.7in,thick] (codeword) at (3+0.5\ext,1+2*\ext) {\fsizes $\pi_{f(\wpdash_1)}(\vec{c}_{\wc})$};
+\path let \p{A}=(codeword) in (3-1.7*\ext,\y{A})node (partition){} -- (partition |- codeword.north);
+\draw (partition |- codeword.north) --  (partition |- codeword.south) ;
+\path (partition) -- node[midway](csvec){\fsizes $\av_{\wpdash_1}$}  (codeword.west);
+
+\path (codeword)-- +(0,0.5*\yoffs) node () {\large $+$};
+
+
+\path (codeword)-- +(0,\yoffs) node[rectangle, draw,minimum width=2.7in,thick] (codeworda) {\fsizes $\pi_{f(\wpdash_2)}(\vec{c}_{\wc_2})$};
+\draw (partition)++(0,\yoffs) -- (partition |- codeworda.north);
+\draw (partition)++(0,\yoffs) -- (partition |- codeworda.south);
+\node () at (codeworda.west -| csvec) {\fsizes $\av_{\wpdash_2}$}  ;
+
+\end{tikzpicture} 

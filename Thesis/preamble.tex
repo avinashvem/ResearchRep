@@ -2,7 +2,7 @@
 \usepackage[english]{babel}
 \usepackage{amstext,amsmath,amsfonts,latexsym,graphicx,amssymb,epsfig,epsf,psfrag}
 \usepackage{tikz,pgf,pgfplots,pgfpages,xcolor,subfigure,pstricks}
-%\usepackage{algorithm,algpseudocode}
+
 \usepackage{algorithm2e,algorithmic}
 %\usepackage[noend]{algpseudocode}
 %\makeatletter
@@ -12,6 +12,7 @@
 \usetikzlibrary{%
   arrows,%
   decorations,%decorations
+  decorations.markings,
   shapes.misc,% wg. rounded rectangle
   shapes.arrows,%
   shapes.callouts, %
@@ -22,18 +23,11 @@
   patterns,% slanted lines fill
   scopes,%
   petri,%
-  fadings
+  fadings,
+  calc
 }  
 
-\newcommand{\h}{\texttt{h}}
-\newcommand{\hbp}{\h^{\mathrm{BP}}}
-\newcommand{\hmap}{\h^{\mathrm{MAP}}}
 \renewcommand{\epsilon}{\varepsilon}
-\newcommand{\dr}{d_c}
-\newcommand{\dl}{d_v}
-\newcommand{\dlh}{\hat{d}_c}
-\newcommand{\BPsmall}{\ensuremath{\text{\tiny BP}}} % Belief Propagation
-\newcommand{\MAPsmall}{\ensuremath{\text{\tiny MAP}}} % Maximum A Posteriori
 
 \setbeamertemplate{itemize item}[triangle]
 \setbeamertemplate{itemize subitem}[circle]
@@ -42,6 +36,7 @@
 \setbeamertemplate{blocks}[rounded,shadow=true]
 \setbeamercolor{block title}{fg=black,bg=blue!30!white}
 \setbeamercolor{block body}{fg=black,bg=blue!10!white}
+
 \newenvironment<>{defn}[1]{%
   \setbeamertemplate{blocks}[default]%
   \setbeamercolor{block title}{fg=blue,bg=white}%
@@ -52,3 +47,14 @@
 \setbeamercolor{alerted text}{fg=red!95!white}
 \newlength\tikzwidth
 \newlength\tikzheight
+
+\newcommand{\av}{\vec{\mathrm{a}}}
+\newcommand{\cv}{\vec{\mathrm{c}}}
+\newcommand{\xv}{\vec{\mathrm{x}}}
+\newcommand{\yv}{\vec{\mathrm{y}}}
+\newcommand{\zv}{\vec{\mathrm{z}}}
+
+\def \Bp{B_{\mathrm{p}}}
+\def \Bc{B_{\mathrm{c}}}
+\newcommand{\wpdash}{w^\mathrm{p}}
+\newcommand{\wc}{w^\mathrm{c}}
