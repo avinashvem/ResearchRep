@@ -1,0 +1,1276 @@
+\documentclass[10pt,xcolor=table]{beamer}
+%\usetheme{warsaw}
+\usetheme{CambridgeUS}
+\usepackage{etex}
+\usepackage[english]{babel}
+\usepackage{amstext,amsthm,amsmath,amsfonts,latexsym,graphicx,amssymb,epsfig,epsf,psfrag,mathtools}
+\usepackage{pgfpages,xcolor,subfigure,pstricks}
+\usepackage{pgfplots}
+\usepackage{url}
+\usepackage{tikz}
+\pgfplotsset{compat=newest}
+%% the following commands are sometimes needed
+%\usetikzlibrary{plotmarks}
+\usetikzlibrary{arrows,backgrounds,plotmarks,decorations.pathmorphing,decorations.footprints,fadings,calc,trees,mindmap,shadows,decorations.text,patterns,positioning,shapes,matrix,fit}
+\input{graphical_settings}		
+\usepackage{grffile}
+\usepackage{fancyhdr}
+\usepackage{pst-all}
+
+\graphicspath{{./../figures/}}
+\makeatletter
+\def\input@path{{./../figures/}}
+\makeatother
+
+\usepackage{tikz,pgfplots}
+\pgfplotsset{compat=newest}
+\pgfplotsset{plot coordinates/math parser=false}
+\usetikzlibrary{shapes.geometric, arrows}
+\usetikzlibrary{decorations.markings}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=1.5cm, minimum height=0.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+
+%\hypersetup{pdfpagemode=FullScreen}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{theorem}[ams style]
+\setbeamertemplate{theorems}[numbered]
+\definecolor{purple}{RGB}{255,0,204}
+
+\newcommand{\defeq}{\triangleq}
+\newcommand{\Pp}{\mathbb{P}}
+\newcommand{\Gm}{\mathbf{G}}
+\newcommand{\Hm}{\mathbf{H}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Zp}{\mathbb{Z}_{+}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rp}{\R_{+}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Zw}{\mathbb{Z}[\omega]}
+\newcommand{\Zi}{\mathbb{Z}[i]}
+\newcommand{\mc}{\mathcal}
+\newcommand{\mbb}{\mathbb}
+
+\newcommand{\wv}{\underline{w}}
+\newcommand{\cv}{\underline{c}}
+\newcommand{\ev}{\underline{e}}
+\newcommand{\sv}{\underline{s}}
+\newcommand{\xv}{\underline{x}}
+\newcommand{\bv}{\underline{b}}
+\newcommand{\kv}{\underline{k}}
+\newcommand{\zv}{\underline{z}}
+\newcommand{\yv}{\underline{y}}
+\newcommand{\hv}{\underline{h}}
+\newcommand{\rv}{\underline{r}}
+
+\newcommand{\Yv}{\underline{Y}}
+\newcommand{\Xv}{\underline{X}}
+\newcommand{\Rv}{\underline{R}}
+\newcommand{\mfk}[1]{\mathfrak{#1}}
+
+
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+\usecolortheme[RGB={0,100,0}]{structure}
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}[rectangle]
+\setbeamertemplate{itemize subsubitem}{$-$}
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamertemplate{navigation symbols}{} % get rid of navigation symbols
+%\setbeamertemplate{footline}[page number]
+%\logo{\includegraphics[height=1cm,keepaspectratio]{greentouch.eps}}
+
+\definecolor{DarkFern}{HTML}{407428}
+\definecolor{DarkCharcoal}{HTML}{4D4944}
+\colorlet{Fern}{DarkFern!85!white}
+\colorlet{Charcoal}{DarkCharcoal!85!white}
+\colorlet{LightCharcoal}{Charcoal!50!white}
+\colorlet{DarkRed}{red!70!black}
+\colorlet{AlertColor}{DarkRed!80!black}
+\colorlet{DarkBlue}{blue!70!black}
+\colorlet{DarkGreen}{green!70!black}
+% Use the colors:
+\setbeamercolor{title}{fg=DarkRed}
+\setbeamercolor{frametitle}{fg=DarkRed}
+\setbeamercolor{normal text}{fg=black}
+\setbeamercolor{block title}{fg=black,bg=DarkBlue!35!white}
+\setbeamercolor{block body}{fg=black,bg=DarkBlue!15!white}
+%\setbeamercolor{block title}{fg=black,bg=Fern!25!white}
+%\setbeamercolor{block body}{fg=black,bg=Fern!25!white}
+\setbeamercolor{alerted text}{fg=AlertColor}
+\setbeamercolor{itemize item}{fg=Charcoal}
+
+\usepackage[backend=bibtex,style=authoryear]{biblatex}
+
+\addbibresource{IEEEabrv.bib}
+\addbibresource{sparseestimation.bib}
+
+
+\def\fig_path{../Figures}
+\begin{document}
+\title{Sub-string/Pattern Matching in Sub-linear Time Using a Sparse Fourier Transform Approach}
+\author{ Krishna R. Narayanan \\
+Joint work with Nagaraj T. Janakiraman, Avinash Vem, J.-F. Chamberland \\
+}
+\titlegraphic{
+\includegraphics[width=0.75in]{TAMULogoBox}
+}
+\institute{Department of Electrical and Computer Engineering \\ Texas A\&M University}
+\date{}
+\frame{\titlepage}
+%-----------------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Problem Statement}
+ 	\vspace{-0.4cm}
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=2.8in]{Pattern_matching_ex.jpg}
+	\end{figure}
+	\vspace{-10pt}
+	\begin{block}{}
+\begin{itemize}\itemsep5pt
+	\item {\color{blue} Database/String}: $\xv = [x[0], x[1], \cdots, x[N-1]]$ \ (length $N$)
+	\item { \color{blue} Query/Substring}: $\yv = [y[0], y[1], \cdots, y[M-1]]$ \ (length $M = N^\mu$)
+	\item {\color{blue} Signal Model:} $x[i]$'s are i.i.d ~ r.v. from $\mathcal{A} = \{+1,-1\}$ (extensions possible)
+\end{itemize}
+\end{block}
+
+\vspace{-3pt}
+\pause
+\begin{block}{}
+Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau_2, \cdots \tau_L]$ with  {\color{blue}high probability}  where
+	\begin{enumerate}
+		\item \alert{Exact Matching}:~  $\yv$ appears {\color{blue}exactly} in $\xv$
+		\begin{itemize}
+				\item [-]  $\yv := \xv[\tau:\tau+M-1]$
+		\end{itemize}
+        \pause
+		\item \alert{Approximate Matching:} ~ $\yv$ is a {\color{blue}noisy substring} of $\xv$
+		\begin{itemize}\itemsep3pt
+				\item [-] $\yv := \xv[\tau:\tau+M-1] \odot \bv$
+				\item [-] $\bv$ is a noise sequence with $d_H(\yv,\xv[\tau:\tau+M-1]) \leq K$
+		\end{itemize}
+	\end{enumerate}
+
+	\end{block}
+	 \end{frame}
+% ----------------------------------------Notations---------------------------------------
+
+\begin{frame}\frametitle{Notation}
+
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=2.5in]{Pattern_matching_ex.jpg}
+	\end{figure}
+	\vspace{-8pt}
+	{\small
+	\begin{table}[h!]
+		\label{Table:Notations3}
+		\begin{center}
+			\begin{tabular}{|c|c|} 	
+				\hline		
+				\textit{Symbol}		&  \textit{Meaning} \\		
+				\hline
+				$N$           		& Size of the string or database in symbols \\
+				\hline
+				$M = N^{\mu}$       & Length of the query in symbols \\
+				\hline
+				$L = N^\lambda$    &   Number of matches \\
+				\hline
+				$K$             &$\max_{\tau}d_{H}(\xv[\tau:\tau+M-1],\yv)$\\
+				\hline
+				$\eta$             &$\frac{K}{M}$\\
+				\hline
+				%$G = N^\gamma$    & Number of blocks \\
+				%\hline
+				%$\tilde{N} = N^{1-\gamma}$   & Length of one block \\
+				%\hline
+				%$f_i = N^\alpha$     & Length of smaller point IDFT at each branch\\
+				%\hline
+				%$g_i = N/f_i$     	   &  Sub-sampling parameter \\
+				%\hline
+				%$B$   					    & Number of shifts also referred to as branches  \\
+				%\hline
+				%$d$           				& Number of stages in the FFAST algorithm \\
+				%\hline
+			\end{tabular}
+		\end{center}
+	\end{table}
+    }
+    \begin{block}{Probabilistic recovery}
+    $\mbb{P}(\hat{\underline{\tau}} \neq \underline{\tau}) \rightarrow 0$ as $N \rightarrow \infty$
+    \end{block}
+	\end{frame}	
+% ----------------------------------------Notations---------------------------------------
+\begin{frame}\frametitle{What do profs do on friday evenings?}
+\begin{columns}
+	\column{0.65\columnwidth}
+\vspace*{-0.2in}
+\begin{figure}
+  \centering
+  \includegraphics[width=3.0in]{eccell}
+  \end{figure}
+  \pause
+  	\column{0.35\columnwidth}
+\begin{figure}
+  \centering
+  \includegraphics[width=1.0in]{shazamimage}
+\end{figure}
+Talk about shazam!
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Data vs Computing - Who's winning?}
+\input{../Figures/datacomputingcomparison}
+\pause
+\begin{itemize}
+\item Linear complexity is too expensive, sub-linear complexity is required
+\end{itemize}
+
+\end{frame}
+%------------------------------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Big data applications}
+\begin{block}{Metabolomics}
+\begin{itemize}
+  \item Database of genomes contains a sequence $\vec{x}$ of length $N=10^{6}-10^{12}$
+\end{itemize}
+
+\end{block}
+  \begin{figure}[h]
+  \includegraphics[width=4.0in]{genomesizes}
+  \end{figure}
+
+\url{http://www.biology-pages.info/G/GenomeSizes.html}
+\end{frame}
+%------------------------------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Big data applications}
+\begin{block}{Metabolomics}
+\begin{itemize}
+  \item Database of genomes contains a sequence $\vec{x}$ of length $N=10^{6}-10^{12}$
+  \item $M=1000$ to $M = 100000$ gives $\mu = 0.25$ to $\mu = 0.42$
+\end{itemize}
+
+  \begin{figure}[h]
+  \includegraphics[width=4.0in]{genomebiology}
+  \end{figure}
+
+
+\end{block}
+
+\end{frame}
+%------------------------------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Big data applications}
+\begin{block}{Audio}
+Let us consider the case of an audio signal which is sampled at a moderate sampling rate of $10$~KHz and let the signal $\xv$ correspond to 1 hour of audio and hence, $N = 3.6 \times 10^7$. Let the query $\yv$ be a 10 second clip which corresponds to $M = 10^4$ resulting in a $\mu = 0.529$.
+\end{block}
+\begin{block}{}
+\begin{figure}
+\includegraphics[width=3.5in]{ScaledVoice}
+\end{figure}
+\end{block}
+\end{frame}
+%%-------------------------------------------------------------------------------------------------------------
+\begin{frame} \frametitle{Some Prior Work}
+	\vspace{-0.2cm}
+	 \begin{block}{Exact Matching - Non-sketching versions}	 	
+	 	\begin{itemize}
+            \item  {Rabin-Karp}: Match a set of strings - $O(N)$ complexity
+	 		\item  {Boyer'77}: First occurrence of the match (only $\tau_1$)	 		
+	 		\begin{itemize}
+	 			\item[-] Average complexity - $O(N^{1-\mu} \log N)$ (sub-linear)
+	 			\item[-] Worst case complexity - $O(N \log N)$
+	 		\end{itemize}	
+	 	\end{itemize}
+	 \end{block}
+	 \begin{block}{Exact Matching - Sketching versions - Bio informatics} 	
+	 	\begin{itemize}
+	 		\item  {Goodrich'05}: BWT, suffix-arrays based indexing
+	 		\begin{itemize}
+	 			\item[-] Time complexity - $O(M + L)$ (sub-linear)
+	 			\item[-] Storage Complexity - $O(N~H_k(X) \log^\epsilon N) + o(N)$ bits  (linear)
+	 			\item[-] Read alignment in Bio-informatics community[ {\color{blue}Li'09,Li'10}]
+	 		\end{itemize}	 		
+	 	\end{itemize}
+	 \end{block}
+\end{frame}
+%-------------------------------------------------------------------------------------------------------------
+\begin{frame} \frametitle{Some Prior Work}
+	\vspace{-0.2cm}
+	\begin{block}{\alert{Approximate Matching}}
+		
+	 	\begin{itemize}
+	 		\item {Chang'94}: Generalization of Boyer'77
+	 		\begin{itemize}
+	 			\item[-] Average time complexity - $O(NK/M \log N)$ (sub-linear only when $K \ll M$ )
+	 		\end{itemize}
+	 		
+	 		\item {Zhang'03}: Approximate Matching using BWT
+	 			\begin{itemize}
+	 				\item[-] Worst case time complexity: $O(\min\{M(M-K){|\mc{A}|}^k\log \frac{N}{|\mc{A}|} , NM \log \frac{N}{|\mc{A}|}\})$
+	 				\item[-] Complexity grows with $|\mc{A}|$ and $K$
+	 			\end{itemize}
+	 		\pause	
+	 		\item {Andoni'13}: $O\left(N^{1-0.359\mu}\right)$ (sub-linear even when $K = O(M)$)
+	 		\begin{itemize}
+	 			\item[-] Combinatorial in nature
+	 		\end{itemize}
+	 	\end{itemize}
+	 	
+	 \end{block}
+\end{frame}
+	
+%---------------------------------------------------------------------------------------------------------------------------
+
+%--------------------------------------------- Main Result -------------------------------------------------------------------
+	 \begin{frame} \frametitle{Our Main Result}
+
+	{\small
+	\begin{table}[h!]
+		\begin{center}
+			\begin{tabular}{|c|c|} 	
+				\hline		
+				\textit{Symbol}		&  \textit{Meaning} \\		
+				\hline
+				$N$           		& Size of the string or database in symbols \\
+				\hline
+				$M = N^{\mu}$       & Length of the query in symbols \\
+				\hline
+				$L = N^\lambda$    &   Number of matches \\
+				\hline
+				$K$             &$\max_{\tau}d_{H}(\xv[\tau:\tau+M-1],\yv)$\\
+				\hline
+				$\eta$             &$\frac{K}{M}$\\
+				\hline
+			\end{tabular}
+		\end{center}
+	\end{table}
+    }	
+     	
+    \vspace{-2.5mm}
+	 \begin{theorem}
+	 	Assume that a sketch of $\xv$ can be precomputed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M,~ 0 \leq \eta \leq 1/6$) problems, our algorithm has
+	 	\begin{itemize}
+	 		\item \alert{Sketching complexity:} {\color{blue} $O(\frac{N}{M}\log N)=O(N^{1-\mu}\log N)$} \alert{samples}
+	 		\item \alert{Computational complexity:}
+	 		{\color{blue}$O(\max(N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N ))$}	 		
+	 		\item a decoder for which $\mbb{P}(\hat{{\mathcal{T}}} \neq \mathcal{T}) \rightarrow 0$ as $N \rightarrow \infty$
+	 	\end{itemize}
+	 \end{theorem}
+	 \pause
+	 \vspace{-0.5mm}
+	 \begin{block}{\alert{Note}}
+	 	When $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$) our algorithm has a {\color{blue}sub-linear time} complexity.
+	 \end{block}	
+\end{frame}
+%-------------------------------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Signal Processing View}
+
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=3.5in]{Pattern_matching_ex.jpg}
+	\end{figure}
+
+			\begin{block}{}			
+				\begin{itemize}
+					\item {Cross-correlation} ($\rv$): $\displaystyle{r[m]=(\xv*\yv)[m] \defeq \sum_{i=0}^{M-1} x[m+i] y[i] }$
+			        \pause
+					\item {Naive implementation}: $O(MN) = O(N^{1+\mu})$ ({\color{blue} super-linear} complexity)
+                    \pause
+					\item {Fourier Transform Approach}: 1970's - $O(N \log N)$ complexity
+					\begin{equation}\nonumber
+					\rv = \mathcal{F}_{N}^{-1} \{~  \mathcal{F}_{N}\{\xv\} ~ \odot ~  \mathcal{F}_{N}\{\yv'\} ~ \}, \ \ \yv' = \yv^{*}[-n]
+					\end{equation}
+					
+				\end{itemize}
+			\end{block}												
+\end{frame}
+%-------------------------------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Main Idea}
+	\vspace{-0.4cm}
+			\begin{block}{}
+			
+				\begin{itemize}
+					\item {Cross-correlation} ($\rv$):
+					
+                    \begin{eqnarray}
+                    \nonumber
+					r[m] & = & (\xv*\yv)[m] \defeq \sum_{i=0}^{M-1} x[m+i] y[i], ~ ~ \ 0 \leq m \leq N-1\\
+                    \nonumber
+					\rv  & = & \mathcal{F}_{N}^{-1} \{~  \mathcal{F}_{N}\{\xv\} ~ \odot ~  \mathcal{F}_{N}\{\yv'\} ~ \}, \ \ \yv' = \yv^{*}[-n]
+					\end{eqnarray}					
+				\end{itemize}
+			\end{block}
+			
+				\begin{columns}
+					\column{0.45\columnwidth}
+			\begin{block}{\alert{ \bf Key Observation}}
+			\vspace{0.2cm}
+				\begin{itemize}
+					\item $\rv$ is {\color{blue}Sparse} with some noise.
+				\end{itemize}
+				 \begin{equation} \label{eqn:RXY_sparse}\nonumber
+				 r[m] \ = \left\{
+				 \begin{array}{ll}
+				 &M,~~  \text{if} \ m \in \mathcal{T} \\
+				 & n_m,~~ m \in [N]-\mathcal{T}
+				 \end{array}
+				 \right.  			
+				 \end{equation}
+			\end{block}
+						
+					\column[]{0.45\columnwidth}
+					\begin{figure}
+						\centering
+						\scalebox{0.35}{\input{cross_corr.tex}}
+					\end{figure}
+					
+				\end{columns}
+				
+					
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Spectral Estimation}
+	
+	\begin{columns}
+		
+		\column{0.35\textwidth}
+		\begin{figure}
+			\centering
+			\scalebox{0.60}{\input{monotone_time_plain.tex}}
+		\end{figure}
+		
+		\column{0.45\textwidth}
+		\begin{figure}
+			\centering
+			\scalebox{0.60}{\input{multitone_freq.tex}}
+		\end{figure}
+
+        \begin{itemize}
+        \item $N=75$
+        \item $x[n] = \displaystyle{\sum_{i=1}^L A_i \ e^{j \frac{2 \pi {\color{blue}{k_i}} n}{N}}}$
+		\end{itemize}
+	\end{columns}	
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Spectral Estimation}
+\begin{block}{Prony's method}
+Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperimental et analytique: sur les lois de la dilatabilité de fluides élastique et sur celles de la force expansive de la vapeur de l'alkool, à différentes températures. Journal de l'école Polytechnique, volume 1, cahier 22, 24-76.
+\end{block}
+\begin{figure}
+  \centering
+  \includegraphics[width=2.0in]{../Figures/Gaspard_de_Prony}
+\end{figure}
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Spectral Estimation}
+	
+	\begin{columns}
+		
+		\column{0.35\textwidth}
+		\begin{figure}
+			\centering
+			\scalebox{0.60}{\input{monotone_time.tex}}
+		\end{figure}
+		
+		\column{0.45\textwidth}
+		\begin{figure}
+			\centering
+			\scalebox{0.60}{\input{monotone_freq.tex}}
+		\end{figure}
+
+        \begin{itemize}
+        \item $N=75$
+        \item $x[n] = A e^{j \frac{2 \pi {\color{blue}{k}} n}{N}}$, $\omega = e^{j \frac{2 \pi}{N}}$
+        \pause
+        \item $x[n_1] = A \omega^{{\color{red}{k}}n_1}$
+        \item $x[n_1+1] = A \omega^k \ \omega^{{\color{red}{k}}n_1}$
+		\end{itemize}
+	\end{columns}	
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Spectral Estimation}
+	
+        \begin{columns}		
+		\column{0.35\textwidth}
+		\begin{figure}
+			\centering
+			\scalebox{0.60}{\input{multitone_time.tex}}
+		\end{figure}
+		
+		\column{0.55\textwidth}
+		\begin{figure}
+			\centering
+			\scalebox{0.60}{\input{multitone_freq.tex}}
+		\end{figure}
+
+        \begin{itemize}
+        \item $x[n] = A_1 \omega^{k_1n} + A_2 \omega^{k_2 n}$
+        \pause
+        \item $x[n_1] = A_1 \omega^{k_1n_1} + A_2 \omega^{k_2 n_2}$
+        \item $x[n_1+1] =  A_1 \omega^{k_1} \omega^{k_1n_1} + A_2 \omega^{k_2} \omega^{k_2 n_2}$
+		\end{itemize}
+	\end{columns}	
+\pause
+\begin{block}{Prony's method does not really work}
+\begin{itemize}
+  \item Not robust to noise
+\end{itemize}
+\end{block}
+\end{frame}
+%-----------------------------------------
+\begin{frame}\frametitle{Sparse Fourier Transform Approach}
+        \begin{block}{Robust Sparse Fourier Transform - Pawar and Ramchandran'14}
+	 		\begin{itemize}
+	 			\item[-] Sparse graph code approach
+	 			\item[-] Computational complexity : $O(N \log N)$
+	 		\end{itemize}
+	 	\end{block}
+\pause
+\begin{block}{Key modifications}
+   \begin{itemize}
+   	\item Optimized for the induced noise model
+   	\item Correlation peak is always {\color{blue} positive}
+   	\item Take advantage in decoding algorithm - {\color{blue}sub-linear} time complexity
+   \end{itemize}
+\end{block}
+\pause
+        \begin{block}{Faster GPS receiver - Hassanieh '12}
+	 		\begin{itemize}
+	 			\item[-] Exploited sparsity in Correlation function $R_{XY}$
+                \item[-] Algorithm based on hashing
+                \item[-] In this application, complexity is still $O(N \log N)$
+	 		\end{itemize}		
+	 	\end{block}	 	
+
+
+\end{frame}
+
+
+
+%--------------------------------------------------------------------------------------
+\def\fracty{0.45}
+\def\fractx{0.8}
+\begin{frame}{Example}
+	%	\begin{figure}[t]
+	%		\centering
+	%		\includegraphics[width=4.8in]{Example_full_framework}
+	%	\end{figure}
+	
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=4.8in]{Example_full_framework}
+	\end{figure}
+	
+	%\begin{columns}
+	%\vspace{-2.0in}
+	%\begin{column}{0.48\textwidth}
+	%%	Signal Domain
+	%\begin{figure}
+	%\centering
+	%%\text{$x[n]:$}
+	%%\resizebox{\fractx\columnwidth}{\fracty\columnwidth}{\input{\fig_path/database_x.tex}}
+	%\input{\fig_path/database_x.tex}
+	%\end{figure}
+	%\vspace{-0.2in}
+	%
+	%\begin{figure}
+	%\centering
+	%%\resizebox{\fractx\columnwidth}{\fracty\columnwidth}{\input{\fig_path/query_y.tex}}
+	%\input{\fig_path/query_y.tex}
+	%\end{figure}
+	%
+	%\vspace{-0.2in}
+	%
+	%\begin{figure}
+	%\centering
+	%%\resizebox{\fractx\columnwidth}{\fracty\columnwidth}{\input{\fig_path/corr_est.tex}}
+	%\input{\fig_path/corr_est.tex}
+	%\end{figure}
+	%\end{column}
+	%
+	%%\begin{column}{0.48\textwidth}
+	%%\tiny{Fourier Domain ($N$-pt FFT)}
+	%%\begin{figure}
+	%%\centering
+	%%\resizebox{0.7\columnwidth}{!}{\input{\fig_path/database_sketch.tex}}
+	%%\end{figure}
+	%%
+	%%\begin{figure}
+	%%\centering
+	%%\resizebox{0.7\columnwidth}{!}{\input{\fig_path/query_sketch.tex}}
+	%%\end{figure}
+	%%
+	%%\begin{figure}
+	%%\centering
+	%%\resizebox{0.7\columnwidth}{!}{\input{\fig_path/corr_fft.tex}}
+	%%\end{figure}
+	%%\end{column}
+	%
+	%\end{columns}
+\end{frame}
+%---------------------------------------------------------
+\begin{frame}\frametitle{Sparse Fourier Transform Approach}
+	\begin{figure}[t]
+		\centering
+		\scalebox{0.28}{\input{notional_diag.tex}}
+	\end{figure}
+\vspace{-0.2cm}
+	 	\begin{block}{}
+	 		\begin{equation}\label{eqn:Rxy_fourier}\nonumber
+	 		\boxed{\rv = \underset{\text{\color{red} 3 } } {\mathcal{F}_{N}^{-1}} \ \{ \underset{\text{ \color{red} 1 } }{  \mathcal{F}_{N}\{\xv\}}  \odot \ \underset{\text{ \color{red} 2 } }{ \mathcal{F}_{N}\{\yv'\}}  \} }
+	 		\end{equation}
+	 		
+	 		\begin{itemize}
+	 			\item[\color{red} 1.] \textit{\color{blue} Sketch of $\xv$ : }  Assume $ \Xv[l] = \mathcal{F}\{\xv\}$ is precomputed at positions $l \in \mathcal{S}$.
+	 			
+	 			\item[\color{red} 2.] \textit{\color{blue} Sketch of $\yv$:}  Compute $ \Yv'[l] = \mathcal{F}\{\yv'\}$ for $l \in \mathcal{S}$.
+	 			\begin{itemize}
+	 				\item[-] Only $M$ non-zero values in $\yv'$ - Efficient computation (folding and adding)
+	 			\end{itemize}
+	 			
+	 			\item[\color{red} 3.] \textit{\color{blue} Sparse $\mathcal{F}^{-1}$}:
+	 			\begin{itemize}
+	 				\item[-] Robust Sparse Inverse Fourier Transform (RSIDFT)
+	 				\item[-] Efficient Implementation- {\color{blue} sublinear} time and sampling complexity
+	 			\end{itemize}
+	 		\end{itemize}
+	 	\end{block}
+\end{frame}
+
+
+%%------------------------------------------------------------------
+%\begin{frame}{Robust Sparse Inverse Fourier Transform(RSIDFT)}
+%\begin{block}{Main Idea}
+%	\begin{itemize}
+%		\item \alert{Sub-sampling} in frequency corresponds to \alert{aliasing} in time
+%		\item Aliased coefficients $\Leftrightarrow$ parity check constraints of \alert{GLDPC codes}
+%		\item \alert{CRT} guided sub-sampling induces a code good for \alert{Peeling decoder}
+%		\item R-FFAST- proposed by Pawar and Ramchandran 2014
+%	\end{itemize}
+%\end{block}
+%\begin{block}{Key modifications}
+%   \begin{itemize}
+%   	\item Optimized for the induced noise model
+%   	\item Correlation peak is always {\color{blue} positive}
+%   	\item Take advantage in decoding algorithm - {\color{blue}sub-linear} time complexity
+%   \end{itemize}
+%\end{block}
+%\end{frame}
+
+%--------------------------------------------------------------------------------------
+	\begin{frame}{DSP - A Quick Review}
+\begin{block}{Subsampling results in aliasing}
+\begin{itemize}
+  \item Let $x[n] \xrightarrow{N-DFT} X[k] , \ \ k,n = 0,1, \ldots,N-1$
+  \item Let $x_{s}[m]  = x[mL] , \ \ m = 0,1, \ldots, N/L=M$ be a sub-sampled signal
+  \item Let $x_s[m] \xrightarrow{M-DFT} X_s[l]$ be the DFT of the sub-sampled signal
+  \item $\boxed{X_s[l] = M\sum\limits_{p=0}^{L-1}X[l+pM]}$
+\end{itemize}
+\end{block}
+\pause
+\begin{block}{Shift in time}
+\begin{itemize}
+  \item Let $x[n] \xrightarrow{N-DFT} X[k] , \ \ k,n = 0,1, \ldots,N-1$
+  \item $x[n-n_0] \xrightarrow{N-DFT} \omega^{n_0k} X[k]$
+  \item $x[n-1] \xrightarrow{N-DFT} \omega^k X[k]$
+\end{itemize}
+\end{block}
+\end{frame}
+	%--------------------------------------------------------------------------------------
+	\begin{frame}{Aliasing and Sparse Graph Codes}
+	%\begin{itemize}
+	%
+	%\item Give a simple example that explains how aliasing can induce a Sparse Graph Code.\\ \item Introduce the Tanner Graph for the induced code here (No background required since it is covered in Part I).	
+	%\end{itemize}
+	
+		\begin{block}{}
+			\begin{figure}[t]
+				\centering
+				\includegraphics[width=3.1in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/X_DFT}
+			\end{figure}
+		\end{block}
+		
+		\begin{columns}
+			
+			\column{.47\textwidth}
+			\begin{block}{{\small $\color{red}x_s$:\ Sub-sampled by $f_1=P_1=2$}}
+				\begin{figure}[t]
+					\centering
+					\includegraphics[width=2.3in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Xs}
+				\end{figure}
+			\end{block}
+			
+			\begin{block}{{\small$\color{red}z_s$:\ Sub-sampled by $f_2=P_2=3$}}
+				\begin{figure}[t]
+					\centering
+					\includegraphics[width=2.3in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Zs}
+				\end{figure}
+			\end{block}
+			
+			\column{.47\textwidth}
+			\begin{block}{\small Factor graph}
+				\begin{figure}[t]
+					\centering
+					\includegraphics[width=2.3in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example}
+				\end{figure}
+			\end{block}
+		\end{columns}
+	\end{frame}
+	
+	
+	
+	%--------------------------------------------------------------------------------------
+	\begin{frame}{FFAST Algorithm Example}
+	%Slide-1:
+	%\begin{itemize}
+	%	\item Block Diagram of a simple 2-stage FFAST setup.
+	%	\item Tanner Graph of the induced code with the parity equations displayed.
+	%\end{itemize}
+	
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=3.6in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/FFAST_2stages_example6}
+	\end{figure}
+	\vspace*{-4mm}
+	\begin{figure}[t]
+		\includegraphics[width=2.9in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
+	\end{figure}
+	
+	\end{frame}
+	%------------------------------------------------------------------------------------
+	\begin{frame}{Singleton Detection}
+			
+		%Slide-2: Singleton Detection
+		%\begin{itemize}
+		%	\item Tanner Graph of the induced code with the equations displayed
+		%	\item Simple example explaining singleton detection (ratio test)
+		%	\item Summarize the singleton detection condition. {\bf(put in slide-3 if needed)}
+		%\end{itemize}
+		
+			\vspace{-5pt}
+			\begin{figure}[t]
+				
+				\includegraphics[width=3.0in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
+			\end{figure}
+			\begin{block}{Singleton condition for a checknode}
+			\begin{itemize}
+				\item Let $i=\frac{-N}{j2\pi} \log(\frac{\tilde{X}_s[l]}{X_s[l]})$. If {\color{blue} $0 \leq i \leq N-1$}, then checknode $l$ is a \alert{Singleton}.\\
+				\item $Pos(l) = i$ is the only variable node participating and $X_s[l]$ is its value.
+			\end{itemize}
+				
+			\end{block}
+			
+	\end{frame}	
+	%-------------------------------------------------------------------------------------
+	\begin{frame}{FFAST Decoder}
+		
+		%Slide-3: Decoder
+		%\begin{itemize}
+		%	\item Tanner Graph of the induced code with the equations displayed
+		%	\item Explain in few lines how the peeling decoder works for this setup
+		%	\item Include a complete example with graphics that explains the complete FFAST decoder {\bf(if needed)}
+		%\end{itemize}
+		
+%	\begin{columns}
+%			\column{0.50\textwidth}
+%			\begin{figure}[t]
+%				\centering
+%				\includegraphics[width=2.5in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/FFAST_2stages}
+%			\end{figure}
+%			\vspace{-6mm}
+%			\hspace{-1.5in}
+%			\column{0.50\textwidth}
+%			
+%			\begin{figure}[t]
+%				
+%				\includegraphics[width=2.45in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
+%			\end{figure}
+%			
+%		\end{columns}
+			\vspace{-5pt}
+			\begin{figure}[t]				
+%\includegraphics[width=3.0in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
+\resizebox{3.0in}{!}
+{
+\input{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde.tex}
+}
+			\end{figure}
+
+		\begin{block}{Peeling decoder}
+			\begin{itemize}
+				\item 1 non-zero value among the neighbors of any right node can be recovered
+				
+				\item Iteratively errors can be corrected and analyzed for random non-zero coeffs
+			\end{itemize}
+		\end{block}
+	\end{frame}	
+	%-----------------------------------------------------------------------------------------
+	\begin{frame}{FFAST Decoder Example}
+	\only<1-3>{\begin{block}{Example 1}
+		Let $N=6$, and the non-zero coefficients be X[0]=5, X[3]=4, X[4]=7
+	    \end{block}	}
+	    \vspace{-7pt}
+		\begin{columns}
+			\only<2-3>{
+				\column{0.43\textwidth}
+                \resizebox{2.0in}{!}
+                {
+                \input{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde_abbrv.tex}
+                }
+
+				\column{0.55\textwidth}
+        \vspace{-7pt}
+				\begin{figure}[t]	\includegraphics[width=2.6in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example1_tilde}
+				\end{figure}}
+				%\column{0.25\textwidth}
+				%\only<3>{\large \color{green} Yes, recoverable!}			
+		\end{columns}
+		
+		\vspace{-7pt}
+		
+%	\only<4-6>{
+%		
+%		 \begin{block}{Example 2}
+%		Let $N=6$, and the non-zero coefficients be X[0] = 5,X[1] = 3 , X[2]=1, X[3] = 4, X[4] = 7.
+%	     \end{block}}
+%	     \begin{columns}	
+%	
+%	     \column{0.70\textwidth}
+%	\only<5->{\begin{figure}[t]		
+%			\includegraphics[width=2.6in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example2_tilde}
+%		      \end{figure}}
+%	   	\column{0.30\textwidth}
+%		\only<6>{\Large \alert{ Not recoverable!}}
+%	\end{columns}		
+	\end{frame}
+%	
+	%-----------------------------------------------------------------------------------------
+%	\begin{frame}{FFAST Construction For Different Regimes}
+%%	\begin{itemize}
+%%		\item Figure: Block diagram of the a d-staged FFAST setup with generalized down-sampling parameter
+%%		\item Give the values of the down-sampling parameters for less-sparse and very-sparse regime. (Also, give the aliasing equations for each case {\bf(if needed)}).
+%%		\item Include the generalized FFAST construction for each $\delta$ ranges {\bf(if needed)}
+%%	\end{itemize}	
+%
+%	\begin{figure}[t]
+%		\includegraphics[width=3.0in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/FFAST_2stages}
+%	\end{figure}
+%	
+%	
+%
+%			Let, $N=P_1 \times P_2 \times \ldots P_d$
+%	\begin{columns}
+%		\column{0.4\textwidth}
+%		
+%		
+%		\begin{block}{\alert{Very-sparse regime}}
+%			\begin{itemize}
+%				\item $K = O(N^\delta), 0<\delta \leq 1/3$
+%				\item \textcolor{blue}{$f_i= N/P_i,\ i=1,2, \ldots,d$}
+%				\end{itemize}
+%				\end{block}
+%				
+%				\column{0.4\textwidth}
+%				\begin{block}{\alert{Less-sparse regime}}
+%					\begin{itemize}
+%						\item $K = O(N^\delta), 1/3<\delta \leq 1$
+%						\item \textcolor{blue}{$f_i= P_i,\ i=1,2, \ldots,d$}
+%						\end{itemize}
+%						\end{block}
+%						
+%						\end{columns}
+%							
+%
+%			\end{frame}
+	%-------------------------------------------------------------------------------------
+	\begin{frame}{Generalization}
+		
+		%Slide-3: Decoder
+		%\begin{itemize}
+		%	\item Tanner Graph of the induced code with the equations displayed
+		%	\item Explain in few lines how the peeling decoder works for this setup
+		%	\item Include a complete example with graphics that explains the complete FFAST decoder {\bf(if needed)}
+		%\end{itemize}
+		
+	\begin{columns}
+			\column{0.50\textwidth}
+			\begin{figure}[t]
+				\centering
+				\includegraphics[width=2.5in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/FFAST_2stages}
+			\end{figure}
+			\vspace{-6mm}
+			\hspace{-1.5in}
+			\column{0.50\textwidth}
+			
+			\begin{figure}[t]
+				
+				\includegraphics[width=2.45in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
+			\end{figure}
+			
+		\end{columns}
+%			\vspace{-5pt}
+%			\begin{figure}[t]
+%				
+%				\includegraphics[width=2.75in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
+%			\end{figure}
+		\begin{block}{Reed Solomon component codes}
+			\begin{itemize}
+				\item $(X_s[l_1],\tilde{X}_s[l_1])$ correspond to 2 syndromes of a 1-error correcting RS code
+                \item RS is over the complex field, no miscorrection
+			\end{itemize}
+		\end{block}
+	\end{frame}	
+
+
+
+%---------------------------------------------------------
+\begin{frame}\frametitle{Sparse Fourier Transform Approach}
+	\begin{figure}[t]
+		\centering
+		\scalebox{0.28}{\input{notional_diag.tex}}
+	\end{figure}
+\begin{itemize}
+\item In the pattern matching problem we want to recover a sparse IDFT
+\item FFT $\Leftrightarrow$ IFFT duality can be used
+\end{itemize}
+\end{frame}
+%--------------------------------------------------------------------------------------------------------
+\begin{frame}\frametitle{RSIDFT Framework}
+	\begin{itemize}
+    \item $N = f_1 \ f_2 \ldots \ f_d$ where $f_i \approx N^\alpha$
+    \item Subsample by $N^{1-\alpha} \Rightarrow$ aliasing from $N^{1-\alpha}$ coeffs
+    \end{itemize}
+		\begin{figure}[t!]
+			\begin{center}
+				\resizebox{0.7\textwidth}{!}{\input{FFAST_Robust_PM.tex}}
+				%	 		\includegraphics[height=7cm]{Figures/FFAST_Robust}
+			\end{center}	
+			\label{fig:rsidft}
+			\vspace{5 pt}
+		\end{figure}
+\end{frame}
+%--------------------------------------------------------------------------------------------------------
+\begin{frame}\frametitle{RSIDFT-Decoding (Peeling Decoder)}
+\begin{columns}
+	\column[]{0.65\columnwidth}
+		\begin{figure}[h!]
+			\begin{center}
+				%		\includegraphics[height=7cm]{Figures/Factorgraph}
+				\resizebox{1.0\textwidth}{!}{\input{Factorgraph_PM.tex}}	
+			\end{center}	
+			%\caption{Example of a Tanner graph formed in a RSIDFT framework with system parameters being $d=2$, $B=2$, $N=6$, $f_1 = 2$ and $f_2=3$. The variable nodes (colored gray circles) represent the cross-correlation vector $\rv$ and the bin nodes (uncolored white boxes) represent the binned observation vector $\zv_{i,k}$. The figure also illustrates the relationship between $\zv_{i,k}$ and $\rv$.}\label{fig:factorgraph}
+		\end{figure}
+	\column[]{0.33\columnwidth}
+	    \begin{block}{Observations:}
+	          $
+	    		\zv_{i,k} = \begin{bmatrix}
+	    		r_{i,1}[k]\\
+	    		r_{i,2}[k]\\
+	    		\vdots\\
+	    		r_{i,B}[k]
+	    		\end{bmatrix}
+	    		$
+	    	\end{block}
+	    	\begin{block}{Decoding- 3 steps}	
+	    		\begin{enumerate}
+	    			\item Bin Classification
+	    			\item Position Identification
+	    			\item Peeling Process
+	    		\end{enumerate}
+	
+	    \end{block}
+	
+		
+\end{columns}	
+\end{frame}
+
+\begin{frame}\frametitle{Observations}
+\begin{align} \nonumber
+	    		\zv_{i,k} = \begin{bmatrix}
+	    		r_{i,1}[k]\\
+	    		r_{i,2}[k]\\
+	    		\vdots\\
+	    		r_{i,B}[k]
+	    		\end{bmatrix}			
+            = \begin{bmatrix}
+			1 & 1 & \ldots & 1 \\
+			\omega^{k}_{2} & \omega^{(k+f_i)}_{2} & \ldots & \omega^{(k+(g_i-1)f_i)}_{2}   \\
+			\vdots & \vdots & \ddots & \vdots\\
+			\omega^{k}_{B} & \omega^{(k+f_i)}_{B} & \ldots & \omega^{(k+(g_i-1)f_i)}_{B} \\
+			\end{bmatrix} \times
+			\begin{bmatrix}
+			r[k+(0)f_i] \\
+			r[k+(1)f_i] \\
+			\vdots\\
+			r[k+(g_i-1)f_i]
+			\end{bmatrix}
+			\end{align}
+
+			\begin{figure}[t]
+			\begin{center}
+				\includegraphics[width=3.5in]{bin_statistics.png}
+			\end{center}
+		\end{figure}
+
+\end{frame}
+
+\begin{frame}\frametitle{Decoder}
+
+\only<1>{\begin{block}{Bin Classification}
+		\begin{itemize}
+			\item  Classify each check-node -  Zero-ton / Single-ton / Multi-ton
+			\item  {\color{blue} Threshold constraints} on first observation $z_{i,k}[1] = z$
+			\item  Threshold varies with $\eta$
+			\begin{itemize}
+				\item[-] different for exact($\eta=0$) and approximate matching
+			\end{itemize}
+		\end{itemize}
+		\begin{align}
+		\label{Eqn:BinClassifApprox} \nonumber
+		\widehat{\mc{H}}_{i,j}=
+		\begin{cases}
+		\mc{H}_z &  	 z/M < \gamma_1\\
+		\mc{H}_s &	  \gamma_1 < z/M < \gamma_2  \\
+		\mc{H}_d  &    \gamma_2  < z/M <  \gamma_3\\
+		\mc{H}_m &      z/M > \gamma_3\\
+		\end{cases}
+		\end{align}
+		where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{1-2\eta}{2},\frac{3-4\eta}{2},\frac{5-6\eta}{2})$
+	\end{block}}
+	
+\only<2>{\vspace{-5pt} \begin{block}{Position Identification}
+		\begin{itemize}
+			\item 	{\color{blue}Observation:} 	\begin{align} \nonumber
+			\zv_{i,k}= \begin{bmatrix}
+			1 & 1 & \ldots & 1 \\
+			\omega^{k}_{2} & \omega^{(k+f_i)}_{2} & \ldots & \omega^{(k+(g_i-1)f_i)}_{2}   \\
+			\vdots & \vdots & \ddots & \vdots\\
+			\omega^{k}_{B} & \omega^{(k+f_i)}_{B} & \ldots & \omega^{(k+(g_i-1)f_i)}_{B} \\
+			\end{bmatrix} \times
+			\begin{bmatrix}
+			r[k+(0)f_i] \\
+			r[k+(1)f_i] \\
+			\vdots\\
+			r[k+(g_i-1)f_i]
+			\end{bmatrix}
+			\end{align}
+			
+			\item Column that gives {\color {blue} maximum correlation} with the observation\\
+			{ \[\boxed{\hat{k} = \underset{k\in\{j+l f_i\}}{\arg \max}~~ \zv^{\dagger}_{i,j} \mathbf{W}[:,l]}\]}
+		\end{itemize}
+	
+		\end{block}}
+
+\only<3>{\begin{block}{Error Probability}
+			\begin{align*}
+			\mbb{P}(\mathcal{E}_{\text{total}}) & \leq &  \mbb{P}(\mathcal{E}_1)~~~~~ & + & \mbb{P}(\mc{E}_2)~~~~~~~~ & + & \mbb{P}(\mc{E}_3)~~~~~~~~\\
+			&\leq & 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}~ & + & 2e^{-N^{\mu+\alpha-1} ~ c_1(\eta)}~ & + &  e^{-c_3 N^{c_4\alpha}}
+			\end{align*}
+			\[\boxed{	\mbb{P}(\mathcal{E}_{\text{total}}) \rightarrow 0  ~~\text{if}~~  \alpha >1-\mu}\]
+		\end{block}
+	     }	
+\end{frame}
+%-------------------------------------------------------------------------------------------------
+\begin{frame}{Error Analysis}
+	
+	\only<1>{\begin{block}{Error Events}
+		\begin{itemize}\small
+				\item {\color{blue}$\mathcal{E}_1${-\it Bin Classification}}: Bin is wrongly classified
+				\item {\color{blue}$\mathcal{E}_2${-\it Pos. Identification}}: Position of singleton is identified wrongly, given a singleton
+				\item {\color{blue}$\mathcal{E}_3${-\it Peeling Process}}: Peeling process fails to recover the $L$ significant correlation coefficients, given $\mbb{P}(\mc{E}_1)= \mbb{P}(\mc{E}_2)=0$
+		\end{itemize}
+	\end{block}
+}
+	\only<1>{\begin{block}{$\mathcal{E}_1${-\it Bin Classification}}
+			\begin{figure}[t]
+			\begin{center}
+				\includegraphics[width=3.5in]{bin_statistics.png}
+			\end{center}
+		\end{figure}
+		\vspace{-20pt}
+		
+		{\small \begin{align*}
+			\mbb{P}[\mc{E}_1] & \leq & \mbb{P}[\mc{E}_1|\widehat{\mc{H}}_{i,j}=\mc{H}_z]~& + &
+			\quad \mbb{P}[\mc{E}_1|\widehat{\mc{H}}_{i,j}=\mc{H}_s]~~~~~& + &
+			\quad \mbb{P}[\mc{E}_1|\widehat{\mc{H}}_{i,j}=\mc{H}_d \cup \mc{H}_m]\\
+			~& = & \mbb{P}[z[1]>\gamma_1] ~& + & (1- \mbb{P}[\gamma_1<z[1]<\gamma_2])  ~& + & \mbb{P}[z[1]<\gamma_2]~~~~~~
+			\end{align*}
+		}
+
+			\vspace{-17pt}
+	\end{block}
+	}
+\end{frame}
+%----------------------------------------------------------------------------------------------------------------
+\begin{frame}{Error Analysis}
+	
+	\only<1,3>{\begin{block}{Error Events}
+		\begin{itemize}\small
+				\item {\color{blue}$\mathcal{E}_1${-\it Bin Classification}}: Bin is wrongly classified
+				\item {\color{blue}$\mathcal{E}_2${-\it Pos. Identification}}: Position of singleton is identified wrongly, given a singleton
+				\item {\color{blue}$\mathcal{E}_3${-\it Peeling Process}}: Peeling process fails to recover the $L$ significant correlation coefficients, given $\mbb{P}(\mc{E}_1)= \mbb{P}(\mc{E}_2)=0$
+		\end{itemize}
+	\end{block}
+}
+
+	\only<2>{\begin{block}{$\mathcal{E}_2${-\it Pos. Identification}}
+			\begin{itemize}
+				\item $\underline{z} =  r[j_p] ~ \wv_{j_p}+ \sum_{k \neq p}n_k \wv_{j_k}$
+				\item $\mbb{P}[\mc{E}_2] = \mbb{P}[\wv_{j_p}^{\dagger}\underline{z}< \wv_{j_k}^{\dagger}\underline{z}]$
+				\item Mutual Incoherence property to bound the cross-correlation(noise) term
+				  \begin{itemize}
+				  	\item [-] $\log N$ measurements (shifts) suffices [Pawar'14]
+				  \end{itemize}
+			\end{itemize}
+		     \end{block}
+		\begin{align} \nonumber
+			\zv_{i,k}= \begin{bmatrix}
+			1 & 1 & \ldots & 1 \\
+			\omega^{k}_{2} & \omega^{(k+f_i)}_{2} & \ldots & \omega^{(k+(g_i-1)f_i)}_{2}   \\
+			\vdots & \vdots & \ddots & \vdots\\
+			\omega^{k}_{B} & \omega^{(k+f_i)}_{B} & \ldots & \omega^{(k+(g_i-1)f_i)}_{B} \\
+			\end{bmatrix} \times
+			\begin{bmatrix}
+			r[k+(0)f_i] \\
+			r[k+(1)f_i] \\
+			\vdots\\
+			r[k+(g_i-1)f_i]
+			\end{bmatrix}
+			\end{align}
+	}	
+	
+		\only<3>{\begin{block}{Error Probability}
+			\begin{align*}
+			\mbb{P}(\mathcal{E}_{\text{total}}) & \leq &  \mbb{P}(\mathcal{E}_1)~~~~~ & + & \mbb{P}(\mc{E}_2)~~~~~~~~ & + & \mbb{P}(\mc{E}_3)~~~~~~~~\\
+			&\leq & 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}~ & + & 2e^{-N^{\mu+\alpha-1} ~ c_1(\eta)}~ & + &  e^{-c_3 N^{c_4\alpha}}
+			\end{align*}
+			\[\boxed{	\mbb{P}(\mathcal{E}_{\text{total}}) \rightarrow 0  ~~\text{if}~~  \alpha >1-\mu}\]
+		\end{block}
+	     }	
+\end{frame}
+%----------------------------------------------------------------------------------------------------------------
+\begin{frame}{Error Analysis}
+	
+	\only<1,3>{\begin{block}{Error Events}
+		\begin{itemize}\small
+				\item {\color{blue}$\mathcal{E}_1${-\it Bin Classification}}: Bin is wrongly classified
+				\item {\color{blue}$\mathcal{E}_2${-\it Pos. Identification}}: Position of singleton is identified wrongly, given a singleton
+				\item {\color{blue}$\mathcal{E}_3${-\it Peeling Process}}: Peeling process fails to recover the $L$ significant correlation coefficients, given $\mbb{P}(\mc{E}_1)= \mbb{P}(\mc{E}_2)=0$
+		\end{itemize}
+	\end{block}
+}
+
+	
+	\only<2>{	
+		\begin{block}{$\mathcal{E}_3${-\it Peeling Process}}
+		\begin{itemize}
+			\item Tools from Coding Theory to analyze Sparse Graph Codes
+			\item Density Evolution to quantify Error Probability
+			\item \# of check-nodes is a function of sparsity (query length)
+			\item Error probability decays with $N$ - {\small R-FFAST and SAFFRON [Pawar'14, Lee'15]}
+		\end{itemize}
+		\end{block}
+	}	
+	
+		\only<3>{\begin{block}{Error Probability}
+			\begin{align*}
+			\mbb{P}(\mathcal{E}_{\text{total}}) & \leq &  \mbb{P}(\mathcal{E}_1)~~~~~ & + & \mbb{P}(\mc{E}_2)~~~~~~~~ & + & \mbb{P}(\mc{E}_3)~~~~~~~~\\
+			&\leq & 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}~ & + & 2e^{-N^{\mu+\alpha-1} ~ c_1(\eta)}~ & + &  e^{-c_3 N^{c_4\alpha}}
+			\end{align*}
+			\[\boxed{	\mbb{P}(\mathcal{E}_{\text{total}}) \rightarrow 0  ~~\text{if}~~  \alpha >1-\mu}\]
+		\end{block}
+	     }	
+\end{frame}
+%----------------------------------------------------------------------------------------------------------------
+\begin{frame}{Complexity Analysis}
+	\begin{block}{Sample Complexity}
+		\vspace{-10pt}
+		\begin{align*}
+		\text{Total \# of samples required (S)} &= O \left(dBN^{\alpha}\right) =   {\color{blue}O(N^{1-\mu}\log N)}
+		\end{align*}
+	\end{block}
+\pause
+	\begin{block}{Computational Complexity}
+		\begin{equation*}\label{eqn:Rxy_fourier}
+		\rv = \underset{\color{red}  \RNum{2} } {\mathcal{F}_{N}^{-1}} \ \{   \mathcal{F}_{N}\{\xv\}  \odot \ \underset{\color{red}  \RNum{1}  }{ \mathcal{F}_{N}\{\yv'\}}  \}
+		\end{equation*}
+		\vspace{-10pt}
+\pause
+	\begin{itemize}
+		\item {\color{blue}Sketch of Query:}\\ \vspace{5pt}
+	 {\small $C_{\color{red}\RNum{1}} \ = \  dB ~
+	 ( \underset{\text{Folding} }{\underbrace{N^{\mu}}} + \ \
+	 \underset{\text{Shorter FFTs} }{\underbrace{N^{\alpha} \ \log N^{\alpha}}} \ )
+	 =  {\color{blue} O(\max(N^{\mu}\log N,N^{1-\mu}\log^2 N)) }$}
+\pause
+		\item {\color{blue}RSIDFT:} \\	{\small$C_{\color{red} \RNum{2}} =  {d B}  \left (
+			\underset{\text{Shorter IFFTs /block/stage} }{\underbrace{ O(N^{\alpha}  \log N^{\alpha})}} \hspace{-3pt}+ \underset{\text{Correlations} }{\underbrace{ L~N^{1-\alpha}}} \right ) = {\color{blue} O(\max(N^{1-\mu}\log^2 N ,N^{\mu+\lambda}\log N)) }$}
+	\end{itemize}
+	\vspace{10pt}	
+	\[\boxed{C_{\text{total}} = \max(C_{\color{red} \text{ \RNum{1}}},C_{\color{red} \text{ \RNum{2}}}) = {\color{blue} O(\max(N^{1-\mu}\log^2 N ,N^{\mu+\lambda}\log N)) }}\]
+		
+	\end{block}
+\end{frame}
+%----------------------------------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Simulation Results}
+\only<1>{\begin{figure}[h!]
+		\begin{center}
+			
+			\resizebox{0.7\textwidth}{!}{\input{sim_results_M_10_7.tex}}	
+				\end{center}
+			\caption{Plot of Probability of Missing a Match vs. Sample Gain for Exact Matching of a substring of length $M=10^5$($\mu=0.41$) from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{5}$ blocks each of length $\tilde{N}=10^7$. The substring was simulated to repeat in $L=10^6$($\lambda=0.5$) locations uniformly at random.}
+	
+\end{figure}}
+
+\only<2>{\begin{figure}[h!]
+	\begin{center}
+		\resizebox{0.7\textwidth}{!}{\input{sim_results_M_10_3.tex}}	
+	\end{center}
+	\caption{Plot of Probability of Missing a Match vs. Sample Gain for Exact Matching of a substring of length $M=10^3$($\mu=0.25$) from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{6}$ blocks each of length $\tilde{N}=10^6$. The substring was simulated to repeat in $L=10^6$($\lambda=0.5$) locations uniformly at random.}
+	
+\end{figure}}
+\end{frame}
+%-----------------References --------------------
+
+
+%\begin{frame}[allowframebreaks]
+%\frametitle{References}%in case more than 1 slide needed
+%	{\footnotesize
+%		\bibliographystyle{ieeetr}
+%		\bibliography{sparseestimation}	}
+%\end{frame}
+
+\begin{frame}{Secure Pattern Matching}
+\begin{figure}
+  \centering
+  \includegraphics[width=4.0in]{airline}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Secure Pattern Matching}
+\begin{figure}
+  \centering
+  \includegraphics[width=4.0in]{doctorpatient}
+\end{figure}
+\end{frame}
+
+%---------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Questions?}
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=2.8in]{questions}
+	\end{figure}
+	\centering
+	\color{blue}
+	\Huge{Thank you!}
+\end{frame}
+
+\end{document} 
