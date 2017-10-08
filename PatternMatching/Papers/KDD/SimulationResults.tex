@@ -3,8 +3,8 @@
 
 \begin{figure*}[ht]
 		\begin{tabular}{cc}
-			\subfloat[$M=10^5(\mu=0.41), \tilde{N}=10^7, ~G=10^{5}$]{\resizebox{0.40\textwidth}{!}{\input{Figures/sim_results_M_10_7.tex}}}&
-			\subfloat[$M=10^3(\mu=0.25),~ \tilde{N}=10^6, ~G=10^{6}$]{\resizebox{0.40\textwidth}{!}{\input{Figures/sim_results_M_10_3.tex}}}
+			\subfloat[$M=10^5(\mu=0.41), \tilde{N}=10^7, ~G=10^{5}$]{\resizebox{0.35\textwidth}{!}{\input{Figures/sim_results_M_10_7.tex}}}&
+			\subfloat[$M=10^3(\mu=0.25),~ \tilde{N}=10^6, ~G=10^{6}$]{\resizebox{0.35\textwidth}{!}{\input{Figures/sim_results_M_10_3.tex}}}
 		\end{tabular}
 		
 		\caption{Plots of probability of missing a match vs. sample gain for exact matching of a query of length $M$ from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G$ blocks each of length $\tilde{N}$. The substring was simulated to repeat in $L=10^6$($\lambda=0.5$) locations uniformly at random.} \label{Fig:Simulation Results}
@@ -18,6 +18,6 @@ The sample gain, defined as the ratio of $N$ to the number of samples used from 
 The plots of $P_e$ vs. sample gain, is presented in Fig.~\ref{Fig:Simulation Results} for two different query lengths: $M=10^5~(\mu=0.41)$ in Fig~\ref{Fig:Simulation Results}(a) and $M=10^3~(\mu=0.25)$ in Fig~\ref{Fig:Simulation Results}(b). As can be inferred from the plots we achieve a sample gain of 200-500 (depending on the tolerable error probability) for the query length corresponding to  $\mu=0.41$ and a sample gain of $2$-$8$ for $\mu=0.25$. This sample gain results from an average number of samples per branch $f_i \approx 9.25 \times10^7 $ ($\alpha=0.66$) for $\mu=0.41$, and  $f_i \approx 6.94\times10^9 $ ($\alpha=0.82$) for $\mu=0.25$. The trend in the results almost matches with the theoretical findings of $\alpha = 1-\mu$. We also notice a sharp threshold in the sample gain, below which the RSIDFT framework succeeds with very high probability. 
 
 \subsection{Real Dataset}
-We did some preliminary tests on a real world dataset to test the algorithm's performance for signals that do not satisfy our i.i.d model assumption. We simulated the performance of our algorithm for an audio clip. Vector $\xv$ corresponded to a 100 second clip sampled at 48KHz ($N=4800000$) and $\yv$ was a sub-string that corresponded to a 3 second substring. Our algorithm required only a sketch size of $48000$ FFT coefficients providing a 100 times reduction over linear time techniques. Although, the i.i.d assumption is violated, our algorithm still provides a good performance improvement over a linear scheme. 
+We did some preliminary tests on a real world dataset to test the algorithm's performance for signals that do not satisfy our i.i.d model assumption. We simulated the performance of our algorithm for a speech signal\footnote{available in https://github.com/tjnagaraj/Pattern-Matching}. Vector $\xv$ corresponded to a 100 second clip sampled at 48KHz ($N=4800000$) and $\yv$ was a sub-string that corresponded to a 3 second substring. Our algorithm required only a sketch size of $48000$ FFT coefficients providing a 100 times reduction over linear time techniques. Although, the i.i.d assumption is violated, our algorithm still provides a good performance improvement over a linear scheme. 
 
  		
