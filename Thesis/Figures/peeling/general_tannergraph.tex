@@ -31,8 +31,15 @@
 }
 
 \path (cn2)++(0,-0.4*\gapCN) node () {\small{$\vdots$}};
-\path (cn1.east)++(\textoffs,0) node ()[anchor=west] {\tiny{$y_1=f(x_i)$}};
-\path (cn4.east)++(\textoffs,0) node ()[anchor=west] {\tiny{$y_m=f(x_i)$}};
+
+\path (cn1.east) node[anchor=west] (ytexta) {\tiny{$y_1=f(\{x_i\})$}};
+\path (ytexta) node[anchor=north] () {\tiny{$i\in\mc{N}_1$}};
+
+%\path (cn4.east) node[anchor=west] () {\tiny{$y_m=f(\{x_i,i\in\mc{N}_m\})$}};
+
+\path (cn4.east) node[anchor=west] (ytextb) {\tiny{$y_m=f(\{x_i\})$}};
+\path (ytextb) node[anchor=north] () {\tiny{$i\in\mc{N}_m$}};
+
 
 \draw (vn4.east)--(cn4.west);
 \draw  (vn5.east)--(cn4.west);
@@ -52,6 +59,6 @@
 %\node[text width=1.5cm] () at (0,-6.5*\gapVN){\tiny $N$ Variable Nodes $K$ unknown};
 \node[align=left] () at (0,-6.5*\gapVN){\tiny $N$ Variable Nodes};
 \node[align=left] () at (0,-6.8*\gapVN){\tiny $K$ unknown};
-\node () at (1.2*\horzgap,-4.5*\gapCN){\tiny $m$ Function Nodes};
+\node () at (1.2*\horzgap,-4.6*\gapCN){\tiny $m$ Function Nodes};
 
 \end{tikzpicture}

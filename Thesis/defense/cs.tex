@@ -1,5 +1,5 @@
-\section{Introduction}
-\subsection{Support Recovery}
+\section{Compressed Sensing: Support recovery}
+\subsection{Main result: Comparison with known limits}
 \begin{frame}{Compressed Sensing}
 \begin{equation*}
 \mathbf{y=Ax +w}
@@ -34,11 +34,11 @@
 
 \onslide<2->
 \begin{block}{Objective}
-Devise a scheme with minimal num. of measurements $M$ and minimal decoding complexity such that $\mbb{P}_{F}\rightarrow 0$ as $N (\text{and } K) \rightarrow \infty$
+Devise a scheme with minimizing num. of measurements $M$ and decoding complexity such that $\mbb{P}_{F}\rightarrow 0$ as $N (\text{and } K) \rightarrow \infty$
 \end{block}
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
-\subsection{Known Limits}
+%\subsection{Known Limits}
 \begin{frame}
 \begin{block}{Optimal order for Support Recovery [1]}
 \begin{itemize}
@@ -65,7 +65,7 @@ x_i\in\mc{X}&\defeq\{A e^{i\theta}: A\in \mc{A},\theta\in \Omega\}\cup \{0\} ,\\
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
-\subsection{Main Result}
+%\subsection{Main Result}
 \begin{frame}{Main result}
 
 \begin{block}{Sub-linear Sparsity-Optimal Sample and Decoding Complexities}
@@ -90,8 +90,8 @@ where the constant $c_{3}>1$ is a parameter dependent on left degree $\ell$.
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
-\subsection{Prior Work}
-\begin{frame}
+%\subsection{Prior Work}
+\begin{frame}\frametitle{Prior Work}
 \begin{itemize}
 \item Zhang and Pfister, ``Verification Decoding of High-Rate LDPC Codes With Applications in Compressed Sensing", 2008
 \item  Jafarpour, Xu, Hassibi and Calderbank, ``Efficient and robust compressed sensing using optimized expander graphs", 2009
@@ -112,8 +112,8 @@ where the constant $c_{3}>1$ is a parameter dependent on left degree $\ell$.
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
-\section{Framework}
-\subsection{Sensing Matrix}
+\subsection{Design scheme}
+%\subsection{Sensing Matrix}
 \begin{frame}{Graphical Representation}
 $(N,\ell,r,\mbf{S})$ ensemble. $\ell N=rM_1$. 
 \onslide<2->{$\text{dim}(\mbf{S})=P\times r$.}
@@ -226,7 +226,7 @@ Sensing matrix $\bf A$ with $M = 8$:
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
-\subsection{Decoding}
+%\subsection{Decoding}
 \begin{frame}{Bin Decoding}
 At each bin, input to the decoder is $\mbf{y}_i=\sum_{j=1}^{r}x_{\mbf{h}_{i}^{j}}\mbf{s}_j+\mbf{w}_i$
 \begin{itemize}
@@ -277,8 +277,8 @@ At each bin, input to the decoder is $\mbf{y}_i=\sum_{j=1}^{r}x_{\mbf{h}_{i}^{j}
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
-\section{Analysis}
-\subsection{Peeling Decoder}
+\subsection{Analysis}
+%\subsection{Peeling Decoder}
 \begin{frame}{Oracle based Peeling Decoder}
 \begin{itemize}
 \item Assume the hypothesis detection in each bin decoder is correct
@@ -302,7 +302,6 @@ where $\epsilon=\frac{K}{N}$ and $r=\frac{\ell N}{\eta K}$
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
-
 \begin{frame}{}
 \begin{block}{Peeling threshold}
 $\eta^{\text{Th}}$ is defined to be the minimum value of $\eta$ for which there is no non-zero solution for the equation:
@@ -321,7 +320,7 @@ Note that $\eta^{\text{Th}}$ is a function of just the left degree $\ell$.
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_------------------------------------------------------------------
 
-\subsection{Bin Decoder}
+%\subsection{Bin Decoder}
 \begin{frame}{Bin detection matrix}
 \begin{itemize}
 \item Singleton detection is the crucial part of bin decoding:
@@ -385,8 +384,8 @@ $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
-\section{Simulation Results}
-\begin{frame}
+%\section{Simulation Results}
+\begin{frame}{Simulation Results}
 \begin{itemize}
 \item $K=50, N=10^5$. $\mc{X}=\{+1,-1\}$
 \item $\ell=4, \eta =2 (M_1 =2K)$. Note that $\eta^{\text{Th}}(\ell=4)=1.295$

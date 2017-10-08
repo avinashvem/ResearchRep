@@ -17,10 +17,22 @@
  \def\moveX {1.8*\nodewidth};
 \def\moveXA {2*\nodewidth};
 
-            
+
+
+
+
+
+
+
+
 \onslide<1>{             
 \foreach \vn in {1,...,6}{
- \node[bit] (vn\vn) at (0,-\vn*\gapVN) {};
+\node[block] (vn\vn) at (0,-\vn*\gapVN) {\fsize \begin{tabular}{c}
+Repeat \\
+$\ell(w_1)$ times
+\end{tabular}};
+\node[block] (vna\vn) at (vn\vn)++(-\ext,0) {\fsize \textbf{Encoder} $\mc{C}$};
+% \node[bit] (vn\vn) at (0,-\vn*\gapVN) {};
 }
 
 \foreach \vn in {1,...,6}{
@@ -255,7 +267,126 @@
 \node [scale=0.2,anchor=west] at (cn2.east) {\tiny{$\vec{z}_2$}};
 \node [scale=0.2,anchor=west] at (cn3.east) {\tiny{$\vec{z}_3$}};
 \node [scale=0.2,anchor=west] at (cn4.east) {\tiny{$\vec{x}_3+\vec{x}_4+\vec{z}_4$}};
-
-\node[scale=0.35] () at (0.5*\horzgap,-5*\gapCN) {\tiny{Stuck}};
 }
+%----------------------------------^%$#@%^&*()_*&^%$#^&*------------------------------------
+\onslide<7>{
+\foreach \vn in {5,6}{
+ \node[bit] (vn\vn) at (0,-\vn*\gapVN) {};
+}
+
+\foreach \vn in {1,2,3,4}{
+ \node[bituncover] (vn\vn) at (0,-\vn*\gapVN) {};
+}
+
+
+\foreach \vn in {5,6}{
+\path (vn\vn) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$\vec{x}_{\vn}$}};
+}
+
+\foreach \vn in {1,2,3,4}{
+\path (vn\vn) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$\hat{\vec{x}}_{\vn}$}};
+}
+
+\foreach \cn in {1,...,4}{
+\node[check] (cn\cn) at (\horzgap,-\cn*\gapCN) {};
+}
+
+
+\draw[line width=0.05mm,densely dotted] (vn4.east)--(cn4.west);
+\draw[line width=0.05mm,densely dotted] (vn3.east)--(cn4.west);
+
+\draw[line width=0.05mm,densely dotted] (vn3.east)--(cn1.west);
+
+\draw[line width=0.05mm] (vn5.east)--(cn1.west);
+\draw[line width=0.05mm] (vn6.east)--(cn1.west);
+
+\node [scale=0.2,anchor=west] at (cn1.east) {\tiny{$\vec{x}_3+\vec{x}_5+\vec{x}_6+\vec{z}_1$}};
+\node [scale=0.2,anchor=west] at (cn2.east) {\tiny{$\vec{z}_2$}};
+\node [scale=0.2,anchor=west] at (cn3.east) {\tiny{$\vec{z}_3$}};
+\node [scale=0.2,anchor=west] at (cn4.east) {\tiny{$\vec{x}_3+\vec{x}_4+\vec{z}_4$}};
+}
+
+
+%----------------------------------^%$#@%^&*()_*&^%$#^&*------------------------------------
+\onslide<8>{
+\foreach \vn in {5,6}{
+ \node[bit] (vn\vn) at (0,-\vn*\gapVN) {};
+}
+
+\foreach \vn in {1,2,3,4}{
+ \node[bituncover] (vn\vn) at (0,-\vn*\gapVN) {};
+}
+
+
+\foreach \vn in {5,6}{
+\path (vn\vn) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$\vec{x}_{\vn}$}};
+}
+
+\foreach \vn in {1,2,3,4}{
+\path (vn\vn) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$\hat{\vec{x}}_{\vn}$}};
+}
+
+\foreach \cn in {1,...,4}{
+\node[check] (cn\cn) at (\horzgap,-\cn*\gapCN) {};
+}
+
+\draw[line width=0.05mm] (vn5.east)--(cn1.west);
+\draw[line width=0.05mm] (vn6.east)--(cn1.west);
+
+\node [scale=0.2,anchor=west] at (cn1.east) {\tiny{$\vec{x}_5+\vec{x}_6+\vec{z}_1$}};
+\node [scale=0.2,anchor=west] at (cn2.east) {\tiny{$\vec{z}_2$}};
+\node [scale=0.2,anchor=west] at (cn3.east) {\tiny{$\vec{z}_3$}};
+\node [scale=0.2,anchor=west] at (cn4.east) {\tiny{$\vec{z}_4$}};
+}
+
+%----------------------------------^%$#@%^&*()_*&^%$#^&*------------------------------------
+\onslide<9>{
+
+\foreach \vn in {1,...,6}{
+ \node[bituncover] (vn\vn) at (0,-\vn*\gapVN) {};
+}
+
+\foreach \vn in {1,2,3,4,5,6}{
+\path (vn\vn) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$\hat{\vec{x}}_{\vn}$}};
+}
+
+\foreach \cn in {1,...,4}{
+\node[check] (cn\cn) at (\horzgap,-\cn*\gapCN) {};
+}
+
+\draw[line width=0.05mm,densely dotted] (vn5.east)--(cn1.west);
+\draw[line width=0.05mm,densely dotted] (vn6.east)--(cn1.west);
+
+\node [scale=0.2,anchor=west] at (cn1.east) {\tiny{$\vec{x}_5+\vec{x}_6+\vec{z}_1$}};
+\node [scale=0.2,anchor=west] at (cn2.east) {\tiny{$\vec{z}_2$}};
+\node [scale=0.2,anchor=west] at (cn3.east) {\tiny{$\vec{z}_3$}};
+\node [scale=0.2,anchor=west] at (cn4.east) {\tiny{$\vec{z}_4$}};
+}
+
+
+%----------------------------------^%$#@%^&*()_*&^%$#^&*------------------------------------
+\onslide<10>{
+
+\foreach \vn in {1,...,6}{
+ \node[bituncover] (vn\vn) at (0,-\vn*\gapVN) {};
+}
+
+\foreach \vn in {1,...,6}{
+\path (vn\vn) ++(-\nodewidth,0) node()[scale=0.25, inner sep=0mm] {\tiny{$\hat{\vec{x}}_{\vn}$}};
+}
+
+\foreach \cn in {1,...,4}{
+\node[check] (cn\cn) at (\horzgap,-\cn*\gapCN) {};
+}
+
+\node [scale=0.2,anchor=west] at (cn1.east) {\tiny{$\vec{z}_1$}};
+\node [scale=0.2,anchor=west] at (cn2.east) {\tiny{$\vec{z}_2$}};
+\node [scale=0.2,anchor=west] at (cn3.east) {\tiny{$\vec{z}_3$}};
+\node [scale=0.2,anchor=west] at (cn4.east) {\tiny{$\vec{z}_4$}};
+
+\node[scale=0.35] () at (0.5*\horzgap,-5*\gapCN) {\tiny{Successfully decoded}};
+}
+
+
+
 \end{tikzpicture}

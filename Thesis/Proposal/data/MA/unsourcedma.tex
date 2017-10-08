@@ -3,9 +3,11 @@
 
 \def\Figurespath{./data/MA}
 
-We propose a novel coding scheme for the unsourced multiple access channel model introduced by Polyanskiy~\cite{polyanskiy2017perspective}.
-This new paradigm is composed of four main ingredients: (i) the transmission period is partitioned into sub-blocks, thereby instituting a slotted framework; (ii) The message (data) is split into two parts and one part chooses an interleaver for a low density parity check (LDPC) type code. This part of the message is encoded using spreading sequences or codewords that are designed to be decoded by a compressed sensing type decoder; (iii) The other part of the message is encoded using a low density parity check (LDPC) type code and decoded using a joint message passing decoding algorithm designed for the $T$-user binary input real adder channel;
-(iv) users repeat their codeword in multiple sub-blocks, with the transmission pattern being a deterministic function of message content and independent of the identity of the user. When this coding scheme is combined with successive interference cancellation, the ensuing communication infrastructure can offer significant performance improvements compared to the recently proposed coding scheme in \cite{ordentlich2017low} and results in the best performing coding scheme to date.
+%In this chapter we consider massive multiple access problem where the access point is only interested in recovering the set of messages. 
+
+%We propose a novel coding scheme for the unsourced multiple access channel model introduced by Polyanskiy~\cite{polyanskiy2017perspective}.
+%This new paradigm is composed of four main ingredients: (i) the transmission period is partitioned into sub-blocks, thereby instituting a slotted framework; (ii) The message (data) is split into two parts and one part chooses an interleaver for a low density parity check (LDPC) type code. This part of the message is encoded using spreading sequences or codewords that are designed to be decoded by a compressed sensing type decoder; (iii) The other part of the message is encoded using a low density parity check (LDPC) type code and decoded using a joint message passing decoding algorithm designed for the $T$-user binary input real adder channel;
+%(iv) users repeat their codeword in multiple sub-blocks, with the transmission pattern being a deterministic function of message content and independent of the identity of the user. When this coding scheme is combined with successive interference cancellation, the ensuing communication infrastructure can offer significant performance improvements compared to the recently proposed coding scheme in \cite{ordentlich2017low} and results in the best performing coding scheme to date.
 
 %--------------------------------------------------------------------------
 \section{Introduction}
@@ -18,7 +20,7 @@ The design of coding schemes is also very challenging for this setting. Almost a
 While Ordentlich and Polyanskiy have contributed an important first step in finding practical schemes for the unsourced MAC, there remains a substantial gap between the performance of their proposed scheme and the capacity limit derived in~\cite{polyanskiy2017perspective}. Indeed, they point to this gap and discuss possibilities for improving its performance. In \cite[Section~III.A]{ordentlich2017low}, they discuss the possibility of improving their scheme by decoding the $T$ messages using the real sum from the channel output instead of first reducing the output of the channel to modulo-$p$ operations. However, in the unsourced MAC, each user is forced to use the same codebook and they remark that ``the task of designing low complexity capacity approaching same-codebook schemes for the real binary adder seems quite challenging.'' Another important limitation that is not discussed in \cite{ordentlich2017low} is that their scheme does not admit iterative cancellation and, hence, successive interference cancellation is not considered.
 Therefore, when more than $T$-users transmit in a slot, this slot is not utilized in the decoding process. As a result, their scheme uses a large number of slots in order to ensure that every user is received in a time slot that contains at most $T$-users, resulting in poor spectral efficiency.
 
-The main contribution of this paper is to propose, analyze and optimize a new coding architecture that overcomes these drawbacks and substantially improves performance when compared to the state-of-the-art.
+The main contribution of this chapter is to propose, analyze and optimize a new coding architecture that overcomes these drawbacks and substantially improves performance when compared to the state-of-the-art.
 Key features of our scheme are summarized as follows.
 \begin{itemize}
 \item \textbf{User Symmetry:} Active users employ the same coding scheme, with transmitted signals determined solely by the message to be transmitted and is independent of the identity of the user. To be precise, no parameter of the encoding scheme such as the interleaver and spreading sequence are unique to a transmitter.
@@ -67,7 +69,7 @@ where $\xv_i$ is a signal of dimension $\tilde{N}$ transmitted by the user~$i$, 
 where $|\cdot|$ denotes the Hamming weight. The objective of this work is to design low-complexity encoding and decoding schemes such that $P_e \leq \epsilon$ for a given per user target error probability $\epsilon$.
 
 \section{Description of the Proposed Scheme}
-The overall schematic of the proposed scheme is shown in Fig.~\ref{fig:overallscheme}. In our proposed scheme, the $\tilde{N}$ channel uses which are available for communication are split into $V$ sub-blocks (also referred to as slots throughout the paper), each of length $N=\tilde{N}/V$ channel uses. The encoding operation at the $i$-th user takes place in two steps.
+The overall schematic of the proposed scheme is shown in Fig.~\ref{fig:overallscheme}. In our proposed scheme, the $\tilde{N}$ channel uses which are available for communication are split into $V$ sub-blocks (also referred to as slots throughout the chapter), each of length $N=\tilde{N}/V$ channel uses. The encoding operation at the $i$-th user takes place in two steps.
 
 \begin{figure}[h]
   \centering
@@ -113,7 +115,7 @@ The overall encoding process is summarized in Fig.~\ref{fig:encodingscheme}.
 
 The main idea here is that permuting the codeword $\cv_{\wc}$ decorrelates the multiple access interference from users even though they use identical linear codes and results in a performance that is similar to that obtained by using different codes of identical rates for the different users. This is similar to interleave-division multiple access scheme that was originally proposed in \cite{ping2006interleave}. The overall code is non-linear because of the random permutations for different codewords and $\av_{\wpdash}$ being appended at the beginning. However, if $\av_{\wpdash}$ is identified (and consequently also $\wpdash$) and removed at the receiver, then the permutations can be determined and decoding the users  can be accomplished using a belief propagation decoder that works on the joint graph of the two users.
 \iflonger
-Several generalizations of this scheme are possible. It is possible to use different shifts of codeword instead of permutations of the codeword. We can also think of a more general scheme where the messages are binned in to $M_\mathrm{p}$ bins each with $M_1$ messages. Within each bin, the messages are encoded by a linear code and a permutation is chosen based on the bin index that the message falls in. In these cases, the $M_\mathrm{p}$ bits will have to be first conveyed through spreading sequences or shifts of a synchronization sequence. By choosing $M_\mathrm{p}$ to be fairly small, the complexity of demodulating/decoding these $M_\mathrm{p}$ bits can be kept to be fairly small. For clarity of exposition, we will use the shift based scheme in the rest of paper. In the special case when $V=1$ and we choose different interleavers or permutations of the code symbols, the proposed scheme becomes identical to interleave division multiple access (IDMA) \cite{ping2006interleave}. In this case, however, $M_\mathrm{p}$ will be reasonably large and efficient multi-user detection is needed to detect the $B_\mathrm{p}$ bits first. This will be considered in a future study.
+Several generalizations of this scheme are possible. It is possible to use different shifts of codeword instead of permutations of the codeword. We can also think of a more general scheme where the messages are binned in to $M_\mathrm{p}$ bins each with $M_1$ messages. Within each bin, the messages are encoded by a linear code and a permutation is chosen based on the bin index that the message falls in. In these cases, the $M_\mathrm{p}$ bits will have to be first conveyed through spreading sequences or shifts of a synchronization sequence. By choosing $M_\mathrm{p}$ to be fairly small, the complexity of demodulating/decoding these $M_\mathrm{p}$ bits can be kept to be fairly small. For clarity of exposition, we will use the shift based scheme in the rest of chapter. In the special case when $V=1$ and we choose different interleavers or permutations of the code symbols, the proposed scheme becomes identical to interleave division multiple access (IDMA) \cite{ping2006interleave}. In this case, however, $M_\mathrm{p}$ will be reasonably large and efficient multi-user detection is needed to detect the $B_\mathrm{p}$ bits first. This will be considered in a future study.
 \fi
 
 \subsection{Decoder}
@@ -126,7 +128,7 @@ The SIC decoder first estimates the number of users transmitted in each sub-bloc
 \begin{align*}
 \hat{R}_{j}= \left[\frac{||\yv_j||^2}{\Nc\Pc+\Np\Pp}\right]
 \end{align*} 
-where $[\cdot ]$ denotes the nearest integer function. Although the simple energy based estimate is adequate for the scope of this paper more sophisticated estimates based on GMAC decoding can be obtained, if necessary. 
+where $[\cdot ]$ denotes the nearest integer function. Although the simple energy based estimate is adequate for the scope of this chapter more sophisticated estimates based on GMAC decoding can be obtained, if necessary. 
 
 For any sub-block $j$, if $\hat{R}_{j}<=T$ the $T$-user GMAC decoder within the sub-block, which is described in the following sub-section, outputs the set of messages transmitted during the $j$-th sub-block. Given the decoded set of messages $\{w_i, i \in \mc{N}_j\}$, for each decoded message $w_i$:
 \begin{itemize}
@@ -267,7 +269,7 @@ According to the encoding scheme each user chooses the slot randomly according t
 \end{proof}
 
 \subsection{Compressed sensing problem and design choices}
-Now we discuss our choice of parameters for $T, B_\mathrm{c}, B_\mathrm{p}$ and the sensing matrix $\mathbf{A}$. First let us start with the sensing matrix and the recovery of the sparse signal that aids in recovering the set of preamble message indices. In this paper the typical values considered for $T$  are $\{2,4\}$. A low probability of error for event $\mc{E}_2$, for such low values of $T$, translates to  designing a sensing matrix $\mathbf{A}$ where we require: 
+Now we discuss our choice of parameters for $T, B_\mathrm{c}, B_\mathrm{p}$ and the sensing matrix $\mathbf{A}$. First let us start with the sensing matrix and the recovery of the sparse signal that aids in recovering the set of preamble message indices. In this chapter the typical values considered for $T$  are $\{2,4\}$. A low probability of error for event $\mc{E}_2$, for such low values of $T$, translates to  designing a sensing matrix $\mathbf{A}$ where we require: 
 \begin{enumerate}
 \item A large minimum distance in the Euclidean space between distinct $T$-sums of columns and 
 \item a minimal number of $T$-sets of columns whose sum is identical.
