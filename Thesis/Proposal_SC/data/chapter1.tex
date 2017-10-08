@@ -1,0 +1,29 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  New template code for TAMU Theses and Dissertations starting Fall 2016.  
+%
+%
+%  Author: Sean Zachary Roberson
+%  Version 3.17.06
+%  Last Updated: 6/15/2017
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                           SECTION I
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\pagestyle{plain} % No headers, just page numbers
+\pagenumbering{arabic} % Arabic numerals
+\setcounter{page}{1}
+
+\chapter{\uppercase {Introduction}}
+In 1948 Claude E. Shannon, widely regarded as the father of digital age, in his seminal paper ``A mathematical theory for communication'' \cite{shannon2001mathematical} introduced the notion of fundamental limit for channel coding hereafter referred to as Shannon limit. He showed that for any given channel, it is impossible to transmit at any rate above the Shannon limit with low error rates and for any rate below it, there exists coding schemes with arbitrarily low error rates. Thus the quest for finding capacity-achieving coding schemes has begun. 
+
+Low-density parity-check (LDPC) codes, belonging to the class of linear block codes, were introduced by Robert G. Gallager in 1962 \cite{gallager1962low}, more than 50 years ago. Due to the high computation efforts involved in the encoding and decoding of the LDPC codes these were largely ignored until the last couple of decades. In 1993, Claude Berrou \etal invented turbo codes \cite{berrou1993near}, a class of convolutional codes, built from a particular concatenation of two recursive systematic convolutional codes. The performance of these codes for the additive Gaussian noise channel in terms of bit error rates(BER) under a low-complexity iterative decoding scheme was shown to be very close (within a fraction of a dB) to the Shannon limit. The introduction of the iterative decoding scheme to the coding community whose computational complexity is only a small factor larger than a standard decoder like Viterbi decoder lead to the re-discovery of LDPC codes. This renewed interest in LDPC codes lead to an explosion of interest from the research community towards understanding the LDPC codes. A landmark result in the topic of LDPC codes is due to Thomas J. Richardson, Mohammad A. Shokrollahi and R{\"u}diger L. Urbanke \cite{richardson2001design} in which the authors presented an irregular LDPC code ensemble whose threshold under iterative decoding scheme is only 0.06dB away from the Shannon limit for the binary-input additive white Gaussian noise(AWGN) channel. 
+
+The turbo codes and the irregular LDPC codes demonstrated performance \emph{very close } to the Shannon limit under practical encoding and decoding schemes. But the search for coding scheme designs that can be generalized to arbitrary rates, which can provably achieve performance \emph{arbitrarily close} to the Shannon limit under practical encoding and decodign schemes is still incomplete. This was achieved through polar codes due to Arikan 2007 and spatially-coupled ldpc codes. Although the SC-LDPC codes were originally introduced as convolutional ldpc codes in 2009 by Lentmaier \etal the generalized construction of SC-LDPC codes and the capacity-achieving property is proven by Kudekar, Urbanke \etal.
+% of rate half  that achieve performance within 0.0045dB of the Shannon limit for the additive Gaussian noise channel by 
+% and culminated in the
+% The near Shannon limit performance reported in this work is achieved Another significant contribution of this work is The thing to be noted is that  with the advent of turbo- codes and low-complexity iterative decoding schemes the LDPC codes were re-discovered.

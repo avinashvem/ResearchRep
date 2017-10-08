@@ -1,0 +1,35 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\begin{document}
+
+
+\section{09/04/2017}
+
+Krishna suggested I submit the SC-LDPC lattices paper for TCOM journal before the defense. That makes lot of sense when one considers the fact the I will be leaving A\&M in two months and I will be working in Machine Learning related topics and not communications and information theory related. This makes it much more unlikely that I will find the time to get to finishing up this journal paper. Once I started digging in to it, these are my findings and current state of the things.
+
+Apart from the content that is already submitted to ISIT, the one addition that I did in the immediate aftermath of the conference, that was not included in the ISIT conference, is the alternate construction that relieves the need to design LDPC ensembles with very high right degree (for the last level where codes with high rates $\approx$ 0.9 are required). Now going through the literature one thing that caught my eye is:
+
+\textit{Lattice Coding that can achieve the power-constrained AWGN channel capacity}.
+
+The single main work that is interesting in light of Construction D is \cite{ling2014achieving} where the authors Ling and Belfiore consider lattice coding with probabilistic shaping to achieve the AWGN channel capacity. The paper can be summarized as following:
+\begin{itemize}
+\item Given a Poltyrev-good lattice (achieving the limit of power unconstrained AWGN channel), the authors propose a discrete Gaussian distribution, centered at an arbitrary point with variance approximately equal to $P$ the signal power, over the lattice to be used for probabilistic shaping. From this one can show that average power of the transmitted signal is approx equal to $P$
+\item If the flatness factor of the given Poltyrev-good lattice is small the authors show that the information rate of the proposed lattice coding is very close to $\frac{1}{2}\log (1+\text{SNR})$
+\item It is shown that the MAP decoder of the the proposed lattice code is equivalent to the MMSE infinite lattice decoding of the scaled signal.
+\item The above result is followed by bounding the error probability of the MAP decoder in terms of the MMSE infinite lattice decoder of the Poltyrev-good lattice.
+\end{itemize}
+Combining the above results gives us a lattice coding scheme that, given a Poltyrev-good lattice, achieves the capacity of the power constrained AWGN channel. 
+
+The gap that needs to be filled currently is the connection between our proposed multi-stage decoder and the MMSE infinite lattice decoder. One place to look for a start is \cite{yan2014construction} where authors Yan, Liu and Ling use the discrete Gaussian distribution for the probabilistic shaping but slightly deviate from the template provided by Ling and Belfiore. In fact the authors claim in Introduction that their lattice coding achieves the AWGN channel capacity under low complexity multi-stage successive cancellation decoding. 
+
+If I can answer the following question with a Yes/No, the submission of the Journal article can be done without any haste.
+\begin{itemize}
+\item Can we construct a lattice coding scheme based on the SC-LDPC lattices proposed in our ISIT paper, that can achieve the power-constrained AWGN channel capacity? As things currently stand the proposed lattices under hyper-cube shaping can achieve performance upto $1.53$dB of the channel capacity, where the loss of 1.53 can be attributed the shaping loss of hyper-cube shaping.
+\end{itemize}
+
+
+
+\bibliographystyle{ieeetr}
+\bibliography{../../bib/journal_full.bib,../../bib/bib_central.bib}
+
+\end{document}

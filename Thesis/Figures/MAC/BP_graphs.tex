@@ -1,0 +1,57 @@
+\begin{tikzpicture}
+\def \depth{1.5}; %vertical gap between nodes/levels
+\def \xgap{2.8}
+\def \gap{0.6}; %Horizontal gap between nodes
+\def \gapA{0.3}; %Encoder Width
+\def \textoffs{0.24}; %Offset for writing text above a node
+\def\nodewidth{0.5};
+\tikzstyle{bitwhite} = [circle, draw, thick, fill=white, radius=0.5*\nodewidth]
+\tikzstyle{bitshaded} = [circle, draw, thick, fill=gray, radius=0.5*\nodewidth]
+\tikzstyle{checkwhite} = [rectangle, draw, thick, fill=white,minimum height=\nodewidth, minimum width=\nodewidth]
+\tikzstyle{checkshaded} = [rectangle, draw, thick, fill=gray,minimum height=\nodewidth, minimum width=\nodewidth]
+                          
+\def \fsize{\footnotesize}; %Defining a generic font size to be adjusted depending on the scaling
+\def \fsizea{\tiny}; %Defining a generic font size to be adjusted depending on the scaling
+\def \dotsize{\Huge}; %Defining a generic font size to be adjusted depending on the scaling
+
+%%---------------------- Graph 1---------------------------------------------------------------------------
+\node [bitshaded](b1) at (0,0) {\fsizea $i$} ;
+\node [bitwhite,radius=0.8*\nodewidth](bMAC) at (0,1) {\fsize $+$} ;
+\draw[thick,decoration={markings,mark=at position 0.5 with {\arrow{>}}},postaction={decorate}] (b1.north) -- node[midway,left]{{\fsize $u_{i,\text{MAC}}$}} node[midway,right] {\fsize $=\sum\limits_{j=1}^{3}v_{j,i}$} (bMAC.south);
+
+\foreach \i in {1,2,3}
+{
+\path (b1) -- +(180+\i*45:\depth) node[checkwhite] (c1\i) {\fsize $\i$};
+\begin{scope}[decoration={ markings,    mark=at position 0.5 with {\arrow{>}}} ] 
+\draw[postaction=decorate] (c1\i.north) -- node[pos=0.3,left]{{\fsize $v_{\i,i}$}} (b1);
+\end{scope}
+}
+
+%%---------------------- Graph 2---------------------------------------------------------------------------
+\node [bitshaded,radius=0.5*\nodewidth](bMAC2) at (\xgap,0) {\fsize $+$} ;
+\node [bitwhite](b2) at (\xgap,1) {\fsizea $i$} ;
+%\node () at (b2.east) {\fsizea User 2} ;
+\draw[decoration={markings,mark=at position 0.5 with {\arrow{>}}},postaction={decorate}] (b2.south) -- node[midway,left]{{\fsize $u^{2}_{i,\text{MAC}}$}} (bMAC2.north);
+\draw[decoration={markings,mark=at position 0.5 with {\arrow{<}}},postaction={decorate}] (bMAC2.west) -- node[midway,below]{{\fsize $y_{i,\text{ch}}$}} +(-0.25*\xgap,0);
+
+
+\path (bMAC2) -- +(180+90:\depth) node[bitwhite] (b21) {\fsizea $i$};
+\draw[thick,decoration={ markings, mark=at position 0.5 with {\arrow{<}}}, postaction=decorate] (b21.north) -- node[midway,left]{{\fsize $v^{1}_{\text{MAC},i}$}} (bMAC2);
+
+
+%%---------------------- Graph 3---------------------------------------------------------------------------
+\node [bitshaded](b3) at (2*\xgap,0) {\fsizea $i$} ;
+\node [bitwhite,radius=0.8*\nodewidth](bMAC3) at (2*\xgap,1) {\fsize $+$} ;
+\draw[decoration={markings,mark=at position 0.5 with {\arrow{<}}},postaction={decorate}] (b3.north) -- node[midway,left]{{\fsize $v_{\text{MAC},i}$}} (bMAC3.south);
+
+\foreach \i in {1,2,3}
+{
+\path (b3) -- +(180+\i*45:\depth) node[checkwhite] (c3\i) {\fsize $\i$};
+}
+\foreach \i in {1,2}
+{
+\draw[decoration={ markings, mark=at position 0.5 with {\arrow{>}}}, postaction=decorate] (c3\i.north) -- node[pos=0.3,left]{{\fsize $v_{\i,i}$}} (b3.south);
+}
+\draw[thick,decoration={ markings, mark=at position 0.6 with {\arrow{<}}}, postaction=decorate] (c33.north) -- node[midway,right]{{\fsize $u_{i,3}=v_{\text{MAC},i}+\sum\limits_{j=1}^{2}v_{j,i}$}} (b3.south);
+
+\end{tikzpicture}

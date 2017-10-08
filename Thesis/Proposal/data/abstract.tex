@@ -1,0 +1,33 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  New template code for TAMU Theses and Dissertations starting Fall 2016.  
+%
+%
+%  Author: Sean Zachary Roberson
+%  Version 3.17.06
+%  Last Updated: 6/15/2017
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                           ABSTRACT 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter*{ABSTRACT}
+\addcontentsline{toc}{chapter}{ABSTRACT} % Needs to be set to part, so the TOC doesnt add 'CHAPTER ' prefix in the TOC.
+
+\pagestyle{plain} % No headers, just page numbers
+\pagenumbering{roman} % Roman numerals
+\setcounter{page}{2}
+
+\indent The focus of this thesis is on a class of problems that can all be characterized by the enormous scale of the total number of parameters but also being sparse in the parameters of interest. The broad theme of this work is in design of schemes that admit iterative algorithms with low computational complexity to such class of problems. In particular this thesis focuses on the following two areas: (i) massive multiple access and interference channels in the scope of communication systems and (ii) support recovery in compressed sensing and group testing problems in the scope of signal processing algorithms. 
+%, that closely resemble peeling decoder in the overall philosophy,
+%to a class of problems that are enormous in scale but whose actual parameters of interest are sparse in nature. 
+
+In the problems of massive multiple access, compressed sensing and group testing the total number of parameters is very large, the parameters being the number of users present in the system, the length of the signal to be compressed and the number of items to be tested for defects for the respective problems. However the number of actual parameters of interest is fairly small in comparison, the parameters of interest being the number of users that are active at any given time, the number of dimensions with non-negligible signal power and the number of defective items for the respective problems. The design schemes proposed in this work attempt to explore this sparse nature of the parameters of interest. The main ingredients common to all the proposed schemes are: (i) a variant of a sparse bipartite Tanner graph is used as the basis for designing the interaction strategy between the parameters of interest (ii) an iterative algorithm designed on the basis of peeling decoder with computational complexity sub-linear in the total number of parameters is used for recovering the parameters of interest. The tools bipartite Tanner graphs and peeling decoder are very popular in the channel coding literature \cite{richardson2008modern} but are not as widely used in the respective areas of study and this thesis is an important step in that direction to bridge that gap.
+
+In~\cite{polyanskiy2017perspective}, Polyanskiy introduced an interesting and timely multiple access problem, wherein the base station is interested only in recovering the list of messages without regard to the identity of the user who transmitted a particular message. In \cite{ordentlich2017low} Ordentlich and Polyanskiy proposed a low-complexity coding scheme that performs the best when compared to the existing practical multiple access schemes such as treat interference as noise (TIN) and slotted-ALOHA. However this is still fairly poor when compared to the performance achievable under random Gaussian coding scheme and joint typical decoding. The proposed scheme in this work not only improves on the performance of the best known coding scheme in \cite{ordentlich2017low} but is only $\approx 6$dB away from the achievability limit mentioned above.
+
+For the support recovery problem in compressed sensing, a design scheme for the sensing matrix based on left and right regular sparse bipartite graphs is proposed. An iterative algorithm similar to the peeling decoder is employed for the recovery of support of the sparse signal. The proposed design scheme enables to achieve the number of measurements and decoding complexity that match the best possible lower bounds upto a constant.
+
+For the non-adaptive group testing problem with approximate recovery as objective, a testing scheme based on left and right regular bipartite graph is proposed. An iterative algorithm similar to the peeling decoder is employed for the detection of defective items. Under the proposed testing scheme the number of tests required is order optimal and more importantly the recovery algorithm has only a sub-linear time complexity.
+\pagebreak{}

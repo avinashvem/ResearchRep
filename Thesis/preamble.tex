@@ -1,0 +1,60 @@
+\usepackage{etex}
+\usepackage[english]{babel}
+\usepackage{amstext,amsmath,amsfonts,latexsym,graphicx,amssymb,epsfig,epsf,psfrag}
+\usepackage{tikz,pgf,pgfplots,pgfpages,xcolor,subfigure,pstricks}
+
+\usepackage{algorithm2e,algorithmic}
+%\usepackage[noend]{algpseudocode}
+%\makeatletter
+%\def\BState{\State\hskip-\ALG@thistlm}
+%\makeatother
+
+\usetikzlibrary{%
+  arrows,%
+  decorations,%decorations
+  decorations.markings,
+  shapes.misc,% wg. rounded rectangle
+  shapes.arrows,%
+  shapes.callouts, %
+  shapes,%
+  chains,%
+  matrix,%
+  positioning,% wg. " of "
+  patterns,% slanted lines fill
+  scopes,%
+  petri,%
+  fadings,
+  calc
+}  
+
+\renewcommand{\epsilon}{\varepsilon}
+
+\setbeamertemplate{itemize item}[triangle]
+\setbeamertemplate{itemize subitem}[circle]
+\setbeamertemplate{itemize subsubitem}{$-$}
+
+\setbeamertemplate{blocks}[rounded,shadow=true]
+\setbeamercolor{block title}{fg=black,bg=blue!30!white}
+\setbeamercolor{block body}{fg=black,bg=blue!10!white}
+
+\newenvironment<>{defn}[1]{%
+  \setbeamertemplate{blocks}[default]%
+  \setbeamercolor{block title}{fg=blue,bg=white}%
+  \setbeamercolor{block body}{fg=black,bg=white}%
+  \begin{block}#2{#1}}{\end{block}}
+
+\setbeamerfont{alerted text}{family=\sffamily, shape=\slshape}
+\setbeamercolor{alerted text}{fg=red!95!white}
+\newlength\tikzwidth
+\newlength\tikzheight
+
+\newcommand{\av}{\vec{\mathrm{a}}}
+\newcommand{\cv}{\vec{\mathrm{c}}}
+\newcommand{\xv}{\vec{\mathrm{x}}}
+\newcommand{\yv}{\vec{\mathrm{y}}}
+\newcommand{\zv}{\vec{\mathrm{z}}}
+
+\def \Bp{B_{\mathrm{p}}}
+\def \Bc{B_{\mathrm{c}}}
+\newcommand{\wpdash}{w^\mathrm{p}}
+\newcommand{\wc}{w^\mathrm{c}}

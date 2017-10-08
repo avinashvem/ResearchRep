@@ -1,0 +1,31 @@
+\section{Notations}
+
+The table below introduces the notations we adopt throughout this paper.
+\begin{table}[h!]
+\begin{center}
+	\begin{tabular}{cc} 	
+		\hline		
+		\textit{Symbol}	    &  \textit{Meaning} \\		
+		\hline
+		$N$           				& Size of the string or database in symbols \\
+	
+		$M$   				        & Length of the query in symbols \\
+
+        $L$    						&   Number of matches \\
+		$\mu$ 				        & Smallest $0<\mu<1$ such that $M =O(N^{\mu})$\\		
+		$\lambda$       		& Smallest $0<\lambda<1$ such that $L =ON^\lambda)$\\
+        $K$                        &$\max_{\tau}d_{H}(\xv[\tau:\tau+M-1],\yv)$\\
+	    $\eta$             &$\frac{K}{M}$\\
+$d$           				& Number of stages in the FFAST algorithm \\
+$f_i \approx N^\alpha$     & Length of smaller point IDFT at each stage-$i$\\
+$g_i = N/f_i$     	    &  Sub-sampling factor in Fourier domain for stage-$i$\\
+$B$   					    & Number of shifts (or branches) in each stage \\
+$G = N^\gamma$    & Number of blocks (for parallel processing)\\
+$\tilde{N} = N^{1-\gamma}$   & Length of one block (for parallel processing)\\
+		\hline
+	\end{tabular}
+\end{center}	
+\caption{Parameters and various quantities involved in describing the algorithm}
+\label{Table:Notations}
+\end{table}	
+We denote signals and vectors using the standard vector notation of arrow over the letter, time domain signals using lowercase letters and the frequency domain signals using uppercase letters. For example $\xv = (x[0], x[1], \ldots, x[N-1] )$ denotes a time domain signal with $i^{\text{th}}$ time component denoted by $x[i]$, and $\Xv= \mathcal{F}_{N}\{\xv\}$ denotes the $N$-point Fourier coefficients of $\xv$. We denote matrices using boldface upper case letters. We denote the set $\{0,1,2\cdots, N-1\}$ by $[N]$.% Note that in Table~\ref{Table:Notations}, we suppose the values of $M$ and $L$ to be $N^{\mu}$ and $N^{\lambda}$, respectively. However, it is not necessary that these parameters assume the given form. All our results can be extended straight forwardly to any $M$ and $L$ as long as $M=O(N^{\mu})$ and $L=O(N^{\lambda})$.

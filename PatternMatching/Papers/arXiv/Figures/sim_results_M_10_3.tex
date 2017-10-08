@@ -1,0 +1,36 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=2.521in,
+height=1.566in,
+at={(0.758in,0.481in)},
+scale only axis,
+xmin=2,
+xmax=18,
+xlabel={Sample Gain},
+ymode=log,
+ymin=1e-05,
+ymax=1,
+yminorticks=true,
+ylabel={Prob of Missing a Match},
+axis background/.style={fill=white}
+]
+\addplot [color=red,solid,mark=*,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+2.0985	4e-07\\
+3.2978	0.004\\
+3.9974	0.004\\
+4.7636	0.006\\
+5.9963	0.017\\
+7.3622	0.038\\
+9.4944	0.054\\
+17.4904	0.197\\
+};
+\end{axis}
+\end{tikzpicture}%

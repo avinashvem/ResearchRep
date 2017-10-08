@@ -3,7 +3,7 @@
 In this section, given the input string $\xv$ and the query string $\yv$, we describe our algorithm that finds the matching positions $\mathcal{T}\coleq \{\tau_1, \tau_2, \cdots \tau_L\}$ with sample and time complexities that are sub-linear in $N$. The main idea exploits the fact that the correlation vector $\rv$ is sparse (upto some noise terms) with dominant peaks at $L$ matching positions denoted by $\mc{T}$ and noise components at $N-L$ positions where the strings do not match.
 \begin{figure*}[t!]
   \centering
-	 	\resizebox{0.95\textwidth}{!}{\input{./Figures/notional_diag.tex}}	
+	 	\resizebox{0.90\textwidth}{!}{\input{./Figures/notional_diag.tex}}	
 	\caption{Schematic of the proposed scheme using sparse Fourier transform computation.}\label{fig:notional}
 \end{figure*}
 
@@ -35,7 +35,7 @@ Consider the RSIDFT framework shown in Fig.~\ref{fig:rsidft}. Let $ \Rv =\Xv \od
 	   	 	
 \begin{figure}[h!]
 	\begin{center}
-	 	\resizebox{0.45\textwidth}{!}{\input{./Figures/FFAST_Robust.tex}}
+	 	\resizebox{0.43\textwidth}{!}{\input{./Figures/FFAST_Robust.tex}}
 	\end{center}	
 \caption{ RSIDFT Framework to compute inverse Fourier Transform of a signal $\Rv$ that is sparse in time domain. }\label{fig:rsidft}
 \end{figure}
@@ -93,7 +93,7 @@ We represent the relation between the set of observation vectors $\{\zv_{i,k},i\
 \subsubsection{Decoder}			
 	Observe from the Tanner graph that the degree of each variable node is $d$ and that of each bin node at stage $i$ is $g_i$. A variable node is referred to as non-zero if it corresponds to a matching position and as zero if it corresponds to a non-matching position. Note that even though the cross-correlation vector value corresponding to a non-matching position is not exactly zero but some negligible noise value we refer to them as zero variable nodes for simplicity. We refer to a bin node as {\it zero-ton} (or $\msc{H}_z$) if the number of non-zero variable nodes connected to the bin node is zero. The {\it singleton ($\msc{H}_s$), double-ton ($\msc{H}_d$) and multi-ton ($\msc{H}_m$)} bin nodes are defined similarly where the number of non-zero variable nodes connected are one, two and greater than two, respectively. The peeling decoder has the following three steps in the decoding process.
 
-\paragraph*{Bin Classification} In this step a bin node is classified either as a zero-ton or a singleton or a multi-ton. At bin $(i,j)$ the classification is done based on  comparing the first observation $z_{i,j}[1]$, which corresponds to zero shift, with a predefined threshold. For $z_{i,j}[1]=z$, the classification hypothesis at bin $(i,j)$, $\widehat{\msc{H}}_{i,j}$, can be written as follows:
+\paragraph*{Bin Classification} In this step a bin node is classified either as a zero-ton or a singleton or a multi-ton. At bin $(i,j)$ the classification is done by  comparing the first observation $z_{i,j}[1]$, which corresponds to zero shift, with a predefined threshold. For $z_{i,j}[1]=z$, the classification hypothesis at bin $(i,j)$, $\widehat{\msc{H}}_{i,j}$, can be written as follows:
 \begin{align}
 \label{Eqn:BinClassifApprox}
 \widehat{\msc{H}}_{i,j}=
@@ -104,7 +104,8 @@ We represent the relation between the set of observation vectors $\{\zv_{i,k},i\
 \msc{H}_m &      z/M > \gamma_3\\
 \end{cases}
 \end{align}
-where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{1-2\eta}{2},\frac{3-4\eta}{2},\frac{5-6\eta}{2})$. Note that for the case of exact matching $\eta=K/M=0$.
+where $(\gamma_1,\gamma_2,\gamma_3)=(\frac{1-2\eta}{2},\frac{3-4\eta}{2},\frac{5-6\eta}{2})$. Note that for the case of exact matching $\eta=K/M=0$.\\
+  \textit{Note:} Notice that in R-FFAST \cite{pawar2014robust} a bin can be classified as a singleton/ multi-ton only after the singleton decoding step, and hence results in a linear complexity. Whereas we take advantage of the positivity in cross-correlation vector to classify a bin just based on the first observation $z_{i,j}[1]$ and perform singleton decoding only for singleton bins. This key distinction lets us achieve a sub-linear time complexity.
 \paragraph*{Singleton decoding}
 If a bin node $(i,j)$ is classified as a singleton in the bin classification step, we need to identify the position of the non-zero variable node connected to it. This is done by correlating the observation vector $\zv_{i,j}$ with each column of the sensing matrix  $\mb{W}_{i,j} \coleq [\wv^{j},\wv^{j+f_i},\ldots,   \wv^{j+(g_i-1)f_i}]$ and choosing the index that maximizes the correlation value.
 \begin{align*}
@@ -117,10 +118,10 @@ where $\dagger$ denotes the conjugate transpose. The value of the variable node 
  Note that for the case of exact matching we know the value to be exactly equal to $M$. But in the case of approximate matching, the actual value of $r[k]\in\{M(1-2\eta),\ldots,M-1,M\}$ and our estimate $\hat{r}[\hat{k}]=M(1-\eta)$ is only approximate. But this suffices for recovering the positions of matches i.e., the indices of the sparse coefficients in $\rv$.			
 
 \paragraph*{Peeling Process} The peeling based decoder we employ consists of finding a singleton bin, then identifying the single non-zero variable node connected to the bin, decoding its value and removing ({\it peeling off}) it's contribution from all the bin nodes connected to that variable node. The main idea behind this decoding scheme is that (for appropriately chosen parameters), at each iteration, peeling a singleton node off will induce at least one more singleton bin and the process of peeling off can be repeated iteratively. Although the main idea is similar for exact matching and the approximate matching scenarios, there are some subtle differences in their implementation.\\
-{\it Exact Matching}: In the case of exact matching, we remove the decoded variable node's contribution from all the bin nodes it is connected to.\\
+{\it Exact Matching}: In exact matching, we remove the decoded variable node's contribution from all the connected bin nodes.\\
 {\it Approximate Matching}: In this case, similar to the approach in \cite{lee2015saffron},  we remove the decoded variable node's contribution only from bins that are originally a singleton or a double-ton. We do not alter the bins which are classified to be multi-tons with degree more than two.
 
-{\it Note:} The differences in peeling implementation for exact and approximate matching cases is because unlike exact matching the approximate matching may result in non-zero error ($e_1$) between the actual correlation value $r[k]$ and the estimate $\hat{r}[\hat{k}]$, i.e. $e_1 = |r[k]- \hat{r}[\hat{k}]|$ with $0 \leq e_1 \leq \eta M$. This may lead to error propagation if we use the same decoding scheme as in exact matching. Hence to overcome this problem we impose a constraint on the type of bin nodes participating in the peeling process.
+%{\it Note:} The differences in peeling implementation for exact and approximate matching cases is because unlike exact matching the approximate matching may result in non-zero error ($e_1$) between the actual correlation value $r[k]$ and the estimate $\hat{r}[\hat{k}]$, i.e. $e_1 = |r[k]- \hat{r}[\hat{k}]|$ with $0 \leq e_1 \leq \eta M$. This may lead to error propagation if we use the same decoding scheme as in exact matching. Hence to overcome this problem we impose a constraint on the type of bin nodes participating in the peeling process.
 	
 We present the overall recovery algorithm, which comprises of {\it bin classification, singleton decoding} and {\it peeling process}, in the Algorithm.\ref{Algo:decoder} pseudo-code. Note that $\msc{N}(k)$ denote the neighborhood for variable node $k$  i.e., the set of bins connected to $k^{\text{th}}$ variable node.
 
@@ -179,14 +180,14 @@ We present the overall recovery algorithm, which comprises of {\it bin classific
 \label{subsec:DesignParameters}
 
 For a given value of $\mu$, we will describe how to choose the parameters $d$ and $f_i$. Find a factorization for signal length $N=\prod_{i=0}^{d-1} P_i$ such that the set of integers $\{P_0,P_1,\ldots,P_{d-1}\}$ are pairwise co-prime and all the $P_i$ are approximately equal. More precisely, let $P_i=\mathbf{F}+O(1) ~\forall i$ for some value $\mathbf{F}$. We can add zeros at the end of the vector $\xv$ and increase the length of the vector until we are able to find a factorization that satisfies this property.
-\begin{itemize}
-	\item  For $\mu<0.5$: Choose $f_i = N/P_i$. \\
+\begin{enumerate}
+	\item For $\mu<0.5$: Choose $f_i = N/P_i$. \\
 	{\it Exact Matching:} Find $d\in \mbb{N}\backslash \{1,2\}$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1}]$\\
-	{\it Approximate Matching}: If $\mu\in(\frac{1}{8},\frac{1}{2})$, choose $d=8$. Else find $d\geq 8$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1})$\\
-    \item For $\mu>0.5$: Choose $f_i = P_i$\\
-    {\it Exact Matching:} Find $d\in \mbb{N}\backslash \{1,2\}$ such that $\mu\in(1-\frac{1}{d-1},1-\frac{1}{d}]$\\
-    {\it Approximate Matching}: If $\mu\in(\frac{1}{2},\frac{1}{8})$, choose $d=8$. Else find $d\geq 8$ such that $\mu\in(1-\frac{1}{d-1},1-\frac{1}{d})$\\    	 
-\end{itemize}
+	{\it Approximate Matching}: If $\mu\in(\frac{1}{8},\frac{1}{2})$, choose $d=8$. Else find $d\geq 8$ such that $\mu\in(\frac{1}{d},\frac{1}{d-1})$
+	\item For $\mu>0.5$: Choose $f_i = P_i$\\
+	 {\it Exact Matching:} Find $d\in \mbb{N}\backslash \{1,2\}$ such that $\mu\in(1-\frac{1}{d-1},1-\frac{1}{d}]$\\
+	 {\it Approximate Matching}: If $\mu\in(\frac{1}{2},\frac{1}{8})$, choose $d=8$. Else find $d\geq 8$ such that $\mu\in(1-\frac{1}{d-1},1-\frac{1}{d})$\\ 
+\end{enumerate}
 Thus, for both the exact and approximate matching cases, for any $0<\mu<1$, we choose the down-sampling factors $f_i$ to be approximately equal to $N^{\alpha}$ where $\alpha > 1- \mu$.
 
 
@@ -196,8 +197,8 @@ Given a database(or string) of length $N$, we divide the database into $G=N^\gam
 	\item Firstly, this enables parallel computing and hence can be distributed across different workstations.
 	\item Improves the sample and computational complexity by a constant factor.
 	\item Sketch of the database needs to be computed only for a smaller block length and hence requires computation of only a shorter $\tilde{N}$ point FFT.
-	%\item Enables localized searches on only a few blocks if we have prior knowledge about where the query could be. Specifically, if we exactly know the number of matching locations, and having encountered the required number of positions from the already run processes (processed blocks), we can terminate rest of the processes.   
-	\item Helps overcome implementation issues with memory and precision as the scale of the problem is reduced. 
+	\item Enables localized searches on only a few blocks if we have prior knowledge about the matching query locations. %Specifically, if we exactly know the number of matching locations, and having encountered the required number of positions from the already run processes (processed blocks), we can terminate rest of the processes.   
+	\item Helps overcome implementation issues with memory and precision as scale of the problem is reduced. 
 \end{itemize}
 \subsection{Sketches of $\Xv$ and $\Yv$}
 \label{subsec:skteches}		
