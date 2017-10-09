@@ -7,7 +7,7 @@
 \usepackage{pgfpages,xcolor,subfigure,pstricks}
 \usepackage{pgfplots}
 \usepackage{url}
-\usepackage{tikz}
+\usepackage{tikz,tikz-cd}
 \pgfplotsset{compat=newest}
 %% the following commands are sometimes needed
 %\usetikzlibrary{plotmarks}
@@ -110,8 +110,12 @@
 
 \usepackage[backend=bibtex,style=authoryear]{biblatex}
 
+\usepackage{chemarrow}	
+
 \addbibresource{IEEEabrv.bib}
 \addbibresource{sparseestimation.bib}
+
+
 
 
 \def\fig_path{../Figures}
@@ -480,7 +484,7 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 \end{block}
 \begin{figure}
   \centering
-%  \includegraphics[width=2.0in]{Gaspard_de_Prony}
+  \includegraphics[width=2.0in]{Gaspard_de_Prony}
 \end{figure}
 \end{frame}
 %--------------------------------------------------------------------------------------
@@ -680,6 +684,17 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 %\end{frame}
 
 %--------------------------------------------------------------------------------------
+	\begin{frame}{DSP - A Quick Review}
+		\begin{block}{Discrete Fourier Transform}
+		    \[
+		        x[n]\autorightleftharpoons{DFT}{IDFT}X[k] 
+		    \]
+		$$X[k] = \sum_{n=0}^{N-1} x[n] e^{\frac{-j 2 \pi k n}{N}} $$
+		$$x[n] = \frac{1}{N}\sum_{k=0}^{N-1} X[k] e^{\frac{+j 2 \pi k n}{N}} $$
+		\end{block}
+	\end{frame}
+
+
 	\begin{frame}{DSP - A Quick Review}
 \begin{block}{Subsampling results in aliasing}
 \begin{itemize}
