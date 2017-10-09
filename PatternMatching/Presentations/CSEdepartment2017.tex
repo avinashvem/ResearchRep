@@ -226,7 +226,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 
 \end{block}
   \begin{figure}[h]
-  \includegraphics[width=4.0in]{genomesizes}
+%  \includegraphics[width=4.0in]{genomesizes}
   \end{figure}
 
 \url{http://www.biology-pages.info/G/GenomeSizes.html}
@@ -254,9 +254,38 @@ Let us consider the case of an audio signal which is sampled at a moderate sampl
 \end{block}
 \begin{block}{}
 \begin{figure}
-\includegraphics[width=3.5in]{ScaledVoice}
+%\includegraphics[width=3.5in]{ScaledVoice}
 \end{figure}
 \end{block}
+\end{frame}
+%%-------------------------------------------------------------------------------------------------------------
+
+\begin{frame} \frametitle{Sketching Model}
+	\begin{block}{Sketch}
+		\begin{itemize}
+			\item Succinct fingerprint (compressed form) of the data 
+			\item Allows Pattern Matching without decompression 
+			\item Sketch could be both lossless or lossy (probabilistic recovery)
+		\end{itemize}
+	\end{block}
+	\begin{block}{Sketching Complexity}
+		Space complexity in bits to store the sketch of database
+	\end{block}
+\end{frame}
+%%-------------------------------------------------------------------------------------------------------------
+
+\begin{frame} \frametitle{Lower Bounds on Sketching Complexity}
+	\begin{block}{Exact Matching:}
+		For a query of length $M = \Omega(\log N)$, any sketching algorithm that can determine the exact matches with a constant probability of error requires \alert{$s = \Omega(n-m)$} bits of memory
+	\end{block}
+	
+	\begin{block}{Approximate Matching:}
+		For a query of length $M$ and a Hamming distance $K= \eta M$ ($0<\eta<1$), any sketching algorithm that can determine the matches with a constant probability of error requires \alert{$s = \Omega (N/M \log N)$} bits of memory.
+	\end{block}
+	
+	\begin{block}{Note}
+		 Minor variations in the model\footfullcite{bar2004sketching} assumption and definition of error probability.
+	\end{block}
 \end{frame}
 %%-------------------------------------------------------------------------------------------------------------
 \begin{frame} \frametitle{Some Prior Work}
@@ -271,6 +300,7 @@ Let us consider the case of an audio signal which is sampled at a moderate sampl
 	 		\end{itemize}	
 	 	\end{itemize}
 	 \end{block}
+	 
 	 \begin{block}{Exact Matching - Sketching versions - Bio informatics} 	
 	 	\begin{itemize}
 	 		\item  {Goodrich'05}: BWT, suffix-arrays based indexing
@@ -447,7 +477,7 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 \end{block}
 \begin{figure}
   \centering
-  \includegraphics[width=2.0in]{../Figures/Gaspard_de_Prony}
+%  \includegraphics[width=2.0in]{Gaspard_de_Prony}
 \end{figure}
 \end{frame}
 %--------------------------------------------------------------------------------------
@@ -675,7 +705,7 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 		\begin{block}{}
 			\begin{figure}[t]
 				\centering
-				\includegraphics[width=3.1in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/X_DFT}
+				\includegraphics[width=3.1in]{X_DFT}
 			\end{figure}
 		\end{block}
 		
@@ -685,14 +715,14 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 			\begin{block}{{\small $\color{red}x_s$:\ Sub-sampled by $f_1=P_1=2$}}
 				\begin{figure}[t]
 					\centering
-					\includegraphics[width=2.3in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Xs}
+					\includegraphics[width=2.3in]{Xs}
 				\end{figure}
 			\end{block}
 			
 			\begin{block}{{\small$\color{red}z_s$:\ Sub-sampled by $f_2=P_2=3$}}
 				\begin{figure}[t]
 					\centering
-					\includegraphics[width=2.3in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Zs}
+					\includegraphics[width=2.3in]{Zs}
 				\end{figure}
 			\end{block}
 			
@@ -700,7 +730,7 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 			\begin{block}{\small Factor graph}
 				\begin{figure}[t]
 					\centering
-					\includegraphics[width=2.3in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example}
+					\includegraphics[width=2.3in]{Factorgraph_example}
 				\end{figure}
 			\end{block}
 		\end{columns}
@@ -718,11 +748,11 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 	
 	\begin{figure}[t]
 		\centering
-		\includegraphics[width=3.6in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/FFAST_2stages_example6}
+		\includegraphics[width=3.6in]{FFAST_2stages_example6}
 	\end{figure}
 	\vspace*{-4mm}
 	\begin{figure}[t]
-		\includegraphics[width=2.9in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
+		\includegraphics[width=2.9in]{Factorgraph_example_tilde}
 	\end{figure}
 	
 	\end{frame}
@@ -739,7 +769,7 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 			\vspace{-5pt}
 			\begin{figure}[t]
 				
-				\includegraphics[width=3.0in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
+				\includegraphics[width=3.0in]{Factorgraph_example_tilde}
 			\end{figure}
 			\begin{block}{Singleton condition for a checknode}
 			\begin{itemize}
@@ -781,14 +811,14 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 %\includegraphics[width=3.0in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
 \resizebox{3.0in}{!}
 {
-\input{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde.tex}
+\input{Factorgraph_example_tilde.tex}
 }
 			\end{figure}
 
 		\begin{block}{Peeling decoder}
 			\begin{itemize}
 				\item 1 non-zero value among the neighbors of any right node can be recovered
-				
+								
 				\item Iteratively errors can be corrected and analyzed for random non-zero coeffs
 			\end{itemize}
 		\end{block}
@@ -804,12 +834,12 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 				\column{0.43\textwidth}
                 \resizebox{2.0in}{!}
                 {
-                \input{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde_abbrv.tex}
+                \input{Factorgraph_example_tilde_abbrv.tex}
                 }
 
 				\column{0.55\textwidth}
         \vspace{-7pt}
-				\begin{figure}[t]	\includegraphics[width=2.6in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example1_tilde}
+				\begin{figure}[t]	\includegraphics[width=2.6in]{Factorgraph_example1_tilde}
 				\end{figure}}
 				%\column{0.25\textwidth}
 				%\only<3>{\large \color{green} Yes, recoverable!}			
@@ -885,7 +915,7 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 			\column{0.50\textwidth}
 			\begin{figure}[t]
 				\centering
-				\includegraphics[width=2.5in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/FFAST_2stages}
+				\includegraphics[width=2.5in]{FFAST_2stages}
 			\end{figure}
 			\vspace{-6mm}
 			\hspace{-1.5in}
@@ -893,7 +923,7 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 			
 			\begin{figure}[t]
 				
-				\includegraphics[width=2.45in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
+				\includegraphics[width=2.45in]{Factorgraph_example_tilde}
 			\end{figure}
 			
 		\end{columns}
@@ -1219,9 +1249,22 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 	
 \end{figure}}
 \end{frame}
+
+\begin{frame}{Secure Pattern Matching}
+v\begin{figure}
+  \centering
+%  \includegraphics[width=4.0in]{airline}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Secure Pattern Matching}
+\begin{figure}
+  \centering
+%  \includegraphics[width=4.0in]{doctorpatient}
+\end{figure}
+\end{frame}
+%--------------------------------------------------------------------------------------
 %-----------------References --------------------
-
-
 %\begin{frame}[allowframebreaks]
 %\frametitle{References}%in case more than 1 slide needed
 %	{\footnotesize
@@ -1229,19 +1272,6 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 %		\bibliography{sparseestimation}	}
 %\end{frame}
 
-\begin{frame}{Secure Pattern Matching}
-\begin{figure}
-  \centering
-  \includegraphics[width=4.0in]{airline}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Secure Pattern Matching}
-\begin{figure}
-  \centering
-  \includegraphics[width=4.0in]{doctorpatient}
-\end{figure}
-\end{frame}
 
 %---------------------------------------------------------------------------------------
 \begin{frame}\frametitle{Questions?}
