@@ -1,0 +1,81 @@
+\begin{tikzpicture}
+%\clip(-0.2in,0) rectangle (1.1in,0.28in) ;
+\def\horzgap{0.75in}; %Horizontal gap between nodes/levels
+\def \gapVN{0.3in}; %vertical gap between nodes
+\def \gapCN{0.4in}; %Horizontal gap between nodes
+
+\def \textoffs{0.12in}; %Offset for writing text above a node
+\def\nodewidth{0.05in};
+\def\nodewidthA{0.1in};
+\def\edgewidth{2pt};
+\def\ext{0.2in};
+
+\def \n {8};
+\def\ldeg{3};
+\def \m {4};
+\def\rdeg{6};
+\def\langle{40};%120 degrees/3
+\def\langle{20};%120 degrees/6
+
+\tikzstyle{check} = [rectangle, draw,  inner sep=0mm, fill=black, minimum height=\nodewidthA, minimum width=\nodewidthA]
+\tikzstyle{checksm} = [rectangle, draw, inner sep=0mm, fill=blue,minimum height=\edgewidth,minimum width=\edgewidth]
+
+\tikzstyle{bit} = [circle, draw, inner sep=0mm, fill=red, minimum size=\nodewidthA]
+\tikzstyle{bitsm} = [circle, draw, inner sep=0mm,fill=red, minimum size=\edgewidth]
+\tikzstyle{edgesock} = [circle, inner sep=0mm, minimum size=\edgewidth,draw, fill=white]     
+
+                          
+\foreach \vn in {2,3,6,7}{
+ \node[bit] (vn\vn) at (0,\vn*\gapVN) {};
+\path (vn\vn) ++(30:\ext) node (evA\vn) [edgesock] {};
+\path (vn\vn) ++(0:\ext) node (evB\vn) [edgesock] {};
+\path (vn\vn) ++(-30:\ext) node (evC\vn) [edgesock] {};
+
+  \draw (vn\vn) -- (evA\vn.west); 
+  \draw (vn\vn) -- (evB\vn.west); 
+  \draw (vn\vn) -- (evC\vn.west); 
+}
+\path (vn3)--node(vndots) {\Large{$\vdots$}} (vn6);
+\node[left =\nodewidth of vndots](){\tiny{$N$ var nodes}};
+
+\foreach \cn in {2,4}{
+\node[check] (cn\cn) at (0.8*\horzgap,0.2in+\cn*\gapCN) {};
+
+\path (cn\cn) ++(150:\ext) node (ecA\cn) [edgesock] {};
+\path (cn\cn) ++(170:\ext) node (ecB\cn) [edgesock] {};
+\path (cn\cn) ++(190:\ext) node (ecC\cn) [edgesock] {};
+\path (cn\cn) ++(210:\ext) node (ecD\cn) [edgesock] {};
+
+  \draw (cn\cn) -- (ecA\cn.east); 
+  \draw (cn\cn) -- (ecB\cn);  
+  \draw (cn\cn) -- (ecC\cn); 
+    \draw (cn\cn) -- (ecD\cn); 
+}
+\path (cn2)--node(cndots) {\Large{$\vdots$}} (cn4);
+\node [right=0.01*\nodewidth of cndots]{\tiny{$m_{1}$ bin nodes}};
+
+\node[draw,minimum width=\horzgap-2*\ext,minimum height=6.5*\gapVN,thick](perm) at (0.4*\horzgap,4.5*\gapVN){\Large{$\pi$}};
+
+\def\moveX {2.5*\nodewidth};
+\onslide<2->
+\foreach \cn in {2,4}{
+\path (cn\cn) ++(\moveX,1.7*\nodewidth) node (bitnA\cn) [bitsm] {};
+\path (cn\cn) ++(\moveX,0.6*\nodewidth) node (bitnB\cn) [bitsm] {};
+\path (cn\cn) ++(\moveX,-0.6*\nodewidth) node (bitnC\cn) [bitsm] {};
+\path (cn\cn) ++(\moveX,-1.7*\nodewidth) node (bitnD\cn) [bitsm] {};
+
+\path (bitnB\cn) ++(\moveX,0) node (checknB\cn) [checksm] {};
+\path (bitnC\cn) ++(\moveX,0) node (checknC\cn) [checksm] {};
+
+\draw (bitnA\cn.east)--(checknB\cn.west);
+\draw (bitnC\cn.east)--(checknB\cn.west);
+\draw (bitnB\cn.east)--(checknC\cn.west);
+\draw (bitnD\cn.east)--(checknC\cn.west);
+\path(bitnD\cn)++(0.6*\moveX,-0.3*\moveX) node(){\tiny{$\mbf{S}$}};
+}
+
+\node [right=0.3*\nodewidth of checknC2]{\tiny{$c\log r$ test nodes}};
+\onslide<3->
+\node [below=5*\nodewidth of bitnD2,anchor=west]{\footnotesize{$m=m_1 \times c\log r$ } \tiny{tests}};
+
+\end{tikzpicture}

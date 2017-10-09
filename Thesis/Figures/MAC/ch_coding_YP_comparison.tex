@@ -1,0 +1,55 @@
+% This file was created by matlab2tikz v0.4.7 running on MATLAB 7.14.
+% Copyright (c) 2008--2014, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% Minimal pgfplots version: 1.3
+% 
+% The latest updates can be retrieved from
+%   http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
+% where you can also make suggestions and rate matlab2tikz.
+% 
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=5in,
+height=3in,
+%scale only axis,
+xmin=0,
+xmax=10000,
+xlabel={Block Length},
+%xmajorgrids,
+ymin=-6.5,
+ymax=-2,
+ylabel={$E_s/N_0$},
+ymajorgrids,
+line width=2pt,
+title={FBL bounds comparison for Rate-1/4},
+legend style={at={(1,1)},anchor=north east,draw=black,fill=white,legend cell align=left}
+]
+\addplot [color=blue,solid]
+  table[row sep=crcr]{400	-5.99\\
+1000 -5.99\\
+4000	-5.99\\
+8000	-5.99\\
+10000	-5.99\\
+};
+\addlegendentry{Shannon-BPSK};
+
+\addplot [color=red,solid,mark=asterisk,mark options={solid}]
+  table[row sep=crcr]{400	-2.8594\\
+800	-3.7969\\
+2400	-4.6562\\
+4000	-4.8906\\
+5600	-5.1469\\
+7200	-5.2031\\
+};
+\addlegendentry{FBL-YP};
+
+\addplot [color=black,solid,mark=triangle,mark options={solid}]
+  table[row sep=crcr]{400	-2.22\\
+1200	-3.21\\
+2000	-3.38\\
+};
+\addlegendentry{LDPC-PEG+Rep};
+
+\end{axis}
+\end{tikzpicture}%

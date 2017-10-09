@@ -1,4 +1,4 @@
-\documentclass[10pt]{beamer}
+\documentclass[10pt,usenames,dvipsnames]{beamer}
 \mode<presentation>
 {
 \usetheme{CambridgeUS}
@@ -17,391 +17,135 @@
   \end{frame}
 }
 
-
-
 \input{../preamble}
-%\input{./tikz_preamble.tex}
 \input{../../bib/avinash_beamer.def}
 
 \def\figpath{../Figures}
+\def\peeling_figpath{../Figures/peeling}
 \def\mac_figpath{../Figures/MAC}
 \def\cs_figpath{../Figures/CS}
 \def\gt_figpath{../Figures/GT}
-\graphicspath{{../Figures/}{../../SCLDPC-lattices/figures/}{../../SCLDPC-lattices/ISIT_Talk/Figures/}}
-
 
 \begin{document}
 \title{\bf Applications of coding theory to massive multiple access and big data problems}
-\author{\textbf{Avinash Vem}\\ \vspace{3pt} \small Advisor: Dr.Krishna Narayanan} 
-\vspace{10pt}
-\institute{Department of Electrical and Computer Engineering \\ Texas A\&M University}
+%\author{\textbf{Avinash Vem}\\ \vspace{3pt} \small Advisor: Dr.Krishna Narayanan} 
+\author{\textbf{Avinash Vem}\\ \vspace{3pt} \small Thanks to Nagaraj Janakiraman, Dr. Krishna Narayanan, Dr. J.-F. Chamberland, Dr. J. Cheng} 
+\vspace{4ex}
+%\institute{Doctoral Degree Final Examination\\ Department of Electrical and Computer Engineering \\ Texas A\&M University}
 \date{} % if no date wanted, keep it blank
 
-\titlegraphic{
-\includegraphics[width=0.5in]{TAMULogoBox.pdf}
-}	
+%\titlegraphic{
+%\includegraphics[width=0.5in]{\figpath/TAMULogoBox.pdf}
+%}	
 
 \frame{\titlepage}
-\begin{frame}
-	\frametitle{Outline}
-	\tableofcontents
-\end{frame}
 
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Motivation for Massive Multiple Access}
+\frametitle{Why massive multiple access?}
 
 \begin{itemize}
 \item 5G -- not just ``4G but faster'' but includes M2M transmissions, IoT
 \item Current wireless -- a few devices with sustained data rate requirements
 \item Future wireless -- {\color{blue}many uncoordinated} devices requiring {\color{blue}sporadic connectivity}
 \end{itemize}
-
-\begin{center}
+\only<1>{
+\centering
 \includegraphics[width=0.9\textwidth]{\mac_figpath/5Gchanginglandscape.pdf}
-\end{center}
-\end{frame}
-
-%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Motivation for Compressed sensing and Group testing}
-
-\begin{itemize}
-\item Future wireless -- {\color{blue}many uncoordinated} devices requiring {\color{blue}sporadic connectivity}
-\end{itemize}
-
-\begin{center}
-%\includegraphics[width=0.9\textwidth]{Figures/5Gchanginglandscape.pdf}
-\end{center}
-\end{frame}
-
-%\input{peeling.tex}
-
-\section{Unsourced multiple access}
-%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{System Model}
-
-  \begin{itemize}
-  \item $N$ \textbf{uncoordinated} users present in the system
-  \item $K$ users \textbf{active} at any given time. Each user has 1 packet to transmit
-  \item Access point(AP) interested only in the \textbf{set} of packets, not the \textbf{source}
-  \item Time is \textbf{slotted}, transmissions occur in slots
-    \begin{itemize}
-	   \item In slot $j$, each user employs a policy to decide to transmit or not
-  \end{itemize}
-
-  \end{itemize}
-\pause
-  \begin{center}
-  \input{\mac_figpath/slots}
-  \end{center}
-\end{frame}
-
-%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
-\begin{frame}\frametitle{Problem statement}
-  \begin{itemize}
-  \item Each user has a $B$-bit message
-  \item $n$ channel uses available per round
-  \pause
-  \item $\{w_1,w_2,\ldots,w_K\}$ - set of messages transmitted
-  \item Channel model $\yv=\sum_{j=1,\ldots,K}\xv_{w_j}+\zv$
-  \item Power constraint -$~\mathbb{E}_w[||\xv_w||^2]\leq nP$
-  \item If $\mc{L}(\yv) $ is the decoder output, probability of decoding error per user
-  \[
-P_e=\frac{1}{K}\sum_{i=1}^{K} \Pr\left( w_i \notin \mc{L}(\yv) \right)  
-  \]
-  \pause
-  \item Minimize $P$ such that $P_e\leq \epsilon$
-  \end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
-\begin{frame}\frametitle{Tanner graph}
-\centering
-\resizebox{0.56\textwidth}{!}{\input{\mac_figpath/MAC_tannergraph}}
-\pause
-\vspace{3ex}
-\begin{itemize}
-\item power constraint $\implies $ sparse Tanner graph 
-\end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
-\begin{frame}\frametitle{Potential solution via peeling decoder}
-\begin{itemize}
-\item Joint decoding via successive interference cancellation: $\textbf{peeling}$ algorithm
-\onslide<2->{
- \item Challenges in implementing peeling:
-	\begin{itemize}
-	\item Decoding in presence of noise
-	\item Tx slots of users unknown at AP
-	\item Power constraint $\implies$ need efficiency in repetition pattern
-	}
-	\end{itemize}
-\end{itemize}
-
-\begin{columns}
-\column{0.5\textwidth}
-\onslide<3->{
-\begin{block}{Solution}
-Proposed design scheme involves solutions to the above challenges
-\end{block} 
 }
-\column{0.4\textwidth}
+
+\only<2>{
 \centering
-\resizebox{\textwidth}{!}{\input{\mac_figpath/MAC_tannergraph_dup}}
-\end{columns}
-\end{frame}
+\includegraphics[width=0.8\textwidth]{\mac_figpath/IoT-application-ranking.png}
+}
 
-%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Main Result}
-Main features of the proposed scheme:
-\begin{itemize}
-\item Encoder is independent of the user. Solely depends on the message
-\pause
-\item Message is split into two parts: $w=(w^{\mathrm{p}},w^{\mathrm{c}})$
-\pause
-	\begin{itemize}
-	\item $w^{\mathrm{c}}$: encoded using an LDPC type channel code
-	\item Designed for a $T$-user Gaussian multiple access(GMAC) channel
-\pause
-	\item $w^{\mathrm{p}}$: preamble, chooses an interleaver for the channel code
-	\item  preamble encoded using a compressed sensing type scheme
-	\end{itemize}
-\pause
-\item Encoded codeword is repeated in multiple slots
-	\begin{itemize}
-	\item  repetition pattern is dependent solely on the message $w$
-	\end{itemize}
-	\pause
-\item Peeling based SIC decoding
-\end{itemize}
-\begin{block}{Main result}
-Optimization of the individual components results in the best performing scheme to date
-\end{block}
-\end{frame}
-
-%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
-\begin{frame} \frametitle{Multiple access - Prior Work}
-
-\begin{itemize}
-   \item Information-theoretic view of MAC (asymptotic in blocklength)
-\begin{itemize}
-\item  Liao-1972, Ahlswede-1973
-\end{itemize}
-
-   \item Network-theoretic view (random access strategy)
-	\begin{itemize}
-		\item ALOHA (Abramson 1970)
-		\item Contention-resolution diversity slotted ALOHA (Cassini 2007)
-	\end{itemize}
-
-	\item Coding-theoretic view (small number of users)- CDMA, multi-user detection
-	\pause
-	\item Gaussian coding for unsourced MAC (Polyanskiy 2017)
-	\begin{itemize}
-		\item First considered the three issues together: 
-		\begin{itemize}
-			\item small payload; \emph{finite block length effects}
-			\item finite number of users active at a given time \emph{random access}
-			\item a large number of users in the system \emph{massive access}
-		\end{itemize}
-		\item Derived achievability bounds via random coding and joint typical decoding
-	\end{itemize}
-	
-	\item Low complexity coding scheme for unsourced MAC (OP-2017)
-	\begin{itemize}
-		\item Concatenated coding scheme- Integer forcing and mod-$p$ $T$-user GMAC
-		\item sub-optimal coding scheme for the $T$-user real adder GMAC
-		\item Absence of SIC
-	\end{itemize}
-\end{itemize}
 
 \end{frame}
 
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Proposed design scheme}
-\centering
-\resizebox{0.85\textwidth}{!}{\input{\mac_figpath/system_diagram}}
+\frametitle{Why compressed sensing and group testing}
+\begin{itemize}
+\setlength\itemsep{6pt}
+
+	\item Generality of compressed sensing found use in wide variety of areas
+	\begin{itemize}
+	\setlength\itemsep{3pt}
+ 		\item measurements are costly e.g., MRI
+		\item storage is expensive e.g., mobile phone camera sensor
+		\item A/D converters, millimeter-wave holography etc.,
+	\end{itemize}
+	\item Applications of group testing include diverse fields like clone screening, human genome project, data forensics, finding shorts in circuits etc..,
+\end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Outline}
+\begin{itemize}
+\setlength{\itemsep}{6pt}
+\item \emph{Unsourced, uncoordinated} massive multiple access
 %\begin{itemize}
+%\item interested only in \emph{what} is transmitted, not \emph{who}
 %\end{itemize}
-
+\item Compressed sensing: support recovery
+\item Non-adaptive group testing: \emph{approximate} and \emph{probabilistic}
+\end{itemize}
 \end{frame}
 
-
-
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Encoder for $T$-GMAC}
-
+\begin{frame} 
+\frametitle{Common theme}
 \begin{itemize}
-	\item B-bit message $w=(\wpdash,\wc).$ $\wpdash\in[1:2^{B_{\mathrm{p}}}],\wc\in[1:2^{B_{\mathrm{c}}}]$
+	\setlength{\itemsep}{4pt}
+	\item {\color{blue}Sparsity}
 	\begin{itemize}
-		\item $B_{\mathrm{p}} \ll B_{\mathrm{c}}$ and $ B=B_{\mathrm{c}}+B_{\mathrm{p}}$
-		\item $\wpdash,\wc$ encoded by compressed sensing and channel coding parts resp.
-%		\item $\wpdash\in[1:2^{B_{\mathrm{p}}}]$ is encoded by the compressed sensing part
-%		\item $\wc\in[1:2^{B_{\mathrm{c}}}]$ is encoded by the channel coding part		
+	\setlength{\itemsep}{3pt}
+		\item Number of users active $\ll$ total number of users in the system
+		\item Sensing signal is sparse in some domain
+		\item Defective items to be identified $\ll$ number of items
 	\end{itemize}
 	\pause
-	\item Compressed sensing encoder ($\wpdash$)
-	\begin{itemize}
-		\item sensing matrix $\mathbf{A}=[\av_1,\av_2,\ldots,\av_{2^{B_{\mathrm{p}}}}]$
-		\end{itemize}
-	\item Channel coding component ($\wc$)
-	\begin{itemize}
-		\item  $\mc{C}_{\mathrm{c}}=[\cv_1,\cv_2,\ldots,\cv_{2^{B_{\mathrm{c}}}}]$ be a LDPC type channel code
-		\item interleaver $\pi_{f(\wpdash)}$ such that $f(\wpdash)\in [1:N_{\mathrm{c}}!]$
-		\end{itemize}
+	\item Design coding 	schemes leveraging the inherent sparsity, based on {\color{blue}bipartite Tanner graphs}
+	\item {\color{blue} Iterative peeling}-like algorithms used for decoding/recovery 
+	\pause
+	\item Importantly the {\color{blue} computational complexity scales with sparsity} of the problem
 \end{itemize}
-\vspace{3ex}
-\centering
-\resizebox{0.6\textwidth}{!}{\input{\mac_figpath/UnsMAC_encoder}}
-
-\end{frame}
-
-
-%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
-\begin{frame}\frametitle{Decoder across slots: Peeling}
-\begin{itemize}
-\item Given $\yv_j=\xv_{w_i}+\zv_j$, assume we can decode $\xv_{w_i}$
-\end{itemize}
-\centering
-%\resizebox{0.4\textwidth}{!}{\input{\mac_figpath/mac_PeelingAnimation}}
 \end{frame}
 
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Decoder across slots: $T$-Peeling}
-\begin{itemize}
-\item In slot $j$, assume we can decode $\{\xv_{w_i},i\in\mc{N}_j\}$ if $|\mc{N}_j|\leq T$
-\[
-\yv_j=\sum\limits_{i\in\mc{N}_j}\xv_{w_i}+\zv_j
-\]
-\end{itemize}
-\centering
-%\resizebox{0.4\textwidth}{!}{\input{\mac_figpath/mac_PeelingAnimation}}
-
-\end{frame}
-
-%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
-\begin{frame}\frametitle{Decoding in a slot: Compressed sensing}
-\begin{itemize}
-	\item Received signal: $\yv_j=\sum_{i\in\mc{N}_j}\xv_{w_i}+\zv_i$, $~~|\mc{N}_j|\leq T$
-	\item Input to the Compressed sensing decoder: $\yv^{\mathrm{p}}_j=\sum_{i\in\mc{N}_j}\av_{\wpdash_i}+\zv^{\mathrm{p}}_i	$
-\end{itemize}
-
-\onslide<2->{
-\begin{align*}
-	\yv^{\mathrm{p}}_j	=\mathbf{A}\vec{b}_j+\zv^{\mathrm{p}}_i \qquad \text{where }\vec{b}_j\in\{0,1\}^{2^{\Bp}},~ |\vec{b}_j|_1=T.
-	\end{align*}
-		}
-
-
-\onslide<3->{
-\begin{itemize}
-\item \emph{Step1}: Get a coarse estimate of $\vec{b}_j$ via sub-optimal CS algorithms
-\item Form a list of positive support set
-\item \emph{Step2}: Refine the estimate by doing ML-estimation on the list
-\end{itemize}
-}
-\onslide<1-2>{
-\centering
-\vspace{2ex}
-\resizebox{0.4\textwidth}{!}{\input{\mac_figpath/cw_sup_position}}
-}
-%	\begin{itemize}
-%	\item LASSO: 
-%	\begin{align*}
-%	\hat{b}_j&=\min_{\vec{\beta}} |\yv_j-\mathbf{A}\vec{\beta}|^2+\lambda |\vec{\beta}|_1\\
-%	\text{subj. to }& \beta_i\geq 0 ~\forall i.
-%\end{align*}
-%
-%\item Least-squares: 
-%\begin{align*}
-%\hat{b}_j &=\min_{\vec{\beta}} |\yv_j-\mathbf{A}\vec{\beta}|^2\\
-%\text{subj. to }& \beta_i\geq 0 ~\forall i.
-%\end{align*}
+	\frametitle{Outline}
+	\tableofcontents
 \end{frame}
 
 
-\begin{frame}\frametitle{Decoding in a slot: Compressed sensing}
-	\begin{align*}
-	\yv^{\mathrm{p}}_j	=\mathbf{A}\vec{b}_j+\zv^{\mathrm{p}}_i \qquad \text{where }\vec{b}_j\in\{0,1\}^{2^{\Bp}},~ |\vec{b}_j|_1=T.
-	\end{align*}
+\input{peeling.tex}
+\input{mac.tex}
+\input{cs.tex}
+\input{gt.tex}
 
+%%----------------------------------------------- DO NOT TOUCH-----------------------------------------------------------
+%----------------------------------------------------------------------------------------------------------------------------------
+\begin{frame}{Conclusion}
 \begin{itemize}
-\item \emph{Step1}: Get a coarse estimate of $\vec{b}_j$ via a sub-optimal CS algorithm
-	\begin{itemize}
-	\item $\ell_1$-regularized LASSO: 
-	\begin{align*}
-		\hat{\vec{b}}_j&=\min_{\vec{\beta}} |\yv_j-\mathbf{A}\vec{\beta}|^2+\lambda |\vec{\beta}|_1~\text{ where }\vec{\beta} \succeq 0
-%		\text{subj. to }& \beta_i\geq 0 ~\forall i.
-	\end{align*}
-
-	\item or constrained least-squares: 
-	\begin{align*}
-		\hat{\vec{b}}_j &=\min_{\vec{\beta}} |\yv_j-\mathbf{A}\vec{\beta}|^2 ~\text{ where }\vec{\beta} \succeq 0
-%		\text{subj. to }& \beta_i\geq 0 ~\forall i.
-	\end{align*}
-
-	\end{itemize}
-\pause
-\item Form a list of positive support set: $\mc{W}_{\text{list}}=\{i:\hat{\vec{b}}_j(i)>\eta_{Th}\}$
-\item Output 
-\[
-\widehat{\mc{W}}_j^{\mathrm{p}}=\argmin_{S\subseteq\mc{W}_{\text{list}},|S|=T}||\yv_j^{\mathrm{p}}-\sum_{i\in S}\av_i||^2_2.
-\]
-%\item \emph{Step2}: Refine the estimate by doing ML-estimation on the list
+  \item Review of the peeling decoder
+  \item Design of coding scheme for unsourced MAC with performance close to the random coding limit
+  \item Sample and computational complexities matching the lower bound within a constant, for support recovery using left and right Tanner graph based design and a simple peeling based recovery algorithm
+    \item Improvement of sample and computational complexities for group testing using left and right Tanner graph based design and a simple peeling based recovery algorithm
 \end{itemize}
-
-
-
-
-%	where the sparse vector $\vec{b}_j\in\{0,1\}^{2^{\Bp}}$ and $|\vec{b}_j|_1=T$.
-
 \end{frame}
-
-
-%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
-\begin{frame}\frametitle{Decoding in a slot: Belief propagation for MAC }
-\begin{itemize}
-	\item Input:
-	\begin{itemize}
- 	\item Set of interleavers from CS decoder: $\{\pi_{f(\wpdash_i)}: i\in\mc{N}_j\}$
-	\item  $\yv^{\mathrm{c}}_j=\sum_{i\in\mc{N}_j} \pi_{f(\wpdash_2)}(\vec{c}_{\wc_2}) +\zv^{\mathrm{c}}_j$
-	\end{itemize}
-	\item<2-> Joint Tanner graph of LDPC code for $|\mc{N}_j|$:
-\end{itemize}
-\onslide<2->{
+	
+%--------------------------------------------------------------------
+\begin{frame}\frametitle{Questions?}
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=2.8in]{\gt_figpath/questions}
+	\end{figure}
 	\centering
-	\vspace{2ex}
-	\resizebox{0.55\textwidth}{!}{\input{\mac_figpath/decodergraph_permutation}}
-}
+	\color{blue}
+	\Huge{Thank you!}
 \end{frame}
 
-%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
-\begin{frame}\frametitle{Decoding in a slot: Belief propagation for MAC }
-\begin{itemize}
-\item Message passing rules at bit/check nodes identical to single user
-\onslide<2->{
-\item Message passing rule at GMAC node:
-\begin{align*}
-v^{1}_{\text{MAC},i}&=h(u^{2}_{i,\text{MAC}},y_{i,\text{ch}})\\
-v^{2}_{i,\text{MAC}}&=h(u^{1}_{i,\text{MAC}},y_{i,\text{ch}}) ~~~\text{ where}\notag\\
-h(l,y)&=\log \frac{1+e^{l}e^{2(y-1)/\sigma^2}}{e^{l}+e^{-2(y+1)/\sigma^2}}
-\end{align*}
-}
-\end{itemize}
-
-	\centering
-	\vspace{2ex}
-	\resizebox{0.85\textwidth}{!}{\input{\mac_figpath/BP_graphs}}
-\end{frame}
-
-
-%\input{cs.tex}
-%\input{gt.tex}
 \end{document}

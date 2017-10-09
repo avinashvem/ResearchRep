@@ -61,7 +61,8 @@
 \only<8>\node[left] (nodetxt) at (vn6.west) {\fsize{E=1}};
 
 %Edges
-\uncover<1-2>{
+\uncover<1-2>
+{
 \foreach \vn/\cn in {2/2,2/3,4/1,5/2}{
  \draw[thick] (vn\vn.east)--(cn\cn.west);
   }
@@ -92,11 +93,14 @@
 \only<1,2,5,6,7,8> \node[right] (nodetxt) at (cn1.east) {\fsize{0}};
 \only<3,4> \node[right] (nodetxt) at (cn1.east) {\fsize{1}};
 
+%\only<1,2> \node[right] (nodetxt) at (cn2.east) {\fsize{0}};
 \only<1,2,4,5,6,7,8> \node[right] (nodetxt) at (cn2.east) {\fsize{0}};
 \only<3> \node[right] (nodetxt) at (cn2.east) {\fsize{1}};
 
 \only<1,2,8> \node[right] (nodetxt) at (cn3.east) {\fsize{0}};
 \only<3,4,5,6,7> \node[right] (nodetxt) at (cn3.east) {\fsize{1}};
+
+
 
 
 
