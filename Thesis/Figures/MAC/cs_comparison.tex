@@ -11,11 +11,12 @@
 
 \begin{axis}[%
 width=6in,
-height=4in,
+height=3.5in,
+scale only axis,
 xmin=-10.5,
 xmax=8,
 xtick={-10,-9,...,8},
-xlabel={$\frac{1}{2\sigma^2}$(dB)},
+xlabel={$E_s/N_0$ in dB},
 ymode=log,
 ymin=1e-6,
 ymax=1,
@@ -40,7 +41,7 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 -3.5 1.60e-4\\
 -3   1.66e-5\\
 };
-\addlegendentry{\emph{BCH}, list dec.,T=2};
+\addlegendentry{\emph{binary}, list dec.,T=2};
 
 \addplot [color=red,dashed,mark=diamond,mark options={solid}]
   table[row sep=crcr]{
@@ -52,7 +53,7 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 -2.8    1.80e-4\\
 -2.50  2.00e-5\\
 };
-\addlegendentry{\emph{BCH}, list dec., T=3};
+\addlegendentry{\emph{binary}, list dec., T=3};
 
 %--------------Binary Correlation---------------------------------------
 \addplot [color=red,solid,mark=asterisk]
@@ -66,7 +67,7 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 3	1.4828516192722e-10\\
 4	7.03881397612349e-14\\
 };
-\addlegendentry{\emph{BCH}, correlation dec.,T=2};
+\addlegendentry{\emph{binary}, correlation dec.,T=2};
 
 
 \addplot [color=red,solid,mark=square]
@@ -87,7 +88,7 @@ legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell ali
 7.50 1.441054e-10 \\
 8.00 3.710032e-12 \\
 };
-\addlegendentry{\emph{BCH}, correlation dec., T=3};
+\addlegendentry{\emph{binary}, correlation dec., T=3};
 
 %--------------Random Correlation---------------------------------------
 \addplot [color=blue,solid,mark=o]
@@ -114,16 +115,18 @@ table[row sep=crcr]{
 };
 \addlegendentry{\emph{random},correlation dec.,T=2};
 
-\addplot [color=ForestGreen,solid]%,mark=triangle,mark options={solid}]
-  table[row sep=crcr]{
--4.00 0.3042\\
--3.00 0.1068\\
--2.00 0.0284\\
--1.00 0.0061\\
-0.00 0.0011\\
-1.00 0.00015778\\
+%-----------------------------------------------------------------
+\addplot [color=ForestGreen,solid,line width=2pt]
+table[row sep=crcr]{
+-4  0.3022\\
+-3	 0.1048\\
+-2	 0.0284\\
+-1	0.0061\\
+0	0.0011\\
+1 1.5778e-04\\
 };
 \addlegendentry{YP-limit,T=2};
+
 
 
 \end{axis}

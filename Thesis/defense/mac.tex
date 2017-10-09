@@ -17,7 +17,7 @@
 		\item {[Cassini 2007]} Contention-resolution diversity slotted ALOHA
 	\end{itemize}
 	
-	\item Coding-theoretic view (small number of users)
+	\item Coding-theoretic view (coordinated, small number of users)
 		\begin{itemize}
 		\item  CDMA, multi-user detection
 		\item {[Chang,Weldon 1979; Wolf 1981]} $T$-user adder MAC 
@@ -106,12 +106,14 @@
 	\vspace{4ex}
 	\item {[OP-2017]} Low complexity coding scheme for unsourced MAC
 	\begin{itemize}\setlength{\itemsep}{4pt}
-		\item Concatenated coding scheme- Integer forcing and mod-$p$ $T$-user GMAC
+		\item Concatenated code for $T$-GMAC: Integer forcing and mod-$2$ addition MAC 
 		\item {\color{blue} polynomial} encoding and decoding complexity $\mc{O}\left(\max(n, KB^2)\right)$
-		\item outperforms existing strategies, however $\approx 20dB$ away from [YP17] ach. limit
-		\begin{itemize}
+		\item {\color{blue} outperforms} existing strategies, however {\color{red} $\approx 20dB$ away} from [YP17] ach. limit
+		\pause
+		\begin{itemize}	\setlength{\itemsep}{2pt}
 		\item sub-optimal coding scheme for the $T$-user real adder GMAC
-		\item absence of iterative SIC		
+		\item ``capacity achieving low complexity \emph{same-codebook} schemes for the $T$-GMAC channel seems to be a challenging task"
+		\item absence of iterative successive interference cancellation(SIC)
 		\end{itemize}
 	\end{itemize}
 \end{itemize}
@@ -122,14 +124,15 @@
 \only<1-2>{
 Main features of the proposed scheme:
 \begin{itemize}
-\item Identical encoder for all the users. Solely depends on the message
+\item Same codebook for all the users. Encoder solely depends on the message
 \item Two stages of encoding:
 	\begin{itemize}
-	\item encoder within a slot: Code $\mc{C}$ good over $T$-user GMAC
+	\setlength{\itemsep}{2pt}
+	\item encoder within a slot: Code with close to optimal performance for $T$-GMAC
 	\item encoder across slots: above codeword is repeated in multiple slots
     \item repetition pattern is dependent solely on the message
 	\end{itemize}
-\item Peeling based SIC decoding across slots
+\item Peeling based successive interference cancellation(SIC) decoding across slots
 \end{itemize}
 }
 \only<3>{
@@ -153,10 +156,11 @@ Main features of the proposed scheme:
 \onslide<2-3>{
 \begin{block}{Main result}
 	\begin{itemize}
-		\item Polynomial encoding and decoding complexity: $\mc{O}(KT^6+n)\approx \mc{O}\left(\max(K,n)\right)$
-		\item ``same code" design for $T$-user GMAC that is $\approx 2$dB away from FBL limit
+		\item Polynomial encoding and decoding complexity: $\mc{O}(KT^6+Kn)\approx \mc{O}\left(nK)\right)$
+		\item {\color{blue} Best among the existing coding strategies} with poly. complexity
 		\item Overall coding scheme outperforms [OP-2017] by $\approx 13$dB
 		\item Only $6$dB away from the Gaussian random coding limit.
+	 	\item ``same code" design for $T$-user GMAC that is $\approx 2$dB away from FBL limit
 \end{itemize} 
 \end{block}
 }
@@ -164,7 +168,7 @@ Main features of the proposed scheme:
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 \subsection{Communication scheme}
 \begin{frame}
-\frametitle{Proposed design scheme}
+\frametitle{Proposed coding scheme}
 \centering
 \resizebox{0.85\textwidth}{!}{\input{\mac_figpath/system_diagram}}
 %\begin{itemize}
@@ -215,11 +219,11 @@ Main features of the proposed scheme:
 \begin{frame}
 \frametitle{Encoding across slots}
 \begin{itemize}
-	\item Encoder within a slot: $w=(\wpdash,\wc)\rightarrow \vec{x}_w,~||\vec{x}_w||^2=P_{\text{slot}}$
+	\item Encoder within a slot: $w=(\wpdash,\wc)\rightarrow \vec{x}_w,~\frac{1}{N}||\vec{x}_w||^2=P_{\text{slot}}$
 	\item Each user 
 	\begin{itemize}
 		\item chooses a repetition parameter $\ell_{w}=g(w), g:[1:M] \rightarrow [1:V]$ 
-		\item chooses $\ell_{w}$ slots from $[1:V]$ based solely on $w$ and repeats in those slots
+		\item chooses $\ell_{w}$ slots from $[1:V]$ acc. to $h(w)$ and repeats in those slots
 	\end{itemize}
 	\onslide<2->{
  	\item Left d.d is determined by the function $g$
@@ -388,7 +392,6 @@ h(l,y)&=\log \frac{1+e^{l}e^{2(y-1)/\sigma^2}}{e^{l}+e^{-2(y+1)/\sigma^2}}
 %\end{itemize}
 \centering
 \resizebox{0.85\textwidth}{!}{\input{\mac_figpath/mac_TPeelingAnimation}}
-
 \end{frame}
 
 
@@ -404,6 +407,7 @@ K & [25:300]\\
 n & 30,000\\
 $P_e$ & 0.05\\
 \end{tabular}
+\vspace{5ex}
 %\begin{block}{}
 %\begin{itemize}
 %\item Practical coding scheme proposed in [OP17]
@@ -421,7 +425,7 @@ $P_e$ & 0.05\\
 \pause
 
 \begin{itemize}
-\item $\#$ preamble $\&$ channel coding message bits: $Bp=9,~\Bc=B-\Bp=91$
+\item $\#$ preamble $\&$ channel coding message bits: $\Bp=9,~\Bc=B-\Bp=91$
 \item Maximum number of users to be jointly decoded at a slot $T\in\{2,4,5\}$
 \item Left d.d: $L(x)=\beta x+(1-\beta)x^2$ i.e., repetition frequency is
 \begin{itemize}
@@ -475,8 +479,8 @@ We need $P_e\leq \epsilon=0.05$
 \item Choice of sensing matrix $\mathbf{A}$:
 	\begin{itemize}
 		\item random Gaussian, Rademacher matrices
-		\item channel code with good minimum distance properties e.g., BCH
 		\pause
+		\item channel code with good minimum distance properties e.g., BCH
 		\item via analysis of correlation decoder, for a good sensing matrix:		
 			\begin{itemize}
 				 \item gap between minimum and maximum Hamming distances $d_{\max}-d_{\min}$ is small
@@ -551,8 +555,8 @@ $K\in[25:300], B=100, n=30,000$. For each $T\in\{2,4,5\}$
 \frac{E_b}{N_0}&=\min_{\beta} \frac{(2-\beta)(N  P_{\text{slot}})}{2B}\\
 \text{ ~~where }&\\
 V&\coleq \arg\min_{V}~\Pr(\mc{E}'_{T\text{-peeling}}(K,V,T))\leq 0.04\\
-N&\coleq\left\lfloor \frac{n}{V}\right\rfloor\\
 P_p&\coleq \arg\min_{P}~ \Pr(\mc{E}_{\mathrm{p}})\leq \frac{0.01}{2V}\\
+N&\coleq\left\lfloor \frac{n}{V}\right\rfloor\\
 P_c&\coleq \arg\min_{P}~\Pr(\mc{E}_{\mathrm{c}} (N_c,B_\mathrm{c},T,P))\leq \frac{0.01}{2V}\\
 P_{\text{slot}}&=\frac{N_p P_p+ N_c P_c}{N}
 \end{align*}
@@ -568,7 +572,7 @@ P_{\text{slot}}&=\frac{N_p P_p+ N_c P_c}{N}
 \begin{frame}{Conclusion}
 \begin{itemize}  
   \item Proposed a practical coding scheme for the timely unsourced MAC problem
-  \item Performance very close to the random coding limit
+  \item Performance within $\approx 6$dB from the random coding ach. limit
   \item Same codebook schemes can perform optimally for GMAC
   \item Leverages the peeling decoder from coding theory  
 \end{itemize}

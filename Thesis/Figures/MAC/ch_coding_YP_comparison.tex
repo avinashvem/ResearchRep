@@ -8,50 +8,34 @@
 % where you can also make suggestions and rate matlab2tikz.
 % 
 \begin{tikzpicture}
-\def\fsize{\Large}
 
 \begin{axis}[%
 width=5in,
 height=3in,
 %scale only axis,
 xmin=0,
-xmax=8000,
-xlabel={\fsize{Block Length}},
-xtick={500,1500,...,7500},
+xmax=10000,
+xlabel={Block Length},
+%xmajorgrids,
 ymin=-6.5,
 ymax=-2,
-ylabel={\fsize{$\frac{ E_s}{N_0}$ in dB}},
+ylabel={$E_s/N_0$},
 ymajorgrids,
 line width=2pt,
-%title={\fsize{FBL bounds comparison for Rate-1/4}},
-legend style={draw=black,fill=white,legend cell align=left,font=\fsize}
+title={FBL bounds comparison for Rate-1/4},
+legend style={at={(1,1)},anchor=north east,draw=black,fill=white,legend cell align=left}
 ]
-
 \addplot [color=blue,solid]
-  table[row sep=crcr]{
-  400	-5.99\\
-900	-5.99\\
-1000	-5.99\\
-1500	-5.99\\
-2000	-5.99\\
-2500	-5.99\\
-3000	-5.99\\
-3500	-5.99\\
+  table[row sep=crcr]{400	-5.99\\
+1000 -5.99\\
 4000	-5.99\\
-4500	-5.99\\
-5000	-5.99\\
-5500	-5.99\\
-6000	-5.99\\
-6500	-5.99\\
-7000	-5.99\\
-7500	-5.99\\
 8000	-5.99\\
+10000	-5.99\\
 };
 \addlegendentry{Shannon-BPSK};
 
 \addplot [color=red,solid,mark=asterisk,mark options={solid}]
-  table[row sep=crcr]{
-400	-2.8594\\
+  table[row sep=crcr]{400	-2.8594\\
 800	-3.7969\\
 2400	-4.6562\\
 4000	-4.8906\\
@@ -61,12 +45,11 @@ legend style={draw=black,fill=white,legend cell align=left,font=\fsize}
 \addlegendentry{FBL-YP};
 
 \addplot [color=black,solid,mark=triangle,mark options={solid}]
-  table[row sep=crcr]{
-  400	-2.22\\
+  table[row sep=crcr]{400	-2.22\\
 1200	-3.21\\
 2000	-3.38\\
 };
 \addlegendentry{LDPC-PEG+Rep};
-\end{axis}
 
+\end{axis}
 \end{tikzpicture}%

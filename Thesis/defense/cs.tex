@@ -1,4 +1,4 @@
-\section{Compressed Sensing: Support recovery}
+\section{Compressed sensing: Support recovery}
 \subsection{Main result: Comparison with known limits}
 \begin{frame}{Compressed Sensing}
 \begin{equation*}
@@ -8,9 +8,9 @@
 
 \begin{itemize}
 \item $\mbf{x}$ -$N \times 1$ sparse signal
-\item $\mbf{A}$ -$M \times N$ measurement matrix
+\item $\mbf{A}$ -$m \times N$ measurement matrix
 \item $\mbf{w}$ -additive noise
-\item $\mbf{y}$ -$M \times 1$ measurement vector
+\item $\mbf{y}$ -$m \times 1$ measurement vector
 \onslide<2->
 \item $\text{supp}(\mbf{x})\coleq \{i: x_i\neq 0, i\in [N]\}$
 \item $K=\card{\text{supp}(\mbf{x})}$
@@ -22,31 +22,30 @@
 \begin{frame}{Problem Statement}
 \begin{itemize}
 \item Decoder: Given $\mbf{y}$ reconstruct the vector $\mbf{x}$ denoted by $\widehat{\mbf{x}}$
-\item Prob. of failure of support recovery $\mbb{P}_{F}\coleq \text{Pr}(\text{supp}(\widehat{\mbf{x}})\neq \text{supp}(\mbf{x}))$
+\item Prob. of failure of support recovery $P_e\coleq \text{Pr}(\text{supp}(\widehat{\mbf{x}})\neq \text{supp}(\mbf{x}))$
 \item Metrics of interest:
 \begin{itemize}
-\item Sample complexity ($M$)
+\item Sample complexity ($m$)
 \item Decoding complexity
-\item $\mbb{P}_{F}$
+\item $P_e$
 \end{itemize} 
 \end{itemize}
 \vspace{5ex}
 
 \onslide<2->
 \begin{block}{Objective}
-Devise a scheme with minimizing num. of measurements $M$ and decoding complexity such that $\mbb{P}_{F}\rightarrow 0$ as $N (\text{and } K) \rightarrow \infty$
+Devise a scheme with minimizing num. of measurements $m$ and decoding complexity such that $P_e\rightarrow 0$ as $N (\text{and } K) \rightarrow \infty$
 \end{block}
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
-%\subsection{Known Limits}
-\begin{frame}
+\begin{frame}\frametitle{Known Limits}
 \begin{block}{Optimal order for Support Recovery [1]}
 \begin{itemize}
 \item In the sub-linear sparsity regime, $K=o(N)$, necessary and sufficient conditions are shown to be:
 \begin{equation*}
-C_1 K\log\left(\frac{N}{K}\right)<M<C_2 K\log\left(\frac{N}{K}\right)
+C_1 K\log\left(\frac{N}{K}\right)<m<C_2 K\log\left(\frac{N}{K}\right)
 \end{equation*}
-\item In the linear sparsity regime, $K=\alpha N,$ it was shown that $M=\Theta(N)$ measurements are sufficient for asymptotically reliable recovery. 
+\item In the linear sparsity regime, $K=\alpha N,$ it was shown that $m=\Theta(N)$ measurements are sufficient for asymptotically reliable recovery. 
  \end{itemize}
 \end{block}
 \vspace{7ex}
@@ -65,25 +64,23 @@ x_i\in\mc{X}&\defeq\{A e^{i\theta}: A\in \mc{A},\theta\in \Omega\}\cup \{0\} ,\\
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
-%\subsection{Main Result}
 \begin{frame}{Main result}
-
-\begin{block}{Sub-linear Sparsity-Optimal Sample and Decoding Complexities}
+\begin{block}{Sub-linear Sparsity: Optimal Sample and Decoding Complexities}
 In the sub-linear sparsity regime, for a given SNR of $\frac{A^{2}_{\text{min}}}{\sigma^{2}}$, our scheme has 
 \begin{itemize}
-\item Sample complexity of $M=c_1 K\log (\frac{c_2 N}{K})$
+\item Sample complexity of $m=c_1 K\log (\frac{c_2 N}{K})$
 \item Decoding complexity of $O\left(K\log(\frac{N}{K})\right)$ 
-\item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$
+\item $P_e\rightarrow 0$ asymptotically in $K$
 \end{itemize} 
-where the constants $c_{1}$ and $c_{2}$ are dependent on SNR, desired rate of decay of $\mbb{P}_{\text{F}}$ and left degree $\ell$.
+where the constants $c_{1}$ and $c_{2}$ are dependent on SNR, desired rate of decay of $P_e$ and left degree $\ell$.
 \end{block}
 \onslide<2->
-\begin{block}{Linear Sparsity Regime}
+\begin{block}{Linear Sparsity}
 In the linear sparsity regime our scheme has 
 \begin{itemize}
-\item Sample complexity of $M=c_3 K\log K$
+\item Sample complexity of $m=c_3 K\log K$
 \item Decoding complexity of $O\left(K\log(K)\right)$ 
-\item $\mbb{P}_{\text{F}}\rightarrow 0$ asymptotically in $K$
+\item $P_e\rightarrow 0$ asymptotically in $K$
 \end{itemize} 
 where the constant $c_{3}>1$ is a parameter dependent on left degree $\ell$.
 \end{block}
@@ -115,7 +112,7 @@ where the constant $c_{3}>1$ is a parameter dependent on left degree $\ell$.
 \subsection{Design scheme}
 %\subsection{Sensing Matrix}
 \begin{frame}{Graphical Representation}
-$(N,\ell,r,\mbf{S})$ ensemble. $\ell N=rM_1$. 
+$(N,\ell,r,\mbf{S})$ ensemble. $\ell N=rm_1$. 
 \onslide<2->{$\text{dim}(\mbf{S})=P\times r$.}
 \begin{figure}
 \scalebox{1.3}{\input{\cs_figpath/TannerGraph.tex}}
@@ -126,7 +123,7 @@ $(N,\ell,r,\mbf{S})$ ensemble. $\ell N=rM_1$.
 \begin{frame}{Matrix Representation}
 $(N,\ell,r,\mbf{S})$ ensemble. 
 \begin{itemize}
-\item $\mbf{H}$ be the adjacency matrix (binning operation)- $M_1 \times N$
+\item $\mbf{H}$ be the adjacency matrix (binning operation)- $m_1 \times N$
 \item $\mbf{S}$ be the bin-detection matrix at each bin - $P \times r$
 \end{itemize}
 \begin{align*}
@@ -160,10 +157,10 @@ $(N,\ell,r,\mbf{S})$ ensemble.
 
 \begin{frame}{Tensor Operation}
 \begin{itemize}
-\item Sensing matrix $\mbf{A}_{M_{1}P\times N}= S_{P\times r}\boxplus H_{M_{1}\times N}$ where
+\item Sensing matrix $\mbf{A}_{m_{1}P\times N}= S_{P\times r}\boxplus H_{m_{1}\times N}$ where
 \vspace{2ex}
 \onslide<2->
-\item $\forall i\in [1:M_1]$, define a $P\times N$ matrix
+\item $\forall i\in [1:m_1]$, define a $P\times N$ matrix
 \begin{equation*}
 \mbf{S}_i=\mbf{h}_i \boxtimes \mbf{S}\defeq [\mbf{0},\ldots,\mbf{0},\mbf{s}_1,\mbf{0},\ldots,\mbf{s}_2,\ldots,\mbf{0},\mbf{s}_r,\mbf{0}]
 \end{equation*}
@@ -173,7 +170,7 @@ where the $r$ columns are placed in the $r$ non-zero indices of $\mbf{h}_i$.
 \mbf{S}_1\\
 \mbf{S}_2\\
 \vdots\\
-\mbf{S}_{M_1}
+\mbf{S}_{m_1}
 \end{bmatrix}
 $
 \end{itemize}
@@ -196,7 +193,7 @@ and
 -1 & +1 & -1
 \end{bmatrix}. \]}
 \onslide<3->{
-Sensing matrix $\bf A$ with $M = 8$: 
+Sensing matrix $\bf A$ with $m = 8$: 
 \[ \mbf{A = H \boxplus S} \ = \begin{bmatrix}
 +1 & \ \ 0 & \ \ 0 & -1 & \ \ 0 & -1\\
 -1 & \ \ 0 & \ \ 0 & +1 & \ \ 0 & -1\\
@@ -254,18 +251,18 @@ At each bin, input to the decoder is $\mbf{y}_i=\sum_{j=1}^{r}x_{\mbf{h}_{i}^{j}
 \begin{frame}{Peeling Decoding}
 \begin{columns}
 \column{0.55\textwidth}
-%\begin{algorithmic}
-%\While {$\exists i\in[M_1]: \mc{H}_i=\mc{H}_Z ~\text{or } \mc{H}_S $, }
-%\If {$\mc{H}_i=\mc{H}_Z$}
-%    \State Remove the bin $i$\\
-%   \hspace{2ex} Assign $0$ to all the variables connected
-%\ElsIf {$\mc{H}_i=\mc{H}_S(k,x[k])$}   
-%   \hspace{4ex} Assign $x[k]$ to $k^{\text{th}}$ variable in bin $i$\\
-%  \hspace{2ex} Subtract $x[k]\mbf{s}_k$ from connected $\mbf{y}_i$  \\
-%  \hspace{2ex} Remove the bin and all variables connected
-%\EndIf
-%\EndWhile
-%\end{algorithmic}
+\begin{algorithmic}
+\While {$\exists i\in[M_1]: \mc{H}_i=\mc{H}_Z ~\text{or } \mc{H}_S $,}
+\If {$\mc{H}_i=\mc{H}_Z$}
+    \State Remove the bin $i$\\
+   \hspace{2ex} Assign $0$ to all the variables connected
+\ElsIf {$\mc{H}_i=\mc{H}_S(k,x[k])$}   
+   \hspace{4ex} Assign $x[k]$ to $k^{\text{th}}$ variable in bin $i$\\
+  \hspace{2ex} Subtract $x[k]\mbf{s}_k$ from connected $\mbf{y}_i$  \\
+  \hspace{2ex} Remove the bin and all variables connected
+\EndIf
+\EndWhile
+\end{algorithmic}
 
 
 \column{0.45\textwidth}
@@ -289,7 +286,7 @@ If $\text{supp}(\mbf{x})=\{i:y_i=\mc{E}\}$, then $P^{(i)}_{\text{BEC}}(\mbf{y})=
 \end{block}
 \onslide<2->
 \begin{itemize}
-\item Choose $M_1=\eta K$ thus $r=\frac{\ell N}{\eta K}$
+\item Choose $m_1=\eta K$ thus $r=\frac{\ell N}{\eta K}$
 \end{itemize}
 \vspace{1ex}
 \begin{block}{DE for Peeling decoder on LDPC -BEC channel}
@@ -314,7 +311,7 @@ in the range $y\in [0,1]$.
 \vspace{3ex}
 \onslide<2->
 \begin{block}{Threshold behavior}
-For $M_1>\eta^{\text{Th}}K$ bin nodes, the peeling decoder will be successful with probability $1-O\left(\frac{1}{K^{\ell-2}}\right)$
+For $m_1>\eta^{\text{Th}}K$ bin nodes, the peeling decoder will be successful with probability $1-O\left(\frac{1}{K^{\ell-2}}\right)$
 \end{block}
 Note that $\eta^{\text{Th}}$ is a function of just the left degree $\ell$.
 \end{frame}
@@ -335,7 +332,7 @@ Note that $\eta^{\text{Th}}$ is a function of just the left degree $\ell$.
 
 \begin{block}{Sample Complexity}
  \begin{align*}
-  M&=M_1\times P \\
+  m&=m_1\times P \\
    &\geq \left[\frac{\eta^{\text{Th}}}{R(2\mbb{P}_{e})}\right] K\log\left(\frac{\ell N}{\eta^{\text{Th}} K}\right)
 \end{align*} 
 \end{block}
@@ -358,15 +355,15 @@ $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(
 \end{description}
 \begin{itemize}
 \item Order optimal sample complexity with precise constants given
-\item $\mbb{P}_{\text{F}}\rightarrow 0$ as $N (\text{and } K)\rightarrow \infty$
-\item Trade-off between the constants in $M$, rate of decay of  $\mbb{P}_{\text{F}}$ and SNR
+\item $P_e\rightarrow 0$ as $N (\text{and } K)\rightarrow \infty$
+\item Trade-off between the constants in $m$, rate of decay of  $P_e$ and SNR
 \item Optimal decoding complexity of $O\left(K\log\left(\frac{N}{K}\right)\right)$
 \end{itemize}
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 \begin{frame}{Implications}
-\begin{block}{Error Probability of a bin - Ramchandran \textit{et al}, 2014}
+\begin{block}{Error Probability of a bin [LPR14]}
 $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(\sqrt{1+2\gamma}-1)^2}+4e^{-c_6 P\left(1-\frac{2\gamma\sigma^2}{A^{2}_{\text{min}}}\right)}+2e^{-P\frac{\left(\beta-\mbb{P}_{e}\right)^2}{2\mbb{P}_{e}(1-\mbb{P}_{e})}}$
 \end{block}
 
@@ -379,7 +376,7 @@ $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(
 \item We choose $P=\log K$ and rate $R(\beta)$ as earlier
 \item A sub-code of size $\frac{\ell}{\alpha\eta}$ of the codebook is chosen as $\mbf{S}$
 \item Sample complexity of $\eta^{\text{Th}}K\log K$
-\item Can we do $\Theta(K)$ with simple decoding?
+\item Can we do $\Theta(K)$?
 \end{itemize}
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
@@ -394,7 +391,7 @@ $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(
 \end{itemize}
 
 \begin{figure}
-\resizebox{0.5\textwidth}{!}{
+\resizebox{0.65\textwidth}{!}{
 \begin{centering}
 \input{\cs_figpath/succ_prb_Slides}
 \end{centering}
