@@ -226,7 +226,7 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 
 \end{block}
   \begin{figure}[h]
-  \includegraphics[width=4.0in]{genomesizes}
+%  \includegraphics[width=4.0in]{genomesizes}
   \end{figure}
 
 \url{http://www.biology-pages.info/G/GenomeSizes.html}
@@ -261,15 +261,18 @@ Let us consider the case of an audio signal which is sampled at a moderate sampl
 %%-------------------------------------------------------------------------------------------------------------
 
 \begin{frame} \frametitle{Sketching Model}
+		\vspace{-10pt}
+	\begin{figure}
+		\includegraphics[width=2.5in]{SketchingModel}
+	\end{figure}
+	\vspace{-8pt}
 	\begin{block}{Sketch}
 		\begin{itemize}
-			\item Succinct fingerprint (compressed form) of the data
+			\item Succinct fingerprint (compressed form) of the data - min communication cost
 			\item Allows Pattern Matching without decompression
-			\item Sketch could be both lossless or lossy (probabilistic recovery)
+			\item Could be both lossless or lossy (probabilistic recovery)
+			\item \alert{Sketching Complexity} - space in bits to store the sketch of database
 		\end{itemize}
-	\end{block}
-	\begin{block}{Sketching Complexity}
-		Space complexity in bits to store the sketch of database
 	\end{block}
 \end{frame}
 %%-------------------------------------------------------------------------------------------------------------
@@ -477,7 +480,7 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 \end{block}
 \begin{figure}
   \centering
-  \includegraphics[width=2.0in]{Gaspard_de_Prony}
+%  \includegraphics[width=2.0in]{Gaspard_de_Prony}
 \end{figure}
 \end{frame}
 %--------------------------------------------------------------------------------------
@@ -1253,14 +1256,14 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 \begin{frame}{Secure Pattern Matching}
 v\begin{figure}
   \centering
-%  \includegraphics[width=4.0in]{airline}
+  \includegraphics[width=4.0in]{airline}
 \end{figure}
 \end{frame}
 
 \begin{frame}{Secure Pattern Matching}
 \begin{figure}
   \centering
-%  \includegraphics[width=4.0in]{doctorpatient}
+  \includegraphics[width=4.0in]{doctorpatient}
 \end{figure}
 \end{frame}
 %--------------------------------------------------------------------------------------
