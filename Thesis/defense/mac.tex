@@ -43,38 +43,41 @@
 
 \begin{itemize}
   \item $N$ \textbf{uncoordinated} users present in the system
-  \item $K$ users \textbf{active} at any given time. Each user has 1 packet to transmit
+  \item $K$ users \textbf{active} during any given round/frame
+  \item Each user has 1 packet to transmit
   \item Time frame is \textbf{slotted}, transmissions occur in slots
    \begin{itemize}
-	   \item In slot $j$, each user can choose to transmit or not
+	   \item In slot $j$, each active user can choose to transmit or not
 	\end{itemize}
-   \item<2-> BS interested only in the \textbf{set} of packets, not the \textbf{source}
-	\begin{itemize}
-	   \item<2-> Due to small payload and a large number of users ($N\gg K$)
-	 \end{itemize}
+   \item<2-> BS interested only in the \textbf{set} of packets, not the \textbf{source} of the packet
+%	\begin{itemize}
+%	   \item<2-> Due to small payload and a large number of users ($N\gg K$)
+%	 \end{itemize}
    
 \end{itemize}
-
- \begin{center}
-  \input{\mac_figpath/slots}
-  \end{center}
+\vspace{10ex}
+\centering 
+\includegraphics[width=4.5in]{\mac_figpath/slotstructurewithoutfb.png}
+%  \input{\mac_figpath/slots}
 \end{frame}
 
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 \begin{frame}\frametitle{Problem statement}
   \begin{itemize}
   \setlength{\itemsep}{3pt}
-  \item $N$ users out of which $K$ active. $K\in[25:300]$
+  \item $K$ active users. $K\in[25:300]$
   \item Each user has a $B$-bit message. $B$ is small $\approx 100$
-  \item $n=30,000$ channel uses available per round
-  \item {\small regime of interest for LP-WANs such as LoRaWAN, Weightless}
+  \item $n$ channel uses available per round. $n=30,000$ 
+  \item {\small regime of interest for LP-WAN standards such as LoRaWAN, Weightless}
 \end{itemize}
   \pause
   \vspace{2ex}
 
   \begin{itemize}
   \item $\{w_1,w_2,\ldots,w_K\}$ - set of messages to be transmitted
+  \vspace{2.5pt}
   \item Power constraint -$~\frac{1}{n}\mathbb{E}_w[||\xv_w||^2]\leq P$
+  \vspace{2.5pt}
   \item Channel model $\yv=\sum_{j=1,\ldots,K}\xv_{w_j}+\zv$. $\vec{z}\sim\mc{N}(0,\mathbf{I}_n)$
   \item If $\mc{L}(\yv)=\{\hat{w}_1,\ldots,\hat{w}_K\}$ is the decoder output, $P_e=\frac{1}{K}\sum\limits_{i=1}^{K} \Pr\left( w_i \notin \mc{L}(\yv) \right) $
   \end{itemize}
@@ -103,7 +106,14 @@
 			\item In comparison, ALOHA, TIN found to be very energy-inefficient for $K\gtrapprox100$
 	\end{itemize}
 	\pause 
-	\vspace{4ex}
+		\centering
+		\includegraphics[width=2.8in]{\mac_figpath/OP_2017.png}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
+\begin{frame}
+\begin{itemize}
 	\item {[OP-2017]} Low complexity coding scheme for unsourced MAC
 	\begin{itemize}\setlength{\itemsep}{4pt}
 		\item Concatenated code for $T$-GMAC: Integer forcing and mod-$2$ addition MAC 
@@ -117,21 +127,25 @@
 		\end{itemize}
 	\end{itemize}
 \end{itemize}
+%	\pause
+	\centering
+\includegraphics[width=2.4in]{\mac_figpath/OP_2017.png}	
 \end{frame}
 
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 \begin{frame}\frametitle{Main Result}
 \only<1-2>{
-Main features of the proposed scheme:
+%Main features of the proposed scheme:
 \begin{itemize}
-\item Same codebook for all the users. Encoder solely depends on the message
-\item Two stages of encoding:
-	\begin{itemize}
-	\setlength{\itemsep}{2pt}
-	\item encoder within a slot: Code with close to optimal performance for $T$-GMAC
-	\item encoder across slots: above codeword is repeated in multiple slots
-    \item repetition pattern is dependent solely on the message
-	\end{itemize}
+%\item Same codebook for all the users. Encoder solely depends on the message
+%\item Two stages of encoding:
+%	\begin{itemize}
+%	\setlength{\itemsep}{2pt}
+%	\item encoder within a slot: Code with close to optimal performance for $T$-GMAC
+%	\item encoder across slots: above codeword is repeated in multiple slots
+%    \item repetition pattern is dependent solely on the message
+%	\end{itemize}
+\item "same-code" design which is close to optimal for $T$-GMAC
 \item Peeling based successive interference cancellation(SIC) decoding across slots
 \end{itemize}
 }

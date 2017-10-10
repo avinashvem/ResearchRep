@@ -34,9 +34,10 @@
 
 \onslide<2->
 \begin{block}{Objective}
-Devise a scheme with minimizing num. of measurements $m$ and decoding complexity such that $P_e\rightarrow 0$ as $N (\text{and } K) \rightarrow \infty$
+Devise a scheme minimizing num. of measurements $m$ and decoding complexity such that $P_e\rightarrow 0$ as $N (\text{and } K) \rightarrow \infty$
 \end{block}
 \end{frame}
+
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 \begin{frame}\frametitle{Known Limits}
 \begin{block}{Optimal order for Support Recovery [1]}
@@ -45,14 +46,14 @@ Devise a scheme with minimizing num. of measurements $m$ and decoding complexity
 \begin{equation*}
 C_1 K\log\left(\frac{N}{K}\right)<m<C_2 K\log\left(\frac{N}{K}\right)
 \end{equation*}
-\item In the linear sparsity regime, $K=\alpha N,$ it was shown that $m=\Theta(N)$ measurements are sufficient for asymptotically reliable recovery. 
+\item In the linear sparsity regime, $K=\alpha N,$ it was shown that $m=\Theta(K)$ measurements are sufficient for asymptotically reliable recovery. 
  \end{itemize}
 \end{block}
 \vspace{7ex}
 
 \onslide<2->{
 \begin{itemize}
-\item In [1], the minimum value of the signal space affects the bounds on $M$
+\item In [1], the minimum value of the signal space affects the bounds on $m$
 \end{itemize}
 \begin{align*}
 x_i\in\mc{X}&\defeq\{A e^{i\theta}: A\in \mc{A},\theta\in \Omega\}\cup \{0\} ,\\
@@ -62,29 +63,7 @@ x_i\in\mc{X}&\defeq\{A e^{i\theta}: A\in \mc{A},\theta\in \Omega\}\cup \{0\} ,\\
 
 [1] Information Theoretic Limits of Support Recovery- Wainwright-2007
 \end{frame}
-%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
-\begin{frame}{Main result}
-\begin{block}{Sub-linear Sparsity: Optimal Sample and Decoding Complexities}
-In the sub-linear sparsity regime, for a given SNR of $\frac{A^{2}_{\text{min}}}{\sigma^{2}}$, our scheme has 
-\begin{itemize}
-\item Sample complexity of $m=c_1 K\log (\frac{c_2 N}{K})$
-\item Decoding complexity of $O\left(K\log(\frac{N}{K})\right)$ 
-\item $P_e\rightarrow 0$ asymptotically in $K$
-\end{itemize} 
-where the constants $c_{1}$ and $c_{2}$ are dependent on SNR, desired rate of decay of $P_e$ and left degree $\ell$.
-\end{block}
-\onslide<2->
-\begin{block}{Linear Sparsity}
-In the linear sparsity regime our scheme has 
-\begin{itemize}
-\item Sample complexity of $m=c_3 K\log K$
-\item Decoding complexity of $O\left(K\log(K)\right)$ 
-\item $P_e\rightarrow 0$ asymptotically in $K$
-\end{itemize} 
-where the constant $c_{3}>1$ is a parameter dependent on left degree $\ell$.
-\end{block}
-\end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
 %\subsection{Prior Work}
@@ -107,8 +86,32 @@ where the constant $c_{3}>1$ is a parameter dependent on left degree $\ell$.
 \end{itemize}
 \end{itemize}
 \end{frame}
-%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
+
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
+\begin{frame}{Main result}
+\begin{block}{Sub-linear Sparsity: Optimal Sample and Decoding Complexities}
+In the sub-linear sparsity regime, for a given SNR of $\frac{A^{2}_{\text{min}}}{\sigma^{2}}$, our scheme has 
+\begin{itemize}
+\item Sample complexity of $m=c_1 K\log (\frac{c_2 N}{K})=\Theta(K\log \frac{N}{K})$
+\item Decoding complexity of $O\left(K\log(\frac{N}{K})\right)$ 
+\item $P_e\rightarrow 0$ asymptotically in $K$
+\end{itemize} 
+where the constants $c_{1}$ and $c_{2}$ are dependent on SNR, desired rate of decay of $P_e$ and left degree $\ell$.
+\end{block}
+\onslide<2->
+\begin{block}{Linear Sparsity}
+In the linear sparsity regime our scheme has 
+\begin{itemize}
+\item Sample complexity of $m=c_3 K\log K$
+\item Decoding complexity of $O\left(K\log(K)\right)$ 
+\item $P_e\rightarrow 0$ asymptotically in $K$
+\end{itemize} 
+where the constant $c_{3}>1$ is a parameter dependent on left degree $\ell$.
+\end{block}
+\end{frame}
+
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 \subsection{Design scheme}
 %\subsection{Sensing Matrix}
 \begin{frame}{Graphical Representation}
@@ -118,65 +121,8 @@ $(N,\ell,r,\mbf{S})$ ensemble. $\ell N=rm_1$.
 \scalebox{1.3}{\input{\cs_figpath/TannerGraph.tex}}
 \end{figure}
 \end{frame}
-%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
-\begin{frame}{Matrix Representation}
-$(N,\ell,r,\mbf{S})$ ensemble. 
-\begin{itemize}
-\item $\mbf{H}$ be the adjacency matrix (binning operation)- $m_1 \times N$
-\item $\mbf{S}$ be the bin-detection matrix at each bin - $P \times r$
-\end{itemize}
-\begin{align*}
-\mbf{\tilde{y}=H(x)}&= 
-\begin{bmatrix}
-   \tilde{\mbf{ y}}_{1} \\
-   \tilde{ \mbf{y}}_{2} \\
-    \vdots \\
-   \tilde{\mbf{y}}_{M_1}
-\end{bmatrix}
-,\text{dim}(\tilde{\mbf{y}}_{i} )=r \times 1,
-\\
-\vspace{10pt}
-\mbf{y}&= 
-\begin{bmatrix}
-   \mbf{ y}_{1}\\
-    \mbf{y}_{2}  \\
-    \vdots \\
-    \mbf{y}_{M_1}
-\end{bmatrix}
-, \text{where } \mbf{y}_i= \mbf{S \tilde{y}}_{i}, \text{dim} (\mbf{y}_i)=P \times 1   
-\end{align*}
-\begin{itemize}
-\item We define a tensor operation such that 
-\begin{equation*}
-\mbf{y=(S\boxplus H)  x}
-\end{equation*}
-\end{itemize}
-\end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
-
-\begin{frame}{Tensor Operation}
-\begin{itemize}
-\item Sensing matrix $\mbf{A}_{m_{1}P\times N}= S_{P\times r}\boxplus H_{m_{1}\times N}$ where
-\vspace{2ex}
-\onslide<2->
-\item $\forall i\in [1:m_1]$, define a $P\times N$ matrix
-\begin{equation*}
-\mbf{S}_i=\mbf{h}_i \boxtimes \mbf{S}\defeq [\mbf{0},\ldots,\mbf{0},\mbf{s}_1,\mbf{0},\ldots,\mbf{s}_2,\ldots,\mbf{0},\mbf{s}_r,\mbf{0}]
-\end{equation*}
-where the $r$ columns are placed in the $r$ non-zero indices of $\mbf{h}_i$.
-\vspace{2ex}
-\item $S\boxplus H=\begin{bmatrix}
-\mbf{S}_1\\
-\mbf{S}_2\\
-\vdots\\
-\mbf{S}_{m_1}
-\end{bmatrix}
-$
-\end{itemize}
-\end{frame}
-%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
-
 \begin{frame}{Example}
 \begin{columns}
 \begin{column}{0.5\textwidth}
@@ -339,17 +285,7 @@ Note that $\eta^{\text{Th}}$ is a function of just the left degree $\ell$.
 \end{frame}
 %-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
 
-\begin{frame}{Analysis of Bin Decoding}
-\begin{itemize}
-\item Let $\text{E}_{\text{bin}}$ be the event an error was made in overall bin decoding
-\item Union bounding: $\text{E}_{\text{bin}}\leq (\eta K+\ell K)\text{Pr(E)}$
-\end{itemize}
-\onslide<2->
-\begin{block}{Error Probability of a bin [LPR14]}
-$\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(\sqrt{1+2\gamma}-1)^2}+4e^{-c_6 P\left(1-\frac{2\gamma\sigma^2}{A^{2}_{\text{min}}}\right)}+2e^{-P\frac{\left(\beta-\mbb{P}_{e}\right)^2}{2\mbb{P}_{e}(1-\mbb{P}_{e})}}$
-\end{block}
-\vspace{2ex}
-\onslide<3->
+\begin{frame}{Implications}
 \begin{description}
     \item[\textbf{Sub-Linear sparsity}]
 \end{description}
@@ -359,14 +295,7 @@ $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(
 \item Trade-off between the constants in $m$, rate of decay of  $P_e$ and SNR
 \item Optimal decoding complexity of $O\left(K\log\left(\frac{N}{K}\right)\right)$
 \end{itemize}
-\end{frame}
-%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
-
-\begin{frame}{Implications}
-\begin{block}{Error Probability of a bin [LPR14]}
-$\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(\sqrt{1+2\gamma}-1)^2}+4e^{-c_6 P\left(1-\frac{2\gamma\sigma^2}{A^{2}_{\text{min}}}\right)}+2e^{-P\frac{\left(\beta-\mbb{P}_{e}\right)^2}{2\mbb{P}_{e}(1-\mbb{P}_{e})}}$
-\end{block}
-
+\pause
 \vspace{2ex}
 \begin{description}
     \item [\textbf{Linear sparsity: $K=\alpha N$}]
@@ -385,16 +314,100 @@ $\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(
 \begin{frame}{Simulation Results}
 \begin{itemize}
 \item $K=50, N=10^5$. $\mc{X}=\{+1,-1\}$
-\item $\ell=4, \eta =2 (M_1 =2K)$. Note that $\eta^{\text{Th}}(\ell=4)=1.295$
+\item $\ell=4, \eta =2 (m_1 =2K)$. Note that $\eta^{\text{Th}}(\ell=4)=1.295$
 \item $r=\frac{N\ell}{\eta K}=4000$. $\log_2(r)=12$
 \item $(12,24)$ Golay code and $(12,n)$ convolutional codes for $n=24,48,96$ with QAM form $\mbf{S}$.
 \end{itemize}
 
 \begin{figure}
-\resizebox{0.65\textwidth}{!}{
+\resizebox{0.55\textwidth}{!}{
 \begin{centering}
 \input{\cs_figpath/succ_prb_Slides}
 \end{centering}
 }
 \end{figure}
+\end{frame}
+
+
+%%%-------------------------------Additional Slides ----------------------------------------------------------------------------------------
+
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
+\begin{frame}{Matrix Representation}
+$(N,\ell,r,\mbf{S})$ ensemble. 
+\begin{itemize}
+\item $\mbf{H}$ be the adjacency matrix (binning operation)- $m_1 \times N$
+\item $\mbf{S}$ be the bin-detection matrix at each bin - $P \times r$
+\end{itemize}
+\begin{align*}
+\mbf{\tilde{y}=H(x)}&= 
+\begin{bmatrix}
+   \tilde{\mbf{ y}}_{1} \\
+   \tilde{ \mbf{y}}_{2} \\
+    \vdots \\
+   \tilde{\mbf{y}}_{M_1}
+\end{bmatrix}
+,\text{dim}(\tilde{\mbf{y}}_{i} )=r \times 1,
+\\
+\vspace{10pt}
+\mbf{y}&= 
+\begin{bmatrix}
+   \mbf{ y}_{1}\\
+    \mbf{y}_{2}  \\
+    \vdots \\
+    \mbf{y}_{M_1}
+\end{bmatrix}
+, \text{where } \mbf{y}_i= \mbf{S \tilde{y}}_{i}, \text{dim} (\mbf{y}_i)=P \times 1   
+\end{align*}
+\begin{itemize}
+\item We define a tensor operation such that 
+\begin{equation*}
+\mbf{y=(S\boxplus H)  x}
+\end{equation*}
+\end{itemize}
+\end{frame}
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
+
+\begin{frame}{Tensor Operation}
+\begin{itemize}
+\item Sensing matrix $\mbf{A}_{m_{1}P\times N}= S_{P\times r}\boxplus H_{m_{1}\times N}$ where
+\vspace{2ex}
+\onslide<2->
+\item $\forall i\in [1:m_1]$, define a $P\times N$ matrix
+\begin{equation*}
+\mbf{S}_i=\mbf{h}_i \boxtimes \mbf{S}\defeq [\mbf{0},\ldots,\mbf{0},\mbf{s}_1,\mbf{0},\ldots,\mbf{s}_2,\ldots,\mbf{0},\mbf{s}_r,\mbf{0}]
+\end{equation*}
+where the $r$ columns are placed in the $r$ non-zero indices of $\mbf{h}_i$.
+\vspace{2ex}
+\item $S\boxplus H=\begin{bmatrix}
+\mbf{S}_1\\
+\mbf{S}_2\\
+\vdots\\
+\mbf{S}_{m_1}
+\end{bmatrix}
+$
+\end{itemize}
+\end{frame}
+
+%-------------------------------------------25@#$@#$^%$##$%^%$^%^_----------------------------------------------------------------
+
+\begin{frame}{Analysis of Bin Decoding}
+\begin{itemize}
+\item Let $\text{E}_{\text{bin}}$ be the event an error was made in overall bin decoding
+\item Union bounding: $\text{E}_{\text{bin}}\leq (\eta K+\ell K)\text{Pr(E)}$
+\end{itemize}
+
+\begin{block}{Error Probability of a bin [LPR14]}
+$\text{Pr(E)}\leq 3e^{-\frac{P}{4}\frac{\gamma^2}{1+4 \gamma}}+2e^{-\frac{P}{4}(\sqrt{1+2\gamma}-1)^2}+4e^{-c_6 P\left(1-\frac{2\gamma\sigma^2}{A^{2}_{\text{min}}}\right)}+2e^{-P\frac{\left(\beta-\mbb{P}_{e}\right)^2}{2\mbb{P}_{e}(1-\mbb{P}_{e})}}$
+\end{block}
+
+%\onslide<3->
+%\begin{description}
+%    \item[\textbf{Sub-Linear sparsity}]
+%\end{description}
+%\begin{itemize}
+%\item Order optimal sample complexity with precise constants given
+%\item $P_e\rightarrow 0$ as $N (\text{and } K)\rightarrow \infty$
+%\item Trade-off between the constants in $m$, rate of decay of  $P_e$ and SNR
+%\item Optimal decoding complexity of $O\left(K\log\left(\frac{N}{K}\right)\right)$
+%\end{itemize}
 \end{frame}

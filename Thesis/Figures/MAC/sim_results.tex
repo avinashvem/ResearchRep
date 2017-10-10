@@ -42,6 +42,24 @@ legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell al
 };
 \addlegendentry{Random Coding-YP-17};
 
+\addplot [color=BurntOrange,solid,mark=triangle,mark size=3.0, line width=2.0pt]
+table[row sep=crcr]{
+25 5.9675\\
+50 7.33\\
+75 8.3433\\
+100 9.1555\\
+125 9.8708\\
+150 10.679\\
+175 11.275\\
+200 12.052 \\
+225 12.61860 \\
+250 13.3702 \\
+275 13.934\\
+300 14.816\\
+ };
+\addlegendentry{$T=1$}; %After Yury's correction
+
+
 \addplot [color=red,solid,mark=diamond,mark size=3.0, line width=2.0pt]
   table[row sep=crcr]{
   25   3.9849  \\
@@ -109,24 +127,6 @@ legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell al
 300  9.6524\\
 };
 \addlegendentry{$T=5$};
-
-\addplot [color=BurntOrange,solid,mark=triangle,mark size=3.0, line width=2.0pt]
-table[row sep=crcr]{
-25 5.9675\\
-50 7.33\\
-75 8.3433\\
-100 9.1555\\
-125 9.8708\\
-150 10.679\\
-175 11.275\\
-200 12.052 \\
-225 12.61860 \\
-250 13.3702 \\
-275 13.934\\
-300 14.816\\
- };
-\addlegendentry{$T=1$}; %After Yury's correction
-
 
 
 \addplot [color=blue,dashed, line width=2.0pt]

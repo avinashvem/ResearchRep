@@ -28,10 +28,11 @@
 
 \begin{document}
 \title{\bf Applications of coding theory to massive multiple access and big data problems}
-%\author{\textbf{Avinash Vem}\\ \vspace{3pt} \small Advisor: Dr.Krishna Narayanan} 
-\author{\textbf{Avinash Vem}\\ \vspace{3pt} \small Thanks to Nagaraj Janakiraman, Dr. Krishna Narayanan, Dr. J.-F. Chamberland, Dr. J. Cheng} 
-\vspace{4ex}
-%\institute{Doctoral Degree Final Examination\\ Department of Electrical and Computer Engineering \\ Texas A\&M University}
+\author{\textbf{Avinash Vem}\\ \vspace{3pt} \small Advisor: Dr.Krishna Narayanan} 
+%\author{\textbf{Avinash Vem}\\ \vspace{3pt} \small Collaborators: Nagaraj Janakiraman, Dr. Krishna Narayanan\\\small Dr. J.-F. Chamberland, Dr. J. Cheng, Dr. Yu-Chih Huang} 
+\vspace{5ex}
+%\institute{Department of Electrical and Computer Engineering \\ Texas A\&M University}
+\institute{Doctoral Degree Final Examination\\ Department of Electrical and Computer Engineering \\ Texas A\&M University}
 \date{} % if no date wanted, keep it blank
 
 %\titlegraphic{
@@ -48,6 +49,7 @@
 \item 5G -- not just ``4G but faster'' but includes M2M transmissions, IoT
 \item Current wireless -- a few devices with sustained data rate requirements
 \item Future wireless -- {\color{blue}many uncoordinated} devices requiring {\color{blue}sporadic connectivity}
+\item<2> Recent draft of IMT2020 - 1M devices per sq. km
 \end{itemize}
 \only<1>{
 \centering
@@ -56,10 +58,8 @@
 
 \only<2>{
 \centering
-\includegraphics[width=0.8\textwidth]{\mac_figpath/IoT-application-ranking.png}
+\includegraphics[width=0.7\textwidth]{\mac_figpath/IoT-application-ranking.png}
 }
-
-
 \end{frame}
 
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
@@ -79,6 +79,16 @@
 \end{itemize}
 \end{frame}
 
+%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
+\begin{frame}\frametitle{Algorithmic complexity}
+\centering
+\resizebox{0.6\textwidth}{!}{\input{\figpath/datacomputingcomparison.tex}}
+
+\begin{itemize}
+\item<2> Linear complexity is too expensive, sub-linear complexity is required
+\end{itemize}
+\end{frame}
+
 
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 \begin{frame}
@@ -92,6 +102,8 @@
 \item Compressed sensing: support recovery
 \item Non-adaptive group testing: \emph{approximate} and \emph{probabilistic}
 \end{itemize}
+\centering
+\resizebox{0.5\textwidth}{!}{\input{\figpath/venn_theme.tex}}
 \end{frame}
 
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
@@ -99,19 +111,20 @@
 \frametitle{Common theme}
 \begin{itemize}
 	\setlength{\itemsep}{4pt}
-	\item {\color{blue}Sparsity}
-	\begin{itemize}
-	\setlength{\itemsep}{3pt}
-		\item Number of users active $\ll$ total number of users in the system
-		\item Sensing signal is sparse in some domain
-		\item Defective items to be identified $\ll$ number of items
-	\end{itemize}
-	\pause
-	\item Design coding 	schemes leveraging the inherent sparsity, based on {\color{blue}bipartite Tanner graphs}
-	\item {\color{blue} Iterative peeling}-like algorithms used for decoding/recovery 
-	\pause
-	\item Importantly the {\color{blue} computational complexity scales with sparsity} of the problem
+%	\item {\color{blue}Sparsity}
+%	\begin{itemize}
+%	\setlength{\itemsep}{3pt}
+%		\item Number of users active $\ll$ total number of users in the system
+%		\item Sensing signal is sparse in some domain
+%		\item Defective items to be identified $\ll$ number of items
+%	\end{itemize}
+%	\pause
+	\item Coding schemes based on {\color{blue}bipartite Tanner graphs} leveraging the inherent sparsity
+	\item<2-> {\color{blue} Iterative peeling}-like algorithms used for decoding/recovery 
+	\item<2-> Importantly the {\color{blue} computational complexity scales with sparsity} of the problem
 \end{itemize}
+\centering
+\resizebox{0.5\textwidth}{!}{\input{\figpath/venn_theme1.tex}}
 \end{frame}
 
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
@@ -125,19 +138,43 @@
 \input{mac.tex}
 \input{cs.tex}
 \input{gt.tex}
+\input{interf_ch.tex}
 
 %%----------------------------------------------- DO NOT TOUCH-----------------------------------------------------------
 %----------------------------------------------------------------------------------------------------------------------------------
 \begin{frame}{Conclusion}
-\begin{itemize}
+\begin{itemize} 
   \item Review of the peeling decoder
-  \item Design of coding scheme for unsourced MAC with performance close to the random coding limit
-  \item Sample and computational complexities matching the lower bound within a constant, for support recovery using left and right Tanner graph based design and a simple peeling based recovery algorithm
-    \item Improvement of sample and computational complexities for group testing using left and right Tanner graph based design and a simple peeling based recovery algorithm
+  \item Design of coding scheme with polynomial complexity for unsourced MAC with performance close to the random coding limit
+  \item For the support recovery problem: coding scheme based on left and right regular Tanner graphs improving the sample and computational complexities matching the lower bound to a constant
+    \item Improvement of testing and computational complexities for group testing using left and right Tanner graphs based design for the group testing problem. Improvement in testing complexity demonstrated for non-asymptotic regime
 \end{itemize}
 \end{frame}
-	
-%--------------------------------------------------------------------
+
+
+%----------------------------------------------------------------------
+\begin{frame}%\frametitle{Publications}
+Preprints:
+{\footnotesize 
+\begin{itemize}
+\item A. Vem, K. R. Narayanan, J. Cheng, J.-F. Chamberland, {\blue ``A User-Independent Serial Interference Cancellation Based Coding Scheme for the Unsourced Random Access Gaussian Channel",} to be published in ITW proceedings, 2017
+\item A. Vem, N. T. Janakiraman, K. R. Narayanan,{\blue ``Group Testing using left-and-right-regular sparse-graph codes",} arXiv:1701.07477
+\item N. T. Janakiraman, A. Vem, K. R. Narayanan, J.-F. Chamberland, ``Sub-string/Pattern Matching in Sub-linear Time Using a Sparse Fourier Transform Approach", arXiv:1704.07852
+\end{itemize}
+}
+
+Conference:
+{\footnotesize 
+\begin{itemize}
+\item A. Vem, N. T. Janakiraman, K. R. Narayanan, {\blue ``Sub-linear time compressed sensing for support recovery using left and right regular sparse-graph codes",} in Proc. of Information Theory Workshop, pp. 429-433, 2016
+\item A. Taghavi, A. Vem, J.F. Chamberland, K.R. Narayanan, `` On the design of universal schemes for massive uncoordinated multiple access", in Proc. of International Symposium on Information Theory, pp. 345-349, 2016
+\item S. Kumar, A. Vem, K. R. Narayanan, H. D. Pfister, ``Spatially-coupled codes for write-once memories", in Proc. of Annual Allerton Conference, pp. 125-131, 2015
+\item S. Kumar, A. Vem, K. R. Narayanan, H. D. Pfister, ``Spatially-coupled codes for side-information problems", in Proc. of International Symposium on  Information Theory, pp. 516-520, 2014
+\item A. Vem, Y. C. Huang, K. R. Narayanan, H. D. Pfister,  {\blue ``Multilevel lattices based on spatially-coupled LDPC codes with applications",} in Proc. of International Symposium on Information Theory, pp. 2336-2340, 2014
+\end{itemize}
+}
+\end{frame}
+%----------------------------------------------------------------------
 \begin{frame}\frametitle{Questions?}
 	\begin{figure}[t]
 		\centering

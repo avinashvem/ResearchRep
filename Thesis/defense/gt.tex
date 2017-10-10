@@ -1,6 +1,6 @@
 %%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 \section{GroupTesting}
-\subsection{Introduction}
+\subsection{Main result}
 \begin{frame}\frametitle{Group Testing}
 	\begin{figure}[t]
 		\centering
@@ -35,7 +35,11 @@ Example:
 \]
 \pause
 \begin{block}{Objective}
-For a given $K,N$ and a maximum probability of recovery error, design a testing scheme minimizing the number of tests
+For a given $K,N$ and a maximum probability of recovery error, design a testing scheme
+\begin{itemize}
+\item minimizing the number of tests
+\item minimizing the computational complexity of recovery 
+\end{itemize} 
 \end{block}
 \end{frame}
 %%%----------------------------------------------------------------------------------------------------------------------------------
@@ -52,7 +56,7 @@ For a given $K,N$ and a maximum probability of recovery error, design a testing 
 \begin{block}{Approximate GT}
 \begin{itemize}
 \item aim is to recover ($1-\epsilon$) fraction of the defective items w.h.p
-\item testing complexity $m$ is $\mc{O}(K\log \frac{N}{K})$
+\item testing complexity $m$ is $\mc{O}(K\log N)$
 \item lower bound not known
 \end{itemize}
 \end{block}
@@ -71,7 +75,7 @@ For a given $K,N$ and a maximum probability of recovery error, design a testing 
 \item Recovers $(1-\epsilon)K$ items w.h.p.
 \item Samples: $m = c_{\epsilon}K \log_2 \frac{N}{K}$ is order optimal
 \begin{itemize}
-\item scaling $O(K \log N)$ is same as [LPR15]
+\item scaling $\mc{O}(K \log N)$ is same as [LPR15]
 \item however our scheme provides a better upper bound $\Theta(K\log\frac{N}{K})$
 \end{itemize}
 \end{itemize}
@@ -101,18 +105,17 @@ For a given $K,N$ and a maximum probability of recovery error, design a testing 
 \item Challenges involved with peeling approach:
 \begin{itemize}
 \item non-linear function node
-\item peeling is difficult. Given $\vec{y}_j=\vec{a}_{1}\vee \vec{a}_{2}\vee \ldots \vec{a}_{k}$ and $\{\vec{a}_1,\ldots \vec{a}_{k-1}\}$, find $\vec{a}_k$? 
+\item peeling is difficult. Given $\vec{y}_j=\vec{s}_{1}\vee \vec{s}_{2}\vee \ldots \vec{s}_{k}$ and $\{\vec{s}_1,\ldots \vec{s}_{k-1}\}$, find $\vec{s}_k$? 
 \end{itemize}
 \end{itemize}
 \vspace{3ex}
-
 \pause
 
 \begin{block}{Idea [LPR15]}
-Design the bin detection matrix $\mathbf{A}$ such that, given
+Design the bin detection matrix $\mathbf{S}$ such that, given
 \begin{itemize}
-\item  $\vec{y}_j=\vec{a}_{i_1}$ find $i_1$ efficiently
-\item $\vec{y}_j=\vec{a}_{i_1}\vee \vec{a}_{i_2}$ and $i_1$ is known find $i_2$
+\item  $\vec{y}_j=\vec{s}_{i_1}$ find $i_1$ efficiently
+\item $\vec{y}_j=\vec{s}_{i_1}\vee \vec{s}_{i_2}$ and $i_1$ is known find $i_2$
 \item<3-> Peeling decoder involving function nodes with not more than two connections
 \end{itemize}
 
@@ -218,29 +221,28 @@ $(N,\ell,r,\mbf{A})$ ensemble. $\ell N=rM_1$.
 \end{frame}
 
 %%%---------------------------------------------------------------------------------%%%%
-\begin{frame}\frametitle{Overall testing scheme}
-Testing matrix: 
-  {\centering
-  $\mbf{A}_{m \times n}  = \underset{\color{blue} (\ell,r) regular~graph}{\bf G_{\frac{m}{6} \times n}} {\Large \bf \otimes} \underset{\color{blue} bin~detection}{\bf S_{6 \times r}}$ \\
-  \vspace{6pt}
-   {\small 
-   \[ S = \begin{bmatrix}
-					\bf{b_1} & \bf{b_2} & \bf{b_3} & \cdots & \bf{b_{n-1}}\\
-				   	\bf{\overline{b_1}} & \bf{\overline{b_2}} & \bf{\overline{b_3}} & \cdots & \bf{\overline{b_{n-1}}}\\
-					\bf{b_{i_1}} & \bf{b_{i_2}} & \bf{b_{i_3}} & \cdots & \bf{b_{i_{n-1}}}\\
-				   	\bf{\overline{b_{i_1}}} & \bf{\overline{b_{i_2}}} & \bf{\overline{b_{i_3}}} & \cdots & \bf{\overline{b_{i_{n-1}}}}\\
-				   	
-					\bf{b_{j_1}} & \bf{b_{j_2}} & \bf{b_{j_3}} & \cdots & \bf{b_{j_{n-1}}}\\
-				   	\bf{\overline{b_{j_1}}} & \bf{\overline{b_{j_2}}} & \bf{\overline{b_{j_3}}} & \cdots & \bf{\overline{b_{j_{n-1}}}} \end{bmatrix} 
-				   	\]
-	}
-	}
-	\begin{itemize}
-	\item $\bf{b_i}$ denotes the $L$-bit binary representation of the integer $i-1$. $L=\lceil \log_2{n} \rceil$
-	\item $\pi_1=(i_1, i_2, \cdots, i_{n-1})$ and $\pi_2=(j_1, j_2, \cdots, j_{n-1})$ are permutations 
-	\end{itemize}
-
-\end{frame}
+%\begin{frame}\frametitle{Overall testing scheme}
+%Testing matrix: 
+%  {\centering
+%  $\mbf{A}_{m \times n}  = \underset{\color{blue} (\ell,r) regular~graph}{\bf G_{\frac{m}{6} \times n}} {\Large \bf \otimes} \underset{\color{blue} bin~detection}{\bf S_{6 \times r}}$ \\
+%  \vspace{6pt}
+%   {\small 
+%   \[ S = \begin{bmatrix}
+%					\bf{b_1} & \bf{b_2} & \bf{b_3} & \cdots & \bf{b_{n-1}}\\
+%				   	\bf{\overline{b_1}} & \bf{\overline{b_2}} & \bf{\overline{b_3}} & \cdots & \bf{\overline{b_{n-1}}}\\
+%					\bf{b_{i_1}} & \bf{b_{i_2}} & \bf{b_{i_3}} & \cdots & \bf{b_{i_{n-1}}}\\
+%				   	\bf{\overline{b_{i_1}}} & \bf{\overline{b_{i_2}}} & \bf{\overline{b_{i_3}}} & \cdots & \bf{\overline{b_{i_{n-1}}}}\\
+%				   	
+%					\bf{b_{j_1}} & \bf{b_{j_2}} & \bf{b_{j_3}} & \cdots & \bf{b_{j_{n-1}}}\\
+%				   	\bf{\overline{b_{j_1}}} & \bf{\overline{b_{j_2}}} & \bf{\overline{b_{j_3}}} & \cdots & \bf{\overline{b_{j_{n-1}}}} \end{bmatrix} 
+%				   	\]
+%	}
+%	}
+%	\begin{itemize}
+%	\item $\bf{b_i}$ denotes the $L$-bit binary representation of the integer $i-1$. $L=\lceil \log_2{n} \rceil$
+%	\item $\pi_1=(i_1, i_2, \cdots, i_{n-1})$ and $\pi_2=(j_1, j_2, \cdots, j_{n-1})$ are permutations 
+%	\end{itemize}
+%\end{frame}
 
 %----------------------------------------------------------------------------------------------------------------------------------
 \begin{frame}{Constrained peeling}
@@ -251,11 +253,7 @@ Testing matrix:
 \item The iteration continues until no doubletons can be resolved
 \end{itemize}
 \end{block}
-Peeling animation involving only single and double-tons
-\end{frame}
-
-%----------------------------------------------------------------------------------------------------------------------------------
-\begin{frame}{Error floor- constrained peeling}
+\vspace{10ex}
 \centering
 \begin{tabular}{| c | c | c | c | c | c | c | c | }
 \hline
@@ -263,10 +261,13 @@ $\epsilon$ & $10^{-3}$ & $10^{-4}$ & $10^{-5}$ & $10^{-6}$ &$ 10^{-7}$ & $10^{-8
 $c_\epsilon$ & 6.13 & 7.88 & 9.63 & 11.36 & 13.10 & 14.84 & 16.57 \\ \hline
  $\ell$ & 7 & 9 & 10 & 12 & 14 & 15 & 17 \\ \hline
 \end{tabular}
-\\
-%{\color{red} Figure showing error floor}
 
 \end{frame}
+
+%----------------------------------------------------------------------------------------------------------------------------------
+%\begin{frame}{Error floor- constrained peeling}
+%
+%\end{frame}
 
 %----------------------------------------------------------------------------------------------------------------------------------
 \begin{frame}{Numerical results-Noiseless GT}
