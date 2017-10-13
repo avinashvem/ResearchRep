@@ -1,0 +1,1686 @@
+\documentclass[10pt,presentation]{beamer}
+\usetheme{CambridgeUS}
+\usecolortheme{dolphin}
+\usecolortheme[RGB={0,120,0}]{structure}
+
+\definecolor{light-gray}{gray}{0.93}
+\definecolor{title-green}{rgb}{0,0.4,0.2}
+
+\setbeamercolor{title}{fg=green!50!black,bg=white}
+\setbeamercolor*{frametitle}{bg=light-gray,fg=title-green}
+\setbeamertemplate{footline}[frame number]
+
+\input{preamble}
+\input{./Figures/SC/tikz_preamble.tex}
+\input{../bib/avinash_beamer.def}
+
+\def\patha{../SCLDPC-lattices}
+\def\side_information_path{../compound-codes/isit14/slides/Figures}
+\def\WOM_path{../compound-codes/WOM/slides/Figures}
+\graphicspath{{./Figures/}{../SCLDPC-lattices/figures/}{../SCLDPC-lattices/ISIT_Talk/Figures/}}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection %currentsubsection,hideothersubsections, sectionstyle=show/hide, 	subsectionstyle=show/shaded
+    ]
+  \end{frame}
+}
+
+\begin{document}
+\title{\bf Applications of Spatial Coupling}
+\author{\textbf{Avinash Vem}\\ \small Advisor: Dr.Krishna Narayanan} 
+\vspace{10pt}
+\institute{Department of Electrical and Computer Engineering \\ Texas A\&M University}
+\date{Dec 02, 2016} % if no date wanted, keep it blank
+
+\titlegraphic{
+\includegraphics[width=0.5in]{TAMULogoBox.pdf}
+}	
+
+\frame{\titlepage}
+\frame{{Outline}\tableofcontents}
+%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
+\section{Spatial Coupling(SC)}
+\subsection{SC-LDPC Ensemble}
+\begin{frame}\frametitle{An $(\ell,r)$ LDPC Code}
+\begin{columns}
+\column{0.45\textwidth}
+\begin{defn}{Parity-Check Matrix}
+\centering
+\begin{align*}
+H=
+\begin{pmatrix}
+1 & 1 & 0 & 0 & 1 & 0\\
+0 & 0 & 1 & 1 & 1 & 0\\
+1 & 0 & 1 & 0 & 0 & 1\\
+0 & 1 & 0 & 1 & 0 & 1  
+\end{pmatrix}
+\end{align*}
+\begin{align*}
+  \ell&=2 & r&=3
+\end{align*}
+\begin{align*}
+\text{LDPC Code } \mc{C}=\{x: H\odot x=0 \}
+\end{align*}
+\end{defn}
+\column{0.45\textwidth}
+\begin{defn}{Tanner Graph}
+\centering
+\vspace{0.6cm}
+\scalebox{0.65}{\input{Figures/SC/ldpc_code}}
+\end{defn}
+\vspace{0.3cm}
+\begin{defn}{Compressed Representation}
+\centering
+\vspace{0.3cm}
+\scalebox{0.65}{\input{Figures/SC/ldpc_code_compressed_tanner}}  
+\end{defn}
+\end{columns}
+\end{frame}
+%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
+
+\begin{frame}\frametitle{Belief Propagation(BP) Decoder}
+\begin{figure}
+\begin{center}
+\scalebox{0.5}{\input{./Figures/BSCsystemmodel}}
+\end{center}
+\end{figure}
+
+\begin{itemize}
+\item For BEC($\epsilon$), $\mathtt{h}=\epsilon$. For general BMS channel, $\text{C}^{\mathrm{Sh}}=1-\mathtt{h}$
+\end{itemize}
+
+\hspace*{10pt}
+\onslide<2->
+\begin{columns}
+\column{0.4\textwidth}
+\vspace{-3cm}
+\begin{defn}{Belief Propagation (BP)}
+\begin{itemize}
+\item Non-optimal
+\item Popular, low-complexity
+\item Threshold: $\hbp$
+\end{itemize}
+\end{defn}
+
+\column{0.6\textwidth}
+\vspace{-7mm}
+\begin{figure}
+\includegraphics[width=0.6\columnwidth]{./Figures/BP_threshold_BSC.pdf}
+\caption{$(3,6), P_{\text{B}}$ vs BSC($\epsilon$) for $n=2^{i}.$}
+\end{figure}
+\centering
+$\varepsilon^{\mathrm{BP}}=0.084$, equivalent $\hbp=0.4160$\\
+whereas for rate 1/2 code $\text{h}^{\mathrm{Sh}}=0.5$ 
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{BP vs MAP}
+\vspace{-5mm}
+\begin{figure}
+\begin{center}
+\scalebox{0.5}{\input{./Figures/BSCsystemmodel}}
+\end{center}
+\end{figure}
+\begin{itemize}
+\item For BEC($\epsilon$), $\mathtt{h}=\epsilon$. For general BMS channel, $\text{C}^{\mathrm{Sh}}=1-\mathtt{h}$
+\end{itemize}
+\vspace{-5mm}
+\hspace*{10pt}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{defn}{Belief Propagation (BP)}
+\begin{itemize}
+\item Non-optimal
+\item Popular, low-complexity
+\item Threshold: $\hbp$
+\end{itemize}
+\end{defn}
+\column{0.5\textwidth}
+\begin{defn}{Maximum a Posteriori (MAP)}
+\begin{itemize}
+\item Optimal decoder
+\item \alert{Not realizable}
+\item Threshold: $\hmap$
+\end{itemize}
+\end{defn}
+\end{columns}
+\centering
+\onslide<2->
+\begin{tabular}{|c|c|c|c|c|c|}
+  \hline
+  LDPC & Shannon & \multicolumn{2}{|c|}{\textcolor{blue}{AWGN}} & \multicolumn{2}{|c|}{\textcolor{blue}{BSC}} \\
+  \cline{3-6}
+  $(\ell,r)$ & $\texttt{h}^{\mathrm{Sh}}$ & $\hbp$ & $\hmap$ & $\hbp$ & $\hmap$ \\
+  \hline
+  $(3,6)$ & $0.5000$ & $0.4293$ & $0.4794$ & $0.4160$ & $0.4681$ \\
+  $(4,6)$ & $0.6667$ & $0.5211$ & $0.6645$ & $0.5203$ & $0.6633$ \\
+%  $(5,6)$ & $0.8333$ & $0.5731$ & $0.8333$ & $0.5773$ & $0.8333$ \\
+  \hline
+\end{tabular}\\
+\onslide<3->
+\alert{Spatial-Coupling aids in bridging this gap}
+\end{frame}
+
+%\begin{frame}{Threshold Comparison}
+%\centering
+%\begin{tabular}{|c|c|c|c|c|c|}
+%  \hline
+%  LDPC & Shannon & \multicolumn{2}{|c|}{\textcolor{blue}{AWGN}} & \multicolumn{2}{|c|}{\textcolor{blue}{BSC}} \\
+%  \cline{3-6}
+%  $(\ell,r)$ & $\texttt{h}^{\mathrm{Sh}}$ & $\hbp$ & $\hmap$ & $\hbp$ & $\hmap$ \\
+%  \hline
+%  $(3,6)$ & $0.5000$ & $0.4293$ & $0.4794$ & $0.4160$ & $0.4681$ \\
+%  $(4,6)$ & $0.6667$ & $0.5211$ & $0.6645$ & $0.5203$ & $0.6633$ \\
+%  $(5,6)$ & $0.8333$ & $0.5731$ & $0.8333$ & $0.5773$ & $0.8333$ \\
+%  \hline
+%\end{tabular}
+%\\
+%\onslide<2->
+%\vspace{5mm}
+%\alert{Spatial-Coupling aids in bridging this gap}
+%\end{frame}
+
+\begin{frame}{$(\ell,r,N,w)$ Spatially-Coupled Ensemble}
+  \scalebox{0.9}{\input{Figures/SC/spatially-coupled-ensemble}}
+  \begin{itemize}
+  \item<1> An LDPC code of left-degree $\ell=3$ and right-degree $r=4$
+  \item<3-> Shown for $\ell = 3$, $r = 4$, and $w=3$
+  \item<3-> Check-nodes at Section $\{i\}$ are connected to variable-nodes in Sections $\{i-(w-1),\dots,i\}$
+  \item<3-> Shown to have {\blue near optimal BP thresholds}
+  \end{itemize}
+\end{frame}
+
+\subsection{Threshold Saturation Phenomenon}
+\begin{frame}{Threshold Saturation via Spatial Coupling (1)}
+\begin{center}
+\scalebox{0.5}{
+\begin{tikzpicture}
+  [node distance=1cm,draw=black,thick, >=stealth']
+  \draw[<->,line width=2pt] (-7,0) -- (9,0) ;
+  \node[circle,draw=red,minimum size=4mm,fill=red] (hbp) at (-1,0) {};
+  \node[circle,draw=red,minimum size=4mm,fill=red] (hmap) at (5,0) {};
+  \node[circle,draw=green!30!black!70,minimum size=4mm,fill=green!30!black!70] (h) at (-5,0) {};
+  \node at (-1,1.3) {\huge{$\h^{\mathrm{BP}}$}}
+     edge[->] (hbp);
+  \node at (5,1.3) {\huge{$\h^{\mathrm{MAP}}$}}
+     edge[->] (hmap);
+  \node at (-5,1.3) {\huge{$\h$}}
+     edge[->] (h);
+\end{tikzpicture}
+}
+\end{center}
+\begin{columns}
+  \column{0.45\textwidth}
+  \begin{center}
+    \setlength\tikzheight{3cm} 
+    \setlength\tikzwidth{3.5cm} 
+    \input{Figures/SC/single_de_l3r6_e0.35}
+  \end{center}
+  \column{0.45\textwidth}
+  \begin{center}
+    \setlength\tikzheight{3cm} 
+    \setlength\tikzwidth{3.5cm} 
+    \input{Figures/SC/sc_de_l3r6_e0.35}
+  \end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Threshold Saturation via Spatial Coupling (2)}
+\begin{center}
+\scalebox{0.5}{
+\begin{tikzpicture}
+  [node distance=1cm,draw=black,thick, >=stealth']
+  \draw[<->,line width=2pt] (-7,0) -- (9,0) ;
+  \node[circle,draw=red,minimum size=4mm,fill=red] (hbp) at (-1,0) {};
+  \node[circle,draw=red,minimum size=4mm,fill=red] (hmap) at (5,0) {};
+  \node[circle,draw=green!30!black!70,minimum size=4mm,fill=green!30!black!70] (h) at (3,0) {};
+  \node at (-1,1.3) {\huge{$\h^{\mathrm{BP}}$}}
+     edge[->] (hbp);
+  \node at (5,1.3) {\huge{$\h^{\mathrm{MAP}}$}}
+     edge[->] (hmap);
+  \node at (3,1.3) {\huge{$\h$}}
+     edge[->] (h);
+\end{tikzpicture}
+}
+\end{center}
+\begin{columns}
+  \column{0.45\textwidth}
+  \begin{center}
+    \setlength\tikzheight{3cm} 
+    \setlength\tikzwidth{3.5cm} 
+    \input{Figures/SC/single_de_l3r6_e0.45}
+  \end{center}
+  \column{0.45\textwidth}
+  \begin{center}
+    \setlength\tikzheight{3cm}
+    \setlength\tikzwidth{3.5cm}
+    \input{Figures/SC/sc_de_l3r6_e0.45}
+  \end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Threshold Saturation via Spatial Coupling (3)}
+\begin{center}
+\scalebox{0.5}{
+\begin{tikzpicture}
+  [node distance=1cm,draw=black,thick, >=stealth']
+  \draw[<->,line width=2pt] (-7,0) -- (9,0) ;
+  \node[circle,draw=red,minimum size=4mm,fill=red] (hbp) at (-1,0) {};
+  \node[circle,draw=red,minimum size=4mm,fill=red] (hmap) at (5,0) {};
+  \node[circle,draw=green!30!black!70,minimum size=4mm,fill=green!30!black!70] (h) at (7,0) {};
+  \node at (-1,1.3) {\huge{$\h^{\mathrm{BP}}$}}
+     edge[->] (hbp);
+  \node at (5,1.3) {\huge{$\h^{\mathrm{MAP}}$}}
+     edge[->] (hmap);
+  \node at (7,1.3) {\huge{$\h$}}
+     edge[->] (h);
+\end{tikzpicture}
+}
+\end{center}
+\begin{columns}
+  \column{0.45\textwidth}
+  \begin{center}
+    \setlength\tikzheight{3cm} 
+    \setlength\tikzwidth{3.5cm} 
+    \input{Figures/SC/single_de_l3r6_e0.5}
+  \end{center}
+  \column{0.45\textwidth}
+  \begin{center}
+    \setlength\tikzheight{3cm} 
+    \setlength\tikzwidth{3.5cm} 
+    \input{Figures/SC/sc_de_l3r6_e0.5}
+  \end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Threshold Saturation Result}
+\centering
+\alert{MAP Performance with a BP Decoder!}
+{ \Large
+\begin{align*}
+  \text{For large } N, w \quad  \hbp_{\mathrm{c}}= \hmap 
+\end{align*}
+}
+\onslide<2->
+\begin{tabular}{|c|c|c|c|}
+  \hline
+  SC-LDPC & Shannon & \textcolor{blue}{AWGN} & \textcolor{blue}{BSC} \\
+  $(\ell,r)$ & $\texttt{h}^{\mathrm{Sh}}$ & $\hbp_{\mathrm{c}}$ & $\hbp_{\mathrm{c}}$  \\
+  \hline
+  $(3,6)$ & $0.5000$ & $0.4794$ & $0.4681$ \\
+  $(4,6)$ & $0.6667$ & $0.6645$ & $0.6633$ \\
+  $(5,6)$ & $0.8333$ & $0.8333$ & $0.8333$ \\
+  \hline
+\end{tabular}
+
+\end{frame}
+
+\begin{frame}
+  \includegraphics[width=0.9\textwidth]{./Figures/SC/spatially-coupled-ensemble.pdf}
+\begin{center}
+  The video link comes here
+  \end{center}
+\end{frame}
+
+\begin{frame}{Rate loss for finite $N$ and $w$}
+\centering
+\begin{tabular}{|c|c|c|c|}
+  \hline
+  SC-LDPC & Shannon & \textcolor{blue}{AWGN} & \textcolor{blue}{BSC} \\
+  $(\ell,r,N,w)$ & $\texttt{h}^{\mathrm{Sh}}$  & $\hbp_{\mathrm{c}}$ & $\hbp_{\mathrm{c}}$  \\
+  \hline
+  $(3,6,10,3)$ & $0.5434$ & $0.4794$ & $0.4681$ \\
+  $(3,6,20,3)$ & $0.5222$ & $0.4794$ & $0.4681$ \\
+  $(3,6,30,3)$ & $0.5149$ & $0.4794$ & $0.4681$ \\
+  \hline
+  $(4,6,10,3)$ & $0.7245$ & $0.6645$ & $0.6633$ \\
+  $(4,6,20,3)$ & $0.6963$ & $0.6645$ & $0.6633$ \\
+  $(4,6,30,3)$ & $0.6866$ & $0.6645$ & $0.6633$ \\
+  \hline
+  $(5,6,10,3)$ & $0.9056$ & $0.8333$ & $0.8333$ \\
+  $(5,6,20,3)$ & $0.8704$ & $0.8333$ & $0.8333$ \\
+  $(5,6,30,3)$ & $0.8582$ & $0.8333$ & $0.8333$ \\
+  \hline
+\end{tabular}
+\end{frame}
+%%%%%---------------------------------------------------------------------------------------------------------------%%%%%%%%%%%%%%%
+
+\begin{frame}{Pros \& Cons}
+\begin{defn}{Pros}
+\begin{itemize}
+\item Significant improvment in thresholds
+\vspace{0.25cm}
+\item Achieves capacity under {\blue simple BP decoding} [KRU'11,KYMP'14]
+\vspace{0.25cm}
+\item {\blue Universality} - works for all channels models! 
+\vspace{0.25cm}
+\end{itemize}
+\end{defn}
+
+\begin{defn}{Cons}
+\begin{itemize}
+\item Need \textcolor{red}{large} blocklengths to leverage the gains
+\end{itemize}
+\end{defn}
+\end{frame}
+%%%%%---------------------------------------------------------------------------------------------------------------%%%%%%%%%%%%%%%
+
+\section{SC-LDPC Lattices}
+\subsection{Introduction to Lattices}
+
+\begin{frame}\frametitle{Lattice}
+\begin{defn}{Lattice}
+Let $\mathbf{G}\in\mathbb{R}^{n\times k}$. An $n$-dimensional real lattice $\Lambda$ can be defined as
+$$
+\Lambda=\{\mbf{G}\mbf{z}, \mbf{z}\in\mbb{Z}^{k}\}
+$$
+\end{defn}
+\onslide<2->
+\begin{columns}
+\column{0.45\textwidth}
+Example:\[
+\mathbf{G}= \left[ \begin{array}{cc}
+1 & -1/2 \\
+0 & \sqrt{3}/2 \end{array} \right]\]
+\column{0.55\textwidth}
+\centering
+\includegraphics[width=2.4in]{./Figures/lattice.eps}
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Lattices and Lattice Codes}
+\begin{defn}{Lattice}
+Let $\mathbf{G}\in\mathbb{R}^{n\times k}$. An $n$-dimensional real lattice $\Lambda$ can be defined as
+$$
+\Lambda=\{\mbf{G}\mbf{z}, \mbf{z}\in\mbb{Z}^{k}\}
+$$
+\end{defn}
+\vspace{-10pt}
+\begin{itemize}
+	\item Efficient structures for
+	\begin{itemize}
+	 		 \item {\blue Mathematics}: sphere packing and sphere covering problems
+	   		 \item{\blue Information Theory}: channel coding \& quantization
+    \end{itemize}
+    \item Single user Gaussian channel - Erez and Zamir
+	\item Coding with side information - Wyner-Ziv and Costa, Zamir, Erez and Shamai
+	\item Secrecy - He and Yener
+	\item Dirty multiple access channel - Philosof, Khisti, Erez and Zamir
+\end{itemize}
+\vspace{5pt}
+	
+``Lattices are everywhere" by Ram Zamir
+\end{frame}
+
+\begin{frame}\frametitle{Prior Work}
+New perspectives for dealing with interference:
+      \begin{itemize}
+     		\item<1-> Interference alignment - Sridharan, Jafarian, Vishwanath and Jafar
+			\item<2-> Compute-and-forward - Nazer \& Gastpar
+			\item<2-> Physical layer network coding - Wilson et al, Nam et al
+      \end{itemize}
+			\vspace{2.5em}
+			
+	\begin{figure}
+		\centering
+		\only<1->{\includegraphics[width=4in]{IC_model_ISIT.pdf}}
+	\end{figure}
+\onslide<3->
+\begin{itemize}
+	\item Above schemes are all based on lattices {\blue good} for channel coding
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Background on lattices}
+\begin{defn}{Voronoi region}
+The \textit{fundamental Voronoi region} $\mathcal{V}$ of a lattice, is the set of all points in $\mathbb{R}^n$ that are closest to the zero vector.
+\vspace{-2mm}
+\begin{align*}
+\mc{V}\coleq \{\mbf{x}:\norm{\mbf{x-0}}\leq \norm{\mbf{x-c}} \quad\forall \mbf{c}\in\Lambda\}
+\end{align*}
+\end{defn}
+\onslide<2->
+\vspace{-3mm}
+\centering
+\includegraphics[width=0.5\textwidth]{./Figures/lattice_voronoi.eps}
+\vspace{-3mm}
+\onslide<3->
+\begin{itemize}
+\item Fundamental volume of $\Lambda$, $V(\Lambda)$: Vol($\mc{V}$)
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Goodness of Lattices for Channel Coding}
+\begin{itemize}
+\item Let a lattice point $\lambda\in\Lambda$ is transmitted via AWGN channel of variance $\sigma^2$
+\item Volume-to-noise ratio(VNR) of $\Lambda$:
+\begin{align*}
+\tx{VNR}\coleq\frac{V(\Lambda)^{2/n}}{2\pi e\sigma^2}
+\end{align*}
+\item $P(\Lambda,\sigma^2)\coleq \text{Pr}(d(\lambda,\lambda+\mbf{z})\geq d(\lambda',\lambda'+\mbf{z})) \tx{ for some } \mbf{\lambda'}\in\Lambda\ $
+\end{itemize}
+\onslide<2->
+\begin{block}{Poltyrev Goodness for Channel Coding}
+For any VNR$>1$ $\exists \{\Lambda_n\}$ such that $P(\Lambda_n,\sigma^2)\rightarrow 0$ as $n\rightarrow \infty$.
+\end{block}
+\begin{itemize}
+	\item	{\blue \textit{Poltyrev-}good} lattices are at the core of such lattice coding schemes
+\end{itemize}
+\end{frame}  
+
+\begin{frame}\frametitle{Objective}
+\begin{defn}{Motivating questions}
+	\begin{itemize}
+		\item All the existing results were based on Construction-A.
+		\begin{itemize}
+				\item Linear codes over \alert{increasing field sizes} and their ML decoding 
+		\end{itemize}
+		\item<2-> Is this construction fundamental to good lattices?
+		\item<2-> Can we work with just {\blue binary codes} under {\blue practical decoding} schemes?
+	\end{itemize}
+\end{defn}
+\onslide<3->
+\begin{defn}{Main Result}
+\begin{itemize}
+     \item Codes over \alert{$\mathbb{F}_{2}$ and BP decoding} suffice
+	 \item<4-> We show existence of sequence of lattices that are \textit{Poltyrev}-good under BP
+     \item<4-> Apply proposed lattices to {\blue Symmetric Interference Channel}
+     \item<4-> Can be applied to other problems which adopt Construction-A lattices
+\end{itemize}			
+\end{defn}
+\end{frame}
+
+\begin{frame}\frametitle{Construction D with $L$ levels}
+\begin{itemize}
+    \item Barnes and Sloane '83, Forney, Chung and Trott '00, Yan, Ling, Wu ' 13
+				 \vspace{0.5em}
+	 \item Choose  $G_{1}\subseteq \ldots \subseteq G_{L}$ where $G_{l}$ is a gen matrix of code $\mc{C}_{l}$ over $\mathbb{F}_{2}$.
+				 \vspace{.5em}
+	\item<2->  $  \underline{\lambda} = \underline{w}_1 \mathbf{G}_1 + 2 \underline{w}_2 \mathbf{G}_2 \ldots +2^{L-1} \underline{w}_{L-1} \mathbf{G}_{L-1} +2^{L}\mathbb{Z}^{N} \in \Lambda$
+\end{itemize}
+				\vspace{0.2in}
+    \begin{columns}[t]      
+ 	      \begin{column}{0.6\textwidth}
+			\onslide<2->	{
+            \begin{figure}
+			\includegraphics[width=2.5in]{lattice_Constr_D1.pdf}
+            \end{figure}
+            			}
+        \end{column}
+
+\begin{column}{0.39\textwidth}
+	\begin{figure}
+\only<1->{\resizebox{\columnwidth}{!}{
+\begin{centering}
+\input{\patha/ISIT_Talk/Figures/Nested_generator_matrix.tex}
+\end{centering}
+}
+}
+	\end{figure}
+\end{column}
+    \end{columns}    
+\end{frame}
+
+
+\begin{frame}\frametitle{Multi-Level Decoding(Successive Cancellation) }
+      \begin{itemize}
+        \item $\underline{y} = \boxed{\underline{w}_1 \mathbf{G}_1 + 2 \underline{w}_2 \mathbf{G}_2 \ldots +2^{L-1} \underline{w}_{L-1} \mathbf{G}_{L-1} +2^{L}\mathbb{Z}^{N}} + \underline{n}$
+         \vspace{0.05in}	
+         \onslide<2->
+         \item $\underline{y}$ mod 2 = $ \left[\,\underline{w}_1 \mathbf{G}_1 + \underline{n}\,\right] $ mod 2 = $\underline{w}_1 \odot \mathbf{G}            _1 + \boxed{\underline{n} \mod 2}$
+         \vspace{0.05in}
+		\item Decode $\underline{w}_1$, reconstruct $\underline{w}_1 \mathbf{G}_1$ and subtract from $\underline{y}$
+         \vspace{0.2in}
+    \end{itemize}
+            \begin{figure}
+					\includegraphics[width=0.7\textwidth]{multi_stage_decode.pdf}
+            \end{figure}
+	\end{frame}
+
+
+\begin{frame}
+%        \begin{theorem}[Forney, Trott \& Chung]
+%            For an AWGN channel with noise variance $\sigma^{2}$ per dimension, there exists a Construction D lattice based on binary linear codes $\mc{C}_{1}\subseteq \mc{C}_{2}\ldots \subseteq \mc{C}_{r}$ such that the Volume-to-Noise(VNR) ratio is arbitrarily close to $1$ and the probability of error is arbitrarily small.
+%       \end{theorem}
+        \begin{theorem}[Forney, Trott \& Chung]
+There exists a sequence of Construction D lattices based on $\mc{C}_{1}\subseteq \mc{C}_{2}\ldots \subseteq \mc{C}_{L}$ such that the VNR $\rightarrow 1$ and the $Pr(\lambda,\sigma^{2})\rightarrow 0$.
+       \end{theorem}
+
+\begin{itemize}
+\item Take $L$ large enough.
+\item It's sufficient that $\mc{C}_{i}$ at each level is capacity achieving for the mod-2 AWGN channel.
+\end{itemize}
+\pause
+\vspace{0.4in}
+Objective:
+\begin{itemize}
+\item Capacity achieving nested code constructions, preferably under BP decoding.
+\end{itemize}
+\end{frame}
+
+\subsection{Proposed Lattice Construction}
+\begin{frame}\frametitle{Proposed Nested Spatially-Coupled LDPC Ensemble}
+    \begin{enumerate}
+        \item<1-> Begin with a $(d_v^1,d_c)$ SC LDPC code. For ex, $(d_v^1=3,d_c=6,L=3,w=2)$. 
+        \item<1-> Group check nodes into type $\mathcal{T}_k$, $k\in\{1,\ldots,d_v^1\}$
+         \vspace{2pt}
+        \item<2-> Remove all check nodes of type $\mathcal{T}_1,\ldots,\mathcal{T}_{d_v^1-d_v^2}$. Ex: $(d_{v}^{2}=2,6)$ sup-code.
+                 \vspace{2pt}
+        \item<3-> Results in a super-code that is a $(d_v^2,d_c)$ SC LDPC code.
+    \end{enumerate}
+    \vspace{0.15in}
+    \begin{figure}
+        \begin{center}
+ 	        \only<1>{\includegraphics[width=3.2in]{Basegraph_ISIT1.pdf}}
+         \only<2>{\includegraphics[width=3.2in]{Basegraph_ISIT2.pdf}}
+         \only<3>{\includegraphics[width=3.1in]{Basegraph_ISIT3.pdf}}
+        \end{center}
+    \end{figure}
+\end{frame}
+         
+\begin{frame}\frametitle{Lattice Design based on the proposed Nested SC LDPC ensemble}
+\begin{enumerate}
+\item For a given $\sigma$, compute the capacity of the mod-2 AWGN channel at each level:
+		$$
+         \underline{y_{i}}= \underline{w}_i \mathbf{G}_i +\frac{1}{2^{i-1}} \underline{n}\mod 2=\underline{w}_i \odot \mathbf{G}_i + \boxed{\frac{1}{2^{i-1}}\underline{n} \mod 2}
+         $$
+         \vspace{0.08in}
+
+\item Fix check node degree $d_{c}$. Choose $d_{v}^{1},\ldots ,d_{v}^{r}$ such that the rate of the code at each level is arbitrarily close to the capacity at the respective level.
+\end{enumerate}
+\pause
+\begin{lemma}\label{lemma:nested_G}
+    Given nested binary linear codes $\mc{C}_{1}\subseteq \mc{C}_{2}\subseteq\ldots \subseteq\mc{C}_{r}$ there exists nested generator matrices for these codes.
+\end{lemma}
+\end{frame}
+
+\subsection{Poltyrev Goodness}
+\begin{frame}\frametitle{Proposed Ensemble is Capacity achieving}
+\begin{theorem}
+Each code ensemble in the proposed nested Spatially-Coupled LDPC ensemble is capacity achieving. 
+\end{theorem}    
+\begin{proof}
+\begin{itemize}
+        \item Each derived protograph has the same spatially coupled structure.
+        \item Show that the mod 2 AWGN channel is BMS.
+        \item The proof follows from [KRU'12] \& [KYMP'13]'s  results.
+    \end{itemize}
+\end{proof}
+\end{frame}
+
+\begin{frame}\frametitle{Proposed Lattices are Poltyrev-Good}
+\begin{theorem}
+There exists a sequence of SC LDPC lattices with VNR$(\Lambda,\sigma^{2})\rightarrow 1$ for which, under multistage BP decoding, $\mbb{E}\left[P(\lambda,\sigma^{2})\right]\rightarrow 0$ as $w,L,M  \rightarrow \infty$.
+\end{theorem}    
+\begin{proof}
+\begin{itemize}
+\item The proposed nested ensemble achieve capacity.
+\item Follows from Forney's result.
+\end{itemize}
+
+\end{proof}
+\vspace{0.3in}
+\pause
+\begin{itemize}
+        \item {\blue Binary codes} and more importantly {\blue practical BP decoding} suffices. 
+        \item Practically we observe that {\blue two levels} of coding gets you lattices very close to Poltyrev limit.
+    \end{itemize}
+\end{frame}
+	
+\begin{frame}\frametitle{Design Example of Poltyrev-Good Lattice}
+Target error probability $P(2^L\Z^n,\sigma_{L}^2)=10^{-4}$ in the uncoded level $\implies\sigma_{L}=0.08$
+\onslide<2->
+\begin{enumerate}
+\item  Capacities for the mod 2 AWGN  channel for respective levels: 
+\vspace{0.1in}
+\begin{center}
+\begin{tabular}{| c | c | c | c | }
+\hline
+ & Level L-1   &  Level L-2  & Level L-3 \\
+\hline 
+$\sigma_{\text{eff}}$ & 0.16   &  0.32  & 0.64 \\ \hline
+ Cap                           &  0.99 & 0.57 & 0.02 \\   \hline
+ (14,30) (3,30)         &  0.9 & 0.533 & 0 \\   \hline
+\end{tabular}
+\end{center}
+\onslide<3->
+\vspace{0.1in}
+\item Fix L=3 and use $(3,30)$, $(14,30)$ nested SC-LDPC codes.
+\begin{itemize}
+\item Note $P(4\Z^n,\sigma^2)\approx nP(4\Z,\sigma^2)$
+\item We fix $n=2\times 10^5$
+\end{itemize}
+\vspace{0.07in}
+\begin{center}
+\begin{tabular}{c c c c c c c}
+\hline  \hline
+$(d_{c},d_{v}^{1},d_{v}^{2})$ &(L,w)& $P(4\Z,\sigma^{2})$ & $\sigma_{\text{max}}$ &$\text{VNR}$ &$\text{VNR}_{\text{rate-loss}}$\\
+\hline
+(30,14,3) & (32,4) & $5 \times 10^{-10}$ & 0.3184 & 1.02dB & 1.347dB \\
+\onslide<4->
+(60, 26, 3)& (72, 12)& $5 \times 10^{-10}$ & 0.3200 &0.482dB & 0.927dB\\
+(60, 27, 3)& (64, 9)& $5 \times 10^{-10}$  &  0.3203 & 0.57dB & 0.951dB\\
+%(60, 42, 3)& (80, 16)& $1 \times 10^{-6}$ & 0.4020 & 0.106dB &0.952dB\\
+\end{tabular}
+\end{center}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}\frametitle{Alternate Nested SC LDPC ensemble}
+\begin{itemize}
+		\item<1-> Derive a lower rate code by ``splitting the checks"
+					\vspace{2pt}
+		\item<1-> Consider a $(3,8)$ code
+					\vspace{2pt}
+		\item<2-> Split each check into ``two" checks to derive a $(3,4)$ sub-code
+					\vspace{2pt}
+		\item<2-> Easy to prove that resulting code is from the $(3,4)$ SC LDPC ensemble
+\end{itemize}
+\vspace{0.3in}
+    \begin{figure}
+        \begin{center}
+         \only<1>{\includegraphics[width=2in]{Constr1_graph1.pdf}}
+           \only<2>{\includegraphics[width=2in]{Constr1_graph2.pdf}}
+        \end{center}
+    \end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{Simulation Results}
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{BER_iters_4_72_9.pdf}
+\end{center}
+\end{figure}
+\onslide<2->{Note that the Block Error Probability is $10^{-4}$ at uncoded level.}
+\end{frame}
+
+\subsection{Symmetric Interference Channel}
+\begin{frame}\frametitle{3-User Symmetric Interference Channel}
+	\begin{figure}
+	\centering
+    \includegraphics[width=4in]{IC_model_ISIT_3user.pdf}
+	\end{figure}
+\pause
+\begin{itemize}
+\item $\mathbf{x}_{i}\in \Lambda_{C}\defeq \Lambda \cap \mathbb{Z}_{4}^{N}$ is transmitted.
+\vspace{0.2in}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}\frametitle{Symmetric Interference Channel - Decoding Sums }
+ Interference at Destination 1:
+\begin{align*}
+ \mathbf{x}_{2}+\mathbf{x}_{3}&= (\underline{w}_2^1+\underline{w}_3^1) \mathbf{G}_1 + 2 (\underline{w}_2^2+\underline{w}_3^2) \mathbf{G}_2 + 4\mathbf{k}_{23}\\
+& = (\underline{w}_2^1 \oplus \underline{w}_3^1) \mathbf{G}_1 + 2 (\underline{c}_{23}^{1} \oplus \underline{w}_2^2 \oplus \underline{w}_3^2) \mathbf{G}_2 + 4(\underline{c}_{23}^{2} +\mathbf{k}_{23})\mathbf{Z}_{}
+\end{align*}
+
+where the carry overs are
+
+\begin{align*}
+& \underline{c}_{23}^{1}=0.5\left(\underline{w}_{1}^{1}+\underline{w}_{1}^{2}-\underline{w}_{1}^{1}\oplus\underline{w}_{1}^{2}\right), \\
+& \underline{c}_{23}^{2}=0.5\left(\underline{c}_{23}^{1}+\underline{w}_{2}^{1}+\underline{w}_{2}^{2}-\underline{c}_{23}^{1}\oplus\underline{w}_{2}^{1} \oplus \underline{w}_{2}^{2}\right)
+\end{align*}
+%are carryovers from first and second levels respectively.
+%and $\mathbf{k}_{23}=\mathbf{k}_{2}+\mathbf{k}_{3}+\sum_{1}^{k_{2}}c_{2i}\mathbf{g}_{i}\in\Z^{n}$. 
+\begin{columns}
+        \begin{column}{0.47\textwidth}
+            \begin{figure}
+               \includegraphics[width=2in]{lattice_Constr_D1_user1.pdf}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.47\textwidth}
+            \begin{figure}
+                \includegraphics[width=2in]{lattice_Constr_D1_user2.pdf}
+            \end{figure}
+        \end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}\frametitle{Achievable Information Rates}
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=3.5in]{ShapingLoss_Final_CTW.pdf}
+        \end{center}
+    \end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{Concluding Remarks}
+    \begin{itemize}
+        \item Multilevel constructions - efficient ways to decode integer combinations
+               \vspace{5pt}
+        \item Need capacity achieving nested codes
+                \vspace{5pt}
+        \item Multilevel construction is provably good under message passing decoding
+               \vspace{5pt}
+               \pause
+        \item Coding schemes based on \alert{binary codes and iterative decoding} suffice
+    \end{itemize}
+\end{frame}
+
+\section{Side-Information Problems}
+\subsection{Gelfand-Pinsker \& Wyner-Ziv}
+\begin{frame}{Lossy Source Coding Problem}
+  \centering{$X^n=(X_1,\cdots,X_n)$, $X_i \sim \mathsf{Bernoulli}(\frac{1}{2})$ \\ 
+  \vspace{0.3cm}
+	Binary code $\mathcal{C}=(n,k)$, rate $R=k/n$}
+  \begin{block}{Lossy Source Coding}<2->
+    \begin{columns}
+      \column{0.55\textwidth}
+      \begin{itemize}
+      \item<2-> Compress $X^n$ to $\hat{X}^n \in \mathcal{C}$
+      \item<2-> \textcolor{blue}{Min.~Hamming distortion}
+        \begin{align*}
+          D=\frac{1}{n} \sum_{i=1}^n \expt \abs{X_i-\hat{X}_i}
+        \end{align*}
+   \vspace{-4mm}
+      \item<3-> Rate-Distortion theory: \vspace{-0.15cm}
+        \begin{align*}
+          R > 1 - h(D)
+        \end{align*}
+        \vspace{-7mm}
+      \item<3-> $h(\cdot)$ is binary entropy function
+        \small{
+          \begin{align*}
+            h(D)\!=\!-D \log_2 D \!-\! (1\!-\!D) \log_2 (1-D)
+          \end{align*}
+        }
+      \end{itemize}
+      \column{0.45\textwidth}<3->
+      \setlength\tikzheight{3cm} 
+      \setlength\tikzwidth{3.5cm} 
+      \centering{\input{../compound-codes/isit14/slides/Figures/source_coding_rate}}
+    \end{columns}
+  \end{block}
+
+\end{frame}
+
+\begin{frame}{Side-Information Problems: Wyner-Ziv}
+  \begin{center}
+    \scalebox{0.5}{\input{\side_information_path/wyner-ziv-block-diagram}}
+  \end{center}
+  \begin{block}{Wyner-Ziv Formulation}<1->
+    \begin{columns}
+      \column{0.55\textwidth}
+      \vspace{-3mm}
+      \begin{itemize}
+      \item<1-> \textcolor{red}{Side-information} $Z^n$ about $X^n$
+      \item<1-> Decoder \textcolor{blue}{additionally} has $Z^n$
+      \item<1-> Say $Z_i = X_i \oplus \mathsf{Ber}(\delta)$
+      \item<2-> Wyner-Ziv theory:
+        \begin{align*}
+          R > l.c.e\{h(D*\delta)-h(D), (\delta,0)\}
+        \end{align*}
+      \item<2-> $D*\delta=D(1-\delta)+\delta(1-D)$
+      \end{itemize}
+      \column{0.45\textwidth}<2->
+      \setlength\tikzheight{3cm} 
+      \setlength\tikzwidth{3.5cm} 
+      \centering{\input{\side_information_path/wyner_ziv_rate}}
+    \end{columns}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Side-Information Problems: Gelfand-Pinsker}
+  \begin{center}
+    \scalebox{0.5}{\input{\side_information_path/gelfand-pinsker-block-diagram}}
+  \end{center}
+  \begin{block}{Gelfand-Pinsker Formulation}<2->
+    \begin{itemize}
+    \item<2-> Message $M^k$ encoded to $X^n \in \mathcal{C}$ with \textcolor{blue}{$\tfrac{1}{n} \sum_{i=1}^n \expt[X_i] \leq p \leq \frac{1}{2}$}
+    \item<2-> Side-information $Z^n$ is available \alert{only at the encoder}
+    \item<2-> The output at the decoder is
+      \begin{align*}
+        Y^n=X^n\oplus Z^n \oplus W^n, \quad \{W_i\} \sim \textsf{Ber}(\delta)
+      \end{align*}
+    \item<3-> Capacity region by Gelfand-Pinsker:
+      \begin{align*}
+        R < h(p) - h(\delta)
+      \end{align*}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Main Result}
+  \begin{block}{Objective}<1->
+    \begin{itemize}
+    \item Construct {\blue low-complexity} coding schemes that achieve the \textcolor{blue}{complete rate regions} of Wyner-Ziv and Gelfand-Pinsker \vspace{0.1cm}
+      \begin{itemize}
+      \item Low-complexity encoding and decoding
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+  \vspace{0.1cm}
+  \begin{block}{Idea}<2->
+    \begin{itemize}
+    \item Wainwright et al.~used compound LDGM/LDPC codes with \alert{optimal encoding/decoding}\vspace{0.1cm}
+    \item Message-passing algorithms have \alert{non-negligible gap}\vspace{0.1cm}
+    \item<3-> Remedy via {\blue Spatial-Coupling}
+      \begin{itemize}
+      \item Channel coding in coupled compound codes (Kasai et al.)
+      \item Lossy source coding with spatially-coupled LDGM (Aref et al.)
+      \item Encoding with compound codes has additional challenges
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\subsection{Compound LDGM/LDPC Codes}
+\begin{frame}\frametitle{An $(\ell,r)$ LDGM Code}
+\begin{columns}
+\column{0.55\textwidth}
+\begin{defn}{Generator Matrix}
+\vspace{-3mm}
+\centering
+\begin{align*}
+G=
+\begin{pmatrix}
+1 & 1 & 0 & 0 & 1 & 0\\
+0 & 0 & 1 & 1 & 1 & 0\\
+1 & 0 & 1 & 0 & 0 & 1\\
+0 & 1 & 0 & 1 & 0 & 1  
+\end{pmatrix}
+\end{align*}
+\begin{align*}
+  \ell&=3 & r&=2
+\end{align*}
+\begin{align*}
+\text{LDGM Code } \mc{C}=\{x: x=m\odot G\}
+\end{align*}
+\end{defn}
+\column{0.45\textwidth}
+\begin{defn}{Tanner Graph}
+\centering
+\vspace{1mm}
+\scalebox{0.7}{\input{Figures/ldgm_code}}
+\end{defn}
+\vspace{0.3cm}
+\pause
+$$ x_1=m_1\oplus m_3 \iff x_1\oplus m_1\oplus m_3=0 $$
+\end{columns}
+\end{frame}
+%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
+\begin{frame}{Compound LDGM/LDPC Codes}
+\begin{columns}
+   \column{0.45\textwidth}
+ \begin{center}
+    \setlength\tikzheight{5cm}
+    \setlength\tikzwidth{6cm}
+    \scalebox{0.5}{\input{\side_information_path/compound_code}}
+ \end{center}
+   \column{0.55\textwidth}
+    \begin{itemize}
+    \item Codebook $\mathcal{C}(n,m-k-k')$ \vspace{0.1cm}
+    \item \textcolor{blue}{Message constraints} \vspace{-0.2cm}
+      \begin{align*}
+        u_1\oplus u_2 \oplus u_5&=s_1, &  u_1\oplus u_3 \oplus u_6&=0
+      \end{align*}
+    \item Codeword $(x_1,\cdots,x_9)$: \vspace{-0.2cm}
+      \begin{align*}
+        x_1 &= u_1 \oplus u_4, & x_2 &= \cdots
+      \end{align*}
+    \end{itemize}
+  \end{columns}
+  \begin{block}{Key Properties}<2->
+    \begin{itemize}
+    \item Compound code is 
+      \begin{itemize}
+      \item a {\blue good source code} under optimal encoding
+      \item a {\blue good channel code} under optimal decoding
+      \end{itemize}
+     \item LDGM code is 
+       \begin{itemize}
+       \item a {\blue good source code} under optimal encoding
+       \item \textcolor{blue}{(side note)} LDGM code is \alert{not} a good channel code
+       \end{itemize}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Good Code}
+  \begin{block}{``Good'' source code}
+    \begin{itemize}
+    \item Rate of the code is $R=1-h(D)+\varepsilon$
+    \item When this code is used to \alert{optimally encode} $\mathsf{Ber}(\tfrac{1}{2})$ source
+    \item The average Hamming \textcolor{blue}{distortion is at most $D$}
+    \end{itemize}
+  \end{block}
+  \vspace{0.4cm}
+  \onslide<2->
+  \begin{block}{``Good'' channel code}
+    \begin{itemize}
+    \item Rate of the code is $R=1-h(\delta)-\varepsilon$
+    \item When this code is used for channel coding on $\mathsf{BSC}(\delta)$
+    \item Message est.~under \alert{optimal decoding} with \textcolor{blue}{error at most $\varepsilon$}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+ \begin{frame}{Coding Scheme: Wyner-Ziv}
+   \vspace{-0.4cm}
+   \begin{center}
+     \scalebox{0.4}{\input{\side_information_path/wyner-ziv-block-diagram}}
+   \end{center}
+   \vspace{-0.35cm}
+   \begin{columns}
+     \column{0.5\textwidth}
+     \vspace{-0.5cm}
+     \begin{center}
+       \setlength\tikzheight{6cm}
+       \setlength\tikzwidth{7cm}
+       \scalebox{0.65}{\input{\side_information_path/wyner-ziv-coding}}
+     \end{center}
+     \column{0.5\textwidth}
+     \begin{itemize}
+     \item<2-> Encode $X^n$ to $\hat{X}^n$ using \alert{LDGM} w/ Distortion $\approx D$ \vspace{0.1cm}
+     \item<3-> Compute \& \textcolor{blue}{transmit $s_i$'s} \vspace{0.1cm} \small{$R = \frac{k}{n} \approx h(D*\delta) - h(D)$} \vspace{0.1cm}
+     \item <3-> Decoder has $Z^n$: \vspace{-0.2cm}
+       \small{
+         \begin{align*}
+           Z_i &= X_i \oplus \mathsf{Ber}(\delta) \\
+           &\approx \hat{X_i} \oplus \mathsf{Ber}(D) \oplus \mathsf{Ber}(\delta) \\
+           &= \hat{X_i} \oplus \mathsf{Ber}(D*\delta)
+         \end{align*}
+       }
+     \item <3-> Decode $\hat{X}^n$ from $Z^n$ \& $s_i$
+     \end{itemize}
+   \end{columns}
+ \end{frame}
+
+\begin{frame}{Coding Scheme: Gelfand-Pinsker}
+  \begin{center}
+    \scalebox{0.5}{\input{\side_information_path/gelfand-pinsker-block-diagram}}
+  \end{center}
+  \vspace{-0.4cm}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \begin{center}
+      \setlength\tikzheight{5cm}
+      \setlength\tikzwidth{6cm}
+      \scalebox{0.5}{\input{\side_information_path/gelfand-pinsker-coding}}
+    \end{center}
+    \column{0.5\textwidth}
+    \begin{itemize}
+    \item<2-> With message $M^k$, encode $Z^n$ to $\hat{Z}^n$ (Distortion $\approx p$) \vspace{0.1cm}
+    \item<2-> \textcolor{red}{Transmit $X^n=Z^n \oplus \hat{Z}^n$} \vspace{0.1cm}
+    \item<3-> Decoder has \vspace{-0.2cm}
+      \small{
+        \begin{align*}
+          Y^n&=X^n \oplus Z^n \oplus W^n\\
+          &= \hat{Z}^n \oplus W^n 
+        \end{align*}
+      }
+    \item <3-> \textcolor{blue}{Decode $\hat{Z}^n$ and compute $M^k$}
+    \item <4-> $R=\tfrac{k}{n}\approx h(p)-h(\delta)$
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Remarks}
+  \begin{itemize}
+  \item Need codes that are \alert{simultaneously good} for channel and source coding \vspace{0.2cm}
+  \item Use \textcolor{blue}{message-passing algorithms} instead of \alert{optimal} \vspace{0.2cm}
+  \item Use spatial-coupling for \alert{goodness} of codes under message-passing \vspace{0.2cm}
+  \end{itemize}
+\end{frame}
+\subsection{Spatial Coupling of Compound Codes}
+\begin{frame}{Spatially-Coupled Compound LDGM/LDPC Codes}
+  \begin{center}
+    \scalebox{0.8}{\input{\side_information_path/spatially_coupled_compound_code}}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Decoding in Spatially-Coupled Compound Codes}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \setlength\tikzheight{5cm}
+    \setlength\tikzwidth{6cm}
+    \scalebox{0.5}{\input{\side_information_path/mp_compound_code}}
+
+    \column{0.5\textwidth}
+    \scalebox{0.5}{\input{\side_information_path/mp_ldgm_bit}}\\ \vspace{0.3cm}
+    \scalebox{0.5}{\input{\side_information_path/mp_ldpc_bit}}\\ \vspace{0.3cm}
+    \scalebox{0.5}{\input{\side_information_path/mp_check}}
+  \end{columns}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item Standard message-passing algorithm
+    \item Threshold saturation proven for SC compound codes on BEC
+    \item Empirically observed for BMS channels
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Encoding in Spatially-Coupled Compound Codes}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \setlength\tikzheight{5cm}
+    \setlength\tikzwidth{6cm}
+    \scalebox{0.5}{\input{\side_information_path/bpgd_compound_code}}
+
+    \column{0.5\textwidth}
+    \scalebox{0.5}{\input{\side_information_path/bpgd_ldgm_bit}}\\ \vspace{0.3cm}
+    \scalebox{0.5}{\input{\side_information_path/bpgd_ldpc_bit}}\\ \vspace{0.3cm}
+    \scalebox{0.5}{\input{\side_information_path/bpgd_check}}
+  \end{columns}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item \textcolor{blue}{Inverse temperature parameter $\beta$}
+    \item Message-passing rules are the same
+    \item However, a \alert{crucial decimation step is needed}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Encoding in SC Compound Codes: BPGD Algorithm}
+  \begin{algorithmic}
+ \WHILE{{\blue There are active LDPC bit-nodes}}
+    \FOR{$t=1$ to $T$}
+    \STATE Run the BP equations
+    \ENDFOR
+    \STATE Evaluate LLRs $m_{i}$ for each LDPC bit-node
+    \STATE Choose max. of $|m_i|$ in \alert{left-most $w$ active sections}
+    \IF{$|m_{i^*}|=0$}
+    \STATE Set $u_{i^*}$ to $0$ or $1$ \textcolor{blue}{uniformly randomly}
+    \ELSE
+    \STATE Set $u_{i^*}$ to $0$ or $1$ with \alert{prob. $\frac{1+\tanh m_{i^*}}{2}$ or $\frac{1-\tanh m_{i^*}}{2}$}
+    \ENDIF
+    \STATE \blue{Decimate} (remove) LDPC bit-node $i^*$ and \textcolor{blue}{update parities}
+ \ENDWHILE
+    \STATE If $\{u_{i}\}$ fail to satisfy LDPC checks, then \textbf{\alert{re-encode}}
+  \end{algorithmic}
+\end{frame}
+
+\begin{frame}{Encoding in SC Compound Codes: Remarks}
+  \begin{itemize}
+  \item \textcolor{blue}{Randomization} in setting $u_{i^*}$ is crucial \vspace{0.3cm}
+  \item BPGD applied to uncoupled code \alert{always failed} \vspace{0.3cm}
+  \item \blue{Spatially-coupled structure} is crucial for successful encoding \vspace{0.15cm}
+    \begin{itemize}
+    \item In addition, distortion is \textcolor{blue}{close to optimal thresholds} \vspace{0.2cm}
+    \item \alert{Does not encode} if decimated from both \textcolor{blue}{left and right}\vspace{0.2cm}
+    \item \alert{Does not encode} if both left and right boundary is set to 0 \vspace{0.2cm}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Encoding in SC Compound Codes: Numerical Example}
+  \begin{center}
+    \begin{tabular}{|c|c|c|}
+      \hline
+      Block length ($n$) & 4-cycles & Attempts $1/2/3/4/\geq 5$  \\
+      \hline
+      \textcolor{blue}{$9000$} & \textcolor{blue}{yes} & \textcolor{blue}{$5/3/5/2/35$} \\
+      $9000$ & no & $21/12/5/3/9$ \\
+      $27000$ & no & $35/15/0/0/0$ \\
+      $45000$ & no & $40/9/0/0/1$ \\
+      $63000$ & no & $44/6/0/0/0$ \\
+      \alert{$81000$} & \alert{no} & \alert{$50/0/0/0/0$}\\ 
+      \hline  
+    \end{tabular}
+  \end{center}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item \# Attempts to encode $50$ seq.~in $(6,3)$ LDGM / $(3,6)$ LDPC
+    \item $L=20$, $w=4$, $\beta=0.65$, $T=10$
+    \item Removing \alert{4-cycles} dramatically improves success
+    \item How much do \textcolor{blue}{6-cycles} matter?
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Numerical Results: Wyner-Ziv}
+  \begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      LDGM & LDPC & $(L,w)$ & $(D_{*},\delta_{*})$ & $(D,\delta)$ \\
+      $(d_v,d_c)$ & $(d'_v,d'_c)$ &  &  & \\
+      \hline
+      $(6,3)$ & (3,6) & (20,4)  & (0.111,0.134)  & (0.1174,0.122) \\
+      $(8,4)$ & (3,6) & (20,4)  & (0.111,0.134)  & (0.1149,0.120) \\
+      $(10,5)$ & (3,6) & (20,4)  & (0.111,0.134)  & (0.1139,0.122) \\
+      \hline  
+    \end{tabular}
+  \end{center}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item $D_*$ and $\delta_*$ are calculated based on the rate of the respective code:
+      \begin{align*}
+        D_*&=h^{-1}(1-R1)  & \delta_*&=h^{-1}(1-R2)
+      \end{align*}
+    \item $n\approx 140000$, $\beta=1.04$, $T=10$
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Numerical Results: Gelfand-Pinsker}
+  \begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      LDGM & LDPC & $(L,w)$ & $(p_{*},\delta_{*})$ & $(p,\delta)$ \\
+      $(d_v,d_c)$ & $(d'_v,d'_c)$ &  &  & \\
+      \hline
+      $(6,3)$ & (3,6) & (20,4)  & (0.215,0.157)  & (0.2200,0.152) \\
+      $(8,4)$ & (3,6) & (20,4)  & (0.215,0.157)  & (0.2230,0.151) \\
+      $(10,5)$ & (3,6) & (20,4)  & (0.215,0.157)  & (0.2200,0.151) \\
+      \hline
+    \end{tabular}
+  \end{center}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item $p_*$ and $\delta_*$ are calculated based on the rate of the respective code:
+      \begin{align*}
+        p_*&=h^{-1}(1-R1)  & \delta_*&=h^{-1}(1-R2)
+      \end{align*}
+    \item $n\approx 140000$, $\beta=0.65$, $T=10$
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Concluding Remarks}
+  \begin{block}{Conclusion}
+    \begin{itemize}
+    \item Spatially-coupled codes achieve the rate regions of Wyner-Ziv and Gelfand-Pinsker problems \vspace{0.2cm}
+    \item \textcolor{red}{Coupling structure} is also crucial 
+      \begin{itemize}
+      \item to achieve optimum thresholds
+      \item for encoding to succeed with decimation 
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Open Questions}
+    \begin{itemize}
+    \item Effect of degree profiles, short-cycles on encoding success \vspace{0.2cm}
+    \item Precise trade-offs with \textcolor{blue}{polar codes}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\section{Write-Once Memory}
+\subsection{Problem Statement}
+\begin{frame}{Write-Once Memories}
+  \begin{center}
+    \scalebox{0.5}{\input{\WOM_path/write-once-memory}}    
+  \end{center}
+  \begin{block}{Flash Memory}<1->
+    \begin{itemize}
+    \item In typical flash memory, changing from $0$ to $1$ is easy
+    \item Resetting $1$ to $0$ requires \textcolor{blue}{rewriting whole block}
+    \item Write-once memories model such storage systems
+    \end{itemize}
+  \end{block}
+  \begin{block}{Binary Write-Once Memories}<2->
+    \begin{itemize}
+    \item<2-> \textcolor{blue}{$0 \longrightarrow 1$ is allowed}
+    \item<3-> \alert{$1 \longrightarrow 0$ is forbidden}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Capacity Region (I) - Noiseless}
+  \begin{center}
+    \scalebox{0.5}{\input{\WOM_path/write-once-memory-capacity-noiseless}}    
+  \end{center}
+  \begin{block}{Write-Once Memory without Noise}
+    \begin{itemize}
+    \item In 1982, Rivest and Shamir gave first WOM codes 
+      \begin{itemize}
+      \item 2 bits in 2 writes with only 3 cells
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+\centering
+$2+2$ bits in 2-write WOM\\
+\vspace{3mm}
+\begin{tabular}{|c|c|c|}
+  \hline
+  $x$ & $r(x)$ & $r'(x)$ \\
+  \hline
+  00 &  & \\
+  01 &  & \\
+  10 &  &  \\
+  11 &  & \\
+  \hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}
+\centering
+$2+2$ bits in 2-write WOM\\
+\vspace{3mm}
+\begin{tabular}{|c|c|c|}
+  \hline
+  $x$ & $r(x)$ & $r'(x)$ \\
+  \hline
+  00 & 000 & \\
+  01 & 001 & \\
+  10 & 010 &  \\
+  11 & 100 & \\
+  \hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}
+\centering
+$2+2$ bits in 2-write WOM\\
+\vspace{3mm}
+\begin{tabular}{|c|c|c|}
+  \hline
+  $x$ & $r(x)$ & $r'(x)$ \\
+  \hline
+  00 & 000 & 111\\
+  01 & 001 & 110\\
+  10 & 010 & 101 \\
+  11 & 100 & 011 \\
+  \hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}{Capacity Region (I) - Noiseless}
+  \begin{center}
+    \scalebox{0.5}{\input{\WOM_path/write-once-memory-capacity-noiseless}}    
+  \end{center}
+  \begin{block}{Write-Once Memory without Noise}
+    \begin{itemize}
+    \item In 1982, Rivest and Shamir gave first WOM codes 
+      \begin{itemize}
+      \item 2 bits in 2 writes with only 3 cells
+      \end{itemize}
+    \item Only about \textcolor{blue}{$n t / \log(t)$ cells} required to store $n$ bits for $t$ writes
+    \item<2-> In 1985, Heegard gave the \alert{capacity} for $t$-write system
+    \item<2-> For a $2$-write system, it is
+      \begin{align*}
+        & \Big{\{} (R_1,R_2) \mid 0 \leq R_1 <  h(\delta) , \,\,0 \leq R_2 < 1-\delta \Big{\}} 
+      \end{align*}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}{Capacity Region (II) - Read Errors}
+  \begin{center}
+    \scalebox{0.5}{\input{\WOM_path/write-once-memory-capacity-noisy}}
+  \end{center}
+  \begin{block}{Write-Once Memory with Read Errors}
+    \begin{itemize}
+    \item Different from write errors
+    \item $Y = X \oplus \mathsf{Ber}(p)$, where $\mathsf{Ber}(p)$ denotes the Bernoulli noise
+    \item Capacity region is \alert{unknown}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Main Result}
+  \begin{block}{Objective}<1->
+    \begin{itemize}
+    \item Construct \alert{low-complexity} coding schemes that achieve the \textcolor{blue}{capacity region} of the WOM system\vspace{0.1cm}
+      \begin{itemize}
+      \item<1-> Low-complexity encoding and decoding
+      \end{itemize}
+    \item<2-> Focus on the 2-write WOM system
+      \begin{itemize}
+      \item Achieves the capacity region of the noiseless system
+      \item For read errors, achieves
+        \begin{align*}
+          R_1 &< h(\delta) - h(p), & R_2 &< 1 - \delta - h(p) .
+        \end{align*}
+      \end{itemize}
+    \item<3-> Extension to multi-write systems \alert{seems possible with BPGD}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Idea}<4->
+    \begin{itemize}
+      \item Use compound LDGM/LDPC codes
+      \item Encoding for second write is \alert{erasure quantization}
+      \item Use \textcolor{blue}{spatial coupling with message-passing}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Compound LDGM/LDPC Codes}
+  \begin{columns}
+    \column{0.45\textwidth}
+    \begin{center}
+      \setlength\tikzheight{5cm}
+      \setlength\tikzwidth{6cm}
+      \scalebox{0.5}{\input{\WOM_path/compound_code}}
+    \end{center}
+    \column{0.55\textwidth}
+    \begin{itemize}
+    \item Codebook $(n,m-k-k')$ \vspace{0.1cm}
+    \item \textcolor{blue}{Message constraints} \vspace{-0.2cm}
+      \begin{align*}
+        u_1\oplus u_2 \oplus u_5&=s_1, &  u_1\oplus u_3 \oplus u_6&=0
+      \end{align*}
+    \item Codeword $(x_1,\cdots,x_9)$: \vspace{-0.2cm}
+      \begin{align*}
+        x_1 &= u_1 \oplus u_4, & x_2 &= \cdots
+      \end{align*}
+    \item Parametrized by $s^k$: $\mathcal{C}(s^k)$
+    \end{itemize}
+  \end{columns}
+  \vspace{0.2cm}
+  \begin{block}{Key Properties of Compound Codes}<2->
+      \begin{itemize}
+      \item a natural \textcolor{red}{coset decomposition}: $\mathcal{C}=\bigcup_{s^k \in \{0,1\}^k} \mathcal{C}(s^k)$
+      \item achieves capacity over eras. chan. under MAP (when $m=n$)
+      \item a \textcolor{blue}{good source code} under optimal encoding
+      \item a \textcolor{blue}{good channel code} under optimal decoding
+      \end{itemize}
+  \end{block}
+\end{frame}
+
+%\begin{frame}{Good Code}
+%  \begin{block}{``Good'' source code}
+%    \begin{itemize}
+%    \item Rate of the code is $R=1-h(\delta)+\varepsilon$
+%    \item When this code is used to \alert{optimally encode} $\mathsf{Ber}(\tfrac{1}{2})$
+%    \item The average Hamming \textcolor{blue}{distortion is at most $\delta$}
+%    \end{itemize}
+%  \end{block}
+%  \vspace{0.4cm}
+%  \begin{block}{``Good'' channel code}
+%    \begin{itemize}
+%    \item Rate of the code is $R=1-h(p)-\varepsilon$
+%    \item When this code is used for channel coding on $\mathsf{BSC}(p)$
+%    \item Message est.~under \alert{optimal decoding} with \textcolor{blue}{error at most $\varepsilon$}
+%    \end{itemize}
+%  \end{block}
+%\end{frame}
+
+\subsection{Coding Scheme}
+\begin{frame}{Coding Scheme for 2-write WOM: First Write}
+  \vspace{-2cm}
+  \begin{center}
+    \begin{align*}
+      R_1 < h(\delta) - h(p)
+    \end{align*}
+  \end{center}
+  \vspace{-0.5cm}
+  \begin{columns}
+    \column{0.45\textwidth}
+    \begin{center}
+      \scalebox{0.5}{\input{\WOM_path/coding-scheme-first-write}}
+    \end{center}
+
+    \column{0.45\textwidth}
+    \begin{itemize}
+    \item<1-> With message $s^k$, encode $0^n$ to $x^n$ (Distortion $\approx \delta$)
+    \item<1-> \textcolor{red}{Store $x^n$}
+    \item<2-> Decoder has
+      \small{
+        \begin{align*}
+          y_i&=x_i \oplus \mathsf{Ber}(p) \\
+        \end{align*}
+      }
+    \vspace{-1.25cm}
+    \item <3-> \textcolor{blue}{Dec. $x^n$ and compute $s^k$}
+    \item <3-> $R_1=\tfrac{k}{n}\approx h(\delta)-h(p)$
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Coding Scheme for 2-write WOM: Second Write}
+  \begin{center}
+    \scalebox{0.5}{\input{\WOM_path/coding-scheme-second-write-tape}}    
+  \end{center}
+  \begin{columns}
+    \column{0.45\textwidth}
+    \begin{center}
+      \scalebox{0.55}{\input{\WOM_path/compound_ldgm_ldpc_wom_code}}
+    \end{center}
+    \column{0.45\textwidth}
+    \begin{itemize}
+    \item Need to find a \alert{consistent} codeword in $\mathcal{C}(s^k)$
+    \item<2-> Closely related to \textcolor{blue}{Binary Erasure Quantization (BEQ)}
+    \item<2-> En Gad, Huang, Li and Bruck (ISIT 2015)
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Binary Erasure Quantization}
+  \begin{itemize}
+  \item Quantize a sequence in $\{0,1,*\}^n$ to $x^n \in \mathcal{C} \subset \{0,1\}^n$
+    \begin{itemize}
+    \item $0$'s and $1$'s should \alert{match exactly}
+    \item $*$'s can take \textcolor{blue}{either $0$ or $1$}
+    \end{itemize}
+    \vspace{0.25cm}
+  \item Can map the second write of 2-write WOM to BEQ
+    \begin{itemize}
+    \item Map $0$'s to $*$'s and keep $1$'s
+    \item Quantize to codeword in $\mathcal{C}(s^k)$
+    \end{itemize}
+\vspace{0.25cm}
+  \item BEQ is the dual of decoding on binary erasure channel
+    \begin{itemize}
+    \item Martinian and Yedidia (Allerton 2003)
+    \item Can quan. all seq. with erasure pattern $e^n \in \{0,1\}^n$ to $\mathcal{C}$ \\ \hspace{3.5cm} $\Updownarrow$ \\ Chan. dec. for $\mathcal{C}^{\perp}$ can correct all vectors with eras. $1^n \oplus e^n$
+    \end{itemize}
+    \vspace{0.25cm}
+  \item Choose a good (dual) code $\mathcal{C}(s^k)$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Coding Scheme for 2-write WOM: Second Write}
+  \vspace{-2cm}
+\onslide<3->{
+  \begin{center}
+    \begin{align*}
+      R_2 < 1 - \delta - h(p)
+    \end{align*}
+  \end{center}
+  }
+  \vspace{-0.5cm}
+  \begin{columns}
+    \column{0.45\textwidth}
+    \begin{center}
+      \scalebox{0.5}{\input{\WOM_path/coding-scheme-second-write}}
+    \end{center}
+
+    \column{0.45\textwidth}
+    \begin{itemize}
+    \item<1-> \alert{Change $0$'s to $*$'s}
+    \item<1-> With message $s^k$, encode seq. to $\mathcal{C}(s^k)$
+    \item<2-> Decoder has
+      \small{
+        \begin{align*}
+          y_i&=x_i \oplus \mathsf{Ber}(p) \\
+        \end{align*}
+      }
+    \vspace{-1.25cm}
+    \item <3-> \textcolor{blue}{Dec. $x^n$ and compute $s^k$}
+    \item <3-> $R_2=\tfrac{k}{n}\approx 1 - \delta - h(p)$
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Iterative Erasure Quantization Algorithm}
+  \begin{center}
+    \scalebox{0.5}{\input{\WOM_path/peeling-encoder}}
+  \end{center}
+  \begin{itemize}
+  \item \alert{Peeling type encoder}
+  \begin{center}
+%    \begin{algorithmic}
+%      \WHILE{$\exists$ non-erasures in $V$}
+%      \IF{$\exists$ non-erased $u \in U$ such that only one of its neighbors $v \in V$ is not erased}
+%      \STATE Pair $(u,v)$.
+%      \STATE Erase $u$ and $v$.
+%      \ELSE
+%      \STATE FAIL.
+%      \STATE \textbf{break}.
+%      \ENDIF
+%      \ENDWHILE
+%    \end{algorithmic}
+  \end{center}
+
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Remarks}
+  \begin{itemize}
+  \item Need codes that are \alert{simultaneously good} for channel/source coding and erasure quantization \vspace{0.2cm}
+  \item Use \textcolor{blue}{message-passing algorithms} instead of \alert{optimal} \vspace{0.2cm}
+  \item Use spatial-coupling for \alert{goodness} of codes under message-passing \vspace{0.2cm}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Spatially-Coupled Compound LDGM/LDPC Codes}
+  \begin{center}
+    \scalebox{0.7}{\input{\WOM_path/spatially_coupled_compound_code}}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Decoding in Spatially-Coupled Compound Codes}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \setlength\tikzheight{5cm}
+    \setlength\tikzwidth{6cm}
+    \scalebox{0.5}{\input{\WOM_path/mp_compound_code}}
+
+    \column{0.5\textwidth}
+    \scalebox{0.5}{\input{\WOM_path/mp_ldgm_bit}}\\ \vspace{0.3cm}
+    \scalebox{0.5}{\input{\WOM_path/mp_ldpc_bit}}\\ \vspace{0.3cm}
+    \scalebox{0.5}{\input{\WOM_path/mp_check}}
+  \end{columns}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item Standard message-passing algorithm
+    \item Threshold saturation proven for SC compound codes on BEC
+    \item Empirically observed for BMS channels
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Numerical Results: Noiseless WOM}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+LDGM/LDPC & $\delta^{*}$ & $\delta$ & $\delta$ & $\delta$ \\
+$(d_v,d_c,d'_v,d'_c)$ & & $w=2$ & $w=3$ & $w=4$ \\
+\hline
+$(3,3,3,6)$  & $0.500$ & $0.477$ & $0.492$ & $0.494$\\
+$(3,3,4,6)$  & $0.333$ & $0.294$ & $0.324$ & $0.326$\\
+$(3,3,5,6)$  & $0.167$ & $0.095$ & $0.156$ & $0.158$\\
+$(4,4,3,6)$  & $0.500$ & $0.461$ & $0.491$ & $0.492$\\
+$(4,4,4,6)$  & $0.333$ & $0.278$ & $0.323$ & $0.325$\\
+$(4,4,5,6)$  & $0.167$ & $0.086$ & $0.155$ & $0.159$\\
+$(5,5,3,6)$  & $0.500$ & $0.436$ & $0.488$ & $0.491$\\
+$(5,5,4,6)$  & $0.333$ & $0.260$ & $0.320$ & $0.324$\\
+$(5,5,5,6)$  & $0.167$ & $0.079$ & $0.154$ & $0.159$\\
+\hline  
+\end{tabular}
+\end{center}
+\begin{block}{Remarks}
+  \begin{itemize}
+  \item $\delta^*$ is the Shannon threshold
+  \item $L=30$, Single system length $\approx 24000$
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Numerical Results: WOM with Read Errors}
+  \begin{center}
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+      LDGM/LDPC & $w$ & $(\delta^{*},p^*)$ & $(\delta,p)$ \\
+      $(d_v,d_c,d'_v,d'_c)$ &  &  & \\
+      \hline
+      $(3,3,4,6)$ & $3$ & $(0.333,0.0615)$ & $(0.321,0.0585)$ \\
+      $(3,3,4,8)$ & $3$ & $(0.500,0.0417)$ & $(0.490,0.0387)$ \\
+      $(3,3,6,8)$ & $4$ & $(0.250,0.0724)$ & $(0.239,0.0684)$ \\
+      $(4,4,4,6)$ & $4$ & $(0.333,0.0615)$ & $(0.324,0.0585)$ \\
+      $(4,4,4,8)$ & $4$ & $(0.500,0.0417)$ & $(0.492,0.0387)$ \\
+      $(4,4,6,8)$ & $4$ & $(0.250,0.0724)$ & $(0.241,0.0694)$ \\
+      \hline  
+    \end{tabular}
+  \end{center}
+  \begin{block}{Remarks}
+    \begin{itemize}
+    \item $\delta^*$ and $p^*$ are the Shannon thresholds
+    \item $L=30$, Single system length $\approx 30000$
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Numerical Results: Small Blocklength}
+\begin{figure}[!tbh]
+  \centering
+  \setlength\tikzheight{3cm}
+  \setlength\tikzwidth{6cm} 
+  \input{\WOM_path/rewrite_failure_prob}
+\end{figure}
+\begin{block}{Remarks}
+  \begin{itemize}
+  \item $(L,w)=(30,3)$, Single system length $1200$, Shannon threshold of $0.5$
+  \item A total of $10^5$ were attempted to encode
+  \item No failures for $\delta < 0.43$
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Concluding Remarks}
+  \begin{block}{Conclusion}
+    \begin{itemize}
+    \item Spatially-coupled compound codes achieve the capacity of 2-write systems \vspace{0.2cm}
+    \item \textcolor{red}{Coupling structure} is also crucial 
+      \begin{itemize}
+      \item to achieve optimum thresholds  
+      \item for encoding to succeed 
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Multi-Write Systems}
+    \begin{itemize}
+    \item Will BPGD work for multi-write systems?
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\section{Research Summary}
+\begin{frame}
+\begin{itemize}
+\item SC-LDPC Lattices [C1]
+\item SC-Compound Codes
+\begin{itemize}
+\item Side-Information Problems [C2]
+\item Coding for WOM [C3] 
+\end{itemize}
+\item Sparse graph coding tools for solving sparse recovery problems 
+\begin{itemize}
+\item Regular bipartite sparse graphs for compressed sensing [C5]
+\item Group testing*
+\item Pattern matching*
+\end{itemize}
+\item Uncoordinated multiple access
+\begin{itemize}
+\item Universal schemes for massive uncoordinated multiple access [C4]
+\item Optimal distributions for finite user multiple access*
+\end{itemize}	
+\item Coding for low latency requirements*
+\end{itemize}
+\vspace{2mm}
+%\begin{center}
+%REFERENCES\\
+%\end{center}
+{\tiny
+C1.~A. Vem, Y.~C.~Huang, K.~R.~Narayanan and H.~D.~Pfister, ``Multilevel lattices based on spatially-coupled LDPC codes with applications", in \textit{Proc.~IEEE.~ISIT}, pp.~2336--2340, 2014.\\
+C2.~S.~Kumar, A.~Vem, K.~R.~Narayanan and H.~D.~Pfister,``Spatially-coupled codes for side-information problems",
+in \textit{Proc.~IEEE.~ISIT}, pp.~516--520, 2014.\\
+C3.~S.~Kumar, A.~Vem, K.~R.~Narayanan and H.~D.~Pfister,``Spatially-coupled codes for write-once memories",
+in \textit{Proc.~Allerton.~Conf}, pp.~125--131, 2015.\\
+C4.~A.~Taghavi, A.~Vem, J.-F.~Chamberland and K.~R.~Narayanan``On the design of universal schemes for massive uncoordinated multiple access", in \textit{Proc.~IEEE.~ISIT}, pp.~345--349, 2016. \\
+C5.~A.~Vem, N.~T.~Janakiraman, and K.~R.~Narayanan,``Sub-linear time compressed sensing for support recovery using left and right regular sparse-graph codes", in \textit{Proc.~IEEE.~ITW}, pp.~429--433, 2016.\\
+*-To be submitted
+}
+\end{frame}
+\end{document}
