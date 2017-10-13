@@ -14,6 +14,7 @@ if U==2
        llr_out(:,1)=log( (1+exp(l2+2*(y-1)/sig^2))./(exp(l2)+exp(-2*(y+1)/sig^2)) );
        llr_out(:,2)=log( (1+exp(l1+2*(y-1)/sig^2))./(exp(l1)+exp(-2*(y+1)/sig^2)) );
        llr_out(llr_out>20)=20;  llr_out(llr_out<-20)=-20;
+       llr_out(isnan(llr_out))=0;
    end
 end
 end

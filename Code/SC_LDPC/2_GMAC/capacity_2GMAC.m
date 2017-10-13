@@ -1,4 +1,4 @@
-function cap=capacity_2user_GMAC(ip,rateFlag)
+function cap=capacity_2GMAC(ip,rateFlag)
 %ip= sig or the rate. If rateFlag==1 then ip is the single user rate.
 %if rateFlag==0 then the ip is the sigma(std_dev of Gaussian noise).
 %For a given rate/sig, compute the capacity of 2 user real adder Gaussian MAC channel. 

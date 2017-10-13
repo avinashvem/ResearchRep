@@ -1,13 +1,16 @@
 % clc
+addpath('../')
 clear all
 global dv dc w L M
-dv=3;
+dv=4;
 dc=6;
 w=3; %Works only for w=3 and dv=3
-M=1000;
+M=100;
 L=16;
 U=2; % Number of users.
 shift=round(4.5*M);
+EsN0_vec=[-4.500 -4.300 -3.90 -3.80 -3.70 -3.60];
+sigVec=sqrt(0.5*(10.^(-EsN0_vec./10)));
 
 llr_max=20; 
 maxIters=500;
@@ -17,15 +20,18 @@ maxSims=1000;
 N=length(Vcon(:,1));
 m=length(Ccon(:,1)); %Number of check nodes
 
-%% 
+%----
 fprintf('Sys. Params are N=%d,m=%d,dc=%d,dv=%d, rate=%4.3f via M=%d\n',N,m,dc,dv,1-m/N,M);
 
 E=zeros(1,eMax+1);
-shiftPattern=[shift+1:N 1:shift];
-inv_shiftPattern=[N-shift+1:N 1:N-shift];
+% shiftPattern=[shift+1:N 1:shift];
+% inv_shiftPattern=[N-shift+1:N 1:N-shift];
+shiftPattern=randperm(N);
+inv_shiftPattern(shiftPattern)=1:N;
+
 
 chan='Gaussian';
-sigVec=[0.82 0.81 0.80];
+
 for sigIter=1:length(sigVec)
 sig=sigVec(sigIter);
 fprintf('Channel is %s and sig=%f or EsNo=%3.2f dB\n',chan,sig',10*log10(1/2/sig^2));
@@ -42,7 +48,7 @@ end
 x=1-2*c;
 y=x(1,:)+x(2,shiftPattern)+sig*randn(1,N);
 
-xhat=BP_two_user_MAC(y,chan,Vcon,Ccon,eMax,maxIters,P',shiftPattern',sig);
+xhat=BP_2GMAC(y,chan,Vcon,Ccon,eMax,maxIters,P',shiftPattern',sig);
 
 num_err=numel(find(xhat-x))+num_err;
 blockErr=~isempty(find(xhat-x,1))+blockErr;
@@ -53,15 +59,28 @@ if numel(find(xhat-x))==1
 end
     
 if mod(sim_cnt,50)==0
-  fprintf('#err bits= %d/%d Sims. %3.2f sec\n',num_err,sim_cnt,toc);
+  fprintf('#err bits/blocks= %d/%d in %d Sims. %3.2f sec\n',num_err,blockErr,sim_cnt,toc);
 end
 end
     
-fprintf('# bits in error= %d after %d Simulations\n',num_err,sim_cnt);
+fprintf('#err bits/blocks= %d/%d after %d Simulations\n',num_err,blockErr,sim_cnt);
 errMat(sigIter,1:3)=[num_err blockErr sim_cnt];
 end
+%------Simulation Results------------------------------------------------------------------
+%{
+% (6,8) dv=6, dc=8,L=16,w=3, rate=0.156
+%  M     (N,m)    (bErr,Berr)  #Sims Es_N0  sig
+% 100 (6400,5400)    (0,0)      1000  -3.0  0.9988
+% 10   (640,540)    (774,10)     506  -0.0  0.7071
+% 10   (640,540)    (376,5)     1000  1.00  0.6302
+% 10   (640,540)    (75,1)      1000  1.75  0.6302
 
-%% ----Simulation Results-----
+
+% (3,4) dv=3, dc=4,L=16,w=3, rate=0.156
+% M=100; (N,m)=(64,54)*1e2
+% (bErr,Berr) #Sims Es_N0  sig
+%   (18,1)     1000  --    1.20
+%   (0,0)      1000  -3.0  0.9988
 
 % (3,6); (N,m)=(8000,4500),M=250 L=16,w=3, rate=0.4375
 %     (bErr,Berr)  #Sims    sig
@@ -93,13 +112,12 @@ end
 % (3,6); (N,m)=(96000,54000),M=3000 L=16,w=3, rate=0.4375
 %   (bErr,Berr) #Sims  sig
 %     (N,2)        2   0.80
-%   (6800,2)       2   0.77
+%   (1.8e5,10)    12   0.79
+%   (1.5e5,10)    88   0.78
+%   (1.8e4,1)    650   0.77
 %    (1178,2)    411   0.76
 %      (0,0)    1050   0.75
 %      (0,0)     600   0.70
-
-
-
 
 % (3,9); (N,m)=(7200,2700),M=150 L=16,w=3, rate=0.625
 % (bErr,Berr) #Sims  sig
@@ -115,8 +133,15 @@ end
 % (1614,2)     1000    0.42
 
 % (3,9); (N,m)=(30240,11340),M=630 L=16,w=3, rate=0.625
-% (bErr,Berr) #Sims    sig
-%    (0,0)     1000   0.49
+% (bErr,Berr)  #Sims    sig
+%  (7.0e4,10)     10   0.530
+%  (6.2e4,10)     22   0.520
+%  (1.8e5,40)    790   0.510
+%  (9.6e4,20)    596   0.508
+%  (6.6e4,13)    750   0.505
+%  (2.2e4,5)     750   0.503
+%  (8700,2)     1000   0.500
+%    (0,0)      1000   0.49
  
 % (3,9); (N,m)=(33600,12600),M=700 L=16,w=3, rate=0.625 
 % (bErr,Berr) #Sims  sig
@@ -133,14 +158,6 @@ end
 %  (0,0)      1e3   0.480
 % (199,2)     765   0.486
 %  (0,0)      1e3   0.483
-
-
-
-
-
-% dv=3, dc=4,L=16,w=3, rate=0.156
-% M   (N,m)*1e2  (bErr,Berr) #Sims  sig
-%100   (64,54)    (18,1)      1000  1.20
 
 % dv=3, dc=9,L=16,w=3
 % M    (N,m)      (bErr,Berr) #Sims  sig
@@ -166,3 +183,5 @@ end
 % dv=4, dc=14,L=16,w=3, rate=0.679
 % M    (N,m)      (bErr,Berr) #Sims  sig
 %90 (1e4,3240)    (5.5e4,20)   20    0
+%}
+

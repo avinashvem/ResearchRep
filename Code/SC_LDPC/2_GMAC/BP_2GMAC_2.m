@@ -1,10 +1,10 @@
-function xhat=BP_two_user_MAC_2(y,channel,Vcon,Ccon,eMax,maxIters,Parity,sig)
-% This is exactly identical to the BP_two_user_MAC except for the graph
+function xhat=BP_2GMAC_2(y,channel,Vcon,Ccon,eMax,maxIters,Parity,sig)
+% This is exactly identical to the BP_2GMAC except for the graph
 % relizatons for the two users. We use two independent Tanner graphs from
 % the same ensemble for the two users.
 
 % dv,dc are Max Variable and Check node degrees respectively. Works for Irregular d.ds.
-% y=x1+x2(shiftPattern)+n(0,sig^2) hwere shiftPattern is a random shift at one of the users.
+% y=x1+x2(shiftPattern)+n(0,sig^2) where shiftPattern is a random shift at one of the users.
 
 global llr_max
 N=length(Vcon(:,1))/2; dv=length(Vcon(1,:));
@@ -37,7 +37,8 @@ end
 
 E1=zeros(eMax,1); E1(eMax+1)=Inf; E2=E1;
 V1_btoc=zeros(N,1);      V2_btoc=V1_btoc;
-%% Message Passing
+
+%------------Message Passing--------------------------------------
 for i=1:maxIters
     E1_prev=E1; E2_prev=E2;
 % Check-node update            
