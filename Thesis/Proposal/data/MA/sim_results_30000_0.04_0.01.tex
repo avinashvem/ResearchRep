@@ -10,7 +10,7 @@
 
 \begin{axis}[%
 width=5.2in,
-height=5in,
+height=3in,
 scale only axis,
 xmin=25,
 xmax=300,
@@ -47,39 +47,39 @@ legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell al
 };
 \addlegendentry{Random Coding \cite{polyanskiy2017perspective} };
 
-\addplot [color=magenta,dotted,line width=2.0pt]
-  table[row sep=crcr]{
-  25   2.26  \\
-  50   2.88  \\
-  75   3.90  \\
- 100   5.03 \\
-  125.0000    5.8798 \\
-  150.0000    7.3954 \\
-  175.0000    8.6199 \\
-  200.0000    9.7328 \\
-  225.0000   11.1761\\
-  250.0000   12.6127\\
-  275.0000   13.3907\\
-  300.0000   14.9116\\
-  };
-\addlegendentry{4-fold ALOHA \cite{ordentlich2017low}};
+%\addplot [color=magenta,dotted,line width=2.0pt]
+%  table[row sep=crcr]{
+%  25   2.26  \\
+%  50   2.88  \\
+%  75   3.90  \\
+% 100   5.03 \\
+%  125.0000    5.8798 \\
+%  150.0000    7.3954 \\
+%  175.0000    8.6199 \\
+%  200.0000    9.7328 \\
+%  225.0000   11.1761\\
+%  250.0000   12.6127\\
+%  275.0000   13.3907\\
+%  300.0000   14.9116\\
+%  };
+%\addlegendentry{4-fold ALOHA \cite{ordentlich2017low}};
 
-\addplot [color=red,solid,mark=diamond,mark size=3.2,line width=2.0pt]
-  table[row sep=crcr]{
-  25   3.5820  \\
-  50   5.2585 \\
-  75   5.8700  \\
-100  6.6738 \\
-125  7.1463 \\
-150  7.9984 \\
-175  8.63 \\
-200  9.55 \\
-225  10.46 \\
-250  11.42 \\
-275 13.4438 \\
-300 14.8439 \\
-};
-\addlegendentry{$T=2$};
+%\addplot [color=red,solid,mark=diamond,mark size=3.2,line width=2.0pt]
+%  table[row sep=crcr]{
+%  25   3.5820  \\
+%  50   5.2585 \\
+%  75   5.8700  \\
+%100  6.6738 \\
+%125  7.1463 \\
+%150  7.9984 \\
+%175  8.63 \\
+%200  9.55 \\
+%225  10.46 \\
+%250  11.42 \\
+%275 13.4438 \\
+%300 14.8439 \\
+%};
+%\addlegendentry{$T=2$};
 
 \addplot [color=blue,solid,mark=square,mark size=2.6,line width=2.0pt]
   table[row sep=crcr]{
@@ -98,7 +98,7 @@ legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell al
 };
 \addlegendentry{$T=4$};
 
-\addplot [color=orange,solid,mark=triangle,mark size=3.0,line width=2.0pt]
+\addplot [color=BurntOrange,solid,mark=triangle,mark size=3.0,line width=2.0pt]
   table[row sep=crcr]{
  25 3.1608  \\
  50 3.8064 \\
@@ -117,21 +117,21 @@ legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell al
 
 
 
-\addplot [color=blue,dashed,line width=2.0pt]
-  table[row sep=crcr]{
-  25   7.50 \\
-   35   7.30 \\
-  50   8.75 \\
-  100 11.7 \\
-  150 14.50\\
-%175  6.7814 \\
-200  18\\
-%225  7.6838 \\
-250  21\\
-%275  8.4960 \\
-300 23\\
-};
-\addlegendentry{OP-Exact\cite{ordentlich2017low}};
+%\addplot [color=blue,dashed,line width=2.0pt]
+%  table[row sep=crcr]{
+%  25   7.50 \\
+%   35   7.30 \\
+%  50   8.75 \\
+%  100 11.7 \\
+%  150 14.50\\
+%%175  6.7814 \\
+%200  18\\
+%%225  7.6838 \\
+%250  21\\
+%%275  8.4960 \\
+%300 23\\
+%};
+%\addlegendentry{OP-Exact\cite{ordentlich2017low}};
 
 \end{axis}
 \end{tikzpicture}

@@ -25,7 +25,7 @@ yminorticks=false,
 ymajorgrids,
 ylabel={\fsize User Error Rate},
 %yminorgrids,
-line width=1.5pt,
+line width=2.5pt,
 mark size=3.5pt,
 legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align=left,font=\fsize}
 ]
@@ -44,7 +44,7 @@ legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align
 %\node[right] at (axis cs: 0.66,5e-6) {\fsize $3000$};
 \node[right] at (axis cs: 0.625,6e-7) {\fsize $\Ka=10000$};
 
-\addplot [color=blue,solid,mark=triangle]
+\addplot [color=blue,solid,mark=triangle,line width=2.5pt]
   table[row sep=crcr]{
 0.58	0.446855769230769\\
 0.6	0.281691729323308\\
@@ -58,7 +58,7 @@ legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align
 };
 \addlegendentry{$\Ka=500$};
 
-\addplot [color=red,solid,mark=asterisk,mark options=solid,mark size=3.0]
+\addplot [color=red,solid,mark=asterisk,mark options=solid,mark size=3.0,line width=2.5pt]
   table[row sep=crcr]{
 0.58	0.445524509803922\\
 0.6	0.233573333333333\\
@@ -72,7 +72,7 @@ legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align
 };
 \addlegendentry{$\Ka=1000$};
 
-\addplot [color=black,solid,mark=o,mark options=solid]
+\addplot [color=black,solid,mark=o,mark options=solid,line width=2.5pt]
   table[row sep=crcr]{
 0.58	0.45552736318408\\
 0.6	0.200620588235294\\
@@ -84,7 +84,7 @@ legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align
 %\addlegendentry{$(T,\lambda,\Ka)=(2,0,3000)$};\\
 \addlegendentry{$\Ka=3000$};
 
-\addplot [color=green,solid,mark=square,mark options=solid]
+\addplot [color=green,solid,mark=square,mark options=solid,line width=2.5pt]
   table[row sep=crcr]{
 0.58	    0.2324    \\
 0.60     0.1444\\
@@ -96,7 +96,7 @@ legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align
 %\addlegendentry{$\Ka=10^4$};
 
 
-\addplot [color=black,dotted]
+\addplot [color=black,dotted,line width=2.5pt]
   table[row sep=crcr]{
 0.5975	5.00e-2 \\
 0.5975	1.00e-2 \\
@@ -115,7 +115,7 @@ legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align
 
 
 %%%%%%%%%-----------------------%----------------------------------
-\addplot [color=blue,solid,mark=triangle]
+\addplot [color=blue,solid,mark=triangle,line width=2.5pt]
   table[row sep=crcr]{
 0.29   0.522000000000000\\
 0.31  0.063631578947368\\
@@ -126,7 +126,7 @@ legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align
 %\addlegendentry{$(T,\lambda,\Ka)=(4,0,500)$};
 %\addlegendentry{$\Ka=500$};
 
-\addplot [color=red,solid,mark=asterisk,mark options=solid]
+\addplot [color=red,solid,mark=asterisk,mark options=solid,line width=2.5pt]
   table[row sep=crcr]{
 0.2900    0.3920\\
 0.3100    0.0039\\
@@ -136,7 +136,7 @@ legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align
 %\addlegendentry{$(T,\lambda,\Ka)=(4,0,1000)$};
 %\addlegendentry{$\Ka=10^3$};
 
-\addplot[color=black,solid,mark=o,mark options=solid]
+\addplot[color=black,solid,mark=o,mark options=solid,line width=2.5pt]
   table[row sep=crcr]{
 0.2900    0.3198\\
 0.30        2.5202e-2\\
@@ -150,7 +150,7 @@ legend style={at={(0.4,1)},anchor=north, draw=black,fill=white,legend cell align
 %\addlegendentry{$\Ka=3\times 10^3$};
 
 
-\addplot [color=black,dotted]
+\addplot [color=black,dotted,line width=2.5pt]
   table[row sep=crcr]{
 0.2949	5.00e-2 \\
 0.2949	1.00e-2 \\

@@ -1,5 +1,6 @@
 \documentclass[12pt]{report}
 \usepackage{tamuconfig}
+\setcounter{tocdepth}{2} 
 \setcounter{secnumdepth}{2}
 
 \renewcommand{\thechapter}{\Roman{chapter}}
@@ -81,10 +82,10 @@
 
 \include{data/titlepage} % This is simply a file that formats and adds your titlepage, please do not edit this unless you have a specific need. .
 \include{data/abstract}
-%\include{data/dedication}
-%\include{data/acknowledgements}
+\include{data/dedication}
+\include{data/acknowledgements}
 %\include{data/contributors}
-%\include{data/nomenclature}
+\include{data/nomenclature}
 \include{data/lists}  % This is simply a file that formats and adds your toc, lof, and lot, please do not edit this unless you have a specific need.
 
 
@@ -110,8 +111,6 @@
 \chapter{GROUP TESTING}
 \label{chap:gt}
 \input{data/GT/grouptesting.tex}
-
-
 
 %fix spacing in bibliography, if any...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
