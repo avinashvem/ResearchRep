@@ -1,4 +1,5 @@
 \begin{tikzpicture}
+\def\fsize{\normalsize}
 \begin{axis}[
 width=\figurewidth,
 height=\figureheight,
@@ -8,14 +9,9 @@ xmax=30,
 xlabel={$\text{P/}\sigma{}^{\text{2}}\text{dB}$},
 ymin=0,
 ymax=5,
-legend style={at={(0,0.717225783363562)},anchor=south west,draw=black,fill=white,legend cell align=left,font=\tiny}
+legend style={at={(0,1)},anchor=north west,draw=black,fill=white,legend cell align=left}
 ]
-\addplot [
-color=red,
-solid,
-mark=star,
-mark options={solid}
-]
+\addplot [color=red,solid,line width=1.5pt]
 table[row sep=crcr]{
 1 0.587818317346194\\
 3 0.791341177455778\\
@@ -38,10 +34,7 @@ table[row sep=crcr]{
 };
 \addlegendentry{Shannon Capacity};
 
-\addplot [
-color=blue,
-solid
-]
+\addplot [color=blue,solid,line width=2.0pt]
 table[row sep=crcr]{
 1 0.108452421861326\\
 3 0.30023434461803\\
@@ -64,12 +57,7 @@ table[row sep=crcr]{
 };
 \addlegendentry{Sum Capacity of a 4-level Construction D Lattice Code};
 
-\addplot [
-color=black,
-mark size=1.4pt,
-only marks,
-mark=square,
-]
+\addplot [color=black,mark size=3.0pt,only marks,mark=square,mark options={solid}]
 table[row sep=crcr]{
 21.4693 3.15\\ % 18.91 3.1501 
 22.3844 3.2667\\  %19.621 3.2668 . The commented out values are the snr values at which the shannon capacity is equal
@@ -80,13 +68,7 @@ table[row sep=crcr]{
 };
 \addlegendentry{DE thresholds for 4 level SC-LDPC Lattice codes};
 
-\addplot [
-color=black,
-mark size=1.5pt,
-only marks,
-mark=asterisk,
-mark options={solid},
-]
+\addplot [color=black,mark size=2.9pt,only marks,mark=asterisk,mark options={solid}]
 table[row sep=crcr]{
 23.2798476914952 3.41666666666667\\
 22.4669998480458 3.26666666666667\\
@@ -96,11 +78,10 @@ table[row sep=crcr]{
 \addlegendentry{BP thresholds for 4-level SC-LDPC Lattice Codes};
 
 
-%\draw[<->,thin] (axis cs:24.05,3.9975) -- (axis cs:25.6,3.9974);
-\draw[<->,thin] (axis cs:18.91,3.1501 ) -- (axis cs:21.469, 3.15);
+\draw[<->] (axis cs:18.91,3.1501 ) -- (axis cs:21.469, 3.15);
 \draw[->] (axis cs:19.6,3.12) to [out=285,in=175] (axis cs:22,2.6);
 %\node[font=\scriptsize] at (axis cs:14,3.6){1.57dB};
-\node[font=\scriptsize] at (axis cs:24,2.6){2.559dB};
+\node[font=\fsize] at (axis cs:24,2.6){2.559dB};
 
 	\end{axis}
 \end{tikzpicture}%

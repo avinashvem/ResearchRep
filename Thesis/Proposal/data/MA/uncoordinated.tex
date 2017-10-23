@@ -52,7 +52,7 @@ For a $(3,6)$ regular LDPC code, the average number of degree-one check nodes gi
 \label{Fig:LDPCResidual}
 \end{figure}
 
-\subsection{Error probability approximates}
+%\subsection{Error probability approximates}
  The authors \cite{amraoui2007find} demonstrate that (can also be observed from Fig. \ref{Fig:LDPCResidual}) the failure of decoder occurs with high probability in two possible scenarios: The first case corresponds to $y\approx 0$ or as $t\rightarrow \infty$ and the other case corresponds to the value of $y$ such that $\tilde{R}_{1}(y)=0$ when $\epsilon=\epsilon_{\text{BP}}$ or equivalently at the value of $y$ where the curve has a stationary point. This point is referred to as critical point $y^*.$ The errors caused corresponding to the first case are referred to as \textit{small-error} events or error floor erasures since they occur towards the end of peeling decoder and the errors corresponding to the second case are referred to as \textit{large-error} events or waterfall erasures. The authors approximate the total probability of error by two expressions, each one corresponding to the one of these two cases.
  
 %\subsubsection*{LP to increase the net throughput}~\\ \\ $\max \frac{-(1-P_b)}{m^2}\Delta m+\sum_{i}-\frac{\partial P_b•}{m\partial L_i}\Delta L_i- \frac{~\partial P_b}{m\partial m}\Delta m$
@@ -95,7 +95,7 @@ L(x)=\frac{\int_{0}^{x}\lmb(x)}{\int_{0}^{1}\lmb(x)}.
 \end{align*}
  $\eta$ is the throughput ($n=m\eta$) and the edges are chosen as in the ``uniform-without replacement" paradigm.
 
-\subsection{Error Probability approximates}
+\subsection{Error probability approximates}
 \label{sec:UMACapproximate}
 \begin{theorem}[Small error events]
 Consider transmission by users over a noiseless MAC channel according to a graph picked uniformly at random from the UMAC$(n,\lmb,\eta)$ ensemble. Assume that the ensemble has no critical point i.e the degree-one check nodes in the residual graph is a monotonously decreasing function of time. Let $P_{\text{B},s_{min}}^{F}(n,\lmb,\rho,\epsilon)$ denote the expected block erasure probability due to stopping sets of size between $s_{min}$ and  $\gamma n$, where $\gamma\in (0,1)$. Then
@@ -209,7 +209,7 @@ smin & $P_{B,s_{\text{min}}}^F$ & $P_{B,s_{\text{min}}}^{\text{Sim}}$& $P_{b,\te
 %\label{Fig:U212}
 %\end{figure}
 
-\subsection{Necessity of Large Error approximation}
+\subsection{Necessity of large error approximation}
 Obviously the next obvious question we consider is for what parameters does the curve has the monotonic property. We increase the throughput from $\eta=0.77$ to $\eta=0.95$ which equates to $m=1053$ by keeping all other variables in the system same. Before we give the analytic and numeric results, residual graph is given in Fig. \ref{Fig:UMAC_Residual}. Notice that for $y=y^*\in(0.82,0.98)$, the curve is negative implying that with significant probability the error events will be of size concentrating around $\sum_{i}K\tilde{L}_{i}(y^*)$ , and hence the large error events are non negligible. To verify this observation numerically we present the results  $P_{B,\text{smin}}^{\text{Sim}}$ versus $P_{B,\text{smin}}^F$ in Table. \ref{Table:SimvsAnalytic3}.
 %\begin{figure}
 %\centering
