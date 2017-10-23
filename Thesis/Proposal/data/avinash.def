@@ -81,6 +81,7 @@
 \def \Bc{B_{\mathrm{c}}}
 
 \def\dmin{d_{\mathrm{min}}}
+\def\dmax{d_{\mathrm{max}}}
 \def\wmin{w_{\text{min}}}
 \def\wmax{w_{\text{max}}}
 \def\Pr{\mathrm{Pr}}

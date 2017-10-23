@@ -1,4 +1,6 @@
+%%%%%%%%%%%%----------------------------------------------------------------------------------%%%%%%%%%%%%%%%
 \section{GroupTesting}
+\subsection{Main result}
 \begin{frame}\frametitle{Group Testing}
 	\begin{figure}[t]
 		\centering
@@ -6,16 +8,17 @@
 	\end{figure}
 
 \begin{itemize}
-	\item II World War - detect all soldiers with syphilis
-	\item Tests performed on efficiently pooled groups of items
-	\item Least no. of tests ($m$) to identify $K$ defective items from $N$ items
+	\item World War II - detect all soldiers with syphilis
+	\item Tests performed on efficiently pooled groups of soldiers
+	\pause
+	\item \emph{Generalized}: Least no. of tests to identify $K$ defective items from $N$ items
 \end{itemize}	
 
 \end{frame}
 
-%%%-------------------------------------------------------------------------------------------
-\begin{frame}\frametitle{Group Testing}
-\alert{Example}
+%%%------------------------------------------------------------------------------------------------------------------------------------------
+\begin{frame}\frametitle{Introduction}
+Example:
 \vspace{-0.3in}
 	\begin{figure}[t]
 		\centering
@@ -23,48 +26,111 @@
 	\end{figure}
 \end{frame}
 
-
-%%----------------------------------------------------------------------------------
-\begin{frame} \frametitle{Group Testing}
-\begin{figure}[t]
+%%---------------------------------------------------------------------------------------------------------------------------------------------
+\begin{frame} \frametitle{Problem statement}
 \centering
-\includegraphics[width=3.4in]{\gt_figpath/A_times_X_group_testing.pdf}
-\end{figure}
+\includegraphics[width=0.58\textwidth]{\gt_figpath/A_times_X_group_testing.pdf}
+\[
+~~\text{ where~~}		\vec{a}_i\odot X ~= \overset{N}{\underset{j=1}{\vee}} a_{ij}X_j 
+\]
+\pause
+\begin{block}{Objective}
+For a given $K,N$ and a maximum probability of recovery error, design a testing scheme
+\begin{itemize}
+\item minimizing the number of tests
+\item minimizing the computational complexity of recovery 
+\end{itemize} 
+\end{block}
+\end{frame}
+%%%----------------------------------------------------------------------------------------------------------------------------------
+\begin{frame} \frametitle{Bounds on sample and time complexities}
+\begin{block}{Probabilistic GT}
+\begin{itemize}
+\item aim is to recover \emph{all} the defective items w.h.p
+\item testing complexity $m$ is $\Omega(K\log \frac{N}{K})$ and $\mc{O}(K\frac{\log^2 N}{\log K})$
+\end{itemize}
+\end{block}
 
-\begin{block}
-	{
-		\[ \small \underset{\color{blue}(Observation \ vector)}{Y_{m \times 1}} = A \odot X = \begin{bmatrix}
-		{<a_1,X>} \\
-		{<a_2,X>}  \\
-		\vdots  \\
-		{<a_m,X>}
-		\end{bmatrix} \ \   <a_i , X> = \overset{N}{\underset{j=1 }{\vee}} a_{ij}X_j  \] }
-		
+\pause
+\vspace{6ex}
+\begin{block}{Approximate GT}
+\begin{itemize}
+\item aim is to recover ($1-\epsilon$) fraction of the defective items w.h.p
+\item testing complexity $m$ is $\mc{O}(K\log N)$
+\item lower bound not known
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------------------------------
+\begin{frame} \frametitle{Main result}
+\begin{itemize}
+\item We propose a testing scheme based on left and right regular Tanner graphs
+\item Bin detection matrix and peeling decoder identical to [LPR 15]
+\end{itemize}
+
+\begin{block}{Approximate Group Testing (Noiseless and Noisy)}
+\begin{itemize}
+\item Recovers $(1-\epsilon)K$ items w.h.p.
+\item Samples: $m = c_{\epsilon}K \log_2 \frac{N}{K}$ is order optimal
+\begin{itemize}
+\item scaling $\mc{O}(K \log N)$ is same as [LPR15]
+\item however our scheme provides a better upper bound $\Theta(K\log\frac{N}{K})$
+\end{itemize}
+\end{itemize}
+\end{block}
+
+\pause
+\begin{block}{Probabilistic Group Testing}
+\begin{itemize}
+\item Recovers $K$ defective items w.h.p.
+\item With $m = cK \log K \log_2 \frac{N}{K}$ tests, probability of recovery $1-\mc{O}(K^{-\alpha})$
+\begin{itemize}
+\item only a factor of $\log K$ away from the lower bound $\Omega(K\log\frac{N}{K})$
+\end{itemize}
+\end{itemize}
+\end{block}
+
+\begin{itemize}
+\item<3-> Computational complexity: $O(K \log \frac{N}{K})$
+\end{itemize}
+\end{frame}
+
+%%%-----------------------------------------------------------------------------------------
+\subsection{Testing scheme}
+\begin{frame}{Challenges to a peeling approach}
+\begin{itemize}
+\item Differs from CS: OR operation instead of real/binary sum
+\item Challenges involved with peeling approach:
+\begin{itemize}
+\item non-linear function node
+\item peeling is difficult. Given $\vec{y}_j=\vec{s}_{1}\vee \vec{s}_{2}\vee \ldots \vec{s}_{k}$ and $\{\vec{s}_1,\ldots \vec{s}_{k-1}\}$, find $\vec{s}_k$? 
+\end{itemize}
+\end{itemize}
+\vspace{3ex}
+\pause
+
+\begin{block}{Idea [LPR15]}
+Design the bin detection matrix $\mathbf{S}$ such that, given
+\begin{itemize}
+\item  $\vec{y}_j=\vec{s}_{i_1}$ find $i_1$ efficiently
+\item $\vec{y}_j=\vec{s}_{i_1}\vee \vec{s}_{i_2}$ and $i_1$ is known find $i_2$
+\item<3-> Peeling decoder involving function nodes with not more than two connections
+\end{itemize}
+
 \end{block}
 \end{frame}
 
-%%%------------------------------------------------------------------------------
-\begin{frame}{Group Testing}
-\begin{block}{Differences}
-\begin{itemize}
-\item Differs from CS: OR operation, non-linear
-\item So the previous bin detection matrix would not work
-\end{itemize}
-\end{block}	
-
-\onslide<2->			
-\begin{block}{Singleton detection}			
+%%%---------------------------------------------------------------------------------
+\begin{frame}\frametitle{Bin detection matrix}
+\begin{align*}
 {
- \tiny
-$$
-			\begin{bmatrix}
-		H_1 \\
-		\overline{H_1}
-\end{bmatrix}
-=
-\begin{bmatrix}
+\small
+\mathbf{S}=\begin{bmatrix}
 					\bf{b_1} & \bf{b_2} & \bf{b_3} & \cdots & \bf{b_{n-1}}\\
-				   	\bf{\overline{b_1}} & \bf{\overline{b_2}} & \bf{\overline{b_3}} & \cdots & \bf{\overline{b_{n-1}}} \end{bmatrix}
+					\vspace{0.2pt}
+				   	\bf{\overline{b}_1} & \bf{\overline{b}_2} & \bf{\overline{b}_3} & \cdots & \bf{\overline{b}_{n-1}} \end{bmatrix}
 =
  \begin{bmatrix}
 		0      & 0   & 0 & \cdots & 1 &  1 \\
@@ -79,78 +145,143 @@ $$
 		1      & 1   & 0 & \cdots & 0 &  0  \\
 		1      & 0   & 1 & \cdots & 1 &  0  \\
 \end{bmatrix}
-$$
 }
-\alert{Note:} If a checknode is a singleton, with $i$th bit-node participating, then the observation vector is the $i$th column of $A$.
+\end{align*}
 
+\begin{block}{Singleton}			
 \begin{itemize}
-\item Singleton - if the {\color{blue}weight of first two observation} vectors together is{ \ \color{blue} $L$}.
-\item {\color{blue}Position} of the defective item is - {\color{blue} decimal value of the 1st observation vector}.
+\item {\color{blue}Detection} - if the weight of first two observation vectors together is $L$
+\item {\color{blue}Position} of the defective item: decimal value of the 1st observation vector
 \end{itemize}    				
 \end{block}					
 \end{frame}
 
-%%%---------------------------------------------------------------------------------
-\begin{frame}\frametitle{Group Testing}
-\vspace*{-0.1in}
-  \begin{block}{Measurement matrix ($A_{m\times n}$)}
-  {\centering
-  $A_{m \times n}  = \underset{\color{blue} (d-left \ regular \ Graph)}{\bf G_{\frac{m}{6} \times n}} {\Large \bf \color{red} \otimes} \underset{\color{blue} (Singleton \ identifier)}{\bf H_{6 \times n}}$ \\
-  \vspace{6pt}
-  Let, $\bf{b_i}$ denote the {\color{blue}$L$-bits binary representation of the integer $i-1$}, $L=\lceil \log_2{n} \rceil$.
-   {\small \[ H = \begin{bmatrix}
-					\bf{b_1} & \bf{b_2} & \bf{b_3} & \cdots & \bf{b_{n-1}}\\
-				   	\bf{\overline{b_1}} & \bf{\overline{b_2}} & \bf{\overline{b_3}} & \cdots & \bf{\overline{b_{n-1}}}\\
-					\bf{b_{i_1}} & \bf{b_{i_2}} & \bf{b_{i_3}} & \cdots & \bf{b_{i_{n-1}}}\\
-				   	\bf{\overline{b_{i_1}}} & \bf{\overline{b_{i_2}}} & \bf{\overline{b_{i_3}}} & \cdots & \bf{\overline{b_{i_{n-1}}}}\\
-				   	
-					\bf{b_{j_1}} & \bf{b_{j_2}} & \bf{b_{j_3}} & \cdots & \bf{b_{j_{n-1}}}\\
-				   	\bf{\overline{b_{j_1}}} & \bf{\overline{b_{j_2}}} & \bf{\overline{b_{j_3}}} & \cdots & \bf{\overline{b_{j_{n-1}}}} \end{bmatrix} \]
-$s_1=(i_1, i_2, \cdots, i_{n-1})$ and $s_2=(j_1, j_2, \cdots, j_{n-1})$ are permutations }}
- \end{block}
+%%%---------------------------------------------------------------------------------%%%%
+\begin{frame}{Doubleton detection}
+Example:
+\begin{align*}
+{
+\small
+\mathbf{S}=
+ \begin{bmatrix}
+		0      & 0   & 0 & 0 & 1 & 1 & 1 & 1 \\
+		0      & 0   & 1 & 1 & 0 & 0 & 1 & 1 \\
+		0      & 1   & 0 & 1 & 0 & 1 & 0 & 1 \\
+		-- & -- & -- & -- & -- & -- & -- & -- \\
+		1      & 1   & 1 & 1 & 0 & 0 & 0 & 0 \\
+		1      & 1   & 0 & 0 & 1 & 1 & 0 & 0 \\
+		1      & 0   & 1 & 0 & 1 & 0 & 1 & 0 
+\end{bmatrix}
+}
+\end{align*}
+\pause
+\begin{itemize}
+\item Let $\vec{y}_j=\vec{s}_{i_1}\vee \vec{s}_{i_2}$ and $i_1=3$ is known, $i_2$ is unknown
+\end{itemize}
+\begin{align*}
+{
+\small
+\vec{y}_j=
+ \begin{bmatrix}
+	 0  \\
+	 1 \\
+  	 0  
+\end{bmatrix} \vee
+ \begin{bmatrix}
+	  s_{i_2}(0) \\
+	  s_{i_2}(1)\\
+	  s_{i_2}(2) 
+\end{bmatrix}
+}
+\end{align*}
 
+\pause
+\[
+{\small
+\vec{a}_{i_2}= 
+\begin{bmatrix}
+	  y_{j}(0) \\
+	  y_{j}(4) \\
+	  y_{j}(2) 
+\end{bmatrix}
+}
+\]
+
+\end{frame}
+
+
+%----------------------------------------------------------------------------------------------------------------------------------
+\begin{frame}{Left and right regular ensemble}
+$(N,\ell,r,\mbf{A})$ ensemble. $\ell N=rM_1$. 
+\onslide<2->{$\text{dim}(\mbf{S})=c\log_2 r \times r$.}
+
+\vspace{5ex}
+\centering
+\resizebox{0.55\textwidth}{!}{\input{\gt_figpath/TannerGraph.tex}}
+\end{frame}
+
+%%%---------------------------------------------------------------------------------%%%%
+%\begin{frame}\frametitle{Overall testing scheme}
+%Testing matrix: 
+%  {\centering
+%  $\mbf{A}_{m \times n}  = \underset{\color{blue} (\ell,r) regular~graph}{\bf G_{\frac{m}{6} \times n}} {\Large \bf \otimes} \underset{\color{blue} bin~detection}{\bf S_{6 \times r}}$ \\
+%  \vspace{6pt}
+%   {\small 
+%   \[ S = \begin{bmatrix}
+%					\bf{b_1} & \bf{b_2} & \bf{b_3} & \cdots & \bf{b_{n-1}}\\
+%				   	\bf{\overline{b_1}} & \bf{\overline{b_2}} & \bf{\overline{b_3}} & \cdots & \bf{\overline{b_{n-1}}}\\
+%					\bf{b_{i_1}} & \bf{b_{i_2}} & \bf{b_{i_3}} & \cdots & \bf{b_{i_{n-1}}}\\
+%				   	\bf{\overline{b_{i_1}}} & \bf{\overline{b_{i_2}}} & \bf{\overline{b_{i_3}}} & \cdots & \bf{\overline{b_{i_{n-1}}}}\\
+%				   	
+%					\bf{b_{j_1}} & \bf{b_{j_2}} & \bf{b_{j_3}} & \cdots & \bf{b_{j_{n-1}}}\\
+%				   	\bf{\overline{b_{j_1}}} & \bf{\overline{b_{j_2}}} & \bf{\overline{b_{j_3}}} & \cdots & \bf{\overline{b_{j_{n-1}}}} \end{bmatrix} 
+%				   	\]
+%	}
+%	}
+%	\begin{itemize}
+%	\item $\bf{b_i}$ denotes the $L$-bit binary representation of the integer $i-1$. $L=\lceil \log_2{n} \rceil$
+%	\item $\pi_1=(i_1, i_2, \cdots, i_{n-1})$ and $\pi_2=(j_1, j_2, \cdots, j_{n-1})$ are permutations 
+%	\end{itemize}
+%\end{frame}
+
+%----------------------------------------------------------------------------------------------------------------------------------
+\begin{frame}{Constrained peeling}
 \begin{block}{Decoding procedure}
 \begin{itemize}
-\item  Identify and decodes singletons using weights of the observation vector
+\item  Identify and decode singletons using weights of the observation vector
 \item Identify and resolve doubletons by guessing to satisfy the first pair of observation vectors and checking if the guess satisfies the other two pairs of observations
 \item The iteration continues until no doubletons can be resolved
 \end{itemize}
-
 \end{block}
-\end{frame}
-
-%----------------------------------------------------------------------------------------------------------------------------------
-\begin{frame} \frametitle{Main results for group testing}
-\begin{block}{Non-adaptive Group Testing (Noiseless and Noisy)}
-\begin{itemize}
-\item Recovers $(1-\epsilon)K$ items w.h.p.
-\item Samples: $m = \Theta(K \log_2 \frac{N}{K})$ is order optimal
-\item Computational complexity: $O(K \log \frac{N}{K})$  (order optimal)
-\end{itemize}
-\end{block}
+\vspace{10ex}
+\centering
+\begin{tabular}{| c | c | c | c | c | c | c | c | }
+\hline
+$\epsilon$ & $10^{-3}$ & $10^{-4}$ & $10^{-5}$ & $10^{-6}$ &$ 10^{-7}$ & $10^{-8}$ & $10^{-9}$ \\ \hline
+$c_\epsilon$ & 6.13 & 7.88 & 9.63 & 11.36 & 13.10 & 14.84 & 16.57 \\ \hline
+ $\ell$ & 7 & 9 & 10 & 12 & 14 & 15 & 17 \\ \hline
+\end{tabular}
 
 \end{frame}
 
 %----------------------------------------------------------------------------------------------------------------------------------
-\begin{frame}{Conclusion}
-\begin{itemize}
-  \item Review of a simple message passing decoder called the peeling decoder
-  \item Density evolution as a tool to analyze its asymptotic performance
-  \item Applications 
-    \begin{itemize}
-      \item Sparse Fourier transform computation
-      \item Compressed sensing type sparse recovery problems
-    \end{itemize}
-\end{itemize}
+%\begin{frame}{Error floor- constrained peeling}
+%
+%\end{frame}
+
+%----------------------------------------------------------------------------------------------------------------------------------
+\begin{frame}{Numerical results-Noiseless GT}
+\centering
+\resizebox{0.6\textwidth}{!}{\input{\gt_figpath/noiseless_sims.tex}}
 \end{frame}
-	
-%--------------------------------------------------------------------
-\begin{frame}\frametitle{Questions?}
-	\begin{figure}[t]
-		\centering
-		\includegraphics[width=2.8in]{\gt_figpath/questions}
-	\end{figure}
-	\centering
-	\color{blue}
-	\Huge{Thank you!}
+
+%----------------------------------------------------------------------------------------------------------------------------------
+\begin{frame}{Numerical results-Noisy GT}
+\vspace{-1ex}
+\begin{align*}
+\vec{y}&=A\odot \vec{x} ~\oplus \vec{z}~~\quad	\text{where } z_i\sim \text{Ber}(q).
+\end{align*}
+
+\centering
+\resizebox{0.6\textwidth}{!}{\input{\gt_figpath/noisy_sims.tex}}
 \end{frame}

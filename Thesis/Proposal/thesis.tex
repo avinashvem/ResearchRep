@@ -1,5 +1,6 @@
 \documentclass[12pt]{report}
 \usepackage{tamuconfig}
+\setcounter{tocdepth}{2} 
 \setcounter{secnumdepth}{2}
 
 \renewcommand{\thechapter}{\Roman{chapter}}
@@ -17,8 +18,7 @@
 %document.
 \usepackage{graphicx}
 
-%If you have JPEG format images, add .jpg as an
-%allowed file extension below. Same for Bitmaps (.bmp).
+%If you have JPEG format images, add .jpg as an allowed file extension below. Same for Bitmaps (.bmp).
 \DeclareGraphicsExtensions{.png}
 
 %It is best practice to keep all your pictures in one folder inside the main directory in which your
@@ -82,21 +82,24 @@
 
 \include{data/titlepage} % This is simply a file that formats and adds your titlepage, please do not edit this unless you have a specific need. .
 \include{data/abstract}
-%\include{data/dedication}
-%\include{data/acknowledgements}
+\include{data/dedication}
+\include{data/acknowledgements}
 %\include{data/contributors}
-%\include{data/nomenclature}
+\include{data/nomenclature}
 \include{data/lists}  % This is simply a file that formats and adds your toc, lof, and lot, please do not edit this unless you have a specific need.
 
 
 \include{data/introduction}
 %\include{data/background}
-%%---------------------MAC--------------------------------
+%%---------------------MAC-----------------------------------------------
 \chapter{MASSIVE MULTIPLE ACCESS}
 \label{chap:MAC}
 \input{data/MA/unsourcedma.tex}
+
+\chapter{RANDOM MULTIPLE ACCESS}
+\label{chap:uncoord_mac}
 \input{data/MA/uncoordinated.tex}
-%--------------------SCLDPC--------------------------------
+%--------------------SCLDPC-----------------------------------------------
 \include{data/SCLDPC} %SCLDPC
 
 %--------------------Compressed Sensing--------------------------------
@@ -108,8 +111,6 @@
 \chapter{GROUP TESTING}
 \label{chap:gt}
 \input{data/GT/grouptesting.tex}
-
-
 
 %fix spacing in bibliography, if any...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
