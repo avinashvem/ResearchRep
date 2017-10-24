@@ -14,13 +14,13 @@ If we consider the probabilistic version of the problem, it was shown in \cite{c
 
 In \cite{lee2015saffron} authors Lee, Pedarsani and Ramchandran proposed a testing scheme based on \textit{left-regular sparse-graph} codes and a simple iterative decoder based on the\textit{peeling} decoder, which are popular tools in channel coding \cite{richardson2008modern}, for the non-adaptive group testing problem. They refer to the scheme as SAFFRON(\textbf{S}parse-gr\textbf{A}ph codes \textbf{F}ramewrok \textbf{F}or g\textbf{RO}up testi\textbf{N}g), a reference which we will follow through this document. The authors proved that using SAFFRON scheme $m=c_\epsilon K\log N$ number of tests are enough to identify atleast $(1-\epsilon)$ fraction of defective items (the approximate version of GT) w.h.p. The precise value of constant $c_\epsilon$ as a function of the required error floor $\epsilon$ is also given. More importantly the computational complexity of the proposed peeling based decoder is only $\mc{O}(K\log N)$. They also showed that with $m=c\cdot K\log K \log N$ tests  i.e. with an additional $\log K$ factor, the \textit{whole} defective set (the probabilistic version of GT) can be recovered with an asymptotically high probability of $1-\mc{O}(K^{-\alpha})$.
 
-\subsection*{Our Contributions}
+\subsection*{Our contributions}
 In this work, we propose a non-adaptive GT scheme that is similar to the SAFFRON but we employ \textit{left-and-right-regular sparse-graph} codes instead of the left-regular sparse-graph codes and show that we only require $\ceps K\log \frac{N\ell}{\ceps K}$ number of tests for an error floor of $\epsilon$ in the approximate version of the GT problem. Although the testing complexity of our scheme has the same asymptotic order $\mc{O}(K\log N)$ as that of \cite{lee2015saffron}, which as far as we are aware is the best known order result for the required number of tests in the approximate GT, it provides a better explicit upper bound of $\Theta(K\log \frac{N}{K})$ with optimal computational complexity $\mc{O}(K\log \frac{N}{K})$ and also a significant improvement in the required number of tests for finite values of $K,N$. 
 %The other novel result of this construction is that for a fixed error floor $\epsilon$ we can achieve these optimal testing and sampling complexities using a fixed and finite value for parameter $\ell$ which is the maximum number of tests any item participates in. In other words we are able to solve efficiently for GT (approximate version) under the constraint that the total number of times any item can be divided is finite (finite divisibility constraint)\cite{gandikotanearly} which is a practical constraint in many of the applications. As far as we are aware this is the first scheme which meets the lower bound for approximate GT problem with optimal computational complexity. And also the first testing scheme for the approximate version that achieves the optimal testing complexity under finite divisibility constraint.
 Following the approach in \cite{lee2015saffron} we extend our proposed scheme with the singleton-only variant of the decoder to tackle the probabilistic version of the GT problem. In Sec.~\ref{Sec:Singleton-only} we show that for $m=c\cdot K\log K \log \frac{N}{K}$ tests i.e. with an additional $\log K$ factor the \textit{whole} defective set can be recovered w.h.p. Note that the testing complexity of our scheme is only $\log K$ factor away from the best known lower bound of $\Omega(K\log \frac{N}{K})$ \cite{chan2014non} for the probabilistic GT problem. We also extend our scheme to the noisy GT problem, where the test results are corrupted by noise, using an error-correcting code similar to the approach taken in \cite{lee2015saffron}. We demonstrate the improvement in the required number of tests due to \emph{left-}and-\emph{right}-regular graphs  for finite values of $K, N$ via simulations.
 %order optimal for both the noiseless and noisy settings as mentioned in \cite{lee2015saffron}. Regarding the optimality of the number of tests for the noiseless setting where both $K$ and $N$ scale satisfying $K=o(N)$, it was shown \cite{atia2012boolean} that the number of tests need to be atleast as large as $C K \log (\frac{N}{K})$ for some constant $C$ such that the probability of error approaches zero. As far as we are aware this is the tightest lower bound. In the same work it is shown that $C K \log N$ is the sufficient number of tests. In our work we show that in fact $C(\epsilon) K \log(\frac{N}{K})$ tests is sufficient to recover $(1-\epsilon)$ fraction of the defective items with high probability. More survey needs to be done regarding the lower and upper bounds for the number of tests in noiseless and noisy settings especially under different performance evaluation criteria. For e.g., in \cite{atia2012boolean} the upper bound(achievable) on the minimal number of tests $O(K \log N)$ is when the performance metric considered is the average probability of error that the decoded support set is not exactly equal to the original support set. But for the framework where $\epsilon$-fraction of the defective items are allowed to be missed, only the locd wer bound on the number of tests required is given. 
 
-\section{Problem Statement}
+\section{Problem statement}
 Formally the group testing problem can be stated as following. Given a total number of $N$ items out of which $K$ are defective, the objective is to perform $m$ different tests and identify the location of the $K$ defective items from the test outputs. For now we consider only the noiseless group testing problem i.e., the result of each test is exactly equal to the boolean OR of all the items participating in the test. 
 
 Let the support vector $\mathbf{x}\in\{0,1\}^{N}$ denote the list of items in which the indices with non-zero values correspond to the defective items. A non-adaptive testing scheme consisting of $m$ tests can be represented by a matrix $\mbf{A}\in\{0,1\}^{m\times N}$ where each row $\mbf{a}_{i}$ corresponds to a test. The non-zero indices in row $\mbf{a}_i$ correspond to the items that participate in $i^{\text{th}}$ test. The output corresponding to vector $\mbf{x}$ and the testing scheme $\mbf{A}$ and can be expressed in matrix form as:
@@ -131,7 +131,7 @@ Combining the lemmas and remarks above, the main result from \cite{lee2015saffro
 A random testing matrix from the SAFFRON scheme with $m=6\ceps K \log_{2}N$ tests recovers atleast $(1-\epsilon)$ fraction of the defective items w.h.p of atleast $1-O(\frac{K}{N^2})$. The computational complexity of the decoding scheme is $O(K\log N)$. The constant $\ceps$ is given in Table. \ref{Table:constantsDE} for some values of $\epsilon$.
 \end{theorem}
 
-\section{Proposed Scheme}
+\section{Proposed scheme}
 The main difference between the SAFFRON scheme described in Sec.~\ref{Sec:PriorWork} and our proposed scheme is that we use a left-and-right-regular sparse-graph instead of left-regular sparse-graph in the first stage for the binning operation.
 
 \begin{definition}[Left-and-right-regular sparse graph ensemble]
@@ -256,7 +256,7 @@ P_e &\leq \tx{Pr}(E_1)+ \tx{Pr}(E_2)\\
 where the second inequality is due to the union bound over a maximum of $K\ell$ (number of edges in the pruned graph) instances of bin decoding. The third line is due to the fact that $\tx{Pr}(E_1)$ is exponentially decaying in $K$ (see Lemma. \ref{Lem:PeelingRegularAnalysis}) and $\tx{Pr}(E_{\tx{bin}})=(\frac{\ceps K}{N\ell})^{p-1}$ (see Lemma. \ref{Lem:BinDecoderAnalysis} and Def. \ref{Def:RegSaffron})
 \end{proof}
 
-\section{Total recovery: Singleton-Only Variant}
+\section{Total recovery: Singleton-only variant}
 \label{Sec:Singleton-only}
  In this section we will look at the proposed regular-SAFFRON scheme but with a decoder that uses only the singleton bins. To elaborate, the only difference is in the decoder which is not iterative in this framework and recovers the variable nodes connected to only the singleton bin nodes and terminates. We will refer to this scheme as \textit{singleton-only} regular-SAFFRON scheme. The trade-off is that we can now recover the \textit{whole} defective set instead of just a large fraction of the defective items with an additional $\log K$ factor tests. Since we do not need to be able to recover resolvable double-tons we only need $2\log_2 r$ number of tests at each bin i.e. we choose $p=1$ for the signature matrix in Eqn. \eqref{Eqn:SignatureMatrix}.
 \begin{theorem}
@@ -281,7 +281,7 @@ P_e&\leq K(1-R_1)^\ell \\
 In third line we used $(1-x)\leq e^{-x}$.
 \end{proof}
 
-\section{Robust Group Testing}
+\section{Robust group testing}
 \label{Sec:NoisyGroupTesting}
 In this section we extend our scheme to the group testing problem where the test results can be noisy. Formally, the signal model can be described as 
 \begin{align*}
@@ -397,7 +397,7 @@ P_e &\leq  \tx{Pr}(E_1)+ K\ell\tx{ Pr}(E_{\tx{bin}})\\
 where the second line is due to Lem. \ref{Lem:RobustBinAnalysis} and the third line is due to the fact that $\tx{Pr}(E_1)$ is exponentially decaying in $K$ and $K\leq N^{(p-1)/p}$ for large enough $K,N$.
 \end{proof}
 
-\section{Simulation Results}
+\section{Simulation results}
 In this section we will evaluate the performance of the proposed regular-SAFFRON scheme via Monte Carlo simulations and compare it with the results of SAFFRON scheme provided in \cite{lee2015saffron} for both the noiseless and noisy models.
 
 \subsection*{Noiseless Group Testing}

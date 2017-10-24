@@ -797,10 +797,74 @@ Although in Sec. \ref{sec:SICanalysis} we remarked that if the minimum left degr
 \begin{figure}[h]
 \centering
  \resizebox{0.75\textwidth}{!}{\input{\Figurespath/sim_results_30000_0.04_0.01.tex}}
-  \caption{Minimum $E_b/N_0$ required to achieve $P_e\leq 0.05$  as a function of number of users. We present the performance comparison for the uniform power constraint case. In this, number of times a codeword is repeated is constant and is independent of the message index.}
+  \caption{Minimum $E_b/N_0$ required to achieve $P_e\leq 0.05$  as a function of number of users. We present the performance comparison of the average power constraint versus the uniform power constraint case. For the uniform power constraint case, number of times a codeword is repeated is constant and is independent of the message index thus resulting in equal energy being expended for all the codewords uniformly.}
   \label{fig:simulationresults30000}
 %\end{minipage}
 \end{figure}
+
+
+\section{Appendix}
+\subsection{Proof of Lem.\ref{lem:errorprob_correlationdecoder}}
+\label{appendix:proof_errorprob_correlationdecoder}
+%\begin{lemma}
+%Let $\{1,2,\ldots,T\}$ be the set of preamble part of the message indices transmitted in a bin and $\yv$ be the preamble part of the received vector. If we let $\Pr(\mc{E}_{corr})$ denote the the probability of the error event that the correlation $\langle \yv, \av_i\rangle \leq \langle \yv, \av_j\rangle $ for some $i\leq T$ and $j>T$. Then 
+%\[
+%\Pr(\mc{E}_{\mathrm{p}})=1-\left(1-(\Mp-T)\Pr(\mc{E}_{\text{corr}})\right)^T 
+%\]
+%\end{lemma}
+%\begin{proof}
+%The observation that the correlation decoder does not make an error in decoding the set of preamble message indices if and only if $\langle \yv, \av_i\rangle >\langle \yv, \av_j\rangle $ is satisfied for all $i\leq T$ and $j>T$ completes the proof.
+%\end{proof}
+
+To complete the proof of Lemma. \ref{lem:errorprob_correlationdecoder} we need to show that 
+\begin{align*}
+\text{random ensemble:}\qquad ~~&\Pr(\mc{E}_{\text{corr}})\leq \exp\left\lbrace\frac{-\Np\Pp}{2(2+(2T-1)\Pp)}\right\rbrace\\
+\text{binary ensemble:}\qquad ~~&\Pr(\mc{E}_{\text{corr}})\leq \exp\left\lbrace\frac{-\Pp(\dmax-T(\dmax-\dmin))^2}{2\dmax}\right\rbrace.
+\end{align*}
+%$\Pr(\mc{E}_{\text{corr}})\leq \exp\left\lbrace\frac{-\Np\Pp}{2(2+(2T-1)\Pp)}\right\rbrace$. 
+According to the hypothesis in Lemma. \ref{lem:errorprob_correlationdecoder} the preamble part of the received vector is written as $\yv=\sum_{i=1}^{T}\av_i+\zv$ where $\zv\sim\mc{N}(0,\mathbf{I}_{\Np})$.	 For a fixed $j$ chosen randomly from $j\in\{T+1,..,\Mp\}$, 
+\begin{align}
+\Pr(\mc{E}_{\text{corr}})&\defeq \Pr(\langle\yv,~\av_j\rangle >\langle\yv,~\av_1\rangle) \label{eqn:appa_probdefinition}\\
+&=\Pr(\langle\zv+\sum_{i=2}^{T}\av_i,\av_j-\av_1\rangle+\langle\av_1,\av_j\rangle >\Np\Pp)\label{eqn:appa_expansionPre}\\
+&=\Pr\left(\frac{1}{\Np\Pp}\left[\langle\zv,\av_j-\av_1\rangle+\langle\sum_{i=1}^{T}\av_i,\av_j\rangle-\langle\sum_{i=2}^{T}  \av_i,\av_j\rangle\right] >1\right)\label{eqn:appa_finalexpansionPre}
+\end{align}
+where we use the fact $||\av_i||^2=\Np\Pp\forall i$ in Eqn. \eqref{eqn:appa_expansionPre}.
+%we substitute Eqn. \eqref{eqn:appa_ydefinition} in Eqn. \eqref{eqn:appa_probdefinition} and use the fact that $||
+
+\subsubsection*{random ensemble} 
+For the random ensemble $\frac{1}{\Pp}a_{ik}a_{jk}$ is a Rademacher random variable $\forall i\neq j, k\in[\Np]$ and thus from central limit theorem $\frac{1}{\Np\Pp}\langle \av_i,\av_j \rangle \frac{1}{\Np\Pp}\sum_{k}a_{ik}a_{jk}\rightarrow\mc{N}(0,\frac{1}{Np})$ asymptotically in $\Np$. Similarly for all $k\in[\Np], \frac{1}{\Pp}z_{k}a_{ik}\sim \mc{N}(0,\frac{1}{\Pp})$ and $\frac{1}{\Np\Pp}\sum_{k}z_{k}a_{ik}\sim \mc{N}(0,\frac{1}{\Np\Pp})$. Thus the right hand side in Eqn. \eqref{eqn:appa_finalexpansionPre} can be approximated as
+\begin{align*}
+\Pr(\mc{E}_{\text{corr}})&=\Pr\left(\frac{1}{\Np\Pp}\left[\langle\zv,\av_j-\av_1\rangle+\langle\sum_{i=1}^{T}\av_i,\av_j\rangle-\langle\sum_{i=2}^{T}  \av_i,\av_j\rangle\right] >1\right)\\
+&\approx \Pr(z_{eq}+a_{eq}>1)  ~~~\text{where } z_{eq}\sim \mc{N}(0,\frac{2}{\Np\Pp}), a_{eq} \sim \mc{N}(0,\frac{2T-1}{\Np})\\
+&\leq \exp\left\lbrace -\frac{\Np\Pp}{2(2+\Pp(2T-1))}\right\rbrace.
+\end{align*}
+
+\subsubsection*{binary ensemble} 
+For the binary ensemble the correlation between any two vectors is bounded as $\Np-2\dmax \leq \frac{1}{\Pp}\langle \av_i,\av_j \rangle\leq \Np-2\dmin$. Thus the right hand side in Eqn. \eqref{eqn:appa_finalexpansionPre} can be upper bounded as
+\begin{align*}
+\Pr(\mc{E}_{\text{corr}})&=\Pr\left(\left[\langle\zv,\av_j-\av_1\rangle+\langle\sum_{i=1}^{T}\av_i,\av_j\rangle-\langle\sum_{i=2}^{T}  \av_i,\av_j\rangle\right] >\Np\Pp\right)\\
+&\leq \Pr\left(\left[\langle\zv,\av_j-\av_1\rangle+\Pp T(\Np-2\dmin)-\Pp(T-1)(\Np-2\dmax)\right] >\Np\Pp\right)\\
+&= \Pr\left(z'_{eq} >2\Pp(\dmax - T(\dmax-\dmin)\right)\\
+&\leq \exp\left\lbrace\frac{-\Pp(\dmax-T(\dmax-\dmin))^2}{2\dmax}\right\rbrace,
+\end{align*}
+where $z'_{eq}=\langle\zv,\av_j-\av_1\rangle\sim\mc{N}(0,4\Pp d_{1j})$, $d_{1j}$ is the Hamming distance between the vectors $\av_1$ and $\av_j$.  Thus the maximum variance $z'_{eq}$ can have is $4\Pp\dmax$ which when used in the tail bound for normal distribution gives the required upper bound.
+
+\subsection{Proof of Lem.\ref{lem:DE_Tpeeling}}
+\label{appendix:proof_DE_Tpeeling}
+In the context of low density parity check (LDPC) codes the bipartite graph corresponds to the parity check matrix where the left and right nodes represent the bits of the codeword and the parity check equations respectively. If we consider an LDPC code under binary erasure channel where each bit is erased with probability $\epsilon$, under the assumption that the bipartite graph is a tree, the probability that a random edge in the graph is an erasure in iteration $t$ of the peeling process is given by \cite{richardson2008modern}
+\begin{align}
+y_{t}&=\sum_{r=1}^{r_{\max}} \rho_r (1-x_t)^{r-1}, \label{eqn:DE_LDPC_check}\\
+x_{t+1}&=\epsilon \lambda(1-y_t).\label{eqn:DE_LDPC_bit}
+\end{align}
+Eqn. \eqref{eqn:DE_LDPC_check} is due to the observation that all the incoming messages at a check node are independent, due to the tree assumption, and the outgoing message on an edge from a check node of degree $r$ is a non-erasure if and only if all the incoming messages are non-erasures. For degree distributions with finite maximum degree on the left and right it is shown that a graph chosen randomly from the ensemble $(N,\lambda,\rho)$ is a tree with probability approaching $1$ asymptotically in blocklength of the code.
+
+Now if we consider an edge $e$ connected to check node of degree $r$ in the $T$-peeling process, the outgoing message is a non-erasure if and only if there are at most $T-1$ erasures in the remaining $r-1$ incoming edges. Thus the probability that the outgoing message from a check node of degree $r$ is non-erasure, denoted by $y_{t,r}$, if the incoming message on the remaining $r-1$ edges is an erasure with probability $x_t$ is equal to
+%$1-\binom{r-1}{t}(1-x_t)^{r-1-t} x_t^{t}$ if $r>T$ else it is equal to $0$.
+\begin{align*}
+y_{t,r}&=\sum_{t=0}^{T-1}\binom{r-1}{t}(1-x_t)^{r-1-t} x_t^{t}  ~&\text{if } r>T\\
+&=1 ~&\text{else if } r\leq T.
+\end{align*}
+Averaging over all edges where an edge is connected to a check node of degree $r$ with probability $\rho_r$ gives us Eqn. \eqref{eqn:DE_Tpeeling_check}.
 
 
 %\begin{figure}[h]
