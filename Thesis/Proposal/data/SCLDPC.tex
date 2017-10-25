@@ -11,10 +11,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                           SECTION III
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \def \figures_path{./data/SCLDPC}
 \chapter{\uppercase {Construction-D Lattices via Spatially coupled LDPC codes}}
 \label{chap:SCLDPClattices}
-
 %\section{Review: Lattices}
 Lattices have been studied in pure mathematics for more than two centuries. In the last few decades lattices have found applications in connection with coding theory, cryptography and various physical sciences. Lattice codes derived from well designed lattice structures have been shown to be optimal coding solutions to several problems in information and coding theory \cite{erez05,zamir2014lattice}. In most of these cases, the underlying lattices are constructed using Construction-A and it has been shown that such lattices are simultaneously good for shaping (Roger's good) and for channel coding (Poltyrev good) \cite{erez05}. There are two important drawbacks in using optimal lattices constructed using Construction-A. On the theoretical side, the use of non-binary codes makes it difficult to prove the optimality of these lattices and lattice codes under practical decoding algorithms such as belief propagation (BP) decoding and so far, we are not aware of any results showing the optimality of Construction-A lattices under BP decoding. On the practical side, optimal lattices constructed from Construction-A typically require the underlying linear codes to work over large fields and hence, result in formidable decoding complexity, even with BP decoding.
 
@@ -501,6 +501,7 @@ for some $\mathbf{k}\in\Z^{n}$.
 
 
 \subsection{Simulation Results for Symmetric IC}
+\label{subsec:SCLDPC_IC_results}
 In this section we present simulation results for the symmetric Gaussian IC and compare them with the bounds given in \cite{sridharan2008capacity}. We choose a pair of nested codes from the $(30,18,3)$ CU-SC-LDPC ensemble with spatial-coupling parameters $(L,w)=(32,4)$. We fix $\sigma=\sigma_{\text{max}}$ (such that in absence of interference, desired signal can be decoded successfully) and we analyze the bit error probability in decoding the interference versus the channel gain $\beta$. We observe that within $0.396$dB of the very strong interference regime given by \eqref{Eqn:StrongInterfCondition2} we are able to decode the interference with a bit error probability of less than $10^{-6}$. Note that the main bottle neck in error performance in decoding the interference is the last i.e., the uncoded level whereas in decoding the desired signal (after the interference is decoded and subtracted), within $\sigma_{\text{max}}$, arbitrarily small error rates can be achieved since no uncoded level needs to be decoded.
 
 %On a single user AWGN channel i.e, after the interference is subtracted, the DE threshold for this code for the given parameters is computed to be $\sigma_{\text{max}}=0.3351$ whereas asymptotically the maximum achievable variance is $\sigma_{\text{AMGN}}=0.3728$. The Shannon capacity from \eqref{Eqn:SigmaShannon} is given by $\sigma_{\text{Sh}}=0.4969$ which is equivalent to a gap of $2.5$dB.
