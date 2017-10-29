@@ -1,26 +1,14 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%  New template code for TAMU Theses and Dissertations starting Fall 2016.  
-%
-%
-%  Author: Sean Zachary Roberson
-%  Version 3.17.06
-%  Last Updated: 6/15/2017
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                           SECTION III
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{\uppercase {Construction-D Lattices via Spatially coupled LDPC codes}\footnote{\textcopyright ~2014 IEEE. Reprinted, with permission, from A. Vem, Y.-C. Huang, K. R. Narayanan, H. D. Pfister, ``Multilevel lattices based on spatially-coupled LDPC codes with applications", International Symposium on Information Theory, 2014.}}
+\label{chap:SCLDPClattices}
 
 \def \figures_path{./data/SCLDPC}
-\chapter{\uppercase {Construction-D Lattices via Spatially coupled LDPC codes}}
-\label{chap:SCLDPClattices}
-%\section{Review: Lattices}
-Lattices have been studied in pure mathematics for more than two centuries. In the last few decades lattices have found applications in connection with coding theory, cryptography and various physical sciences. Lattice codes derived from well designed lattice structures have been shown to be optimal coding solutions to several problems in information and coding theory \cite{erez05,zamir2014lattice}. In most of these cases, the underlying lattices are constructed using Construction-A and it has been shown that such lattices are simultaneously good for shaping (Roger's good) and for channel coding (Poltyrev good) \cite{erez05}. There are two important drawbacks in using optimal lattices constructed using Construction-A. On the theoretical side, the use of non-binary codes makes it difficult to prove the optimality of these lattices and lattice codes under practical decoding algorithms such as belief propagation (BP) decoding and so far, we are not aware of any results showing the optimality of Construction-A lattices under BP decoding. On the practical side, optimal lattices constructed from Construction-A typically require the underlying linear codes to work over large fields and hence, result in formidable decoding complexity, even with BP decoding.
+Lattices have been studied in pure mathematics for more than two centuries. In the last few decades lattices have also found application in connection with coding theory, cryptography and various physical sciences. Codes derived from well designed lattice structures have been shown to be optimal coding solutions to several problems in information and coding theory \cite{erez05,zamir2014lattice}. In most of these cases, the underlying lattices are constructed using Construction-A and it has been shown that such lattices are simultaneously good for shaping (Roger's good) and for channel coding (Poltyrev good) \cite{erez05}. There are two important drawbacks in using optimal lattices constructed using Construction-A. On the theoretical side, the use of non-binary codes makes it difficult to prove the optimality of these lattices and lattice codes under practical decoding algorithms such as belief propagation (BP) decoding and so far, we are not aware of any results showing the optimality of Construction-A lattices under BP decoding. On the practical side, optimal lattices constructed from Construction-A typically require the underlying linear codes to work over large fields and hence, result in formidable decoding complexity, even with BP decoding.
 
-In this chapter, we propose a class of lattices constructed using Construction-D \cite{BarnesSloane83} where the underlying linear codes are nested binary spatially-coupled low density parity check codes (SC-LDPC) codes with uniform left and right degrees. By using the result that regular SC-LDPC codes can universally achieve capacity under BP decoding for the class of binary memoryless symmetric (BMS) channels  \cite{kudekaruniversal,kumar2014threshold} and by leveraging Forney {\em et al}'s result \cite{forney2000}, we show that the proposed lattices allow us to achieve the Poltyrev limit under multistage BP decoding. We refer to the proposed lattices as SC-LDPC lattices. Density evolution thresholds show that the proposed SC-LDPC lattices can approach the Poltyrev limit to within 0.2 dB under multistage BP decoding. Very recently, binary polar codes have been used in conjunction with Construction-D to obtain Poltyrev-good lattices in \cite{YanLingWu13}. The focus of this chapter is on the use of SC-LDPC codes.
+In this chapter \cite{vem2014multilevel}, we discuss Construction-D lattices. We propose a class of lattices constructed using Construction-D \cite{BarnesSloane83} where the underlying linear codes are nested binary spatially-coupled low density parity check codes (SC-LDPC) codes with uniform left and right degrees. Forney {\em et al} \cite{forney2000} showed that the Construction-D lattices achieve the Poltyrev-limit under multi-stage decoding if the underlying codes at each level are capacity achieving. Leveraging this result, and the result due to Kudekar \textit{et al} proving that the regular SC-LDPC codes can universally achieve capacity under BP decoding for the class of binary memoryless symmetric (BMS) channels \cite{kudekaruniversal,kumar2014threshold}, we show that the proposed Construction-D lattices achieve the Poltyrev limit under multistage BP decoding.
 
-We then construct lattice codes from this class of lattices and apply them to the symmetric interference channel \cite{jafar10}.  Recently, it has been pointed out in \cite{Estela13} that there is a natural connection between lattices generated by Construction-D (or Construction-D$^\prime$) and the interference alignment scheme in \cite{jafar10}. Thus, one can directly implement interference alignment by replacing the Barnes-Wall lattices in \cite{Estela13} by our proposed SC-LDPC lattices. Simulation results show that this replacement leads to a significant gain in terms of error probability performance. 
+ We refer to the proposed lattices as SC-LDPC lattices. The density evolution thresholds show that the proposed SC-LDPC lattices can approach the Poltyrev limit to within 0.2 dB under multistage BP decoding. Around the same time, binary polar codes have been used in conjunction with Construction-D to obtain Poltyrev-good lattices in \cite{YanLingWu13}. The focus of this chapter is on the use of SC-LDPC codes.
+
+We then derive lattice codes from the proposed SC-LDPC lattices and apply them to the symmetric interference channel \cite{jafar10}.  It has been pointed out in \cite{Estela13} that there is a natural connection between lattices generated by Construction-D (or Construction-D$^\prime$) and the interference alignment scheme in \cite{jafar10}. In fact we observe that the interference alignment can be achieved by replacing the Barnes-Wall lattices in \cite{Estela13} by our proposed SC-LDPC lattices. Our numerical simulation results show that the proposed solution leads to a significant gain in terms of error probability performance. 
 %This class of lattice codes can also be applied to Integer-forcing or compute-and-forward in the multiple access stage \cite{nazer2011CF}.
 
 Throughout the rest of the chapter, vectors and matrices are written in lowercase boldface and uppercase boldface, respectively. $\mbf{I}_{n}$ denotes identity matrix of size $n\times n$.
@@ -30,19 +18,20 @@ A lattice $\Lmb$ is a discrete set of points in Euclidean space that form an add
 \begin{equation}
 \Lmb^{(n)} =\{\lmb\in\R^{n}:\lmb=\mathbf{M}\mbf{u},\mbf{u}\in \Z^{m}\}
 \end{equation}
-where $\mathbf{M}\in\R^{n \times m}$ is full-rank and is called the generator matrix of the lattice. Throughout this chapter, whenever a lattice $\Lmb$ is used without the superscript, it is understood that the lattice is contained in the $n$-dimensional Euclidean space i.e., $\Lmb\subset \R^{n}$. For a given lattice $\Lmb$, we denote the \tit{quantizer} with respect to the lattice as $Q_{\Lmb}$,  \tit{modulo} operation with respect to the lattice as $\mod \Lmb$,  \tit{fundamental Voronoi region} as $\mc{V}_{\Lmb}$ and the \tit{fundamental volume} defined as the volume of any fundamental region as Vol$(\Lmb)$\cite{erez2004achieving}.
+where $\mathbf{M}\in\R^{n \times m}$ is full-rank and is called the generator matrix of the lattice. Throughout this chapter, whenever a lattice $\Lmb$ is used without the superscript, it is understood that the lattice is contained in the $n$-dimensional Euclidean space i.e., $\Lmb\subset \R^{n}$. For a given lattice $\Lmb$, we denote the \tit{quantizer} with respect to the lattice as $Q_{\Lmb}$,  \tit{modulo} operation with respect to the lattice as $\mod \Lmb$,  \tit{fundamental Voronoi region} as $\mc{V}_{\Lmb}$ and the \tit{fundamental volume} defined as the volume of any fundamental region as Vol$(\Lmb)$. For more details on the lattice terminology see \cite{zamir2014lattice}.
 
-Assume that some $\mbf{\lmb}\in\Lmb$ is transmitted through an additive white Gaussian noise (AWGN) channel of variance $\sigma^{2}$ and denote the noise vector by $\mbf{z}$. The \textit{volume-to-noise ratio}(VNR) of $\Lmb$, $\alpha^{2}(\Lmb,\sigma^{2})$, is defined as:
+Assume that some $\mbf{\lmb}\in\Lmb$ is transmitted through an additive white Gaussian noise (AWGN) channel of variance $\sigma^{2}$. The \textit{volume-to-noise ratio}(VNR) of $\Lmb$, $\alpha^{2}(\Lmb,\sigma^{2})$, is defined as:
 \begin{equation}\label{Eqn:VNRDefinition}
 \alpha^{2}(\Lmb,\sigma^{2})=\frac{\text{Vol}(\Lmb)^{2/n}}{2\pi e\sigma^{2}}.
 \end{equation}
 
-At the receiver, under decoder $\mc{D}:\mbb{R}^{n}\rightarrow\Lmb$, let us denote the error probability of decoding a lattice point $\lmb\in\Lmb$ as $\tx{P}(\mathbf{\lmb},\sigma^{2})$ under decoder $\mc{D}$. To be more precise,  %we define $\tx{P}(\mathbf{\lmb},\sigma^{2})$ as
+At the receiver given the decoder $\mc{D}:\mbb{R}^{n}\rightarrow\Lmb$, let us denote the error probability of decoding a lattice point $\lmb\in\Lmb$ as $\tx{P}(\mathbf{\lmb},\sigma^{2})$ under decoder $\mc{D}$. To be more precise,  %we define $\tx{P}(\mathbf{\lmb},\sigma^{2})$ as
 \begin{equation*}
- \tx{P}(\mathbf{\lmb},\sigma^{2}):=\Pr\left(\mc{D}(\mathbf{\lmb}+\mathbf{z})\neq  \lmb\right).
+ \tx{P}(\mathbf{\lmb},\sigma^{2}):=\Pr\left(\mc{D}(\mathbf{\lmb}+\mathbf{z})\neq  \lmb\right),
 \end{equation*}
+where the noise vector is denoted by $\mbf{z}$.
 %where $d(\mathbf{x},\mathbf{y})$ is the Euclidean distance between $\mathbf{x}$ and $\mathbf{y}$. 
-For an infinite lattice $\Lmb$, $\tx{P}(\lmb,\sigma^{2})$ under the minimum Euclidean distance decoder is independent of $\lmb$ and hence the average probability of decoding error for the lattice  $\tx{P}(\Lmb,\sigma^{2})$ is the same as $\tx{P}(\lmb,\sigma^{2})$ for any $\lmb\in \Lmb$. Note that minimum distance decoder is the optimal ML decoder for this problem.
+For an infinite lattice $\Lmb$, $\tx{P}(\lmb,\sigma^{2})$ under the minimum Euclidean distance decoder is independent of $\lmb$ and hence the average probability of decoding error for the lattice  $\tx{P}(\Lmb,\sigma^{2})$ is the same as $\tx{P}(\lmb,\sigma^{2})$ for any $\lmb\in \Lmb$. Note that minimum distance decoder is the optimal decoder for this problem.
 % \tx{P}(\mathbf{\lmb},\sigma^{2}):=\Pr\left(d(\mathbf{\lmb},\mathbf{\lmb}+\mathbf{z})\geq d(\mathbf{\lmb'},\mathbf{\lmb'}+\mathbf{z}) \text{ for any } \mathbf{\lmb'}\in\Lmb\right),
 
 \subsection{Poltyrev limit}
@@ -50,24 +39,25 @@ For an infinite lattice $\Lmb$, $\tx{P}(\lmb,\sigma^{2})$ under the minimum Eucl
 Poltyrev in \cite{poltyrev94} showed that for any $\delta>0$ there exists sequence of lattices $\Lmb^{(n)}$, indexed by $n$, such that the volume-to-noise ratio $\alpha^{2}(\Lmb^{(n)},\sigma^{2})<1+\delta,~ \forall n$ and the average error probability under minimum distance decoder $\tx{P}(\Lmb^{(n)},\sigma^{2}) \rightarrow 0$ as $n \rightarrow \infty$. We shall call such a sequence of lattices as being Poltyrev-good.
 \end{definition}
 \begin{remark}
-The converse to the Poltyrev limit i.e., if the VNR of any lattice $\Lmb$, $\alpha^{2}(\Lmb,\sigma^{2})<1$, then it can be shown by simple geometric arguments that the average probability of decoding error is bounded away from $0$ even under the minimum distance decoder. Thus the Poltyrev limit is a fundamental limit for the unconstrained AWGN channel problem. And also note that to show that a specific sequence of lattices achieve Poltyrev limit it suffices to show that the sequence of lattices satisfy the conditions in Definition \ref{Def:PoltyrevLimit} using any decoder, not necessarily the optimal minimum distance decoder.
+The converse to the Poltyrev limit i.e., if the VNR of any lattice $\Lmb$, $\alpha^{2}(\Lmb,\sigma^{2})<1$, then it can be shown by simple geometric arguments that the average probability of decoding error is bounded away from $0$ even under the minimum distance decoder. Thus the Poltyrev limit is a fundamental limit for the unconstrained AWGN channel coding problem. And also note that to show that a specific sequence of lattices achieve Poltyrev limit it suffices to show that the sequence of lattices satisfy the conditions in Definition \ref{Def:PoltyrevLimit} using any decoder, not necessarily the optimal minimum distance decoder.
 \end{remark}
+
 \subsection{Construction-D and its goodness}
-In the literature, even though many lattice constructions such as Construction-A, Construction-D, Construction-D$^\prime$, Construction E etc.., have been available  since the 1960s, we can safely say that Construction-A has been the most popular one among the information and coding theory communities. The main reason behind this is that the lattices based on Construction-A are used to show (constructive) optimal solutions to various problems like sphere packing, covering, channel coding, source coding, physical-layer network coding etc.., Note that in many of these applications, the optimality is only asymptotic in the field size over which the Construction-A lattice is constructed upon. So even though the Construction-A provides us optimal lattices, the main disadvantage is that at the encoder and decoder should operate over finite fields of very large size. However if you consider Construction-D with it's multi-level structure, it enables us to work over fields of very small size at each level thus making Construction-D lattices practical to implement.
+In the literature, even though many lattice constructions such as Construction-A, Construction-D, Construction-D$^\prime$, Construction E etc.., were available  since the 1960s, we can safely say that Construction-A has been the most popular one among the information and coding theory communities. The main reason being that the lattices based on Construction-A are used to show (constructive) optimal solutions to various problems like sphere packing, covering, channel coding, source coding, physical-layer network coding etc., \cite{nazer2011CF,erez05,sridharan2008capacity,Estela13}. Note that in many of these applications, the optimality is only asymptotic in the field size over which the Construction-A lattice is constructed upon. So even though the Construction-A provides us optimal lattices, the main disadvantage is that at the encoder and decoder should operate over finite fields of very large size. However Construction-D with it's multi-level structure enables us to work over fields of very small size at each level thus making Construction-D lattices much more amenable for practical implementation.
 
  In this subsection we briefly describe multilevel construction of lattices \cite{BarnesSloane83,conwaysphere}, specifically Construction-D and then recall Forney {\em et al}'s result on the existence of Poltyrev-good lattices based on this construction \cite{forney2000}.
 
-		Multilevel construction of lattices is based on a sequence of nested codes $\{\mathcal{C}_{l},1\leq l\leq r\}$ where each code $\mathcal{C}_{l}$ is of length $n$ over $\mathbb{F}_q$, a field of size $q$. Construction-D and Construction-D$^{\prime}$ are based on such nested sequence of linear codes. For details we refer the reader to \cite{conwaysphere}. Throughout this work we work with binary linear codes i.e., $q=2$. For $1\leq i \leq r$ where $r$ is the number of levels, let $\mathcal{C}_{i}$ be a $(n,k_i)$ binary code spanned by the set of binary $n$-tuples $\{\mathbf{g}_1,\mathbf{g}_2,\ldots,\mathbf{g}_{k_i}\}$ linearly independent over $\Z$ where $k_{1}\leq k_{2}\leq \cdots \leq k_{r}$. One can observe that $\mc{C}_{1}\subseteq \ldots \subseteq \mc{C}_{2}\subseteq \mc{C}_{r}$. Using such nested binary linear codes $\{\mathcal{C}_{j},1\leq j\leq r\}$, a multilevel Construction-D lattice $\Lmb$ can be defined as follows:
+Multilevel construction of lattices is based on a sequence of nested codes $\{\mathcal{C}_{l},1\leq l\leq r\}$ where each code $\mathcal{C}_{l}$ is of length $n$ over $\mathbb{F}_q$, a field of size $q$. Construction-D and Construction-D$^{\prime}$ are based on such nested sequence of linear codes. For details we refer the reader to \cite{conwaysphere}. Throughout this work we work with binary linear codes i.e., $q=2$. For $1\leq i \leq r$ where $r$ is the number of levels, let $\mathcal{C}_{i}$ be a $(n,k_i)$ binary code spanned by the set of binary $n$-tuples $\{\mathbf{g}_1,\mathbf{g}_2,\ldots,\mathbf{g}_{k_i}\}$ linearly independent over $\Z$ where $k_{1}\leq k_{2}\leq \cdots \leq k_{r}$. One can observe that $\mc{C}_{1}\subseteq \ldots \subseteq \mc{C}_{2}\subseteq \mc{C}_{r}$. Using such nested binary linear codes $\{\mathcal{C}_{j},1\leq j\leq r\}$, a multilevel Construction-D lattice $\Lmb$ can be defined as follows:
 \begin{align}\label{Eqn:ConstrD}
  \Lmb=\biggl\{2^{r}\Z^{n}+\sum_{1\leq i\leq r}2^{i-1}\sum_{1\leq j\leq k_{i}}\alpha_{ij}\mathbf{g}_j|\alpha_{ij}\in\{0,1\}\biggr\}
 \end{align}
-where ``$+$" denotes is in $\R^{n}$.  Since the generator vectors $\mbf{g}_{1},\mbf{g}_{2},\ldots,\mbf{g}_{k_{r}}$ are all linearly independent and based on the fact that the volume of the Voronoi region corresponding to each point in the lattice is equal to the 	volume of the fundamental Voronoi region, the VNR of a Construction-D lattice described in \eqref{Eqn:ConstrD} can be computed to be
+where ``$+$" denotes addition in $\R^{n}$.  Since the generator vectors $\mbf{g}_{1},\mbf{g}_{2},\ldots,\mbf{g}_{k_{r}}$ are all linearly independent and based on the fact that the volume of the Voronoi region corresponding to each point in the lattice is equal to the 	volume of the fundamental Voronoi region, the VNR of a Construction-D lattice described in \eqref{Eqn:ConstrD} can be computed to be
 \begin{equation}\label{Eqn:VNRConstrutionD}
     \alpha^{2}(\Lmb,\sigma^{2})=\frac{2^{2(r-\sum_{i=1}^{r}k_{i}/n)}}{2\pi e\sigma^{2}}.
 \end{equation}
 
 \subsubsection*{Multistage Decoder}
-We describe the multistage decoding that can be used to decode a Construction-D lattice over any memoryless additive noise channel. Let $\lmb\in\Lmb$, where $\Lmb$ is as defined in \eqref{Eqn:ConstrD}, be transmitted through an AWGN channel and $\mathbf{y}=\lmb+\mathbf{z}$ is received where $\mathbf{z}\sim\mathcal{N}(0,\sigma^{2} \mbf{I}_{n})$. Let $\mc{D}_{i}$ be the component decoder corresponding to $\mc{C}_{i}$ which, given any $\mbf{x}\in\R^{n}$, maps it to a codeword in $\mc{C}_{i}$, i.e., $\mc{D}_{i}(\mbf{x})\in\mc{C}_{i}$. Let the initialization be $\hat{\mathbf{y}}_{0}=\mathbf{y}$.
+We describe the multistage decoding that can be used to decode a Construction-D lattice over any memoryless additive noise channel. Let $\lmb\in\Lmb$, where $\Lmb$ is as defined in \eqref{Eqn:ConstrD}, be transmitted through an AWGN channel and $\mathbf{y}=\lmb+\mathbf{z}$ is received where $\mathbf{z}\sim\mathcal{N}(0,\sigma^{2} \mbf{I}_{n})$. Let $\mc{D}_{i}$ be the component decoder corresponding to $\mc{C}_{i}$ which, given any $\mbf{x}\in\R^{n}$, maps it to a codeword in $\mc{C}_{i}$, i.e., $\mc{D}_{i}(\mbf{x})\in\mc{C}_{i}$. Let the initialization step be $\hat{\mathbf{y}}_{0}=\mathbf{y}$.
 \begin{itemize}
 \item \tit{Step} 1: At stage $i, $ $1\leq i\leq r$, $\hat{\mathbf{y}}_{i-1}\mod 2$ is decoded to a codeword  $\hat{\mathbf{x}}_{i}\in \mathcal{C}_{i}$. Also, the corresponding information bits  $\{\hat{\alpha}_{i1},\hat{\alpha}_{i2},\ldots, \hat{\alpha}_{ik_{i}}\}\in \{0,1\}^{k_{i}}$ that generate $\hat{\mathbf{x}}_{i}$, are computed.
 \item \tit{Step} 2: Compute $\hat{\mathbf{y}}_{i}= \frac{1}{2} \cdot(\hat{\mathbf{y}}_{i-1}-\sum_{1\leq i\leq k_{i}}\hat{\alpha}_{ij}\mathbf{g}_j)$. Go to \tit{Step} 1.
@@ -93,11 +83,11 @@ At the $i^{\text{th}}$ stage of decoding, conditioned on successful decoding in 
 where $\mathbf{x}_{i}\in\mathcal{C}_{j}$. We call the channel defined in \eqref{Eqn:Mod2Channel} as an additive mod-2 Gaussian noise (AMGN) channel \cite{forney2000} and denote the capacity for this channel as  $\text{C}_{\text{AMGN}}(\sigma^{2}_{i})$ where $\sigma_{i}^{2}=2^{-2(i-1)}\sigma^2$.
 
 \begin{theorem}[Forney \textit{et al.} \cite{forney2000}]
-For an AWGN channel with noise variance per dimension $\sigma^{2}$, there exists a sequence of construction D lattices $\Lmb$ based on a chain of $r$ two-way one-dimensional lattice partitions and $r$ nested random binary linear codes $\mathcal{C}_{1}\subseteq \mathcal{C}_{2}\cdots \subseteq \mathcal{C}_{r}$ that is Poltyrev-good.
+For an AWGN channel with noise variance per dimension $\sigma^{2}$, there exists a sequence of Construction-D lattices $\Lmb$ based on a chain of $r$ two-way one-dimensional lattice partitions and $r$ nested random binary linear codes $\mathcal{C}_{1}\subseteq \mathcal{C}_{2}\cdots \subseteq \mathcal{C}_{r}$ that is Poltyrev-good.
 \end{theorem}
 
 \begin{remark}\label{Rmk:Forney_proof}
-    Note that in \cite{forney2000}, it was shown that if for each level $j\in\{1,\ldots,r\}$ the binary linear code $\mathcal{C}_{j}$ at that respective level is arbitrarily close to the capacity of the respective AMGN channel and has an arbitrarily low error probability in that stage of the multistage decoder then it was shown that the Construction-D lattice thus constructed can be arbitrarily close to Poltyrev-limit with an arbitrarily low probability of error.
+    Note that in \cite{forney2000}, it was shown that if for each level $j\in\{1,\ldots,r\}$ the binary linear code $\mathcal{C}_{j}$ at that respective level is arbitrarily close to the capacity of the respective AMGN channel and has an arbitrarily low error probability in that stage of the multistage decoder then it was shown that the Construction-D lattice can thus be constructed arbitrarily close to the Poltyrev-limit with an arbitrarily low probability of error.
 \end{remark}
 
 \section{Proposed SC-LDPC Lattices}\label{Sec:SCLDPC}
@@ -109,7 +99,7 @@ Let the required rates of the two codes be $r_{1}$ and $r_{2}$, $0< r_{1}<r_{2}$
 	d_{v}^{i}\geq 3 \hspace{0.3cm} \text{  and }  \hspace{0.3cm}  1-\frac{d_{v}^{i}}{d_{c}}>r_{i}-\epsilon, i\in \{1,2\}.
 						\label{Eqn:DegreeConditions1}
 \end{align}
-The $\epsilon$ leeway in the above equations is just for rounding off $r_{i}$ to the nearest rational number and not very important.
+The $\epsilon$ leeway in the above equations is just for rounding off $r_{i}$ to the nearest rational number and not very significant.
 \iflonger
  [ALSO WHY THE BIT NODE DEGREE SHOULD BE ATLEAST 3].
  \fi
@@ -120,7 +110,7 @@ Fix $M\in \N$. We place $M d_{c}$ variable nodes at each position in the range $
 
 More precisely, the ensemble is defined as follows. Choose $M$ such that $\frac{Md_{c}}{w}$ is a natural number. Fix $k\in[1:d_{v}^{1}]$ and $i\in[1:L]$. Choose a permutation $\pi^{v}_{i,k}$ uniformly at random from the set of permutations on $Md_{c}$ letters. Under arbitrary indexing of the $Md_{c}$ variable nodes at position $i$, for $j\in [0:w-1]$, assign $\mc{E}_{k}$ type edges of $\pi^{v}_{i,k}\left(j\frac{Md_{c}}{w}+1:(j+1)\frac{Md_{c}}{w}\right)$ variable nodes at position $i$ to check nodes at position $i+j$. Under this assignment, ignoring the boundary effects, for each check node type at position $i+j$, the number of edges that come from variable nodes at position $i$ is $\frac{Md_{c}}{w}$, a $w^{\text{th}}$ fraction of the total number of connections. From the check nodes perspective, for $k\in[1:d_{v}^{1}]$, at  each position, distribute these edges according to a permutation $\pi^{c}_{i,k}$ chosen uniformly at random from the set of all permutations on $Md_{c}$ letters. We call the proposed construction as $(d_{v}^{1},d_{c},L,w)$ \textit{check-uniform} SC-LDPC (CU-SC-LDPC) ensemble of codes.  
 
-Choose a tanner graph uniformly at random from the above described $(d_{v}^{1},d_{c},L,w)$ CU-SC-LDPC ensemble, call it $\mc{G}_{1}$. Observe that, removal of all check nodes of a particular type, say $\mc{T}_{d_{v}^{1}}$, from $\mc{G}_{1}$ results in a regular $(d_{v}^{1}-1,d_{c})$ Tanner graph. One can see that removal of all check nodes of types $\mc{T}_{d_{v}^{2}+1},\mc{T}_{d_{v}^{2}+2},\ldots, \mc{T}_{d_{v}^1} $ from $\mc{G}_{1}$ results in a graph from the $(d_{c},d_{v}^{2},L,w)$ CU-SC-LDPC ensemble, which let's refer to as $\mc{G}_{2}$. More importantly, all the check-nodes in the derived graph $\mc{G}_{2}$ are also contained in $\mc{G}_{1}$ and hence any codeword satisfying all the check constraints in $\mc{G}_{1}$ also satisfies all the check constraints in $\mc{G}_{2}$. Thus we can say that the binary code $\mc{C}_{1}$ defined by $\mc{G}_{1}$ is a sub-code of the binary code $\mc{C}_{2}$ defined by $\mc{G}_{2}$. One can obtain a sequence of nested linear codes $\mc{C}_1\subseteq\mc{C}_2\subseteq\ldots\mc{C}_r$ by repeatedly performing the above operation. Given $(d_{c},d_{v}^{1},\ldots,d_{v}^{r})$, for each code $\mc{C}_{1}$ from the $(d_{c},d_{v}^{1},L,w)$ CU-SC-LDPC ensemble, we can obtain a nested sequence of codes $\mc{C}_1,\mc{C}_2,\ldots,\subseteq\mc{C}_r$ where $\mc{C}_{i} \in (d_{c},d_{v}^{i},L,w)$ CU-SC-LDPC ensemble.  We call the proposed ensemble of nested sequences of codes as $(d_{c},d_{v}^{1},\ldots,d_{v}^{r},L,w)$ CU-SC-LDPC ensemble. 
+Choose a Tanner graph uniformly at random from the above described $(d_{v}^{1},d_{c},L,w)$ CU-SC-LDPC ensemble, call it $\mc{G}_{1}$. Observe that, removal of all check nodes of a particular type, say $\mc{T}_{d_{v}^{1}}$, from $\mc{G}_{1}$ results in a regular $(d_{v}^{1}-1,d_{c})$ Tanner graph. One can see that removal of all check nodes of types $\mc{T}_{d_{v}^{2}+1},\mc{T}_{d_{v}^{2}+2},\ldots, \mc{T}_{d_{v}^1} $ from $\mc{G}_{1}$ results in a graph from the $(d_{c},d_{v}^{2},L,w)$ CU-SC-LDPC ensemble, which let's refer to as $\mc{G}_{2}$. More importantly, all the check-nodes in the derived graph $\mc{G}_{2}$ are also contained in $\mc{G}_{1}$ and hence any codeword satisfying all the check constraints in $\mc{G}_{1}$ also satisfies all the check constraints in $\mc{G}_{2}$. Thus we can say that the binary code $\mc{C}_{1}$ defined by $\mc{G}_{1}$ is a sub-code of the binary code $\mc{C}_{2}$ defined by $\mc{G}_{2}$. One can obtain a sequence of nested linear codes $\mc{C}_1\subseteq\mc{C}_2\subseteq\ldots\mc{C}_r$ by repeatedly performing the above operation. Given $(d_{c},d_{v}^{1},\ldots,d_{v}^{r})$, for each code $\mc{C}_{1}$ from the $(d_{c},d_{v}^{1},L,w)$ CU-SC-LDPC ensemble, we can obtain a nested sequence of codes $\mc{C}_1,\mc{C}_2,\ldots,\subseteq\mc{C}_r$ where $\mc{C}_{i} \in (d_{c},d_{v}^{i},L,w)$ CU-SC-LDPC ensemble.  We call the proposed ensemble of nested sequences of codes as $(d_{c},d_{v}^{1},\ldots,d_{v}^{r},L,w)$ CU-SC-LDPC ensemble. 
 
 \begin{figure}[ht!]
 \centering
@@ -139,7 +129,7 @@ Observe that choosing $\mc{G}_{1}$ uniformly at random from the $(d_{c},d_{v}^{1
 \begin{example}\label{Ex:ConstrD.1}
 For $r_{1}=0.5$, $r_{2}=0.9$ let us try to compute the degree profiles satisfying \eqref{Eqn:DegreeConditions1}. One can see that      any triplet $(d_{c},d_{v}^{1},d_{v}^{2})=(10k, 5k, k), k\geq 3$, satisfies all the required conditions and $(30, 15, 3)$ is the simplest degree profile. We will see later the justification for choosing, $r_{2}=0.9$ in this example (or in general why a nested super-code of high rate, close to 1, is required).
 \end{example}
-As we have seen in example \ref{Ex:ConstrD.1}, the CU-SC-LDPC construction requires to work with high degree tanner graphs. Therefore when one attempts multi-stage decoding on lattices based on the proposed nested CU-SC-LDPC ensemble, BP decoding needs to be carried out on a highly complex graph, a regular $(15,30)$ Tanner graph in example \ref{Ex:ConstrD.1}. For this purpose, to avoid high degree tanner graphs, we propose the following alternate construction.
+As we have seen in Example.~\ref{Ex:ConstrD.1}, the CU-SC-LDPC construction requires to work with high degree Tanner graphs. Therefore when one attempts multi-stage decoding on lattices based on the proposed nested CU-SC-LDPC ensemble, BP decoding needs to be carried out on a graph that is not very sparse such as the regular $(15,30)$ Tanner graph in Example \ref{Ex:ConstrD.1}. For this purpose, to avoid high degree Tanner graphs, we propose the following alternate construction.
 
 \begin{figure}[ht!]
 \centering
@@ -150,8 +140,8 @@ As we have seen in example \ref{Ex:ConstrD.1}, the CU-SC-LDPC construction requi
 \label{BaseGraph_sup}
 \end{figure}
 
-\subsection{Alternate Construction}
-In contrast to the previous construction where the check node degree remains same over all the graphs in the sequence of nested codes, in this construction the variable node degree remains same over all the graphs in the sequence of nested codes. Similar to the previous construction we explain for the case $r=2$.
+\subsection{Alternate construction}
+In contrast to the previous construction where the check node degree remains constant over all the graphs in the sequence of nested codes, in this construction the variable node degree remains constant over all the graphs in the sequence of nested codes. Similar to the previous construction we explain for the case $r=2$.
 
 Let the the required rates be $r_{1}, r_{2}$ , $0<r_{1}<r_{2}<1$. For small enough $\epsilon >0$, choose $d_{v}\geq 3$ such that there exists $d_{c}^{1},d_{c}^{2}\in \N$,
 \begin{align}
@@ -184,17 +174,15 @@ Consider $\mbf{x}\in\mc{C}_{1}$ and a check node $c\in \mc{G}_{2}$. As $\mbf{x}$
 \end{align*}
 The above implies $\mbf{h}^{T}_{c}\cdot \mbf{x}\equiv 0 \mod 2, \hspace{0.2cm} \forall c\in \mc{G}_{2}$ and hence $x\in \mc{C}_{2}$.
 \end{proof}
-One can obtain a sequence of nested linear codes $\mc{C}_1\subseteq\mc{C}_2\subseteq \ldots\subseteq\mc{C}_r$ by repeatedly performing the above operation, starting from $\mc{C}_{r}$. We observe that in this construction, unlike the previous construction, for any code $\mc{C}_{2}$ from the $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble, choice for deriving a sub-code is not unique. The non-uniqueness arises from the fact that for each check node `$c$' the number of choices for the partition $\Pi_{c}$ is not unique and any partition will result in a valid sub-code. We call the set of all $n$-tuples of codes $(\mc{C}_{1},\mc{C}_{2},\ldots,\mc{C}_{r})$, where $\mc{C}_{1}\subseteq \ldots\subseteq\mc{C}_{r}$ derived from the above construction as $(d_{v},d_{c}^{1},\ldots,d_{c}^{r})$ VC-SC-LDPC ensemble of nested codes. Here VC refers to \textit{variable-constant} since the variable degree remains constant across the nested sequence of codes. From here after when a nested chain of codes is referred to as SC-LDPC and no distinction between the constructions CU-SC-LDPC or VC-SC-LDPC is made, we mean that the statement is valid for both the constructions. 
+One can obtain a sequence of nested linear codes $\mc{C}_1\subseteq\mc{C}_2\subseteq \ldots\subseteq\mc{C}_r$ by repeatedly performing the above operation, starting from $\mc{C}_{r}$. We observe that in this construction, unlike the previous construction, for any code $\mc{C}_{2}$ from the $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble, choice for deriving a sub-code is not unique. The non-uniqueness arises from the fact that for each check node `$c$' the number of choices for the partition $\Pi_{c}$ is not unique and any partition will result in a valid sub-code. We call the set of all $n$-tuples of codes $(\mc{C}_{1},\mc{C}_{2},\ldots,\mc{C}_{r})$, where $\mc{C}_{1}\subseteq \ldots\subseteq\mc{C}_{r}$ derived from the above construction as $(d_{v},d_{c}^{1},\ldots,d_{c}^{r})$ VC-SC-LDPC ensemble of nested codes. Here VC refers to \textit{variable-constant} since the variable degree remains constant across the nested sequence of codes. Here after whenever a nested chain of codes is referred to as SC-LDPC and no distinction between the constructions CU-SC-LDPC or VC-SC-LDPC is made, it is implied that the statement is valid for both the constructions. 
 
 \begin{remark}\label{Rmk:EquivNestedConstr2}
-Note that, given a code $\mc{C}_{2}$ from the $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble, deriving a sub-code $\mc{C}_{1}$ is equivalent to choosing a set of partitions: $\{\Pi_{c}: \tx{`}c\text{' is a check node in } \mc{C}_{2}\}$ uniformly at random. Therefore we can say that in this construction, for any choice of $\mc{C}_{2}$ there are equal number of choices for $\mc{C}_{1}$ from the $(d_{v},d_{c}^{1},L,w)$ SC-LDPC ensemble which are all equal likely. \iflonger
-({\color{red}{I use this fact later in one of the proofs, but not sure about where to place this remark}}).
-\fi
+Note that, given a code $\mc{C}_{2}$ from the $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble, deriving a sub-code $\mc{C}_{1}$ is equivalent to choosing a set of partitions: $\{\Pi_{c}: \tx{`}c\text{' is a check node in } \mc{C}_{2}\}$ uniformly at random. Therefore we can say that in this construction, for any choice of $\mc{C}_{2}$ there are equal number of choices for $\mc{C}_{1}$ from the $(d_{v},d_{c}^{1},L,w)$ SC-LDPC ensemble which are all equal likely.
 \end{remark}
 
 
 \begin{example}\label{Ex:ConstrD.2}
-Under the VC-SC-LDPC construction, let's consider the same desired rates $r_{1}=0.5$ and $r_{2}=0.9$ as in example~\ref{Ex:ConstrD.1}. By simple inspection one can see that the parameters $(d_{v},d_{c}^{1},d_{c}^{2})=(3,6,30)$ gives us nested VC-SC-LDPC codes of desired rates. Here we need to work with $(3,6)$ and $(3,30)$ SC-LDPC codes compared to $(15,30)$ and $(3,30)$ SC-LDPC codes in example~\ref{Ex:ConstrD.1} based on the CU-SC-LDPC construction.
+Under the VC-SC-LDPC construction, let's consider the same desired rates $r_{1}=0.5$ and $r_{2}=0.9$ as in Example~\ref{Ex:ConstrD.1}. By simple inspection one can see that the parameters $(d_{v},d_{c}^{1},d_{c}^{2})=(3,6,30)$ gives us nested VC-SC-LDPC codes of desired rates. Here we need to work with $(3,6)$ and $(3,30)$ SC-LDPC codes compared to $(15,30)$ and $(3,30)$ SC-LDPC codes in Example~\ref{Ex:ConstrD.1} based on the CU-SC-LDPC construction.
 \end{example}
 
 Since Construction-D works with generator matrices of nested linear codes, we have to obtain nested generator matrices from the proposed nested SC-LDPC codes. In the following lemma, we show the existence of such nested generator matrices for any set of nested binary linear codes.
@@ -229,8 +217,8 @@ where $R_{i}$ is the design rate of the $i^{\text{th}}$ code in the nested seque
 \end{remark}
 
 
-\subsection{Poltyrev-Goodness of the Proposed Lattices}
-We now show the existence of a sequence of lattices which is Poltyrev-good under BP decoding. In the following lemmas, we show that the proposed SC-LDPC codes( both the constructions) achieve the AMGN channel capacity. We then follow the argument by Forney \textit{et al.} described in remark~\ref{Rmk:Forney_proof} to show the result.
+\subsection{Poltyrev-Goodness of the proposed lattices}
+In this section we show the existence of a sequence of proposed lattices which is Poltyrev-good under BP decoding. In the following lemmas, we show that the proposed SC-LDPC codes (both the constructions) achieve the AMGN channel capacity. We then follow the argument by Forney \textit{et al.} described in Remark~\ref{Rmk:Forney_proof} to show the result.
 
 \begin{lemma}\label{Lemma:DE_SCLDPC}
 For a BMS channel with associated L-density $\mathbf{x}_{\text{BMS}}$\cite{richardson2008modern}, density evolution (DE) equation for a ($d_{v},d_{c},L,w$) CU-SC-LDPC ensemble is given by
@@ -284,7 +272,7 @@ For any $\delta ,\epsilon>0$, there exists $d_{c},d_{v},L,w$ and code $\mc{C}$ f
 %For any $\epsilon>0$, there exists a sequence of codes, parameterized by $M$, from ($d_{c},d_{v},L,w$) SC-LDPC  ensemble such that the design rate $R(d_{v},d_{c},L,w)>C_{\text{AMGN}}-\epsilon$ and the bit error probability under BP decoding $\rightarrow 0$  as $M\rightarrow \infty$, where $C_{\text{AMGN}}$ is the Shannon capacity of the AMGN channel.
 \end{lemma}
 \begin{proof}
-The proof in Lemma \ref{Lemma:BMSProof1} that AMGN channel is BMS and remark \ref{Rmk:Same_DE} gives us the required result.
+The proof in Lemma \ref{Lemma:BMSProof1} that AMGN channel is BMS and Remark~\ref{Rmk:Same_DE} gives us the required result.
 \end{proof}
 
 We have shown that there exists good codes from the ensembles of both the constructions, where by a `good code' we mean a code with the design rate arbitrarily close to the capacity of the AMGN channel and an arbitrarily small probability of error under BP decoding. But for using Construction-D and to be able to apply Forney's result we need to show existence of nested sequence of codes from the proposed constructions where each code in the sequence is a good code. We show this in the following theorems.
@@ -314,7 +302,7 @@ where the average is over all codes $\mc{C}(n)$ of blocklength `$n$' from the $(
 \end{align}
 for $i\in \{1,2\}$ where  the the average is over all codes of blocklength $n$ from $\mc{E}_{1}$.
 
- From remark \ref{Rmk:EquivNestedConstr1}, this construction is equivalent to first choosing $\mc{C}_{2}$ uniformly at random from $\mc{E}_{2}$ and then choosing $\mc{C}_{1}$ uniformly at random from the set $\mc{E}_{1}(\mc{C}_{2})\coleq \{\mc{C}_{1}:\mc{C}_{1}\in \mc{E}_{1},\mc{C}_{1}\subseteq \mc{C}_{2}\}$. From the fact that the set $\mc{E}_{1}(\mc{C}_{2})$ has same cardinality for all choices of $\mc{C}_{2}$ (see remark \ref{Rmk:EquivNestedConstr1}), we can deduce that the marginal distribution for $\mc{C}_{1}$ is uniform on $\mc{E}_{1}(\mc{C}_{2})$.\\
+ From Remark~\ref{Rmk:EquivNestedConstr1}, this construction is equivalent to first choosing $\mc{C}_{2}$ uniformly at random from $\mc{E}_{2}$ and then choosing $\mc{C}_{1}$ uniformly at random from the set $\mc{E}_{1}(\mc{C}_{2})\coleq \{\mc{C}_{1}:\mc{C}_{1}\in \mc{E}_{1},\mc{C}_{1}\subseteq \mc{C}_{2}\}$. From the fact that the set $\mc{E}_{1}(\mc{C}_{2})$ has same cardinality for all choices of $\mc{C}_{2}$ (see remark \ref{Rmk:EquivNestedConstr1}), we can deduce that the marginal distribution for $\mc{C}_{1}$ is uniform on $\mc{E}_{1}(\mc{C}_{2})$.\\
  For being concise we refer to code $\mc{C}_{i}\in\mc{E}_{i}$ as good if $\tx{P}_{\tx{b}}^{\text{BP}}(\mc{C}_{i},\sigma^{2})\leq \epsilon_{2}$ and bad if otherwise. Consider the probability of choosing a bad code for either levels,
  \begin{align*}
 \tx{Pr}&\left[~ \mc{C}_{2}  \tx{ is bad  or } \mc{C}_{1} \tx{ is bad }\right] \\
@@ -369,7 +357,7 @@ Although lattices based on both the constructions have shown to be Poltyrev-good
 \end{remark}
 
 
-\subsection{Design and Simulation Results}
+\subsection{Design and simulation results}
 %In this subsection, we explain the design example of SC-LDPC lattices that approach the Poltyrev limit. Before we explain the design of Poltyrev-good SC-LDPC lattices, let's analyze the decoding error probability.
 
 In this subsection, we explain the design of SC-LDPC lattices that approach the Poltyrev limit with examples. Before the design principles  let us analyze the decoding error probability.
@@ -391,7 +379,6 @@ As we use multistage decoding the average probability of decoding error $\tx{P}(
 Plugging in the values of $n$ and the target error probability in \eqref{Eqn:ZLatticeProb} gives us $\sigma_{r+1}= 0.0804$. Now moving to the next level i.e., level $r$, $\sigma_{r}=2\sigma_{r+1}=0.1608$. The capacity of the effective AMGN channel observed in this level of the multi-stage decoding is $\tx{C}_{\tx{AMGN}}(\sigma^{2}_{r})=0.9923$, see Fig. \ref{Fig:AMGNCapacity}. For the details on computing the capacity of the AMGN channel see \cite{forney2000}.  Similarly proceeding, $\sigma_{r-1}=2\sigma_{r}=0.3217$, $\tx{C}_{\tx{AMGN}}(\sigma^{2}_{r-1})=0.5726$, $\sigma_{r-2}=2\sigma_{r-1}=0.6434$, $\tx{C}_{\tx{AMGN}}(\sigma^{2}_{r-2})=0.0242$. Observe that the capacity for level $r-2$ is almost zero which renders coding for this level unnecessary albeit at the cost of a very small increase in VNR (due to the rate loss) of $0.145$dB $(=20\log_{10}2^{0.0242})$. Hence $r=2$ i.e., two coded levels suffice. We use ($30,14,3$) CU-SC-LDPC ensemble with $L=32, w=4$ for the first two levels and $\Z_{4}^{n}$ lattice for the last level which results in nested SC-LDPC codes of rates $0.5333$ and $0.9$ ($0.49$ and $0.89$ including rate-loss due to boundary effects of coupling) matching closely the capacities of first two levels i.e. $0.5726$ and $0.99$.
 \begin{table}
 \centering
-\caption{DE thresholds and Gap from Poltyrev limits (without rate loss from termination) for SC-LDPC lattice ensembles for various degree profiles.}
 \begin{tabular}{c c c c c c}
 \hline  \hline
 $(d_{c},d_{v}^{1},d_{v}^{2})$ &(L,w)& $\sigma_{\text{max}}$ &$\text{VNR}^{*}$(dB) &$\text{VNR}_{\text{rate-loss}}$(dB)\\
@@ -406,17 +393,18 @@ $(d_{c},d_{v}^{1},d_{v}^{2})$ &(L,w)& $\sigma_{\text{max}}$ &$\text{VNR}^{*}$(dB
 %(60, 42, 3)& (72, 12) & 0.3975 & 0.1953 &0.203dB&---
 %(60,42,3)&(72,12)&0.3975&0.1953&0.203dB\footnote{Target Bit Error Probability of $10^{-6}$}&---
 \end{tabular}
+\caption{Density evolution (DE) thresholds for SC-LDPC lattice ensembles under BP decoding for various degree profiles. The gap from the respective Poltyrev limits, computed without considering rate loss from termination, are also given.}
 \label{Table:Thresholds}
 \end{table}
 
-\subsubsection*{Simulation Results}
+\subsubsection*{Simulation results}
 Due to symmetry in the lattice the all-zero lattice point is assumed to be transmitted. Instead of plotting the symbol error rate, we focus on determining the thresholds of the resulting lattice under BP decoding. We estimate the BP threshold from simulations by determining the maximum noise variance for which no codeword errors are observed, at each coded level, in simulation of 10 consecutive codewords each of length $2\times 10^{5}$. We calculate the maximum variance $\sigma_{\tx{max}}^{2}$ for which all the levels of the lattice can be decoded given by $\sigma_{\text{max}}=\min(\sigma_{1}^{\text{BP}},2\sigma_{2}^{\text{BP}},\sigma_{3})$, where $\sigma_{1}^{\text{BP}}$ and $\sigma_{2}^{\text{BP}}$ are the respective BP thresholds for the two SC-LDPC codes and $\sigma_{3}^{2}$ is the noise variance at which the uncoded level achieves the target error probability. The VNR threshold is then calculated for the given rates and $\sigma_{\text{max}}$. Thus obtained BP thresholds $\sigma_{1}^{\text{BP}}$, $\sigma_{2}^{\text{BP}}$ for the above codes are $0.3142$ and $0.2161$ respectively which results in a VNR of $1.14$dB ($1.46$dB with rate loss due to termination). The DE predicted values are $0.3184$ and $0.21836$. We observe that the BP thresholds are very close to DE thresholds. i.e., the parameters are large enough to assume that the BP thresholds can be approximated by DE thresholds. Therefore it is reasonable to calculate the VNR thresholds using the DE thresholds. For various SC-LDPC ensembles Table. \ref{Table:Thresholds} gives us the VNR thresholds i.e., the VNRs achievable for respective target error probabilities which are computed using the DE thresholds. Note that the Poltyrev limit is zero dB, thus making the VNR threshold and the gap from Poltyrev limit equivalent. The gap to the Poltyrev limit is primarily due to the fact that there is a mismatch between the capacity of the equivalent channel and the rates that are obtainable for the proposed CU-SC-LDPC ensemble.  
 
 In the above design, if we target a error probability per dimension of $10^{-6}$  instead, that gives us $\sigma_{r+1}= 0.0999$, capacities for the subsequent levels $\tx{C}_{\tx{AMGN}}(\sigma^{2}_{r})=0.9507$, $\tx{C}_{\tx{AMGN}}(\sigma^{2}_{r-1})=0.3223$ and $\tx{C}_{\tx{AMGN}}(\sigma^{2}_{r-2})=0.0024$. Pair of nested codes from $(60,42,3)$ CU-SC-LDPC ensemble gives us rates $0.3$ and $0.95$ resulting in better matching of the rates (negligible rate loss). The resulting DE thresholds are within $0.203$dB from Poltyrev limit. This is reported in the last row in the table. [Couple of lines - Broadly justifying the VC-SC-LDPC construction] Observe that for these parameters we can use a $(60,4,3)$ VC-SC-LDPC ensemble with the same parameters of $(L=72,w=12)$ gives us codes of rates $0.25$ and $0.95$. Although this results in a slight VNR-loss due to the relatively poor mismatching of rates, in this case BP decoding is carried out on a $(3,4)$ Tanner graph instead of a $(42,60)$ which considerably reduces the complexity of decoding.
 
 \section{Application - Interference Channel}
-\subsection{Problem Statement}
-We consider the 3 user Gaussian IC consisting of 3 transmitters, 3 receivers, and 3 independent messages originally considered in \cite{sridharan2008capacity}, where message $W_{j}$ originates at transmitter $j$ and is intended for receiver $j$, $\forall j\in \mc{J}\defeq\{1,2,3\}$. The output observed at the receiver $j$ is given by
+\subsection{Problem statement}
+We consider the 3 user Gaussian interference channel (IC) consisting of 3 transmitters, 3 receivers, and 3 independent messages originally considered in \cite{sridharan2008capacity}, where message $W_{j}$ originates at transmitter $j$ and is intended for receiver $j$, $\forall j\in \mc{J}\defeq\{1,2,3\}$. The output observed at the receiver $j$ is given by
 \begin{align}\label{SymmInterfChannel}
     \mathbf{y}_{j}=\mathbf{x}_{j}+ \sum^{3}_{k=1,k\neq j}h_{jk}\mathbf{x}_{k}+\mathbf{z}_{j}, \hspace{10pt} \forall j\in \mc{J}
 \end{align}
@@ -430,20 +418,18 @@ to the 3 user one is given by \cite{sridharan2008capacity}
 \label{Eqn:StrongInterfCondition1}
 \end{align}
 
-Sridharan \textit{et al.} in \cite{sridharan2008capacity} introduce the idea of lattice alignment where each user uses a lattice code and each receiver first decodes the total interference (aligned due to lattice structure) observed and then decodes the desired message. For this case, they
-derived a tighter condition on $\beta$ in order for the interference to be decoded first. This is based on lattice coding, independent of the number of users, and is given by
+Sridharan \textit{et al.} in \cite{sridharan2008capacity} introduced the idea of lattice alignment where each user uses a lattice code and each receiver first decodes the total interference (aligned due to lattice structure) observed and then decodes the desired message. For this case, they derived a tighter condition on $\beta$ in order for the interference to be decoded first. This is based on lattice coding, independent of the number of users, and is given by
 \begin{align}
 \beta^{2}(\sigma)\geq \beta^{*^{2}}(\sigma)\defeq\frac{(P+\sigma^{2})^{2}}{P\sigma^{2}}
 \label{Eqn:StrongInterfCondition2}
 \end{align}
-If \eqref{Eqn:StrongInterfCondition2} is satisfied, each user can achieve a capacity \cite{sridharan2008capacity} of
-$\frac{1}{2}\log(1+\frac{P}{\sigma^{2}})$. Equivalently, for a given rate $R$, maximum noise variance under which the rate can be achieved is given by
+If \eqref{Eqn:StrongInterfCondition2} is satisfied, each user can achieve a capacity of $\frac{1}{2}\log(1+\frac{P}{\sigma^{2}})$ \cite{sridharan2008capacity}. Equivalently, for a given rate $R$, maximum noise variance under which the rate can be achieved is given by
 \begin{align}
 \sigma^{2}_{\text{max}}=\frac{P}{2^{2R}-1}.
 \label{Eqn:SigmaShannon}
 \end{align}
 
-\subsection{Applying the Proposed Lattices}
+\subsection{Applying the proposed lattices}
 Encouraged by the Poltyrev-limit achieving property of the proposed lattice ensembles under BP decoding, we use SC-LDPC lattice codes for the symmetric Gaussian IC in the very strong interference region. Let $\Lmb_{SC}$ be the SC-LDPC lattice defined in \eqref{Eqn:ConstrD} with $r=2$.
 % and a code from $(30,15,5)$ CU-SC-LDPC ensemble is used for the two levels.
 We define the SC-LDPC lattice code $\mc{C}_{SCL}$ based on $\Lmb_{SC}$ using hypercube shaping:
@@ -473,18 +459,18 @@ where the mod operation is over $\mc{B}$ instead of $[0,4)$. The dither vector a
 \end{figure*}
 
 \subsection{Decoding}
-Before looking at the general case let us consider the symmetric Gaussian IC i.e $h_{12}=h_{13}$. Without loss of generality let us consider receiver 1. The system flow from the perspective of receiver 1 is given in Fig.~\ref{Fig:SIC_decoder}. The input to the multistage decoder at receiver 1 is given by
+Before looking at the general case let us consider the symmetric Gaussian IC i.e $h_{12}=h_{13}$. Without loss of generality let us consider receiver 1. The system schematic from the perspective of receiver 1 is given in Fig.~\ref{Fig:SIC_decoder}. The input to the multistage decoder at receiver 1 is given by
 \begin{align*}
 \tilde{\mathbf{y}}_{1} &\defeq \frac{\mathbf{y}_{1}}{h_{12}}-\mathbf{d}_{2}-\mathbf{d}_{3}+1.5^{n}+1.5^{n}\\%\mod \Z_{4}^{n} \\
 &=\mathbf{c}_{2}+\mathbf{c}_{3}+\frac{1}{h_{12}}\left(\mathbf{x}_{1}+\mathbf{z}_{1}\right).
 \end{align*}
-The key here is that $\mathbf{c}_{2},\mathbf{c}_{3}\in\mc{C}_{SCL}\subset\Lmb$ and hence $\mathbf{c}_{2}+\mathbf{c}_{3}\in \Lmb$.
+Note that $\mathbf{c}_{2},\mathbf{c}_{3}\in\mc{C}_{SCL}\subset\Lmb$ and hence $\mathbf{c}_{2}+\mathbf{c}_{3}\in \Lmb$.
 \begin{align*}
 \mathbf{c}_{2}+\mathbf{c}_{3}&=\sum_{i=1}^{k_{1}}\left(\alpha_{2i}+\alpha_{3i}\right)\mathbf{g}_i+2\sum_{i=1}^{k_{2}}\left(\beta_{2i}+\beta_{3i}\right)\mathbf{g}_i +4\mathbf{k}_{2}+4\mathbf{k}_{3}\\
 &=\sum_{i=1}^{k_{1}}\left(\alpha_{2i}\oplus\alpha_{3i}\right)\mathbf{g}_i+2\sum_{i=1}^{k_{2}}\left(c_{1i}\oplus\beta_{2i}\oplus\beta_{3i}\right)\mathbf{g}_i +4\mathbf{k}_{23}
 \end{align*}
 where $c_{1i}=0.5\left(\alpha_{2i}+\alpha_{3i}-\alpha_{2i}\oplus\alpha_{3i}\right)$, $c_{2i}=0.5\left(c_{1i}+\beta_{2i}+\beta_{3i}-c_{1i}\oplus\beta_{2i}\oplus\beta_{3i}\right)$ are carryovers from first and second levels respectively and
- $\mathbf{k}_{23}=\mathbf{k}_{2}+\mathbf{k}_{3}+\sum_{1}^{k_{2}}c_{2i}\mathbf{g}_{i}\in\Z^{n}$. The key point is that $c_{1i}, c_{2i} \in \{0,1\}$. Using multi-stage decoder described in Section \ref{Sec:SCLDPC}, one can directly decode the lattice point $\mathbf{x}_{2}+\mathbf{x}_{3}$(interference), subtract it and decode the desired signal.
+ $\mathbf{k}_{23}=\mathbf{k}_{2}+\mathbf{k}_{3}+\sum_{1}^{k_{2}}c_{2i}\mathbf{g}_{i}\in\Z^{n}$. The key here is that  $c_{1i}, c_{2i} \in \{0,1\}$ which lets us apply multi-stage BP decoding. Using multi-stage decoder described in Section \ref{Sec:SCLDPC}, one can directly decode the lattice point $\mathbf{x}_{2}+\mathbf{x}_{3}$(interference), subtract it and decode the desired signal.
 
 The decoding scheme above extends to the case when one channel gain is an integer multiple of the other. For example, let $h_{13}=Kh_{12}$
 where $K=\sum_{0}^{l-1}a_{i}2^{i}\in \Z, a_{i}\in\{0,1\}$. In this case, input to the multi-stage decoder is
@@ -500,7 +486,7 @@ where $\mathbf{c}_{2}+K\mathbf{c}_{3}$ is a lattice point and is given by
 for some $\mathbf{k}\in\Z^{n}$.
 
 
-\subsection{Simulation Results for Symmetric IC}
+\subsection{Simulation results for symmetric IC}
 \label{subsec:SCLDPC_IC_results}
 In this section we present simulation results for the symmetric Gaussian IC and compare them with the bounds given in \cite{sridharan2008capacity}. We choose a pair of nested codes from the $(30,18,3)$ CU-SC-LDPC ensemble with spatial-coupling parameters $(L,w)=(32,4)$. We fix $\sigma=\sigma_{\text{max}}$ (such that in absence of interference, desired signal can be decoded successfully) and we analyze the bit error probability in decoding the interference versus the channel gain $\beta$. We observe that within $0.396$dB of the very strong interference regime given by \eqref{Eqn:StrongInterfCondition2} we are able to decode the interference with a bit error probability of less than $10^{-6}$. Note that the main bottle neck in error performance in decoding the interference is the last i.e., the uncoded level whereas in decoding the desired signal (after the interference is decoded and subtracted), within $\sigma_{\text{max}}$, arbitrarily small error rates can be achieved since no uncoded level needs to be decoded.
 
@@ -516,7 +502,7 @@ In Fig.~\ref{Fig:ShapingLoss}, we plot the achievable rate as a function of $P/\
 \setlength\figureheight{0.7\textwidth}
 \setlength\figurewidth{0.85\columnwidth}
 \input{\figures_path/ShapingLoss_Final}
-\caption{Gap between the Shannon capacity and the sum-capacity of a 4-level Construction-D lattice code(hypercube shaping) under multi-stage decoding. The DE thresholds for various SC-LDPC lattice codes with a maximum check node degree of $60$ are also given.}	
+\caption{The gap between the Shannon capacity and the achievable sum-rate of a 4-level Construction-D lattice code(hypercube shaping) under multi-stage decoding. The DE thresholds, along with comparison with BP thresholds for $n=2\times10^5$, for various SC-LDPC lattice codes with a maximum check node degree of $60$ are also given.}	
 \label{Fig:ShapingLoss}	
 \end{figure}
 

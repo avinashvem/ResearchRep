@@ -1,0 +1,113 @@
+In this appendix we present an alternate analysis for the compressed sensing problem we encountered in Sec~\ref{sec:cs_analysis} based on lattice decoding. A low probability of error for event $\mc{E}_{\mathrm{p}}$ for low values of $T$ translates to designing a sensing matrix $\mathbf{A}$ where we require: 
+\begin{enumerate}
+\item A large minimum distance in the Euclidean space between distinct $T$-sums of columns and 
+\item a minimal number of $T$-sets of columns whose sum is identical.
+\end{enumerate} 
+Before we formalize the above mentioned notions, we would like to note that, for the choice of $\mathbf{A}$, we considered the superimposed codes proposed by authors Fan, Darnell and Honary for the multiaccess binary adder channel \cite{fan1995superimposed}. In this work the authors consider binary codes and show that every constant weight code with weight $w$ and maximum correlation $c$ corresponds to a subclass of disjunctive code of order $T<\frac{w}{c}$. In other words, for any $T<\frac{w}{c}$ sum of any $T$ codewords from this code results in a distinct output. Although the superimposed codes solve the second requirement we mentioned above they do not consider the first requirement i.e., the larger minimum distance of the resulting signal space of $T$-sums of codewords which is also critical in obtaining a low probability of decoding error values. We present the discussion of these results and our result relaxing the constraint of \textit{constant weight} in Appendix~\ref{appendix:disjunctive}.
+
+In the following subsection we introduce lattice and derive upper bounds on $\Pr(\mc{E}_{\mathrm{p}})$ based on maximum-likelihood decoder for lattices.
+\begin{definition}
+A lattice $\Lambda$ in $n$-dimensional Euclidean space $\Lambda\subset \mathbb{R}^{n}$ can be defined as:
+\begin{equation}
+\Lambda =\{\lambda\in\mathbb{R}^{n}:\lambda=\mathbf{G}\mathbf{u},\mathbf{u}\in \mathbb{Z}^{m}\}
+\end{equation}
+where $\mathbf{G}\in\mathbb{R}^{n \times n}$ is called the generator matrix of the lattice. We define the minimum distance $\dmin(\Lambda)$ of the lattice $\Lambda$ as 
+\[
+\dmin(\Lambda)\defeq \min_{\lambda_1, \lambda_2\in\Lambda } ||\lambda_1-\lambda_2||_2.
+\]
+\end{definition}
+
+Let the set of codewords/columns of $\mbf{A}$ be denoted by $\mc{C}$ and $\mc{C}\subseteq \mc{C}_{\text{lin}}$ where $\mc{C}_{\text{lin}}$ is a binary linear code. We can then observe that the set of $T$-sums of codewords is a subset of lattice formed from $\mc{C}_{\text{lin}}$ ie..,
+\begin{align*}
+\sum_{j=1}^{T}\vec{a}_{i_j}&\in \Lambda ~~ i_j\in[1:M_\mathrm{p}]
+\end{align*}
+where $\Lambda =\{\mathbf{G}\mathbf{u},\mbf{u}\in \mbb{Z}^{m}\}, \mbf{G}$ is the generator matrix of the binary code $\mc{C}_{\text{lin}}$. Now that the connection between the $T$-sums of the binary code and the lattice in which they are contained in is established we formalize the two requirements on $\mbf{A}$ mentioned above.
+%\begin{definition}
+%For a given binary code $\mc{C}$ and fixed $T$, we define the parameter 
+%\[
+%\beta_T(\mc{C})\defeq |\{S:\exists S' \text{ s.t.} \sum_{i\in S}\vec{c}_i= \sum_{i\in S'}\vec{c}_i, |S|=|S'|=T,S\neq S'\}|,
+%\]
+%which counts the number of subsets of size $T$ whose sum is not unique in the set of $T$-sums of codewords from $\mc{C}$. The second requirement mentioned above translates to minimizing $\beta_T(\mc{C})$.
+%\label{Def:disjunctive_parameter_Tsum}
+%\end{definition}
+
+%\begin{definition}
+%For a given binary code $\mc{C}$ and fixed $T$, we define the minimum distance parameter
+%\[
+%\dmin(\mc{C},T)\defeq \min_{S\neq S',|S|=|S'|=T} ||\sum_{i\in S}\vec{a}_i-\sum_{i\in S'}\vec{a}_i||_2,
+%\]
+%which counts the minimum Euclidean distance between the $T$-sums of codewords. Note that $\beta_T(\mc{C})>0$ implies $\dmin(\mc{C},T)=0$ and $\beta_T(\mc{C})=0$ implies $\dmin(\mc{C},T)\geq \dmin(\Lambda)$.
+%\label{Def:dmin_Tsum}
+%\end{definition}
+
+\begin{definition}
+For a given binary code $\mc{C}$ and fixed $T$, for a subset $S$ of size $T$, we define the indicator parameter
+\[
+\beta_T(S) \defeq \mathbf{1}[\exists S' \text{ s.t. }~ u(S)= u(S'), |S'|=T,S'\neq S],
+\]
+where $u(S)\coleq \sum_{i\in S}\vec{c}_i$ and $\beta_T(S)$ indicates if the $T$-sum of codewords for the index set $S$ is unique in the set of $T$-sums of codewords from $\mc{C}$. The second requirement mentioned above translates to minimizing $\beta_T(\mc{C})$ where we define $\beta_T(\mc{C})\defeq \sum_{S\subset [1:|\mc{C}|]}\beta_T(S)$ that counts the total number of subsets whose sum is not unique in the set of $T$-sums of codewords from $\mc{C}$.
+\label{Def:disjunctive_parameter_Tsum}
+\end{definition}
+
+\begin{definition}
+For a given binary code $\mc{C}$, fixed $T$, we define the minimum Euclidean distance of a set $S$ in the space of  $T$-sums of codewords as
+\[
+%\dmin(\mc{C},T)\defeq \min_{S\neq S',|S|=|S'|=T} \left|\left|\sum_{i\in S}\vec{a}_i-\sum_{i\in S'}\vec{a}_i \right|\right|_2,
+\dmin(S;\mc{C})\defeq \min_{S\neq S',|S|=|S'|=T} \left|\left| u(S)-u(S') \right|\right|_2.
+\]
+\label{Def:dmin_Tsum}
+\end{definition}
+
+%\begin{definition}
+%For a given binary code $\mc{C}$ and fixed $T$, we define the minimum Euclidean distance between $T$-sums of codewords as
+%\[
+%%\dmin(\mc{C},T)\defeq \min_{S\neq S',|S|=|S'|=T} \left|\left|\sum_{i\in S}\vec{a}_i-\sum_{i\in S'}\vec{a}_i \right|\right|_2,
+%\dmin(\mc{C},T)\defeq \min_{S\neq S',|S|=|S'|=T} \left|\left| u(S)-u(S') \right|\right|_2,
+%\]
+%%which counts the minimum Euclidean distance between the $T$-sums of codewords. Note that $\beta_T(\mc{C})>0$ implies $\dmin(\mc{C},T)=0$ and $\beta_T(\mc{C})=0$ implies $\dmin(\mc{C},T)\geq \dmin(\Lambda)$.
+%\label{Def:dmin_Tsum}
+%\end{definition}
+
+%We will upper bound the probability of decoding error for the CS problem in terms of the parameters defined in Def.~\ref{Def:disjunctive_parameter_Tsum} and \ref{Def:dmin_Tsum}.
+%We observe that the set of $T$-sums of codewords is a subset of lattice formed from $\mc{C}_{\text{lin}}$ ie.., $\sum_{j=1}^{T}\vec{a}_{i_j}\in \Lambda ~ i_j\in[1:M_\mathrm{p}]$,
+%\begin{align*}
+%\sum_{j=1}^{T}\vec{a}_{i_j}&\in \Lambda ~~ i_j\in[1:M_\mathrm{p}]
+%\end{align*}
+%where $\Lambda =\{\mathbf{G}\mathbf{u},\mbf{u}\in \mbb{Z}^{m}\}, \mbf{G}$ is the generator matrix of the binary code $\mc{C}_{\text{lin}}$. 
+Also the following relation combining the three quantities above can be observed:
+\begin{equation}
+\dmin(S;\mc{C}) \begin{cases} \geq  \dmin(\Lambda) &~~\text{if } \beta_T(S)=0 \\
+=0 & \mbox{otherwise.}  \end{cases}
+\label{eqn:LatticeTsumconnection}
+\end{equation}
+
+
+We will upper bound the probability of decoding error for the CS problem in terms of the parameters defined in Def.~\ref{Def:disjunctive_parameter_Tsum} and \ref{Def:dmin_Tsum}.
+\begin{lemma}
+Let $\mc{C}\subseteq \mc{C}_{\text{lin}}$, where $\mc{C}_{\text{lin}}$ is a linear code containing $\mc{C}$, be a binary code with parameters $(n,M,\dmin)$. The probability of error of the bounded distance decoder in decoding $\vec{z}=\sum_{i\in S,|S|= T}\vec{c}_i+\vec{n}$ where $\vec{n}\sim \mc{N}(0,\sigma^2 \mathbf{I})$ can be upper bounded by
+\[
+Pr(\mc{E}_{\mathrm{p}})\leq \frac{\beta_T(\mc{C})}{\binom{|\mc{C}|}{T}}+ \left(\frac{e\dmin^2(\Lambda)}{4\sigma^2 N}e^{\frac{-\dmin(\Lambda)^2}{4\sigma^2 N}}\right)^{N/2}
+%\exp\left(-\frac{\dmin^2(\mc{C},T)}{2\sigma^2} \right),
+\]
+where $N$ is the blocklength of the code $\mc{C}$.
+%$K(\Lambda)$ is the maximum number of lattice points that are at a distance $\dmin(\Lambda)$ from any given point in the lattice.
+%\[
+%\beta_T(\mc{C})=|\{S:\exists S' \text{ s.t.} \sum_{i\in S}\vec{c}_i= \sum_{i\in S'}\vec{c}_i, |S|=|S'|=T,S\neq S'\}|.
+%\]
+%Here $\dmin(\Lambda)$ is the minimum distance of the lattice $\Lambda$ formed using $\mc{C}_{\text{lin}}$ and
+\label{Lem:CS_UpperBound}
+\end{lemma}
+\begin{proof}
+We recall that the error event $\mc{E}_2$ is defined as the event in which the CS decoder fails to decode the set $S$ exactly from
+\[
+\yv=\sum_{i\in S}\vec{a}_i+\vec{z}
+\]
+where $|S|=T$. When we condition event $\mc{E}_2$ on the $T$-sum of vectors from $S$ not being unique, which happens with probability $\frac{\beta_T(\mc{C})}{\binom{|\mc{C}|}{T}}$ the first part of the bound is obtained. If we assume that the $T$-sum of vectors from $S$ is unique, then the probability of error in decoding the set $S$ under bounded distance decoding can be upper bounded by  $\Pr \left[\left|\left|\vec{z}\right|\right|\geq \frac{\dmin(\Lambda)}{2}\right]$ which is equivalent to
+\begin{align*}
+ \Pr\left[ \sum_{i=1}^{N}z^2_i \geq \frac{\dmin^2(\Lambda)}{4\sigma^2}\right]
+\end{align*}
+where $z_i\sim \mc{N}(0,1)$. The result is obtained by using the right tail bounds of Chi-squared$•$ distribution.
+\end{proof}
+
+We should note that it is not easy to compute the values of $\beta_T(\mc{C})$ especially for higher values of $T$ or $M_\mathrm{p}$. However sharper conditions for $T$-disjunctive codes provided in Appendix~\ref{appendix:disjunctive} hopefully provide guidelines to design codes such that $\beta_T(\mc{C})=0$
+%Following the constant weight code argument in \cite{fan1995superimposed} we provide upper bounds, in terms of the minimum and maximum Hamming weights of the binary code $\mc{C}$, on the values of $T$ for which $\beta_T(\mc{C})=0$.

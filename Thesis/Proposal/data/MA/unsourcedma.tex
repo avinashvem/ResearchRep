@@ -15,6 +15,7 @@
 
 %--------------------------------------------------------------------------
 %\section{Introduction}
+%\footnote[1]{\textcopyright ~2017 IEEE. Reprinted, with permission, from A. Vem, K. R. Narayanan, J. Cheng, J.-F. Chamberland, ``A User-Independent Serial Interference Cancellation Based Coding Scheme for the Unsourced Random Access Gaussian Channel", accepted for publication in Information Theory Workshop, Nov. 2017.}
 In~\cite{polyanskiy2017perspective}, Polyanskiy introduced an interesting and timely multiple access problem; throughout, we refer to this new formulation as the unsourced multiple access channel model (MAC). In this setting, a very large number, $\Ktot$, of users in a wireless network operate in an uncoordinated fashion. Out of the $\Ktot$ users, a subset of $\Ka$ users are active at any time; and each of them wishes to communicate a $B$-bit message to a central base station. The base station is interested only in recovering the list of messages without regard to the identity of the user who transmitted a particular message. In addition to this, the interest is typically in the case when $B$ is small.
 
 The unsourced, uncoordinated nature of the problem and the small block lengths represent a substantial departure from the traditional multiple access channel and, consequently, has important implications both on the fundamental limits as well as the design of pragmatic low-complexity coding schemes. Due to small block lengths, information rates do not provide reasonable benchmarks and finite block length bounds are more meaningful. In \cite{polyanskiy2017perspective}, Polyanskiy provides bounds on the performance of finite-length codes for this channel model.
@@ -299,6 +300,7 @@ We define simplified SIC decoder as an iterative decoding process on a bipartite
 
 
 \subsection{Compressed sensing problem and design choices}
+\label{sec:cs_analysis}
 In this section we discuss the choice of parameters $T,\Bc$ (or equivalently $\Mp$), sensing matrix $\mathbf{A}$ and analyze the performance of the preamble component for various such  choices under the correlation and list decoders described in Sec.\ref{subsubsec:decoder_subblock}. 
 
 We consider two options for the choice of sensing matrix: (i) random matrix with each entry chosen according to Rademacher distribution, referred to as \textit{random ensemble} and (ii) sensing matrix derived as a subset of a binary code with good minimum distance properties, referred to as \textit{binary ensemble}. 
@@ -658,21 +660,23 @@ x_{t+1}&=\lambda(1-y_t).\label{eqn:DE_Tpeeling_bit}
 \label{lem:DE_Tpeeling}
 \end{lemma}
 \begin{proof}
-In the context of low density parity check(LDPC) codes the bipartite graph corresponds to the parity check matrix where the left and right nodes represent the bits of the codeword and the parity check equations respectively. If we consider an LDPC code under binary erasure channel where each bit is erased with probability $\epsilon$, under the assumption that the bipartite graph is a tree, the probability that a random edge in the graph is an erasure in iteration $t$ of the peeling process is given by \cite{richardson2008modern}
-\begin{align}
-y_{t}&=\sum_{r=1}^{r_{\max}} \rho_r (1-x_t)^{r-1}, \label{eqn:DE_LDPC_check}\\
-x_{t+1}&=\epsilon \lambda(1-y_t).\label{eqn:DE_LDPC_bit}
-\end{align}
-Eqn. \eqref{eqn:DE_LDPC_check} is due to the observation that all the incoming messages at a check node are independent, due to the tree assumption, and the outgoing message on an edge from a check node of degree $r$ is a non-erasure if and only if all the incoming messages are non-erasures. For degree distributions with finite maximum degree on the left and right it is shown that a graph chosen randomly from the ensemble $(N,\lambda,\rho)$ is a tree with probability approaching $1$ asymptotically in blocklength of the code.
-
-Now if we consider an edge $e$ connected to check node of degree $r$ in the $T$-peeling process, the outgoing message is a non-erasure if and only if there are at most $T-1$ erasures in the remaining $r-1$ incoming edges. Thus the probability that the outgoing message from a check node of degree $r$ is non-erasure, denoted by $y_{t,r}$, if the incoming message on the remaining $r-1$ edges is an erasure with probability $x_t$ is equal to
-%$1-\binom{r-1}{t}(1-x_t)^{r-1-t} x_t^{t}$ if $r>T$ else it is equal to $0$.
-\begin{align*}
-y_{t,r}&=\sum_{t=0}^{T-1}\binom{r-1}{t}(1-x_t)^{r-1-t} x_t^{t}  ~&\text{if } r>T\\
-&=1 ~&\text{else if } r\leq T.
-\end{align*}
-Averaging over all edges where an edge is connected to a check node of degree $r$ with probability $\rho_r$ gives us Eqn. \eqref{eqn:DE_Tpeeling_check}.
+Proof is provided in Appendix~\ref{appendix:proof_DE_Tpeeling}.
 \end{proof}
+%In the context of low density parity check(LDPC) codes the bipartite graph corresponds to the parity check matrix where the left and right nodes represent the bits of the codeword and the parity check equations respectively. If we consider an LDPC code under binary erasure channel where each bit is erased with probability $\epsilon$, under the assumption that the bipartite graph is a tree, the probability that a random edge in the graph is an erasure in iteration $t$ of the peeling process is given by \cite{richardson2008modern}
+%\begin{align}
+%y_{t}&=\sum_{r=1}^{r_{\max}} \rho_r (1-x_t)^{r-1}, \label{eqn:DE_LDPC_check}\\
+%x_{t+1}&=\epsilon \lambda(1-y_t).\label{eqn:DE_LDPC_bit}
+%\end{align}
+%Eqn. \eqref{eqn:DE_LDPC_check} is due to the observation that all the incoming messages at a check node are independent, due to the tree assumption, and the outgoing message on an edge from a check node of degree $r$ is a non-erasure if and only if all the incoming messages are non-erasures. For degree distributions with finite maximum degree on the left and right it is shown that a graph chosen randomly from the ensemble $(N,\lambda,\rho)$ is a tree with probability approaching $1$ asymptotically in blocklength of the code.
+%
+%Now if we consider an edge $e$ connected to check node of degree $r$ in the $T$-peeling process, the outgoing message is a non-erasure if and only if there are at most $T-1$ erasures in the remaining $r-1$ incoming edges. Thus the probability that the outgoing message from a check node of degree $r$ is non-erasure, denoted by $y_{t,r}$, if the incoming message on the remaining $r-1$ edges is an erasure with probability $x_t$ is equal to
+%%$1-\binom{r-1}{t}(1-x_t)^{r-1-t} x_t^{t}$ if $r>T$ else it is equal to $0$.
+%\begin{align*}
+%y_{t,r}&=\sum_{t=0}^{T-1}\binom{r-1}{t}(1-x_t)^{r-1-t} x_t^{t}  ~&\text{if } r>T\\
+%&=1 ~&\text{else if } r\leq T.
+%\end{align*}
+%Averaging over all edges where an edge is connected to a check node of degree $r$ with probability $\rho_r$ gives us Eqn. \eqref{eqn:DE_Tpeeling_check}.
+%\end{proof}
 
 Let $L(x)=\sum_{i=1}^{l_{\max}} L_i x^i$ be the left d.d according to which the the users choose their repetition parameters as described in Sec. \ref{sec:Txpolicy_TannerGraph} i.e., $\Pr(L_{w}=i)=L_i$. Also let the average left degree of this distribution be $l_{\text{avg}}=\sum_i iL_i$. Then according to our transmission policy the right d.d. $R(x)$ is Binomial distributed with parameters $(\Ka l_{\text{avg}},1/V)$  and in the limit $\Ka\rightarrow \infty$ $R(x)$ can be approximated as Poisson distribution with parameter $r_{\text{avg}}=\frac{\Ka l_{\text{avg}}}{V}$. Thus, asymptotically in $\Ka$, it can be seen that $R(x)=e^{-r_{\text{avg}}(1-x)}$ and $\rho(x)=R'(x)/R'(1)=e^{-r_{\text{avg}}(1-x)}$. For more details refer to \cite{narayanan2012iterative}.
 
@@ -804,7 +808,7 @@ Although in Sec. \ref{sec:SICanalysis} we remarked that if the minimum left degr
 
 
 \section{Appendix}
-\subsection{Proof of Lem.\ref{lem:errorprob_correlationdecoder}}
+\subsection{Proof of Lem.~\ref{lem:errorprob_correlationdecoder}}
 \label{appendix:proof_errorprob_correlationdecoder}
 %\begin{lemma}
 %Let $\{1,2,\ldots,T\}$ be the set of preamble part of the message indices transmitted in a bin and $\yv$ be the preamble part of the received vector. If we let $\Pr(\mc{E}_{corr})$ denote the the probability of the error event that the correlation $\langle \yv, \av_i\rangle \leq \langle \yv, \av_j\rangle $ for some $i\leq T$ and $j>T$. Then 
@@ -849,7 +853,7 @@ For the binary ensemble the correlation between any two vectors is bounded as $\
 \end{align*}
 where $z'_{eq}=\langle\zv,\av_j-\av_1\rangle\sim\mc{N}(0,4\Pp d_{1j})$, $d_{1j}$ is the Hamming distance between the vectors $\av_1$ and $\av_j$.  Thus the maximum variance $z'_{eq}$ can have is $4\Pp\dmax$ which when used in the tail bound for normal distribution gives the required upper bound.
 
-\subsection{Proof of Lem.\ref{lem:DE_Tpeeling}}
+\subsection{Proof of Lem.~\ref{lem:DE_Tpeeling}}
 \label{appendix:proof_DE_Tpeeling}
 In the context of low density parity check (LDPC) codes the bipartite graph corresponds to the parity check matrix where the left and right nodes represent the bits of the codeword and the parity check equations respectively. If we consider an LDPC code under binary erasure channel where each bit is erased with probability $\epsilon$, under the assumption that the bipartite graph is a tree, the probability that a random edge in the graph is an erasure in iteration $t$ of the peeling process is given by \cite{richardson2008modern}
 \begin{align}
@@ -866,6 +870,115 @@ y_{t,r}&=\sum_{t=0}^{T-1}\binom{r-1}{t}(1-x_t)^{r-1-t} x_t^{t}  ~&\text{if } r>T
 \end{align*}
 Averaging over all edges where an edge is connected to a check node of degree $r$ with probability $\rho_r$ gives us Eqn. \eqref{eqn:DE_Tpeeling_check}.
 
+\subsection{Lattice decoding based analysis for compressed sensing}
+\label{appendix:cs_analysis2}
+\input{./data/MA/appdx_disjunctive}
+
+\subsection{T-Disjunctive codes}
+\label{appendix:disjunctive}
+In the following subsection we first present the main results from \cite{fan1995superimposed} that enabled the authors to show that constant weight codes are a subclass of disjunctive code. Then we follow it up with our result where we relax the constant weight constraint on the code to \textit{nearly} constant weight.
+\begin{definition}
+The maximum correlation $c$ of a binary code $\mc{C}$ is defined as
+\[
+c=\max_{\vec{c}_i,\vec{c}_j\in \mc{C},~i\neq j} < \vec{c}_i,\vec{c}_j>.
+\]
+\end{definition}
+
+\begin{definition}
+A binary vector $\vec{c}=[c(1),c(2),\ldots,c(n)]$ is said to be included in a vector  $\vec{z}=[z(1),z(2),\ldots,z(n)]$ if and only if $z(i)\geq c(i)~\forall i$.
+\end{definition}
+
+\begin{definition}
+A binary code $\mc{C}$ with length $n$, size $M$ is said to be a disjunctive code of order $T$ if each subset $S\subset \mc{C}$ with size $|S|\leq T$ has the property that the vector $\vec{z}$ includes only those codewords in $\mc{C}$ that belong to $S$ where
+\begin{equation}
+\vec{z}=\sum_{\vec{c}_i\in S}\vec{c}_i
+\label{eqn:mac_adder}
+\end{equation}
+is the output of the multiple access real adder channel. We denote a disjunctive code by $D(n,M,T)$.
+\end{definition}
+
+\begin{definition}
+A constant weight(CW) binary code is one in which all the codewords have equal weight $w$. For a CW code, the minimum distance $d_{\text{min}}$ and the maximum correlation $c$ are related as
+\[
+2c=2w-\dmin.
+\]
+We denote a constant code by parameters CW$(n,M,w,c)$ where $n, M$ are blocklength and size of the code respectively.
+\end{definition}
+\begin{lemma}[\cite{fan1995superimposed} Theorem 1]
+\label{lem:fandisjunctive_code}
+A constant weight binary code $\mc{C}$ with parameters $(n,M,w,c)$ is also a disjunctive code of order $(n,M,T)$ for all $T$ satisfying
+\[
+T<\frac{w}{c}.
+\]
+\end{lemma}
+
+\begin{example}
+Consider a Reed-Solomon code $RS(n,k,\dmin)=RS(7,3,5)$. As described in \cite{fan1995superimposed} we construct a constant weight code by mapping each symbol in a codeword from GF($2^3$) to a length $8$ binary vector of weight one
+\begin{align*}
+0&\rightarrow 10000000\\
+1&\rightarrow 01000000\\
+&\cdots	\\
+7&\rightarrow 00000001.
+\end{align*}
+Note that this code has parameters $n=56,M=2^9, w=7,\dmin=10$ which implies $c=w-\dmin/2=2$. Thus any $T$-sum of the codewords from this CW code is unique for all $T\leq 3<\frac{w}{c}$.
+\end{example}
+
+Now we relax the constant weight constraint in Lemma. \ref{lem:fandisjunctive_code} and give the corresponding bounds on the disjunctive code parameters.
+
+\begin{lemma}
+\label{lem:maxCorr_nonconstwtcode}
+For a binary code $\mc{C}$ with parameters $(n,M,\dmin,\wmax)$, where $\wmax$ is the maximum Hamming weight of all the codewords in the code, the maximum correlation between any two codewords can be given by
+\[
+c\leq \wmax-\dmin/2.
+\]
+\end{lemma}
+\begin{proof}
+For any two codewords $\vec{c}_i, \vec{c}_j\in\mc{C}$ the relationship between correlation, Hamming distance and sum of Hamming weights can be given by
+\[
+d_H(\vec{c}_i,\vec{c}_j)+2c(\vec{c}_i,\vec{c}_j)=w_H(\vec{c}_i)+w_H(\vec{c}_j)
+\]
+where $d_H$ and $w_H$ are the Hamming distance and weights respectively. By substituting the lower and upper bounds $\dmin$ and $\wmax$ for the two parameters gives us the required upper bound on maximum correlation of any two codewords of the binary code.
+\end{proof}
+
+\begin{lemma}
+A binary code $\mc{C}$ with parameters $(n,M,\dmin,\wmax)$ is also a disjunctive code of order $(n,M,T)$ for all $T$ satisfying
+\begin{align}
+T<\frac{\wmin}{\wmax-\dmin/2}.
+\label{eqn:mac_CS_mainbound}
+\end{align}
+where $\wmin$ and $\wmax$ respectively are the minimum and maximum Hamming weights of all codewords in the code. Note that the values of $\dmin$ and $\wmin$ are not necessarily equal for non-linear codes.
+\label{lem:mac_CS_mainbound}
+\end{lemma}
+
+\begin{proof}
+Without loss of generality consider a set $S=\{\vec{c}_1,\vec{c}_2,\ldots, \vec{c}_T\}$ of codewords of size $T$ and let the output of the real adder multiple access channel, given by Eqn. \eqref{eqn:mac_adder}, be $\vec{z}$. Let us consider codeword $\vec{c}_e\in\mc{C}\backslash S$ and look at the event in which $\vec{z}$ does not include $\vec{c}_e$. Let $s_{ie}\coleq\{k:c_{i}(k)=c_{e}(k)=1\}~\forall i\leq T$ and  $s_{e}=\{k: c_{e}(k)=1\}$. Since $\vec{z}=\sum_{i\leq T}\vec{c}_i\implies z(k)\geq 1 ~\forall k\in \cup s_{ie}$. Hence the condition that needs to be satisfied for $\vec{z}$ to not include $\vec{c}_e$ is that $\exists k: k\in s_e\backslash \cup s_{ie}$ which translates to
+\begin{align}
+ |\cup s_{ie}|< |s_e|.\label{eqn:subsetineq_CSproof}
+\end{align}
+%\cup s_{ie} &\subset s_e \notag\\
+The inequality in Eq. \eqref{eqn:subsetineq_CSproof} is satisfied when $\sum_i c(\vec{c}_i,\vec{c}_e)<w_H(c_e)$ which is implied by the condition $Tc_{\max}<\wmin$ and from Lemma. \ref{lem:maxCorr_nonconstwtcode} the required result follows.
+\end{proof}
+
+%The proof is provided in Appendix. We look at an example of sensing matrix $\mbf{A}$ based on BCH code to consider how the results so far impact the probability of decoding error.
+
+\begin{example}
+Consider a binary BCH code $\mc{C}$ with parameters $(n,k,\dmin)=(63,10,27)$. Let the subset $\mc{C}_0\subset \mc{C}$ be obtained via the following decomposition:
+\[
+\mc{C}=\mc{C}_0 \cup \mc{C}_1 ~~\text{ such that } c\in \mc{C}_0 \iff \bar{c}\in\mc{C}_1,
+\]
+where $\bar{c}=\mathbf{1}\oplus c$ is the one's complement of $c$. For the code $\mc{C}_0\backslash \mathbf{0}$, $\mathbf{0}$ being the all-zero codeword, the weight and distance parameters are computed to be $(\wmin,\wmax,\dmin)=(27,36,27)$ for which the bound in Eqn. \eqref{eqn:mac_CS_mainbound} is $T\leq 1$. But numerically we observe that this code produces unique outputs from the MAC adder channel atleast upto values of $T=3$. The parameters $\beta_T(\mc{C}_0)$ and $\dmin(\mc{C}_0,T)$ are computed numerically for $T\leq 1$ and are given by :
+%minimum Euclidean distance between the $T$-sums of the codewords from $\mc{C}_0$ is 
+\begin{center}
+\begin{tabular}{ c c c }
+T  &  $\dmin$& $\beta_T(\mc{C})$\\
+\hline\hline
+1	&	$\sqrt{27}$	& 0\\
+2	& $\sqrt{27}$ & 0\\
+3  &  $\sqrt{27}$& 0 .
+\end{tabular}
+\end{center}
+\label{Ex:BCH_halfcode}
+\end{example}
 
 %\begin{figure}[h]
 %  \centering
@@ -874,76 +987,3 @@ Averaging over all edges where an edge is connected to a check node of degree $r
 %}
 %  \label{fig:BP_simulations}
 %\end{figure}
-
-%\section{Disjunctive codes}
-%In the following subsection we first present the main results from \cite{fan1995superimposed} that enabled the authors to show that constant weight codes are a subclass of disjunctive code. Then we follow it up with our result where we relax the constant weight constraint on the code to \textit{nearly} constant weight.
-%\begin{definition}
-%The maximum correlation $c$ of a binary code $\mc{C}$ is defined as
-%\[
-%c=\max_{\vec{c}_i,\vec{c}_j\in \mc{C},~i\neq j} < \vec{c}_i,\vec{c}_j>.
-%\]
-%\end{definition}
-%
-%\begin{definition}
-%A binary vector $\vec{c}=[c(1),c(2),\ldots,c(n)]$ is said to be included in a vector  $\vec{z}=[z(1),z(2),\ldots,z(n)]$ if and only if $z(i)\geq c(i)~\forall i$.
-%\end{definition}
-%
-%\begin{definition}
-%A binary code $\mc{C}$ with length $n$, size $M$ is said to be a disjunctive code of order $T$ if each subset $S\subset \mc{C}$ with size $|S|\leq T$ has the property that the vector $\vec{z}$ includes only those codewords in $\mc{C}$ that belong to $S$ where
-%\begin{equation}
-%\vec{z}=\sum_{\vec{c}_i\in S}\vec{c}_i
-%\label{eqn:mac_adder}
-%\end{equation}
-%is the output of the multiple access real adder channel. We denote a disjunctive code by $D(n,M,T)$.
-%\end{definition}
-%
-%\begin{definition}
-%A constant weight(CW) binary code is one in which all the codewords have equal weight $w$. For a CW code, the minimum distance $d_{\text{min}}$ and the maximum correlation $c$ are related as
-%\[
-%2c=2w-\dmin.
-%\]
-%We denote a constant code by parameters CW$(n,M,w,c)$ where $n, M$ are blocklength and size of the code respectively.
-%\end{definition}
-%\begin{lemma}[\cite{fan1995superimposed} Theorem 1]
-%\label{lem:fandisjunctive_code}
-%A constant weight binary code $\mc{C}$ with parameters $(n,M,w,c)$ is also a disjunctive code of order $(n,M,T)$ for all $T$ satisfying
-%\[
-%T<\frac{w}{c}.
-%\]
-%\end{lemma}
-%
-%\begin{example}
-%Consider a Reed-Solomon code $RS(n,k,\dmin)=RS(7,3,5)$. As described in \cite{fan1995superimposed} we construct a constant weight code by mapping each symbol in a codeword from GF($2^3$) to a length $8$ binary vector of weight one
-%\begin{align*}
-%0&\rightarrow 10000000\\
-%1&\rightarrow 01000000\\
-%&\cdots	\\
-%7&\rightarrow 00000001.
-%\end{align*}
-%Note that this code has parameters $n=56,M=2^9, w=7,\dmin=10$ which implies $c=w-\dmin/2=2$. Thus any $T$-sum of the codewords from this CW code is unique for all $T\leq 3<\frac{w}{c}$.
-%\end{example}
-%
-%Now we relax the constant weight constraint in Lemma. \ref{lem:fandisjunctive_code} and give the corresponding bounds on the disjunctive code parameters.
-%
-%\begin{lemma}
-%\label{lem:maxCorr_nonconstwtcode}
-%For a binary code $\mc{C}$ with parameters $(n,M,\dmin,\wmax)$, where $\wmax$ is the maximum Hamming weight of all the codewords in the code, the maximum correlation between any two codewords can be given by
-%\[
-%c\leq \wmax-\dmin/2.
-%\]
-%\end{lemma}
-%\begin{proof}
-%For any two codewords $\vec{c}_i, \vec{c}_j\in\mc{C}$ the relationship between correlation, Hamming distance and sum of Hamming weights can be given by
-%\[
-%d_H(\vec{c}_i,\vec{c}_j)+2c(\vec{c}_i,\vec{c}_j)=w_H(\vec{c}_i)+w_H(\vec{c}_j)
-%\]
-%where $d_H$ and $w_H$ are the Hamming distance and weights respectively. By substituting the lower and upper bounds $\dmin$ and $\wmax$ for the two parameters gives us the required upper bound on maximum correlation of any two codewords of the binary code.
-%\end{proof}
-%\begin{proof}[Proof of Lem.~\ref{lem:mac_CS_mainbound}]
-%Without loss of generality consider a set $S=\{\vec{c}_1,\vec{c}_2,\ldots, \vec{c}_T\}$ of codewords of size $T$ and let the output of the real adder multiple access channel, given by Eqn. \eqref{eqn:mac_adder}, be $\vec{z}$. Let us consider codeword $\vec{c}_e\in\mc{C}\backslash S$ and look at the event in which $\vec{z}$ does not include $\vec{c}_e$. Let $s_{ie}\coleq\{k:c_{i}(k)=c_{e}(k)=1\}~\forall i\leq T$ and  $s_{e}=\{k: c_{e}(k)=1\}$. Since $\vec{z}=\sum_{i\leq T}\vec{c}_i\implies z(k)\geq 1 ~\forall k\in \cup s_{ie}$. Hence the condition that needs to be satisfied for $\vec{z}$ to not include $\vec{c}_e$ is that $\exists k: k\in s_e\backslash \cup s_{ie}$ which translates to
-%\begin{align}
-% |\cup s_{ie}|< |s_e|.\label{eqn:subsetineq_CSproof}
-%\end{align}
-%%\cup s_{ie} &\subset s_e \notag\\
-%The inequality in Eq. \eqref{eqn:subsetineq_CSproof} is satisfied when $\sum_i c(\vec{c}_i,\vec{c}_e)<w_H(c_e)$ which is implied by the condition $Tc_{\max}<\wmin$ and from Lemma. \ref{lem:maxCorr_nonconstwtcode} the required result follows.
-%\end{proof}

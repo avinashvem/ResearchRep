@@ -13,6 +13,7 @@
 %\usepackage{times}
 %\usepackage{cmbright}
 \usepackage[T1]{fontenc}
+\usepackage[stable]{footmisc}
 
 %This package allows for the use of graphics in the
 %document.
@@ -92,28 +93,29 @@
 \include{data/introduction}
 %\include{data/background}
 %%---------------------MAC-----------------------------------------------
-\chapter{MASSIVE MULTIPLE ACCESS}
+\chapter{MASSIVE MULTIPLE ACCESS\footnote{\textcopyright ~2017 IEEE. Reprinted, with permission, from A. Vem, K. R. Narayanan, J. Cheng, J.-F. Chamberland, ``A User-Independent Serial Interference Cancellation Based Coding Scheme for the Unsourced Random Access Gaussian Channel", accepted for publication in Information Theory Workshop, Nov. 2017.}}
 \label{chap:MAC}
 \input{data/MA/unsourcedma.tex}
 
 \chapter{RANDOM MULTIPLE ACCESS}
 \label{chap:uncoord_mac}
 \input{data/MA/uncoordinated.tex}
---------------------SCLDPC-----------------------------------------------
+
+%--------------------SCLDPC-----------------------------------------------
 \include{data/SCLDPC} %SCLDPC
 
 %--------------------Compressed Sensing--------------------------------
-\chapter{COMPRESSED SENSING}
+\chapter{COMPRESSED SENSING\footnote{\textcopyright ~2016 IEEE. Reprinted, with permission, from A. Vem, N. T. Janakiraman, K. R. Narayanan, ``Sub-linear time compressed sensing for support recovery using left and right regular sparse-graph codes", Information Theory Workshop, Sept. 2016.}}
 \label{chap:cs}
 \input{data/CS/compressedsensing.tex}
 
-%----------------------------Group Testing----------------- 
+%----------------------------Group Testing-------------------------------
 \chapter{GROUP TESTING}
 \label{chap:gt}
 \input{data/GT/grouptesting.tex}
 
 %-----------------Conclusion Future research-------------------------
-\chapter{\uppercase{ Conclusion \& Future Directions}}
+\chapter{\uppercase{ Future Directions}}
 \label{chap:conclusion}
 \input{data/conclusion.tex}
 
@@ -131,7 +133,7 @@
 \renewcommand{\bibname}{{\normalsize\rm REFERENCES}}
 
 %This file is a .bib database that contains the sources.This removes the dependency on the previous file
-\bibliography{data/myReference}
+\bibliography{data/journal_full,data/myReference}
 
 %This next line includes appendices. The file
 %appendix.tex contains commands pointing to
