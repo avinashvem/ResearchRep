@@ -28,7 +28,7 @@ yminorgrids,
 legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell align=left,font=\fsize}
 ]
 
-\node[] at (axis cs: 100,7.5696) {\Large $X$};
+%\node[] at (axis cs: 100,7.5696) {\Large $X$};
 
 \addplot [color=black,solid,dashed, line width=2.0pt]
   table[row sep=crcr]{
@@ -96,7 +96,7 @@ legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell al
 275  8.4960 \\
 300 9.1467 \\
 };
-\addlegendentry{$T=4$};
+\addlegendentry{$T=4$;$\mbb{E}_w[||\xv_w||^2]=NP$};
 
 \addplot [color=BurntOrange,solid,mark=triangle,mark size=3.0,line width=2.0pt]
   table[row sep=crcr]{
@@ -113,7 +113,7 @@ legend style={at={(0,1)},anchor=north west, draw=black,fill=white,legend cell al
 275 9.7502\\
 300 10.3086\\
  };
-\addlegendentry{$T=4;||\vec{x}||^2\leq NP$};
+\addlegendentry{$T=4;||\xv||^2= NP$};
 
 
 

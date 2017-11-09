@@ -3,10 +3,10 @@
 % and based on this approximation we devise a multiple round LP optimization scheme to find the optimal left degree distribution (based on which the users choose the number of time slots to transmit in). As of now with the aid of this scheme we are able to achieve a net throughput of $0.86$ for $n=1000$ which we also provide evidence for via Monte Carlo simulations.
 
 \section{Motivation}
-Recently, there has been a lot of interest in the design of random access strategies for the uncoordinated massive multiple access problem in view of wireless networks. An interesting connection has been established between codes on graphs and the decoding of multiple users (or, collision resolution in multiple access schemes). Leveraging this connection, many results from coding theory have been used to design and analyze various random access strategies. Particularly, it has been shown that in the limit of the number of users becoming asymptotically large, the throughput efficiency of uncoordinated multiple access can be as high as that of coordinated multiple access \cite{narayanan2012iterative}. In this chapter, we consider the non-asymptotic regime when the number of users is fixed and finite. By extending the finite-length analysis of low density parity check (LDPC) code ensembles \cite{amraoui2007find} to the multiple access case, we analyze the performance of the random access schemes for finite lengths and verify with numerical simulations.
+Recently, there has been a lot of interest in the design of random access strategies for the uncoordinated massive multiple access problem in view of wireless networks. An interesting connection has been established between codes on graphs and the decoding of multiple users (or, collision resolution in multiple access schemes) \cite{liva2011graph}. Leveraging this connection, results from coding theory have been used to design and analyze various random access strategies. Particularly, it has been shown that in the limit of the number of users becoming asymptotically large, the throughput efficiency of uncoordinated multiple access can be as high as that of coordinated multiple access \cite{narayanan2012iterative}. In this chapter, we consider the non-asymptotic regime when the number of users is fixed and finite. By extending the finite-length analysis of low density parity check (LDPC) code ensembles \cite{amraoui2007find} to the multiple access case, we analyze the performance of the random access schemes for finite lengths and validate the analysis with numerical simulations.
 
 \subsection{System model}
-In the considered system model there are a total of $n$ users currently active each with one packet of information to transmit to the access point. Similar to Ch.~\ref{chap:MAC} the transmission period is partitioned into sub-blocks, referred to as slots, thus resulting in a similar slotted structure. Let the total number of slots available per round be $m$. The random access strategy of each user, independent and uncoordinated from other users, can be described as following. Each user $k$, $k\in [1:n]$, populates a random variable $D_{k}$ distributed according to the probability mass function $L(x)$ or equivalently $\Pr(D_{k}=i)=L_{i}$. The respective user then chooses $D_{k}$ time slots uniformly at random, with replacement, from the $m$ available slots. We will refer to this paradigm of picking check nodes randomly as \textit{uniform-with replacement} paradigm. We can represent the random strategy via bipartite Tanner graphs similar to a LDPC code where the variable nodes represent the $n$ users and the check nodes represent the $m$ available slots. There exists an edge between variable node $i$ and check node $j$ if and only if user $i$ chose to transmit in slot $j$. Note that we follow the same convention as used in describing LDPC codes for the degree distribution polynomials:
+In the considered system model there are a total of $n$ users currently active each with one packet of information to transmit to the access point. Similar to Ch.~\ref{chap:MAC} the transmission period is partitioned into sub-blocks, referred to as slots, thus resulting in a similar slotted structure. Let the total number of slots available per round be $m$. The random access strategy of each user, independent and uncoordinated from other users, can be described as following. Each user $k$, $k\in [1:n]$, populates a random variable $D_{k}$ distributed according to the probability mass function $L(x)$ or equivalently $\Pr(D_{k}=i)=L_{i}$. The respective user then chooses $D_{k}$ time slots uniformly at random, with replacement, from the $m$ available slots. We will refer to this framework of picking check nodes randomly as \textit{uniform-with replacement} framework. We can represent the random strategy via bipartite Tanner graphs similar to a LDPC code where the variable nodes represent the $n$ users and the check nodes represent the $m$ available slots. There exists an edge between variable node $i$ and check node $j$ if and only if user $i$ chose to transmit in slot $j$. Note that we follow the same convention as used in describing LDPC codes for the degree distribution polynomials:
 \begin{align}
 L(x)=\sum_{i=1}^{l_{\text{max}}} L_{i}x^{i}\label{eqn:varnodedd_LDPC}\\
 \lmb(x)=\sum_{i=1}^{l_{\text{max}}} \lmb_{i}x^{i-1},\notag
@@ -60,87 +60,81 @@ For a $(3,6)$ regular LDPC code, the average number of degree-one check nodes gi
 %&\sum \Delta L_i=0;      & -\min\{\delta,L_{i}\}\leq \Delta L_i\leq \delta
 %\end{align*}
 
-\begin{theorem}[Scaling Law \cite{richardson2008modern}]
+\begin{lemma}[Scaling Law \cite{richardson2008modern}]
 Consider transmission over a BEC channel using random elements from the LDPC $(n,\lambda,\rho)$ ensemble. Assume that the ensemble has a single critical point $y^*>0$ and let $\nu^*=\epsilon_{\text{BP}}L(y^*)$. Let $P_{\text{B}}^{W}(n,\lmb,\rho,\epsilon)$ denote the expected block erasure probability due to erasures of size atleast $n\gamma \nu^{*}$, where $\gamma\in (0,1)$. Fix $z:=\sqrt{n}(\epsilon_{\text{BP}}-\beta n^{-2/3}-\epsilon)$. Then as $n\rightarrow \infty ,$
 \begin{align*}
-P_{\text{B}}^{W}(n,\lmb,\rho,\epsilon)=Q\left(\frac{z}{\alpha}\right)\left(1+O(n^{-1/3})\right)
+P_{\text{B}}^{W}(n,\lmb,\rho,\epsilon)&=Q\left(\frac{z}{\alpha}\right)\left(1+O(n^{-1/3})\right)\\
+P_{\text{b}}^{W}(n,\lmb,\rho,\epsilon)&=\nu^* Q\left(\frac{z}{\alpha}\right)\left(1+O(n^{-1/3})\right)
 \end{align*}
 where $\alpha$ and $\beta$ are constants dependent on the degree distributions.
-\end{theorem}
+\end{lemma}
 The expression above approximates the error probability of large-erasure events.
 
-\begin{theorem}[Error Floor \cite{amraoui2007find}]
+\begin{lemma}[Error Floor \cite{amraoui2007find}]
 Consider transmission over a BEC channel using random elements from the LDPC $(n,\lambda,\rho)$ ensemble. Assume that the ensemble has a single critical point $y^*>0$ and let $\nu^*=\epsilon_{\text{BP}}L(y^*)$. Let $P_{\text{B}}^{F}(n,\lmb,\rho,\epsilon)$ denote the expected block erasure probability due to stopping sets of size between $s_{\text{min}}$ and  $n\gamma \nu^{*}$, where $\gamma\in (0,1)$. Then for any $\epsilon<\epsilon_{\text{BP}}$
 \begin{align*}
-P_{\text{B}}^{F}(n,\lmb,\rho,\epsilon)=1-e^{-\sum_{s\geq s_{min}}\tilde{A}_{s}\epsilon^s}\left(1+o(1)\right),
+P_{\text{B}}^{F}(n,\lmb,\rho,\epsilon)&=1-e^{-\sum_{s\geq s_{\min}}\tilde{A}_{s}\epsilon^s}\left(1+o(1)\right)\\
+P_{\text{b}}^{F}(n,\lmb,\rho,\epsilon)&=\sum_{s\geq s_{\min}}s\tilde{A}_{s}\epsilon^s\left(1+o(1)\right),
 \end{align*}
 where $\tilde{A}_{s}=\text{coef}\{\log(A(x)),x^s\}$ for $s\geq 1$, with $A(x)=\sum_{s\geq 0} A_{s}x^s$ and
 \begin{multline}
 A_{s}=\sum_{e}\left( \text{coef}\left\lbrace\prod_{i} (1+xy^{i})^{nL_{i}}, x^{s}y^{e} \right\rbrace \right.\times \\
 \left.\frac{\text{coef}\lbrace \prod_{i}\left((1+x)^i -ix \right)^{n(1-r)R_{i}},x^{e}\rbrace}{\binom{nL'(1)}{e}}\right).
 \end{multline}
-\end{theorem}
-Note that $A_{s}$ is the expected number of stopping sets of size $s$ in a random graph picked uniformly at random from the graph and $\tilde{A}_{s}$ is the expected number of minimal stopping sets of size $s$. Following along similar lines we derive error floor expression in the case of random multiple access problem.
+\end{lemma}
+Note that $A_{s}$ is the expected number of stopping sets of size $s$ in a random graph chosen uniformly at random from the LDPC ($n\lmb,\rho$) ensemble and $\tilde{A}_{s}$ is the expected number of minimal stopping sets of size $s$. Following along similar lines we derive error floor expression in the case of random multiple access problem.
  
 %Our objective is, for a given $n$, to minimize the total throughput $\eta=\frac{n}{m}\left(1-P_{b}(n,L(x)\right)$ over the variables $m$-number of slots and the degree distribution $L(x)$. Even from the analytical approximate expression for the bit/block probability of error it appears to be a highly complex problem and the global optimization would be very difficult to compute. So for a fixed $n$ and an initial left distribution $L(x)$ we compute the partial derivatives and implement the local optimization via LP to derive a locally optimal left distribution $L^{*}(x)$. With this as our current input to the LP we repeat the procedure until there are diminishing improvements to the total throughput $\eta$.
 
 \section{Error analysis for random multiple access}
   We note that in the case of random uncoordinated multiple access scheme since the right degree distribution is not a design choice but rather has a Poisson distribution, as discussed in \cite{narayanan2012iterative}, the error probability approximations do not carry over directly from \cite{amraoui2007find} especially for the \textit{water-fall} erasures. But we approximate the small-error events $P_{\text{b}}^{\text{F}}(n,L)$, where `F' stands for error floor, the expression for which is given in \ref{sec:UMACapproximate}. We avoid the large error events by imposing a constraint in the optimization problem that the residual degree-1 check nodes $\tilde{R}_1(y)$ in the initial stages of peeling decoder is bounded away from $0$ by a certain threshold and thus the overall probability of error is well approximated by $P_{\text{b}}^{\text{F}}(n,L)$ alone. We support this claim by providing evidence via simulations.
 
-%We consider the paradigm in which $k^{\text{th}}$ user/bit-node, for $k\in [1:n]$, generates a random variable $D_{k}$ from the probability mass function $L(x)$ independent of other bit nodes or equivalently $\text{Pr}(D_{k}=i)=L_{i}$. Each bit node, after the generation of $D_{k}$, chooses $D_{k}$ time slots/check nodes uniformly at random, with replacement, from the $m$ check nodes available. 
+%We consider the framework in which $k^{\text{th}}$ user/bit-node, for $k\in [1:n]$, generates a random variable $D_{k}$ from the probability mass function $L(x)$ independent of other bit nodes or equivalently $\text{Pr}(D_{k}=i)=L_{i}$. Each bit node, after the generation of $D_{k}$, chooses $D_{k}$ time slots/check nodes uniformly at random, with replacement, from the $m$ check nodes available. 
 
-We will refer to the random access paradigm of picking check nodes randomly but with replacement as \textit{uniform-with replacement} paradigm. Even though the ``uniform-with replacement" allows for multiple edges in the graph, the analysis is made easier because of this assumption. For a given edge, probability that it connects to any of the check nodes is equal to $\frac{1}{m}$. We also believe that the resulting analysis can be easily extended to the ``uniform-without replacement" paradigm where in the $D_{k}$ check nodes are picked uniformly at random, but without replacement from the $m$ check nodes. Note that in Narayanan, Pfister \cite{narayanan2012iterative} consider the `` uniform-without replacement" paradigm. We define the ensemble of graphs for the random multiple access problem as UMAC$(n,\lmb,\eta)$ where $L(x)$ is as described in Eqn.~\eqref{eqn:varnodedd_LDPC}, is related to $\lmb(x)$ via
+We will refer to the random access framework of picking check nodes randomly but with replacement as \textit{uniform-with replacement} framework. Even though the ``uniform-with replacement" allows for multiple edges in the graph, the analysis is made easier because of this assumption. For a given edge, probability that it connects to any of the check nodes is equal to $\frac{1}{m}$. We also believe that the resulting analysis can be easily extended to the ``uniform-without replacement" framework where in the $D_{k}$ check nodes are picked uniformly at random, but without replacement from the $m$ check nodes. Note that in Narayanan, Pfister \cite{narayanan2012iterative} consider the `` uniform-without replacement" framework. Let  variable node d.d. $L(x)$, as described in Eqn.~\eqref{eqn:varnodedd_LDPC} be the distribution according to which the users choose the repetition degree and the edges are chosen according to the ``uniform-without replacement" framework. Under this framework we define the ensemble of graphs for the random multiple access problem as UMAC$(n,\lmb,\eta)$ where $\lmb(x)$ is related to $L(x)$ via
 \begin{align*}
-L(x)=\frac{\int_{0}^{x}\lmb(x)}{\int_{0}^{1}\lmb(x)}.
+L(x)=\frac{\int_{0}^{x}\lmb(x)}{\int_{0}^{1}\lmb(x)},
 \end{align*}
- $\eta$ is the throughput ($n=m\eta$) and the edges are chosen as in the ``uniform-without replacement" paradigm.
+ $\eta$ is the throughput ($n=m\eta$).
 
 \subsection{Error probability approximates}
 \label{sec:UMACapproximate}
 \begin{theorem}[Small error events]
-Consider transmission by users over a noiseless MAC channel according to a graph picked uniformly at random from the UMAC$(n,\lmb,\eta)$ ensemble. Assume that the ensemble has no critical point i.e the degree-one check nodes in the residual graph is a monotonously decreasing function of time. Let $P_{\text{B},s_{min}}^{F}(n,\lmb,\rho,\epsilon)$ denote the expected block erasure probability due to stopping sets of size between $s_{min}$ and  $\gamma n$, where $\gamma\in (0,1)$. Then
+Consider transmission by users over a noiseless MAC channel according to a graph picked uniformly at random from the UMAC$(n,\lmb,\eta)$ ensemble. Assume that the ensemble has single critical point $y^*>0$ and let $\nu^*=\epsilon_{\text{BP}}L(y^*)$. Let $P_{\text{B},s_{\min}}^{F}(n,\lmb,\rho,\epsilon)$ ($P_{\text{b},s_{\min}}^{F}(n,\lmb,\rho,\epsilon)$) denote the expected block (bit) erasure probability due to stopping sets of size between $s_{\min}$ and  $\gamma \nu^*$, where $\gamma\in (0,1)$. Then
 \begin{align}
-P_{\text{B},s_{min}}^{F}(n,\lmb,\rho,\epsilon)=1-e^{-\sum\limits_{s\geq s_{\text{min}}}^{\gamma n}\tilde{A}_{s}}\left(1+o(1)\right),
-\label{Eqn:PBAnalytic}
+P_{\text{B},s_{\min}}^{F}(n,\lmb,\rho,\epsilon)&=1-e^{-\sum\limits_{s\geq s_{\text{min}}}^{\gamma n}\tilde{A}_{s}}\left(1+o(1)\right),\label{Eqn:PBAnalytic}\\
+P_{\text{b}}^{F}(n,\lmb,\rho,\epsilon)&=\sum_{s\geq s_{\min}}s\tilde{A}_{s}\epsilon^s\left(1+o(1)\right),\label{Eqn:PbAnalytic}
 \end{align}
 where $\tilde{A}_{s}=\text{coef}\{\log(A(x)),x^s\}$ for $s\geq 1$, with $A(x)=\sum_{s\geq 0} A_{s}x^s$ and
-\begin{multline}\label{Eqn:AvgSS}
-A_{s}=\sum_{i}\left(\text{coef}\left\lbrace (1+x\sum_{i}L_{i}y^{i})^{n}, x^{s}y^{i} \right\rbrace \right.\times \\
-\left.\frac{\text{coef}\lbrace (e^x -x)^{m},x^{i}\rbrace }{\frac{m^i}{i!}}\right). \\
-\end{multline}
+\begin{align}
+A_{s}=\sum_{i}\left(\text{coef}\left\lbrace (1+x\sum_{i}L_{i}y^{i})^{n}, x^{s}y^{i} \right\rbrace \times \frac{\text{coef}\lbrace (e^x -x)^{m},x^{i}\rbrace }{\frac{m^i}{i!}}\right).\label{Eqn:AvgSS}
+\end{align}
+%\begin{multline}\label{Eqn:AvgSS}
+%A_{s}=\sum_{i}\left(\text{coef}\left\lbrace (1+x\sum_{i}L_{i}y^{i})^{n}, x^{s}y^{i} \right\rbrace \times \frac{\text{coef}\lbrace (e^x -x)^{m},x^{i}\rbrace }{\frac{m^i}{i!}}\right). \\
+%\end{multline}
 \label{Thm:UMACFloor}
 \end{theorem}
+% i.e the degree-one check nodes in the residual graph is a monotonously decreasing function of time. 
 
 \begin{proof}
-We now give only a brief glimpse of the proof, the detailed proof will be added later. We first show that the expression for $A_{s}$ in \eqref{Eqn:AvgSS} is equal to the expected number of stopping sets of size `$s$' in a graph picked uniformly at random from the UMAC($n,\lmb,\eta$) ensemble. The first term is $\binom{n}{s}$ times the probability that $s$ nodes have $e$ edges attached to them and the second term is equal to the probability that the $e$ edges, under the ``uniform-with replacement" paradigm, form a stopping set i.e, they choose check nodes such that none of the check nodes chosen have only one edge connection.
+We first show that the expression for $A_{s}$ in \eqref{Eqn:AvgSS} is equal to the expected number of stopping sets of size `$s$' in a graph chosen uniformly at random from the UMAC($n,\lmb,\eta$) ensemble. The first term is $\binom{n}{s}$ times the probability that $s$ nodes have $i$ edges attached to them and the second term is equal to the probability that the $i$ edges, under the ``uniform-with replacement" framework, form a stopping set i.e, they choose check nodes such that none of the check nodes chosen have only one edge connection.
 
-From there we will try to follow the similar argument as in \cite{richardson2008modern} that for large values of $n$ the minimal stopping sets tend to a Poisson distribution with independent components. And then the relation between $A(x)$ and $\tilde{A}(x)$, expression for block/bit error probability follows along the same lines.
+From there we follow similar argument as in \cite{richardson2008modern} that for large values of $n$ the minimal stopping sets tend to a Poisson distribution with independent components. And then the relation between $A(x)$ and $\tilde{A}(x)$, expression for block/bit error probability follows along the same lines.
 \end{proof}
 
-\begin{remark}
-Even though the condition in Theorem \ref{Thm:UMACFloor} that the degree-1 check nodes in the residual graph decrease monotonously with time is a stringent constraint to be satisfied, we believe that even when the curve of degree-1 check nodes has a stationary  point (curve $\tilde{R}_{1}(y)$ is non-monotonous function of $y$) the expression in Eqn. \eqref{Eqn:AvgSS}  approximates the probability of small error events well enough.
-\end{remark}
+%\begin{remark}
+%Even though the condition in Theorem \ref{Thm:UMACFloor} that the degree-1 check nodes in the residual graph decrease monotonously with time is a stringent constraint to be satisfied, we believe that even when the curve of degree-1 check nodes has a stationary  point (curve $\tilde{R}_{1}(y)$ is non-monotonous function of $y$) the expression in Eqn. \eqref{Eqn:AvgSS}  approximates the probability of small error events well enough.
+%\end{remark}
 
 \subsection{Results}
-We use the following degree distribution, with a maximum degree of 30. Note that we chose this distribution randomly.
+We use the degree distribution given in Eqn.~\eqref{Eqn:L1x} with a maximum degree of 30. Note that we chose this distribution randomly. For parameters $n=1000, m=1300 ( \eta \approx 0.77)$ and $L(x)$ in Eqn. \eqref{Eqn:L1x}, we obtain the following results given in Table.~\ref{Table:SimvsAnalytic1}. Note that $P_{B,s_{\text{min}}}^F$ is computed using the analytic expression given in \eqref{Eqn:PBAnalytic} whereas $P_{B,s_{\text{min}}}^{\text{Sim}}$ is computed using numeric simulations of peeling decoder.
 \begin{multline}
 L_1(x)=0.3x^2+ 0.25 x^3+ 0.2 x^4 + 0.1 x^5+ 0.05 x^{10} + 0.04 x^{15}\\
  + 0.03 x^{20} + 0.02 x^{25}+ 0.01 x^{30}.
 \label{Eqn:L1x}
 \end{multline}
-For the parameters of $n=1000, m=1300( \eta \approx 0.77)$ and $L(x)$ in Eqn. \eqref{Eqn:L1x} we get the following results given in Table.~\ref{Table:SimvsAnalytic1}. Note that $P_{B,s_{\text{min}}}^F$ is computed using the analytic expression given in \eqref{Eqn:PBAnalytic} whereas $P_{B,s_{\text{min}}}^{\text{Sim}}$ is computed using numeric simulations of Peeling decoder.
 
-
-\begin{figure}
-\centering
-\setlength\figurewidth{0.8\columnwidth}
-\setlength\figureheight{0.6\columnwidth}
-\input{data/UMAC/Figures/R1(y)_1000_0.77_L1_L2.tex}
-\caption{$\tilde{R}_{1}(y)$ for UMAC($1000,L(x),0.77$) corresponding to $L_{1,2}(x)$ in Eqn. \eqref{Eqn:L1x}.}
-\label{Fig:UMAC_Residual}
-\end{figure}
-
-\begin{table}
+\begin{table}[!ht]
 \centering
 \begin{tabular}{c c c c c}
 \hline  \hline
@@ -160,9 +154,11 @@ smin & $P_{B,\text{smin}}^F$ & $P_{B,\text{smin}}^{\text{Sim}}$ & $P_{b,\text{sm
 \label{Table:SimvsAnalytic1}
 \end{table}
 
-We notice that the analytic and numerical results are almost in perfect agreement. To justify applying Thm. \ref{Thm:UMACFloor} we verify that most of the error events are of small size, analytically through Fig.~\ref{Fig:UMAC_Residual}. We also verify numerically that the maximum stopping set size we observe is 22 thus rendering an approximation for error probability because of large error events unnecessary. \\
+\begin{remark}
+We notice that the analytic and numerical results are almost in perfect agreement. To justify applying Thm. \ref{Thm:UMACFloor} we verify that most of the error events are of small size, analytically through Fig.~\ref{Fig:UMAC_Residual} by plotting the number of degree-one check nodes in the residual graph. We also verify numerically that the maximum stopping set size we observe is 22 thus rendering an approximation for error probability because of large error events unnecessary. 
+\end{remark}
 
-To verify for another distribution, we perform the experiments for another bit-node distribution given in Eqn. \eqref{Eqn:L2x}. The evolution of residual degree-1 check nodes is given in Fig. \ref{Fig:UMAC_Residual}. The corresponding numeric results obtained via simulations are given in Table. \ref{Table:SimvsAnalytic2}.
+To verify for another distribution, we perform the experiments for another variable node distribution given in Eqn. \eqref{Eqn:L2x}. The evolution of residual degree-one check nodes is given in Fig. \ref{Fig:UMAC_Residual}. The corresponding numeric results obtained via simulations are given in Table. \ref{Table:SimvsAnalytic2}.
 \begin{multline}
 L_{2}(x)=0.3x^2+ 0.25 x^3+ 0.2 x^4 + 0.1 x^5+ 0.05 x^{6} + 0.04 x^{7}\\
  + 0.03 x^{8} + 0.02 x^{10}+ 0.01 x^{20}.
@@ -178,7 +174,7 @@ L_{2}(x)=0.3x^2+ 0.25 x^3+ 0.2 x^4 + 0.1 x^5+ 0.05 x^{6} + 0.04 x^{7}\\
 %\label{Fig:UMAC_Residual_NonMonotonous2}
 %\end{figure}
 
-\begin{table}
+\begin{table}[!ht]
 \centering
 \begin{tabular}{c c c c c}
 \hline  \hline
@@ -197,7 +193,14 @@ smin & $P_{B,s_{\text{min}}}^F$ & $P_{B,s_{\text{min}}}^{\text{Sim}}$& $P_{b,\te
 \caption{Comparison of Probability of Block\textbackslash Bit errors computed analytically and via simulations for $L_2(x)$ given by Eqn. \eqref{Eqn:L2x}, $K=1000, \eta=0.77$.}
 \label{Table:SimvsAnalytic2}
 \end{table}
-
+%\begin{figure}
+%\centering
+%\setlength\figurewidth{0.8\columnwidth}
+%\setlength\figureheight{0.6\columnwidth}
+%\input{data/UMAC/Figures/R1(y)_1000_0.77_L1_L2.tex}
+%\caption{$\tilde{R}_{1}(y)$ for UMAC($1000,L(x),0.77$) corresponding to $L_{1,2}(x)$ in Eqn. \eqref{Eqn:L1x}.}
+%\label{Fig:UMAC_Residual}
+%\end{figure}
 
 %\begin{figure}
 %\centering
@@ -210,7 +213,7 @@ smin & $P_{B,s_{\text{min}}}^F$ & $P_{B,s_{\text{min}}}^{\text{Sim}}$& $P_{b,\te
 %\end{figure}
 
 \subsection{Necessity of large error approximation}
-Obviously the next obvious question we consider is for what parameters does the curve has the monotonic property. We increase the throughput from $\eta=0.77$ to $\eta=0.95$ which equates to $m=1053$ by keeping all other variables in the system same. Before we give the analytic and numeric results, residual graph is given in Fig. \ref{Fig:UMAC_Residual}. Notice that for $y=y^*\in(0.82,0.98)$, the curve is negative implying that with significant probability the error events will be of size concentrating around $\sum_{i}K\tilde{L}_{i}(y^*)$ , and hence the large error events are non negligible. To verify this observation numerically we present the results  $P_{B,\text{smin}}^{\text{Sim}}$ versus $P_{B,\text{smin}}^F$ in Table. \ref{Table:SimvsAnalytic3}.
+The next obvious question we consider is for what parameters does the probability of small error events given in Eqns.~\eqref{Eqn:PBAnalytic} \& \eqref{Eqn:PbAnalytic} is dominated by the large error events and hence is inaccurate estimators of the total probability of error.  We consider the case of increases throughput from $\eta=0.77$ to $\eta=0.95$ which equates to $m=1053$ by keeping all other variables in the system same. Before we look at the analytic and numeric results, consider the evolution of residual graph for $\eta=0.95$ given in Fig. \ref{Fig:UMAC_Residual}. Notice that for $y=y^*\in(0.82,0.98)$, the curve is negative implying that with significant probability the error events will be of size concentrating around $\sum_{i}K\tilde{L}_{i}(y^*)$ , and hence the large error events are non-negligible and in fact will dominate the total error events. To verify this observation numerically we present the results  $P_{B,\text{smin}}^{\text{Sim}}$ versus $P_{B,\text{smin}}^F$ in Table. \ref{Table:SimvsAnalytic3}.
 %\begin{figure}
 %\centering
 %\setlength\figurewidth{0.8\columnwidth}
@@ -220,16 +223,28 @@ Obviously the next obvious question we consider is for what parameters does the 
 %\label{Fig:UMAC_Residual_NonMonotonous}
 %\end{figure}
 
-\begin{table}
+\begin{table}[!ht]
 \centering
 \begin{tabular}{c c c c c}
 \hline  \hline
 smin & $P_{B,\text{smin}}^F$ & $P_{B,\text{smin}}^{\text{Sim}}$& $P_{b,\text{smin}}^{F}$ &$P_{b,\text{smin}}^{\text{Sim}}$\\
 \hline
-2 &   &1 & &0.93\\
-3 &  &1 & &0.93\\
-4 &  &1 & &0.93\\
+2 & 7.91$\times 10^{-2}$  & 1 & $2.13\times 10^{-4}$ &0.93\\
+3 & 2.79$\times 10^{-2}$  & 1 & $1.05\times 10^{-4}$ &0.93\\
+4 & 1.11$\times 10^{-2}$  & 1 & $5.41\times 10^{-5}$ &0.93\\
 \end{tabular}
 \caption{Comparison of Probability of Block\textbackslash Bit errors computed analytically and via simulations for $L_1(x)$ given by Eqn. \eqref{Eqn:L1x}, $K=1000, \eta=0.95$.}
 \label{Table:SimvsAnalytic3}
 \end{table}
+
+\begin{figure}[!ht]
+\centering
+\resizebox{0.9\textwidth}{!}{\input{data/UMAC/Figures/R1(y)_1000_0.77_L1_L2.tex}}
+\caption{$\tilde{R}_{1}(y)$ for UMAC($1000,L(x),0.77$) corresponding to $L_{1,2}(x)$ in Eqn. \eqref{Eqn:L1x}.}
+\label{Fig:UMAC_Residual}
+\end{figure}
+
+
+\section{Conclusion}
+We derived analytic expressions to compute the probability of small error events for the random uncoordinated multiple access problem. We also demonstrated, through numerical simulation, that these analytic expressions are a good estimator for the overall probability of error if the throughput $\eta=\frac{n}{m}$ satisfies certain conditions. The validity of these conditions on throughput can be evaluated by plotting the evolution of residual degree-one check nodes given by the analytic expression in Eqn.~\eqref{Eqn:Residual}.
+%$\eta<\eta^*$ such that at $\eta^*$ the fraction of degree-one check nodes $\tilde{R}(y)$ is bounded away from zero from ,   if such that the , 
