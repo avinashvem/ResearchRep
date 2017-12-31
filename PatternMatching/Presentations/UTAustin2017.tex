@@ -390,6 +390,58 @@ Let us consider the case of an audio signal which is sampled at a moderate sampl
 	 	When $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$) our algorithm has a {\color{blue}sub-linear time} complexity.
 	 \end{block}	
 \end{frame}
+
+
+
+\begin{frame} \frametitle{Improved Result}
+	
+	{\small
+		\begin{table}[h!]
+			\begin{center}
+				\begin{tabular}{|c|c|} 	
+					\hline		
+					\textit{Symbol}		&  \textit{Meaning} \\		
+					\hline
+					$N$           		& Size of the string or database in symbols \\
+					\hline
+					$M = N^{\mu}$       & Length of the query in symbols \\
+					\hline
+					$L = N^\lambda$    &   Number of matches \\
+					\hline
+					$K$             &$\max_{\tau}d_{H}(\xv[\tau:\tau+M-1],\yv)$\\
+					\hline
+					$\eta$             &$\frac{K}{M}$\\
+					\hline
+				\end{tabular}
+			\end{center}
+		\end{table}
+	}	
+	
+	\vspace{-2.5mm}
+	\begin{theorem}
+		Assume that a sketch of $\xv$ can be precomputed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M,~ 0 \leq \eta \leq 1/6$) problems, our algorithm has
+		\begin{itemize}
+		 \item	For $\mu \leq 0.5:$
+		\begin{itemize}
+			\item \alert{Sketching complexity:} 
+			{\color{blue} $O(\frac{N}{M}\log N)=O(N^{1-\mu}\log N)$} \alert{samples}
+			\item \alert{Computational complexity:}
+			{\color{blue}$O(\max(N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N ))$}
+		\end{itemize}	
+		\item	For $\mu > 0.5$ and $\lambda<\mu-0.5$ :
+
+		\begin{itemize}
+			\item \alert{Sketching complexity:} 
+			{\color{blue} $O(\sqrt{N}\log N)$} samples
+			\item \alert{Computational complexity:}
+			{\color{blue}$O(\sqrt{N}\log^2 N)$}
+		\end{itemize}	
+				 		
+			\item a decoder for which $\mbb{P}(\hat{{\mathcal{T}}} \neq \mathcal{T}) \rightarrow 0$ as $N \rightarrow \infty$
+		\end{itemize}
+	\end{theorem}
+\end{frame}
+
 %-------------------------------------------------------------------------------------------------------------
 \begin{frame}\frametitle{Signal Processing View}
 
