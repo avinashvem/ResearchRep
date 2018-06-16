@@ -1,4 +1,4 @@
-function [Vcon,Ccon,Emax]=LDPC_PEG_cnstr(n,m,L,R,repeat_flag)
+function [Vcon,Ccon,Emax,girth]=LDPC_PEG_cnstr(n,m,L,R,repeat_flag)
 % n: Number of bit nodes
 % m: # check nodes
 % L(1,:): left d.d L(x)=\sum L(1,i) x^ldeg(i)
@@ -42,8 +42,7 @@ global repeat
     Vcon(Vcon==0)=Emax+1;
    %}
     assert(sum(ndeg_vec)==sum(mdeg_vec))
-    [Vcon,Ccon,Emax]=ldpc_peg_constr_michael(n,m,ndeg_vec,mdeg_vec);
-    
+    [Vcon,Ccon,Emax,girth]=ldpc_peg_constr_michael(n,m,ndeg_vec,mdeg_vec);  
 if repeat_flag
 %     global repeat
     N=size(Vcon,1); m=size(Ccon,1);
