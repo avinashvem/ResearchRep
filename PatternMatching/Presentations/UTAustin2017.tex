@@ -165,6 +165,24 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 
 	\end{block}
 	 \end{frame}
+%%-------------------------------------------------------------------------------------------------------------
+
+\begin{frame} \frametitle{Sketching Model}
+		\vspace{-10pt}
+	\begin{figure}
+		\includegraphics[width=2.25in]{SketchingModel.pdf}
+	\end{figure}
+	\vspace{-8pt}
+	\begin{block}{Sketch}
+		\begin{itemize}
+			\item Succinct fingerprint (compressed form) of the data - min communication cost
+			\item Allows Pattern Matching without decompression
+			\item Could be both lossless or lossy (probabilistic recovery)
+			\item \alert{Sketching Complexity} - space in bits to store the sketch of database
+            \item \alert{Computational Complexity} - operations to find the matching locations
+		\end{itemize}
+	\end{block}
+\end{frame}
 % ----------------------------------------Notations---------------------------------------
 
 \begin{frame}\frametitle{Notation}
@@ -264,23 +282,6 @@ Let us consider the case of an audio signal which is sampled at a moderate sampl
 \end{frame}
 %%-------------------------------------------------------------------------------------------------------------
 
-\begin{frame} \frametitle{Sketching Model}
-		\vspace{-10pt}
-	\begin{figure}
-		\includegraphics[width=2.5in]{SketchingModel.pdf}
-	\end{figure}
-	\vspace{-8pt}
-	\begin{block}{Sketch}
-		\begin{itemize}
-			\item Succinct fingerprint (compressed form) of the data - min communication cost
-			\item Allows Pattern Matching without decompression
-			\item Could be both lossless or lossy (probabilistic recovery)
-			\item \alert{Sketching Complexity} - space in bits to store the sketch of database
-		\end{itemize}
-	\end{block}
-\end{frame}
-%%-------------------------------------------------------------------------------------------------------------
-
 \begin{frame} \frametitle{Lower Bounds on Sketching Complexity}
 	\begin{block}{Exact Matching:}
 		For a query of length $M = \Omega(\log N)$, any sketching algorithm that can determine the exact matches with a constant probability of error requires \alert{$s = \Omega(n-m)$} bits of memory
@@ -336,8 +337,9 @@ Let us consider the case of an audio signal which is sampled at a moderate sampl
 	 				\item[-] Complexity grows with $|\mc{A}|$ and $K$
 	 			\end{itemize}
 	 		\pause	
-	 		\item {Andoni'13}: $O\left(N^{1-0.359\mu}\right)$ (sub-linear even when $K = O(M)$)
+	 		\item {Andoni, Hassanieh, Indyk and Katabi'13}: Sub-linear for $K = O(M)$
 	 		\begin{itemize}
+                \item[-] \textcolor[rgb]{0.00,0.00,1.00}{$O\left(N^{1-0.359\mu}\right)$ (sub-linear even when $K = O(M)$)}
 	 			\item[-] Combinatorial in nature
 	 		\end{itemize}
 	 	\end{itemize}
@@ -388,6 +390,58 @@ Let us consider the case of an audio signal which is sampled at a moderate sampl
 	 	When $L<\frac{N}{M}$ (i.e. $\lambda<1-\mu$) our algorithm has a {\color{blue}sub-linear time} complexity.
 	 \end{block}	
 \end{frame}
+
+
+
+\begin{frame} \frametitle{Improved Result}
+	
+	{\small
+		\begin{table}[h!]
+			\begin{center}
+				\begin{tabular}{|c|c|} 	
+					\hline		
+					\textit{Symbol}		&  \textit{Meaning} \\		
+					\hline
+					$N$           		& Size of the string or database in symbols \\
+					\hline
+					$M = N^{\mu}$       & Length of the query in symbols \\
+					\hline
+					$L = N^\lambda$    &   Number of matches \\
+					\hline
+					$K$             &$\max_{\tau}d_{H}(\xv[\tau:\tau+M-1],\yv)$\\
+					\hline
+					$\eta$             &$\frac{K}{M}$\\
+					\hline
+				\end{tabular}
+			\end{center}
+		\end{table}
+	}	
+	
+	\vspace{-2.5mm}
+	\begin{theorem}
+		Assume that a sketch of $\xv$ can be precomputed and stored. Then for the {\it exact pattern matching} and {\it approximate pattern matching} (with $K = \eta M,~ 0 \leq \eta \leq 1/6$) problems, our algorithm has
+		\begin{itemize}
+		 \item	For $\mu \leq 0.5:$
+		\begin{itemize}
+			\item \alert{Sketching complexity:} 
+			{\color{blue} $O(\frac{N}{M}\log N)=O(N^{1-\mu}\log N)$} \alert{samples}
+			\item \alert{Computational complexity:}
+			{\color{blue}$O(\max(N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N ))$}
+		\end{itemize}	
+		\item	For $\mu > 0.5$ and $\lambda<\mu-0.5$ :
+
+		\begin{itemize}
+			\item \alert{Sketching complexity:} 
+			{\color{blue} $O(\sqrt{N}\log N)$} samples
+			\item \alert{Computational complexity:}
+			{\color{blue}$O(\sqrt{N}\log^2 N)$}
+		\end{itemize}	
+				 		
+			\item a decoder for which $\mbb{P}(\hat{{\mathcal{T}}} \neq \mathcal{T}) \rightarrow 0$ as $N \rightarrow \infty$
+		\end{itemize}
+	\end{theorem}
+\end{frame}
+
 %-------------------------------------------------------------------------------------------------------------
 \begin{frame}\frametitle{Signal Processing View}
 
@@ -453,6 +507,31 @@ Let us consider the case of an audio signal which is sampled at a moderate sampl
 				\end{columns}
 				
 					
+\end{frame}
+%--------------------------------------------------------------------------------------
+\begin{frame}{Main Idea}
+\begin{figure}[t]
+\centering
+\includegraphics[width=2.5in]{Factorgraph_example}
+\end{figure}
+\begin{columns}
+\column{0.7\textwidth}
+\begin{itemize}
+\item Compute sums of groups of indices
+\item Chinese remainder theorem - unique identification
+\item E.g. $N = 6 = 2 \times 3$, every $i \cong (j_1,j_2)$
+\item Pawar and Ramchandran' 13 - Structured computation through FFT
+\end{itemize}
+\column{0.3\textwidth}
+\begin{tabular}{|c|c|c|}
+  \hline
+  0 & 2 & 4 \\
+  \hline
+  3 & 5 & 1 \\
+  \hline
+%  \caption{}\label{}
+\end{tabular}
+\end{columns}
 \end{frame}
 %--------------------------------------------------------------------------------------
 \begin{frame}{Spectral Estimation}
@@ -576,7 +655,7 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 %--------------------------------------------------------------------------------------
 \def\fracty{0.45}
 \def\fractx{0.8}
-\begin{frame}{Example}
+\begin{frame}{Main idea - $\rv = \underset{\text{\color{red} 3 } } {\mathcal{F}_{N}^{-1}} \ \{ \underset{\text{ \color{red} 1 } }{  \mathcal{F}_{N}\{\xv\}}  \odot \ \underset{\text{ \color{red} 2 } }{ \mathcal{F}_{N}\{\yv'\}}  \}$}
 	%	\begin{figure}[t]
 	%		\centering
 	%		\includegraphics[width=4.8in]{Example_full_framework}
@@ -634,35 +713,35 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 	%
 	%\end{columns}
 \end{frame}
-%---------------------------------------------------------
-\begin{frame}\frametitle{Sparse Fourier Transform Approach}
-	\begin{figure}[t]
-		\centering
-		\scalebox{0.28}{\input{notional_diag.tex}}
-	\end{figure}
-\vspace{-0.2cm}
-	 	\begin{block}{}
-	 		\begin{equation}\label{eqn:Rxy_fourier}\nonumber
-	 		\boxed{\rv = \underset{\text{\color{red} 3 } } {\mathcal{F}_{N}^{-1}} \ \{ \underset{\text{ \color{red} 1 } }{  \mathcal{F}_{N}\{\xv\}}  \odot \ \underset{\text{ \color{red} 2 } }{ \mathcal{F}_{N}\{\yv'\}}  \} }
-	 		\end{equation}
-	 		
-	 		\begin{itemize}
-	 			\item[\color{red} 1.] \textit{\color{blue} Sketch of $\xv$ : }  Assume $ \Xv[l] = \mathcal{F}\{\xv\}$ is precomputed at positions $l \in \mathcal{S}$.
-	 			
-	 			\item[\color{red} 2.] \textit{\color{blue} Sketch of $\yv$:}  Compute $ \Yv'[l] = \mathcal{F}\{\yv'\}$ for $l \in \mathcal{S}$.
-	 			\begin{itemize}
-	 				\item[-] Only $M$ non-zero values in $\yv'$ - Efficient computation (folding and adding)
-	 			\end{itemize}
-	 			
-	 			\item[\color{red} 3.] \textit{\color{blue} Sparse $\mathcal{F}^{-1}$}:
-	 			\begin{itemize}
-	 				\item[-] Robust Sparse Inverse Fourier Transform (RSIDFT)
-	 				\item[-] Efficient Implementation- {\color{blue} sublinear} time and sampling complexity
-	 			\end{itemize}
-	 		\end{itemize}
-	 	\end{block}
-\end{frame}
-
+%%---------------------------------------------------------
+%\begin{frame}\frametitle{Sparse Fourier Transform Approach}
+%	\begin{figure}[t]
+%		\centering
+%		\scalebox{0.28}{\input{notional_diag.tex}}
+%	\end{figure}
+%\vspace{-0.2cm}
+%	 	\begin{block}{}
+%	 		\begin{equation}\label{eqn:Rxy_fourier}\nonumber
+%	 		\boxed{\rv = \underset{\text{\color{red} 3 } } {\mathcal{F}_{N}^{-1}} \ \{ \underset{\text{ \color{red} 1 } }{  \mathcal{F}_{N}\{\xv\}}  \odot \ \underset{\text{ \color{red} 2 } }{ \mathcal{F}_{N}\{\yv'\}}  \} }
+%	 		\end{equation}
+%	 		
+%	 		\begin{itemize}
+%	 			\item[\color{red} 1.] \textit{\color{blue} Sketch of $\xv$ : }  Assume $ \Xv[l] = \mathcal{F}\{\xv\}$ is precomputed at positions $l \in \mathcal{S}$.
+%	 			
+%	 			\item[\color{red} 2.] \textit{\color{blue} Sketch of $\yv$:}  Compute $ \Yv'[l] = \mathcal{F}\{\yv'\}$ for $l \in \mathcal{S}$.
+%	 			\begin{itemize}
+%	 				\item[-] Only $M$ non-zero values in $\yv'$ - Efficient computation (folding and adding)
+%	 			\end{itemize}
+%	 			
+%	 			\item[\color{red} 3.] \textit{\color{blue} Sparse $\mathcal{F}^{-1}$}:
+%	 			\begin{itemize}
+%	 				\item[-] Robust Sparse Inverse Fourier Transform (RSIDFT)
+%	 				\item[-] Efficient Implementation- {\color{blue} sublinear} time and sampling complexity
+%	 			\end{itemize}
+%	 		\end{itemize}
+%	 	\end{block}
+%\end{frame}
+%
 
 %%------------------------------------------------------------------
 %\begin{frame}{Robust Sparse Inverse Fourier Transform(RSIDFT)}
@@ -729,7 +808,7 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 \end{block}
 \end{frame}
 	%--------------------------------------------------------------------------------------
-	\begin{frame}{Aliasing and Sparse Graph Codes}
+	\begin{frame}{Aliasing and Sparse Graph Codes (Pawar and Ramchandran '13)}
 	%\begin{itemize}
 	%
 	%\item Give a simple example that explains how aliasing can induce a Sparse Graph Code.\\ \item Introduce the Tanner Graph for the induced code here (No background required since it is covered in Part I).	
@@ -814,48 +893,48 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 			
 	\end{frame}	
 	%-------------------------------------------------------------------------------------
-	\begin{frame}{FFAST Decoder}
-		
-		%Slide-3: Decoder
-		%\begin{itemize}
-		%	\item Tanner Graph of the induced code with the equations displayed
-		%	\item Explain in few lines how the peeling decoder works for this setup
-		%	\item Include a complete example with graphics that explains the complete FFAST decoder {\bf(if needed)}
-		%\end{itemize}
-		
-%	\begin{columns}
-%			\column{0.50\textwidth}
-%			\begin{figure}[t]
-%				\centering
-%				\includegraphics[width=2.5in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/FFAST_2stages}
+%	\begin{frame}{FFAST Decoder}
+%		
+%		%Slide-3: Decoder
+%		%\begin{itemize}
+%		%	\item Tanner Graph of the induced code with the equations displayed
+%		%	\item Explain in few lines how the peeling decoder works for this setup
+%		%	\item Include a complete example with graphics that explains the complete FFAST decoder {\bf(if needed)}
+%		%\end{itemize}
+%		
+%%	\begin{columns}
+%%			\column{0.50\textwidth}
+%%			\begin{figure}[t]
+%%				\centering
+%%				\includegraphics[width=2.5in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/FFAST_2stages}
+%%			\end{figure}
+%%			\vspace{-6mm}
+%%			\hspace{-1.5in}
+%%			\column{0.50\textwidth}
+%%			
+%%			\begin{figure}[t]
+%%				
+%%				\includegraphics[width=2.45in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
+%%			\end{figure}
+%%			
+%%		\end{columns}
+%			\vspace{-5pt}
+%			\begin{figure}[t]				
+%%\includegraphics[width=3.0in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
+%\resizebox{3.0in}{!}
+%{
+%\input{Factorgraph_example_tilde.tex}
+%}
 %			\end{figure}
-%			\vspace{-6mm}
-%			\hspace{-1.5in}
-%			\column{0.50\textwidth}
-%			
-%			\begin{figure}[t]
-%				
-%				\includegraphics[width=2.45in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
-%			\end{figure}
-%			
-%		\end{columns}
-			\vspace{-5pt}
-			\begin{figure}[t]				
-%\includegraphics[width=3.0in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Factorgraph_example_tilde}
-\resizebox{3.0in}{!}
-{
-\input{Factorgraph_example_tilde.tex}
-}
-			\end{figure}
-
-		\begin{block}{Peeling decoder}
-			\begin{itemize}
-				\item 1 non-zero value among the neighbors of any right node can be recovered
-								
-				\item Iteratively errors can be corrected and analyzed for random non-zero coeffs
-			\end{itemize}
-		\end{block}
-	\end{frame}	
+%
+%		\begin{block}{Peeling decoder}
+%			\begin{itemize}
+%				\item 1 non-zero value among the neighbors of any right node can be recovered
+%								
+%				\item Iteratively errors can be corrected and analyzed for random non-zero coeffs
+%			\end{itemize}
+%		\end{block}
+%	\end{frame}	
 	%-----------------------------------------------------------------------------------------
 	\begin{frame}{FFAST Decoder Example}
 	\only<1-3>{\begin{block}{Example 1}
@@ -863,7 +942,7 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 	    \end{block}	}
 	    \vspace{-7pt}
 		\begin{columns}
-			\only<2-3>{
+			\only<1-3>{
 				\column{0.43\textwidth}
                 \resizebox{2.0in}{!}
                 {
@@ -1113,21 +1192,28 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 	
 		\end{block}}
 
-\only<3>{\begin{block}{Error Probability}
-			\begin{align*}
-			\mbb{P}(\mathcal{E}_{\text{total}}) & \leq &  \mbb{P}(\mathcal{E}_1)~~~~~ & + & \mbb{P}(\mc{E}_2)~~~~~~~~ & + & \mbb{P}(\mc{E}_3)~~~~~~~~\\
-			&\leq & 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}~ & + & 2e^{-N^{\mu+\alpha-1} ~ c_1(\eta)}~ & + &  e^{-c_3 N^{c_4\alpha}}
-			\end{align*}
-			\[\boxed{	\mbb{P}(\mathcal{E}_{\text{total}}) \rightarrow 0  ~~\text{if}~~  \alpha >1-\mu}\]
-		\end{block}
-	     }	
+\only<3>{\begin{block}{Peeling}
+\begin{itemize}
+  \item Peel the known variables
+  \item Repeat the process for doubleton and multiton nodes
+\end{itemize}
+\end{block}
+}
+%\only<3>{\begin{block}{Error Probability}
+%			\begin{align*}
+%			\mbb{P}(\mathcal{E}_{\text{total}}) & \leq &  \mbb{P}(\mathcal{E}_1)~~~~~ & + & \mbb{P}(\mc{E}_2)~~~~~~~~ & + & \mbb{P}(\mc{E}_3)~~~~~~~~\\
+%			&\leq & 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}~ & + & 2e^{-N^{\mu+\alpha-1} ~ c_1(\eta)}~ & + &  e^{-c_3 N^{c_4\alpha}}
+%			\end{align*}
+%			\[\boxed{	\mbb{P}(\mathcal{E}_{\text{total}}) \rightarrow 0  ~~\text{if}~~  \alpha >1-\mu}\]
+%		\end{block}
+%	     }	
 \end{frame}
 %-------------------------------------------------------------------------------------------------
 \begin{frame}{Error Analysis}
 	
 	\only<1>{\begin{block}{Error Events}
 		\begin{itemize}\small
-				\item {\color{blue}$\mathcal{E}_1${-\it Bin Classification}}: Bin is wrongly classified
+				\item {\color{red}$\mathcal{E}_1${-\it Bin Classification}}: Bin is wrongly classified
 				\item {\color{blue}$\mathcal{E}_2${-\it Pos. Identification}}: Position of singleton is identified wrongly, given a singleton
 				\item {\color{blue}$\mathcal{E}_3${-\it Peeling Process}}: Peeling process fails to recover the $L$ significant correlation coefficients, given $\mbb{P}(\mc{E}_1)= \mbb{P}(\mc{E}_2)=0$
 		\end{itemize}
@@ -1159,7 +1245,7 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 	\only<1,3>{\begin{block}{Error Events}
 		\begin{itemize}\small
 				\item {\color{blue}$\mathcal{E}_1${-\it Bin Classification}}: Bin is wrongly classified
-				\item {\color{blue}$\mathcal{E}_2${-\it Pos. Identification}}: Position of singleton is identified wrongly, given a singleton
+				\item {\color{red}$\mathcal{E}_2${-\it Pos. Identification}}: Position of singleton is identified wrongly, given a singleton
 				\item {\color{blue}$\mathcal{E}_3${-\it Peeling Process}}: Peeling process fails to recover the $L$ significant correlation coefficients, given $\mbb{P}(\mc{E}_1)= \mbb{P}(\mc{E}_2)=0$
 		\end{itemize}
 	\end{block}
@@ -1191,23 +1277,23 @@ Solved by {\color{blue}{Baron Gaspard Riche de Prony (1795)}}. Essai éxperiment
 			\end{align}
 	}	
 	
-		\only<3>{\begin{block}{Error Probability}
-			\begin{align*}
-			\mbb{P}(\mathcal{E}_{\text{total}}) & \leq &  \mbb{P}(\mathcal{E}_1)~~~~~ & + & \mbb{P}(\mc{E}_2)~~~~~~~~ & + & \mbb{P}(\mc{E}_3)~~~~~~~~\\
-			&\leq & 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}~ & + & 2e^{-N^{\mu+\alpha-1} ~ c_1(\eta)}~ & + &  e^{-c_3 N^{c_4\alpha}}
-			\end{align*}
-			\[\boxed{	\mbb{P}(\mathcal{E}_{\text{total}}) \rightarrow 0  ~~\text{if}~~  \alpha >1-\mu}\]
-		\end{block}
-	     }	
+%		\only<3>{\begin{block}{Error Probability}
+%			\begin{align*}
+%			\mbb{P}(\mathcal{E}_{\text{total}}) & \leq &  \mbb{P}(\mathcal{E}_1)~~~~~ & + & \mbb{P}(\mc{E}_2)~~~~~~~~ & + & \mbb{P}(\mc{E}_3)~~~~~~~~\\
+%			&\leq & 6e^{-\frac{N^{\mu+\alpha-1}(1-6\eta)^2}{16}}~ & + & 2e^{-N^{\mu+\alpha-1} ~ c_1(\eta)}~ & + &  e^{-c_3 N^{c_4\alpha}}
+%			\end{align*}
+%			\[\boxed{	\mbb{P}(\mathcal{E}_{\text{total}}) \rightarrow 0  ~~\text{if}~~  \alpha >1-\mu}\]
+%		\end{block}
+%	     }	
 \end{frame}
 %----------------------------------------------------------------------------------------------------------------
 \begin{frame}{Error Analysis}
 	
-	\only<1,3>{\begin{block}{Error Events}
+	\only<1->{\begin{block}{Error Events}
 		\begin{itemize}\small
 				\item {\color{blue}$\mathcal{E}_1${-\it Bin Classification}}: Bin is wrongly classified
 				\item {\color{blue}$\mathcal{E}_2${-\it Pos. Identification}}: Position of singleton is identified wrongly, given a singleton
-				\item {\color{blue}$\mathcal{E}_3${-\it Peeling Process}}: Peeling process fails to recover the $L$ significant correlation coefficients, given $\mbb{P}(\mc{E}_1)= \mbb{P}(\mc{E}_2)=0$
+				\item {\color{red}$\mathcal{E}_3${-\it Peeling Process}}: Peeling process fails to recover the $L$ significant correlation coefficients, given $\mbb{P}(\mc{E}_1)= \mbb{P}(\mc{E}_2)=0$
 		\end{itemize}
 	\end{block}
 }
