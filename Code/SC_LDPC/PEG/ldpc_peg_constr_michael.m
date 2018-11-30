@@ -1,4 +1,4 @@
-function [Vcon,Ccon,Emax]=ldpc_peg_constr_michael(n,l,var_deg_vec,check_deg_vec)
+function [Vcon,Ccon,Emax,girth]=ldpc_peg_constr_michael(n,l,var_deg_vec,check_deg_vec)
 
 
 % k=200; % number of information bits

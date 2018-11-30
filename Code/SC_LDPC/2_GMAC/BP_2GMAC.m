@@ -45,7 +45,7 @@ for i=0:maxIters
     E2(E2>20)=20; E2(E2<-20)=-20; E2(abs(E2)<1e-5)=0;
     E1(eMax+1)=Inf;  E2(eMax+1)=Inf;
     
-    %Update at bit node (message to MAC node)
+% Update at bit node (message to MAC node)
     V1_btoc=V1_fromChecks;  V2_btoc=V2_fromChecks;
     
     if mod(i,10)==0
