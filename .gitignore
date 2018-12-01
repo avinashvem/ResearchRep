@@ -18,3 +18,4 @@
 *.xml
 *.pdf
 PatternMatching/Presentations/ITA_2017-blx.bib
+/PatternMatching/Presentations/*.aux
