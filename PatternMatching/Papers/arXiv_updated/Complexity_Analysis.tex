@@ -1,0 +1,44 @@
+\section{Sample and Computational Complexity}
+\label{Sec:Complexity}
+In this section, we will analyze the sketching complexity which is the  number of samples we access from the sketch of the signal $\xv$ stored in the database and the computational complexity as a function of the system parameters.
+
+\subsection{\bf Sample Complexity}\label{subsec:SampleComplexity}
+In each branch of the RSDIFT framework we down-sample the $N$ samples by a factor of $\frac{N}{f_i}$ to get $f_i\approx N^{\alpha}$ samples. We repeat this for a random shift in each branch for $B=O(\log N)$ branches in each stage thus resulting in a total of $O(N^{\alpha}\log N)$ samples per block per stage. We repeat this for $d = \frac{1}{1-\alpha}$ such stages resulting in a total of $dN^{\alpha}\log N$ samples per block. So, the total number of samples is given by
+\begin{align*}
+S&= O \left(dN^{\alpha}\log N\right) =   O(N^{1-\mu}\log N)
+\end{align*}
+
+
+\subsection{\bf Computational Complexity} \label{subsec:ComputationComplexity}
+
+As described in Eq.~\ref{eqn:Rxy_fourier}, the computation of $\rv$ involves three steps:
+\begin{enumerate}
+	\item  Operation - \RNum{1}:
+	Since we assume that the sketch of database $\xv$, $\mathcal{F}_{N}\{\xv\}$, is pre-computed, we do not include this in computational complexity.
+
+	\item  Operation - \RNum{2}:
+	As described in Sec.~\ref{subsec:skteches}, in each branch $(i,j)$, we use a folding based technique to compute the sketch of $\yv$, $\mathcal{F}_{N}\{\yv'\}$ at points in the set $\mc{S}_{i,j}$. The folding technique involves two steps: folding and adding (aliasing) which has a complexity of $O(M)$ computations , and computing $f_i$-point DFTs that takes $O(N^\alpha \log N^{\alpha})$ computations. So, for a total of $dB$ branches the number of computations in this step is given by
+	
+	\begin{align*}
+	 C_{\RNum{2}} \ &= ~  dB ~
+	( \underset{\text{Folding} }{\underbrace{N^{\mu}}} + \ \
+	\underset{\text{Shorter FFTs} }{\underbrace{N^{\alpha} \ \log N^{\alpha}}} \ )\\
+	&= ~O(\max(N^{1-\mu}\log^2 N ,N^{\mu}\log N)).
+	\end{align*}
+	{\textit{Note:}} Folding and adding, for each shift, involves adding $N^{1-\alpha}$ vectors of length $N^{\alpha}$. We know that the length of the query is $M =N^{\mu}$, i.e., the number of non-zero elements in $\yv$ (zero-padded version of the query) is $M$ and hence we only need to compute $M$ additions instead of length of the vector $N$.
+
+	\item  Operation - \RNum{3}:
+	 Computing $\mathcal{F}_{N}^{-1}\{ \xv \}$ involves two parts:\\ RSIFT framework and the decoder. The RSIFT framework involves computing smaller $f_i$ point IDFTs, which takes approximately $O(N^{\alpha} \log N^{\alpha})$ computations in each branch. For a total of $dB$ branches, we get a complexity of $O(dB N^{\alpha}$ $\log N^{\alpha})$. In the decoding process, the dominant computation is from position identification. Each position identification process involves correlating the observation vector of length $B$ with $\frac{N}{f_i} \approx N^{1-\alpha}$ column vectors, which amounts to $B N^{1-\alpha}$ computations. There will be a maximum of $dL$ such position identifications, which gives a complexity of$O(dLBN^{1-\alpha} )$. Now, plugging in $\alpha = 1-\mu$ (condition for vanishing probability of error) the total number of computations involved in this step, $C_{\RNum{1}}$, is given by
+	\begin{align*}	
+	C_{\RNum{3}} \ &=  {d B}  ~(\hspace{-8pt}
+	\underset{\text{Shorter IFFTs /block/stage} }{\underbrace{ O(N^{\alpha}  \log N^{\alpha})}} \hspace{-3pt}+ \underset{\text{Correlations} }{\underbrace{ L~N^{1-\alpha}}})
+	\\
+	&=  O(\max(N^{1-\mu}\log^2 N ,N^{\mu+\lambda}\log N)).
+	\end{align*}
+
+\end{enumerate}
+
+Thus, the total number of computations, $C = \max\{C_{\RNum{2}},C_{\RNum{3}}\} $, is given by
+  \begin{align*}
+  C ~ = O(\max\{N^{1-\mu}\log^2 N, N^{\mu+\lambda}\log N \})
+  \end{align*}
