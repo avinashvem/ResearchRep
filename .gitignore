@@ -18,4 +18,8 @@
 *.xml
 *.pdf
 PatternMatching/Presentations/ITA_2017-blx.bib
+<<<<<<< HEAD
 PatternMatching/Presentations/UTAustin2017-blx.bib
+=======
+/PatternMatching/Presentations/*.aux
+>>>>>>> e2d860a9f276bae738f9646b9fcd7c96ab7cb607

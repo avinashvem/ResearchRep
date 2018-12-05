@@ -49,7 +49,7 @@ At the receiver, under decoder $\mc{D}:\mbb{R}^{n}\rightarrow\Lmb$, let us denot
 \begin{equation*}
  \tx{P}(\mathbf{\lmb},\sigma^{2}):=\Pr\left(\mc{D}(\mathbf{\lmb}+\mathbf{z})\neq  \lmb\right).
 \end{equation*}
-%where $d(\mathbf{x},\mathbf{y})$ is the Euclidean distance between $\mathbf{x}$ and $\mathbf{y}$. 
+%where $d(\mathbf{x},\mathbf{y})$ is the Euclidean distance between $\mathbf{x}$ and $\mathbf{y}$.
 For an infinite lattice $\Lmb$, $\tx{P}(\lmb,\sigma^{2})$ under the minimum Euclidean distance decoder is independent of $\lmb$ and hence the average probability of decoding error for the lattice  $\tx{P}(\Lmb,\sigma^{2})$ is the same as $\tx{P}(\lmb,\sigma^{2})$ for any $\lmb\in \Lmb$. Note that minimum distance decoder is the optimal ML decoder for this problem.
 % \tx{P}(\mathbf{\lmb},\sigma^{2}):=\Pr\left(d(\mathbf{\lmb},\mathbf{\lmb}+\mathbf{z})\geq d(\mathbf{\lmb'},\mathbf{\lmb'}+\mathbf{z}) \text{ for any } \mathbf{\lmb'}\in\Lmb\right),
 
@@ -121,9 +121,9 @@ In this approach we first construct a regular $(d_{v}^{1},d_{c})$ Tanner graph $
 
 Fix $M\in \N$. We place $M d_{c}$ variable nodes at each position in the range $[1: L]\coleq\{1,2,\ldots ,L\}$, $L\in\N$ and $Md_{v}^{1}$ check nodes at each position in the range $[1 : L+w-1]$, where $w\in \N$ is coupling width. At each position divide the $Md_{v}^{1}$ check nodes into $d_{v}^{1}$ groups where each group contains $M$ check nodes. At any position we refer to all check nodes belonging to $k^{\text{th}}$ group as of type $\mc{T}_{k}$. This equates to, at each position,  $Md_{c}$ edges coming from check nodes of type $\mc{T}_{k}$ for all $k\in [1:d_{v}^{1}]$. Similarly, for each variable node, we arbitrarily classify the $d_{v}^{1}$ edges into types, where $k^{\text{th}}$ edge is referred to as type $\mc{E}_{k}$ which equates to $Md_{c}$ edges of each type at any position. For a fixed $k \in [1 : d_{v}^{1}]$, for all $i \in [1 : L]$, each edge of type $\mc{E}_{k}$ at position $i$ is assigned uniformly at random to a type $\mc{T}_{k}$ check node from positions $[i : i+w-1]$. The main idea is that, for each $k\in [1:d_{v}^{1}]$, if we consider the sub-graph containing only the type $\mc{T}_{k}$ check nodes and variable nodes with single edge (type $\mc{E}_{k}$ edges) the above mimics the construction of a $(1,d_{c},L,w)$ ensemble \cite{KudekarUrbanke11} on the sub-graph. This results in a Tanner graph in which every variable node has exactly one edge connected to type $\mc{T}_{k}$ check node, for all $k \in [1: d_{v}^{1}]$. We call such a graph, a \textit{check-uniform connected graph}.
 
-More precisely, the ensemble is defined as follows. Choose $M$ such that $\frac{Md_{c}}{w}$ is a natural number. Fix $k\in[1:d_{v}^{1}]$ and $i\in[1:L]$. Choose a permutation $\pi^{v}_{i,k}$ uniformly at random from the set of permutations on $Md_{c}$ letters. Under arbitrary indexing of the $Md_{c}$ variable nodes at position $i$, for $j\in [0:w-1]$, assign $\mc{E}_{k}$ type edges of $\pi^{v}_{i,k}\left(j\frac{Md_{c}}{w}+1:(j+1)\frac{Md_{c}}{w}\right)$ variable nodes at position $i$ to check nodes at position $i+j$. Under this assignment, ignoring the boundary effects, for each check node type at position $i+j$, the number of edges that come from variable nodes at position $i$ is $\frac{Md_{c}}{w}$, a $w^{\text{th}}$ fraction of the total number of connections. From the check nodes perspective, for $k\in[1:d_{v}^{1}]$, at  each position, distribute these edges according to a permutation $\pi^{c}_{i,k}$ chosen uniformly at random from the set of all permutations on $Md_{c}$ letters. We call the proposed construction as $(d_{v}^{1},d_{c},L,w)$ \textit{check-uniform} SC-LDPC (CU-SC-LDPC) ensemble of codes.  
+More precisely, the ensemble is defined as follows. Choose $M$ such that $\frac{Md_{c}}{w}$ is a natural number. Fix $k\in[1:d_{v}^{1}]$ and $i\in[1:L]$. Choose a permutation $\pi^{v}_{i,k}$ uniformly at random from the set of permutations on $Md_{c}$ letters. Under arbitrary indexing of the $Md_{c}$ variable nodes at position $i$, for $j\in [0:w-1]$, assign $\mc{E}_{k}$ type edges of $\pi^{v}_{i,k}\left(j\frac{Md_{c}}{w}+1:(j+1)\frac{Md_{c}}{w}\right)$ variable nodes at position $i$ to check nodes at position $i+j$. Under this assignment, ignoring the boundary effects, for each check node type at position $i+j$, the number of edges that come from variable nodes at position $i$ is $\frac{Md_{c}}{w}$, a $w^{\text{th}}$ fraction of the total number of connections. From the check nodes perspective, for $k\in[1:d_{v}^{1}]$, at  each position, distribute these edges according to a permutation $\pi^{c}_{i,k}$ chosen uniformly at random from the set of all permutations on $Md_{c}$ letters. We call the proposed construction as $(d_{v}^{1},d_{c},L,w)$ \textit{check-uniform} SC-LDPC (CU-SC-LDPC) ensemble of codes.
 
-Choose a tanner graph uniformly at random from the above described $(d_{v}^{1},d_{c},L,w)$ CU-SC-LDPC ensemble, call it $\mc{G}_{1}$. Observe that, removal of all check nodes of a particular type, say $\mc{T}_{d_{v}^{1}}$, from $\mc{G}_{1}$ results in a regular $(d_{v}^{1}-1,d_{c})$ Tanner graph. One can see that removal of all check nodes of types $\mc{T}_{d_{v}^{2}+1},\mc{T}_{d_{v}^{2}+2},\ldots, \mc{T}_{d_{v}^1} $ from $\mc{G}_{1}$ results in a graph from the $(d_{c},d_{v}^{2},L,w)$ CU-SC-LDPC ensemble, which let's refer to as $\mc{G}_{2}$. More importantly, all the check-nodes in the derived graph $\mc{G}_{2}$ are also contained in $\mc{G}_{1}$ and hence any codeword satisfying all the check constraints in $\mc{G}_{1}$ also satisfies all the check constraints in $\mc{G}_{2}$. Thus we can say that the binary code $\mc{C}_{1}$ defined by $\mc{G}_{1}$ is a sub-code of the binary code $\mc{C}_{2}$ defined by $\mc{G}_{2}$. One can obtain a sequence of nested linear codes $\mc{C}_1\subseteq\mc{C}_2\subseteq\ldots\mc{C}_r$ by repeatedly performing the above operation. Given $(d_{c},d_{v}^{1},\ldots,d_{v}^{r})$, for each code $\mc{C}_{1}$ from the $(d_{c},d_{v}^{1},L,w)$ CU-SC-LDPC ensemble, we can obtain a nested sequence of codes $\mc{C}_1,\mc{C}_2,\ldots,\subseteq\mc{C}_r$ where $\mc{C}_{i} \in (d_{c},d_{v}^{i},L,w)$ CU-SC-LDPC ensemble.  We call the proposed ensemble of nested sequences of codes as $(d_{c},d_{v}^{1},\ldots,d_{v}^{r},L,w)$ CU-SC-LDPC ensemble. 
+Choose a tanner graph uniformly at random from the above described $(d_{v}^{1},d_{c},L,w)$ CU-SC-LDPC ensemble, call it $\mc{G}_{1}$. Observe that, removal of all check nodes of a particular type, say $\mc{T}_{d_{v}^{1}}$, from $\mc{G}_{1}$ results in a regular $(d_{v}^{1}-1,d_{c})$ Tanner graph. One can see that removal of all check nodes of types $\mc{T}_{d_{v}^{2}+1},\mc{T}_{d_{v}^{2}+2},\ldots, \mc{T}_{d_{v}^1} $ from $\mc{G}_{1}$ results in a graph from the $(d_{c},d_{v}^{2},L,w)$ CU-SC-LDPC ensemble, which let's refer to as $\mc{G}_{2}$. More importantly, all the check-nodes in the derived graph $\mc{G}_{2}$ are also contained in $\mc{G}_{1}$ and hence any codeword satisfying all the check constraints in $\mc{G}_{1}$ also satisfies all the check constraints in $\mc{G}_{2}$. Thus we can say that the binary code $\mc{C}_{1}$ defined by $\mc{G}_{1}$ is a sub-code of the binary code $\mc{C}_{2}$ defined by $\mc{G}_{2}$. One can obtain a sequence of nested linear codes $\mc{C}_1\subseteq\mc{C}_2\subseteq\ldots\mc{C}_r$ by repeatedly performing the above operation. Given $(d_{c},d_{v}^{1},\ldots,d_{v}^{r})$, for each code $\mc{C}_{1}$ from the $(d_{c},d_{v}^{1},L,w)$ CU-SC-LDPC ensemble, we can obtain a nested sequence of codes $\mc{C}_1,\mc{C}_2,\ldots,\subseteq\mc{C}_r$ where $\mc{C}_{i} \in (d_{c},d_{v}^{i},L,w)$ CU-SC-LDPC ensemble.  We call the proposed ensemble of nested sequences of codes as $(d_{c},d_{v}^{1},\ldots,d_{v}^{r},L,w)$ CU-SC-LDPC ensemble.
 
 \begin{Remark}\label{Rmk:EquivNestedConstr1}
 Observe that choosing $\mc{G}_{1}$ uniformly at random from the $(d_{c},d_{v}^{1},L,w)$ CU-SC-LDPC ensemble is equivalent to choosing a set of permutations $\Pi_{1}=\{\pi_{i,k}^{c},\pi_{i,k}^{v}: i\in[1:L],k\in[1:d_{v}^{1}]\}$ where each permutation is chosen uniformly at random from the set of permutations on $Md_{c}$ letters. Deriving nested graph $\mc{G}_{2}$ is equivalent to considering just the subset: $\Pi_{2}=\{\pi_{i,k}^{c},\pi_{i,k}^{v}: i\in[1:L],k\in[1:d_{v}^{2}]\}$ of permutations. Hence this construction of nested codes is equivalent to first constructing $\mc{G}_{2}$ by choosing $\Pi_{2}$ and then choosing $\{\pi_{i,k}^{c},\pi_{i,k}^{v}: i\in[1:L], k\in[d_{v}^{2}+1:d_{v}^{1}]\}$ to construct $\Pi_{1}$ or equivalently $\mc{G}_{1}$.
@@ -164,12 +164,12 @@ Let the the required rates be $r_{1}, r_{2}$ , $0<r_{1}<r_{2}<1$. For small enou
 
 In this construction of a nested pair of $\mc{C}_{1}\subseteq \mc{C}_{2}$ with SC-LDPC like structure, we first describe the construction of $\mc{C}_{2}$ and then the procedure of deriving the sub-code $\mc{C}_{1}$. The construction of $\mc{C}_{2}$ is identical to that of the $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble described in \cite{KudekarUrbanke11}. For sake of being self-contained we briefly describe the construction here. For details we refer the reader to  \cite{KudekarUrbanke11}.
 
-Fix $M$ such that $\frac{Md_{v}}{d_{c}^{2}}\in \N$. We place $M$ variable nodes at positions $[1: L]$, $L\in\N$ and $\frac{Md_{v}}{d_{c}^{2}}$ check nodes at positions $[1 : L+w-1]$, where $w\in \N$ is the coupling width. From the variable node perspective we assign the edges such that each of the $d_{v}$ connections of a variable node at position $i$ is chosen uniformly at random from the range $[i : i+w-1]$. Ignoring the boundary effects, the above assignments are such that, for check nodes  at position $i$, the number of edges that come from variable nodes at position $i-j$, $j\in[0:w-1]$ is $\frac{Md_{v}}{w}$. In other words it is exactly $w^{\text{th}}$ fraction of the total number of edges at position $i$. We distribute these edges to $\frac{Md_{v}}{d_{c}^{2}}$ check nodes at position $i$ according to a permutation $\pi_{i}$ chosen uniformly at random from the set of permutations on $Md_{v}$ letters. With this we can also assume that each of the $d_{c}^{2}$ connections of a check node at position $i$ is independently chosen from the range $[i-w+1 : i]$. Until this point the construction is identical to the $(d_{v},d_{c}^{2},L,w)$ ensemble described in \cite{KudekarUrbanke11}, which we hereafter refer to as $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble. 
+Fix $M$ such that $\frac{Md_{v}}{d_{c}^{2}}\in \N$. We place $M$ variable nodes at positions $[1: L]$, $L\in\N$ and $\frac{Md_{v}}{d_{c}^{2}}$ check nodes at positions $[1 : L+w-1]$, where $w\in \N$ is the coupling width. From the variable node perspective we assign the edges such that each of the $d_{v}$ connections of a variable node at position $i$ is chosen uniformly at random from the range $[i : i+w-1]$. Ignoring the boundary effects, the above assignments are such that, for check nodes  at position $i$, the number of edges that come from variable nodes at position $i-j$, $j\in[0:w-1]$ is $\frac{Md_{v}}{w}$. In other words it is exactly $w^{\text{th}}$ fraction of the total number of edges at position $i$. We distribute these edges to $\frac{Md_{v}}{d_{c}^{2}}$ check nodes at position $i$ according to a permutation $\pi_{i}$ chosen uniformly at random from the set of permutations on $Md_{v}$ letters. With this we can also assume that each of the $d_{c}^{2}$ connections of a check node at position $i$ is independently chosen from the range $[i-w+1 : i]$. Until this point the construction is identical to the $(d_{v},d_{c}^{2},L,w)$ ensemble described in \cite{KudekarUrbanke11}, which we hereafter refer to as $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble.
 
 We now will describe the construction of a nested sub-code contained in a code from the above ensemble. Let a graph $\mc{G}_{2}$ be picked uniformly at random from the  $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble and let the binary code defined by this Tanner graph be $\mc{C}_{2}$. Consider a check node $C$ in $\mc{G}_{2}$ and
-% and let's denote the set of bit nodes connected to the check node $c$ as $V_{c}$. 
-replace the check node $C$ by check nodes $C_{1}, C_{2}, \ldots, C_{q}$ where each new check node $C_{i}$ has a degree $d_{c}^{1}$( Recall: $d_{c}^{2}=q d_{c}^{1},q\in \N$, by design). With an arbitrary ordering of the $d_{c}^{2}$ edges incident on $C$, distribute these edges to the new checks $C_{1}, C_{2}, \ldots, C_{q}$ according to a partition $\Pi_{C}$ picked uniformly at random from the set of all ``partitions of a set of $qd_{c}^{2}$ letters into $q$ subsets of equal size''. 
-%the identity permutation of $d_{c}$ leters. permutation $P_{c}$ chosen uniformly at random from the set of all permutations on $d_{c}^{2}$ letters. 
+% and let's denote the set of bit nodes connected to the check node $c$ as $V_{c}$.
+replace the check node $C$ by check nodes $C_{1}, C_{2}, \ldots, C_{q}$ where each new check node $C_{i}$ has a degree $d_{c}^{1}$( Recall: $d_{c}^{2}=q d_{c}^{1},q\in \N$, by design). With an arbitrary ordering of the $d_{c}^{2}$ edges incident on $C$, distribute these edges to the new checks $C_{1}, C_{2}, \ldots, C_{q}$ according to a partition $\Pi_{C}$ picked uniformly at random from the set of all ``partitions of a set of $qd_{c}^{2}$ letters into $q$ subsets of equal size''.
+%the identity permutation of $d_{c}$ leters. permutation $P_{c}$ chosen uniformly at random from the set of all permutations on $d_{c}^{2}$ letters.
 Note that this operation, which we refer to as \textit{check-splitting}, does not alter the degree of  any variable node in the graph. By performing the \textit{check-splitting} operation on all the check nodes in $\mc{G}_{2}$, we derive a regular $(d_{v},d_{c}^{1})$ tanner graph. Let the derived graph be denoted $\mc{G}_{1}$ and let the binary code defined by $\mc{G}_{1}$ be $\mc{C}_{1}$.
 
 \begin{lemma}\label{Lemma:NestedCodes}
@@ -183,11 +183,11 @@ Let $c$ be a check node in $\mc{G}_{2}$ and $\mbf{h}_{c}$ be the  corresponding 
 Consider $\mbf{x}\in\mc{C}_{1}$ and a check node $c\in \mc{G}_{2}$. As $\mbf{x}$ satisfies all the parity-check equations in $\mc{G}_{1}$, $\mbf{h}^{T}_{c_{i}}\cdot \mbf{x}\equiv 0 \mod 2, 1\leq i \leq q$.
 \begin{align*}
 \mbf{h}^{T}_{c}\cdot \mbf{x}&=\left[\mbf{h}^{T}_{c_{1}}+\ldots +\mbf{h}^{T}_{c_{q}}\right] \cdot \mbf{x}\\
-												&\equiv 0 \mod 2. 
+												&\equiv 0 \mod 2.
 \end{align*}
 The above implies $\mbf{h}^{T}_{c}\cdot \mbf{x}\equiv 0 \mod 2, \hspace{0.2cm} \forall c\in \mc{G}_{2}$ and hence $x\in \mc{C}_{2}$.
 \end{IEEEproof}
-One can obtain a sequence of nested linear codes $\mc{C}_1\subseteq\mc{C}_2\subseteq \ldots\subseteq\mc{C}_r$ by repeatedly performing the above operation, starting from $\mc{C}_{r}$. We observe that in this construction, unlike the previous construction, for any code $\mc{C}_{2}$ from the $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble, choice for deriving a sub-code is not unique. The non-uniqueness arises from the fact that for each check node `$c$' the number of choices for the partition $\Pi_{c}$ is not unique and any partition will result in a valid sub-code. We call the set of all $n$-tuples of codes $(\mc{C}_{1},\mc{C}_{2},\ldots,\mc{C}_{r})$, where $\mc{C}_{1}\subseteq \ldots\subseteq\mc{C}_{r}$ derived from the above construction as $(d_{v},d_{c}^{1},\ldots,d_{c}^{r})$ VC-SC-LDPC ensemble of nested codes. Here VC refers to \textit{variable-constant} since the variable degree remains constant across the nested sequence of codes. From here after when a nested chain of codes is referred to as SC-LDPC and no distinction between the constructions CU-SC-LDPC or VC-SC-LDPC is made, we mean that the statement is valid for both the constructions. 
+One can obtain a sequence of nested linear codes $\mc{C}_1\subseteq\mc{C}_2\subseteq \ldots\subseteq\mc{C}_r$ by repeatedly performing the above operation, starting from $\mc{C}_{r}$. We observe that in this construction, unlike the previous construction, for any code $\mc{C}_{2}$ from the $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble, choice for deriving a sub-code is not unique. The non-uniqueness arises from the fact that for each check node `$c$' the number of choices for the partition $\Pi_{c}$ is not unique and any partition will result in a valid sub-code. We call the set of all $n$-tuples of codes $(\mc{C}_{1},\mc{C}_{2},\ldots,\mc{C}_{r})$, where $\mc{C}_{1}\subseteq \ldots\subseteq\mc{C}_{r}$ derived from the above construction as $(d_{v},d_{c}^{1},\ldots,d_{c}^{r})$ VC-SC-LDPC ensemble of nested codes. Here VC refers to \textit{variable-constant} since the variable degree remains constant across the nested sequence of codes. From here after when a nested chain of codes is referred to as SC-LDPC and no distinction between the constructions CU-SC-LDPC or VC-SC-LDPC is made, we mean that the statement is valid for both the constructions.
 
 \begin{Remark}\label{Rmk:EquivNestedConstr2}
 Note that, given a code $\mc{C}_{2}$ from the $(d_{v},d_{c}^{2},L,w)$ SC-LDPC ensemble, deriving a sub-code $\mc{C}_{1}$ is equivalent to choosing a set of partitions: $\{\Pi_{c}: \tx{`}c\text{' is a check node in } \mc{C}_{2}\}$ uniformly at random. Therefore we can say that in this construction, for any choice of $\mc{C}_{2}$ there are equal number of choices for $\mc{C}_{1}$ from the $(d_{v},d_{c}^{1},L,w)$ SC-LDPC ensemble which are all equal likely.
@@ -209,15 +209,15 @@ Denote $\mathbf{Z}_{i}=\{\mathbf{G}_{1},\mathbf{g}_{k_{1}+1},\mathbf{g}_{k_{1}+2
 span$(\mathbf{Z}_{i})$ for $i=1,2, \ldots, k_{2}-k_{1}$. Note that for any $\mathbf{x}\in Y_{i}$, $\mathbf{x}$ is linearly independent with $\mathbf{Z}_{i}$ and hence
 $\mathbf{Z}_{i+1}=\{\mathbf{Z}_{i},\mathbf{g}_{k_{1}+i}\}$ forms a linearly independent set where $\mathbf{g}_{k_{1}+i}=\mathbf{x}$. This recursive procedure gives us a basis $\mathbf{G}_{2}$ for $\mathcal{C}_{2}$. Thus the existence of the generator matrices for nested binary linear codes is shown.
 \end{IEEEproof}
-From Lemma~\ref{Lemma:NestedGeneratorMatrix}, given nested SC-LDPC codes $\mathcal{C}_{1}\subseteq \mathcal{C}_{2}\ldots \subseteq\mathcal{C}_{r}$, one can find a corresponding sequence of nested sets of generator vectors $\mathbf{G}_{1}\subseteq \mathbf{G}_{2} \subseteq \ldots \subseteq\mathbf{G}_{r}$ and hence one can use Construction-D described in \eqref{Eqn:ConstrD} with the proposed nested SC-LDPC codes. We refer to the lattice thus constructed as SC-LDPC lattice. Whenever required, we will make the distinction of the lattice being constructed from nested CU-SC-LDPC (or VC-SC-LDPC) sequence of codes by referring it to as a CU-SC-LDPC lattice (or VC-SC-LDPC lattice). 
+From Lemma~\ref{Lemma:NestedGeneratorMatrix}, given nested SC-LDPC codes $\mathcal{C}_{1}\subseteq \mathcal{C}_{2}\ldots \subseteq\mathcal{C}_{r}$, one can find a corresponding sequence of nested sets of generator vectors $\mathbf{G}_{1}\subseteq \mathbf{G}_{2} \subseteq \ldots \subseteq\mathbf{G}_{r}$ and hence one can use Construction-D described in \eqref{Eqn:ConstrD} with the proposed nested SC-LDPC codes. We refer to the lattice thus constructed as SC-LDPC lattice. Whenever required, we will make the distinction of the lattice being constructed from nested CU-SC-LDPC (or VC-SC-LDPC) sequence of codes by referring it to as a CU-SC-LDPC lattice (or VC-SC-LDPC lattice).
 
 \begin{Discussion}
-For any code from the $(d_{v},d_{c},L,w)$ SC-LDPC ensemble, the design rate can be computed to be 
+For any code from the $(d_{v},d_{c},L,w)$ SC-LDPC ensemble, the design rate can be computed to be
 \begin{align}
 \tx{R}(d_{v},d_{c},L,w)=1-\frac{d_{v}}{d_{c}}\frac{L+w-1}{L}.
 \label{Eqn:DesignRate}
 \end{align}
-Similarly we define the design VNR of the proposed SC-LDPC lattices to be 
+Similarly we define the design VNR of the proposed SC-LDPC lattices to be
 \begin{align*}
 \alpha^{2}_{*}(\Lmb,\sigma^{2})=\frac{2^{2(r-\sum_{i=1}^{r}R_{i})}}{2\pi e\sigma^{2}}.
 \end{align*}
@@ -226,7 +226,7 @@ where $R_{i}$ is the design rate of the $i^{\text{th}}$ code in the nested seque
 \alpha^{2}(\Lmb,\sigma^{2})\leq \alpha^{2}_{*}(\Lmb,\sigma^{2}).
 \label{Eqn:VNRInequality}
 \end{align}
-%they are assumed to be equal (\textbf{Probably a reference for justification?}). 
+%they are assumed to be equal (\textbf{Probably a reference for justification?}).
 \end{Discussion}
 
 
@@ -291,7 +291,7 @@ The proof in Lemma \ref{Lemma:BMSProof1} that AMGN channel is BMS and Remark \re
 We have shown that there exists good codes from the ensembles of both the constructions, where by a `good code' we mean a code with the design rate arbitrarily close to the capacity of the AMGN channel and an arbitrarily small probability of error under BP decoding. But for using Construction-D and to be able to apply Forney's result we need to show existence of nested sequence of codes from the proposed constructions where each code in the sequence is a good code. We show this in the following theorems.
 
 \begin{lemma}\label{Lemma:NestedGoodCodes1}
-Given $r,\sigma^{2}$, for any $\epsilon>0$, there exists $d_{c},d_{v}^{1},\ldots, d_{v}^{r},L,w,$ and a nested sequence of codes $\mc{C}_{1}\subseteq \mc{C}_{2}\subseteq\ldots \subseteq\mc{C}_{r}$ from the $(d_{c},d_{v}^{1},\ldots,d_{v}^{r},L,w)$ CU-SC-LDPC ensemble such that 
+Given $r,\sigma^{2}$, for any $\epsilon>0$, there exists $d_{c},d_{v}^{1},\ldots, d_{v}^{r},L,w,$ and a nested sequence of codes $\mc{C}_{1}\subseteq \mc{C}_{2}\subseteq\ldots \subseteq\mc{C}_{r}$ from the $(d_{c},d_{v}^{1},\ldots,d_{v}^{r},L,w)$ CU-SC-LDPC ensemble such that
 \begin{align}
 \tx{R}(d_{v}^{i},d_{c},L,w)&>\tx{C}_{\text{AMGN}}\left(\sigma^{2}_{i}\right)-5\epsilon, \text{ and} \label{Eqn:RateConditions1}\\
 \tx{P}_{\tx{b}}^{\tx{BP}}\left(\mc{C}_{i},\sigma^{2}_{i}\right)&<\epsilon \hspace{0.5cm}\text{ for }1\leq i \leq r\label{Eqn:Error Prob1},
@@ -308,7 +308,7 @@ It was not only shown in \cite{kudekaruniversal} that any system that satisfies 
 \lim_{n\rightarrow\infty}\mbb{E}_{\mc{C}(n)\in(d_{v},d_{c},L,w)}\left[ \ind_{\{\tx{P}_{\tx{b}}^{\tx{BP}}\left(\mc{C}(n),\sigma^{2}\right)\leq \epsilon\}}\right]=1,
 \label{Corollary:AlmostGoodEnsemble}
 \end{align}
-where the average is over all codes $\mc{C}(n)$ of blocklength `$n$' from the $(d_{v},d_{c},L,w)$ SC-LDPC ensemble under uniform distribution. From Lemma~\ref{Lemma:DE_SCLDPC}, $(d_{v},d_{c},L,w)$ CU-SC-LDPC ensemble satisfies \eqref{Eqn:DE_SCLDPC} and hence \eqref{Corollary:AlmostGoodEnsemble} is valid for the $(d_{v}^{i},d_{c},L,w)$ CU-SC-LDPC ensembles, $i\in\{1,2\}$. Hence we can choose $n$ large enough such that 
+where the average is over all codes $\mc{C}(n)$ of blocklength `$n$' from the $(d_{v},d_{c},L,w)$ SC-LDPC ensemble under uniform distribution. From Lemma~\ref{Lemma:DE_SCLDPC}, $(d_{v},d_{c},L,w)$ CU-SC-LDPC ensemble satisfies \eqref{Eqn:DE_SCLDPC} and hence \eqref{Corollary:AlmostGoodEnsemble} is valid for the $(d_{v}^{i},d_{c},L,w)$ CU-SC-LDPC ensembles, $i\in\{1,2\}$. Hence we can choose $n$ large enough such that
 \begin{align}
 \mbb{E}_{\mc{C}_{i}(n)\in \mc{E}_{i}}\left[	 \ind_{\{\tx{P}_{\tx{b}}^{\tx{BP}}\left(\mc{C}_{i}(n),\sigma^{2}\right)\leq \epsilon\}}\right]\geq 1-\epsilon_{1},
 \label{Eqn:Proof1.1}
@@ -323,7 +323,7 @@ for $i\in \{1,2\}$ where  the the average is over all codes of blocklength $n$ f
 &\leq \tx{Pr}\left[\mc{C}_{2} \tx{ is bad} \right] +\tx{Pr}\left[\mc{C}_{1} \tx{ is bad}\middle\vert \mc{C}_{1} \in \mc{E}_{1}\right] \\
 &\leq 2\epsilon_{1}
  \end{align*}
- where the last inequality follows from%the uniform marginal distribution on $\mc{C}_{1}$ and 
+ where the last inequality follows from%the uniform marginal distribution on $\mc{C}_{1}$ and
  Eq. \eqref{Eqn:Proof1.1}. This not only gives us the existence of a good pair of nested codes arbitrarily close to capacity but also that almost all nested pairs from $(d_{c},d_{v}^{1},d_{v}^{2})$ CU-SC-LDPC ensemble are good.
 \end{IEEEproof}
 
@@ -338,12 +338,12 @@ In the proof of Lemma \ref{Lemma:NestedGoodCodes1}, using Remark \ref{Rmk:Same_D
    For any $\epsilon,\delta>0$, there exists a CU-SC-LDPC lattice $\Lmb$ with $\alpha^2(\Lmb,\sigma^2)<1+\epsilon$ for which, under multistage BP decoding, the average probability of error $\tx{P}(\Lmb,\sigma^{2})<\delta$.
 \end{theorem}
 \begin{IEEEproof}
-We first choose $r$ large enough such that 
+We first choose $r$ large enough such that
 \begin{equation}
 \tx{P}\left(\Z_{2^{r}}^{n},\sigma_{r+1}\right)<\frac{\delta}{r+1},\notag
 \end{equation}
-where $\tx{P}\left(\Z_{2^{r}}^{n},\sigma_{r+1}\right)$ is the average error probability in decoding a point chosen uniformly at random from $\Z_{2^{r}}^{n}$ under minimum distance decoder. 
-Then from Lemma~\ref{Lemma:NestedGoodCodes1}, there exists $(d_{c},d_{v}^{1},\ldots,d_{v}^{r})$ and nested sequence of codes $(\mc{C}_{1}, \mc{C}_{2}, \ldots,\mc{C}_{r})$ from the $(d_{c},d_{v}^{1},\ldots,d_{v}^{r})$ CU-SC-LDPC ensemble such that 
+where $\tx{P}\left(\Z_{2^{r}}^{n},\sigma_{r+1}\right)$ is the average error probability in decoding a point chosen uniformly at random from $\Z_{2^{r}}^{n}$ under minimum distance decoder.
+Then from Lemma~\ref{Lemma:NestedGoodCodes1}, there exists $(d_{c},d_{v}^{1},\ldots,d_{v}^{r})$ and nested sequence of codes $(\mc{C}_{1}, \mc{C}_{2}, \ldots,\mc{C}_{r})$ from the $(d_{c},d_{v}^{1},\ldots,d_{v}^{r})$ CU-SC-LDPC ensemble such that
 \begin{align}
 \tx{R}(d_{v}^{i},d_{c},L,w)&>\tx{C}_{\text{AMGN}}\left(\sigma_{i}\right)-\epsilon_{1}, \text{ and} \\
 \tx{P}_{\tx{b}}^{\tx{BP}}\left(\mc{C}_{i},\sigma_{i}\right)&<\epsilon_{2} \hspace{0.5cm}\text{ for }1\leq i \leq r.
@@ -367,7 +367,8 @@ Although lattices based on both the constructions have shown to be Poltyrev-good
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[trim={0 6cm 0 6cm},clip,width=\columnwidth]{\figures_path/Cap_integer_coset_lattice.pdf}
+%\includegraphics[trim={0 6cm 0 6cm},clip,width=\columnwidth]{\figures_path/Cap_integer_coset_lattice.pdf}
+\includegraphics[width=\columnwidth]{\figures_path/Cap_integer_coset_lattice.pdf}
 \caption{Channel capacity of the AMGN channel}
 \label{Fig:AMGNCapacity}
 \end{figure}
@@ -412,7 +413,7 @@ $(d_{c},d_{v}^{1},d_{v}^{2})$ &(L,w)& $\sigma_{\text{max}}$ &$\text{VNR}^{*}$ &$
 \end{table}
 
 \subsubsection*{Simulation Results}
-Due to symmetry in the lattice the all-zero lattice point is assumed to be transmitted. Instead of plotting the symbol error rate, we focus on determining the thresholds of the resulting lattice under BP decoding. We estimate the BP threshold from simulations by determining the maximum noise variance for which no codeword errors are observed, at each coded level, in simulation of 10 consecutive codewords each of length $2\times 10^{5}$. We calculate the maximum variance $\sigma_{\tx{max}}^{2}$ for which all the levels of the lattice can be decoded given by $\sigma_{\text{max}}=\min(\sigma_{1}^{\text{BP}},2\sigma_{2}^{\text{BP}},\sigma_{3})$, where $\sigma_{1}^{\text{BP}}$ and $\sigma_{2}^{\text{BP}}$ are the respective BP thresholds for the two SC-LDPC codes and $\sigma_{3}^{2}$ is the noise variance at which the uncoded level achieves the target error probability. The VNR threshold is then calculated for the given rates and $\sigma_{\text{max}}$. Thus obtained BP thresholds $\sigma_{1}^{\text{BP}}$, $\sigma_{2}^{\text{BP}}$ for the above codes are $0.3142$ and $0.2161$ respectively which results in a VNR of $1.14$dB ($1.46$dB with rate loss due to termination). The DE predicted values are $0.3184$ and $0.21836$. We observe that the BP thresholds are very close to DE thresholds. i.e., the parameters are large enough to assume that the BP thresholds can be approximated by DE thresholds. Therefore it is reasonable to calculate the VNR thresholds using the DE thresholds. For various SC-LDPC ensembles Table. \ref{Table:Thresholds} gives us the VNR thresholds i.e., the VNRs achievable for respective target error probabilities which are computed using the DE thresholds. Note that the Poltyrev limit is zero dB, thus making the VNR threshold and the gap from Poltyrev limit equivalent. The gap to the Poltyrev limit is primarily due to the fact that there is a mismatch between the capacity of the equivalent channel and the rates that are obtainable for the proposed CU-SC-LDPC ensemble.  
+Due to symmetry in the lattice the all-zero lattice point is assumed to be transmitted. Instead of plotting the symbol error rate, we focus on determining the thresholds of the resulting lattice under BP decoding. We estimate the BP threshold from simulations by determining the maximum noise variance for which no codeword errors are observed, at each coded level, in simulation of 10 consecutive codewords each of length $2\times 10^{5}$. We calculate the maximum variance $\sigma_{\tx{max}}^{2}$ for which all the levels of the lattice can be decoded given by $\sigma_{\text{max}}=\min(\sigma_{1}^{\text{BP}},2\sigma_{2}^{\text{BP}},\sigma_{3})$, where $\sigma_{1}^{\text{BP}}$ and $\sigma_{2}^{\text{BP}}$ are the respective BP thresholds for the two SC-LDPC codes and $\sigma_{3}^{2}$ is the noise variance at which the uncoded level achieves the target error probability. The VNR threshold is then calculated for the given rates and $\sigma_{\text{max}}$. Thus obtained BP thresholds $\sigma_{1}^{\text{BP}}$, $\sigma_{2}^{\text{BP}}$ for the above codes are $0.3142$ and $0.2161$ respectively which results in a VNR of $1.14$dB ($1.46$dB with rate loss due to termination). The DE predicted values are $0.3184$ and $0.21836$. We observe that the BP thresholds are very close to DE thresholds. i.e., the parameters are large enough to assume that the BP thresholds can be approximated by DE thresholds. Therefore it is reasonable to calculate the VNR thresholds using the DE thresholds. For various SC-LDPC ensembles Table. \ref{Table:Thresholds} gives us the VNR thresholds i.e., the VNRs achievable for respective target error probabilities which are computed using the DE thresholds. Note that the Poltyrev limit is zero dB, thus making the VNR threshold and the gap from Poltyrev limit equivalent. The gap to the Poltyrev limit is primarily due to the fact that there is a mismatch between the capacity of the equivalent channel and the rates that are obtainable for the proposed CU-SC-LDPC ensemble.
 
 In the above design, if we target a error probability per dimension of $10^{-6}$  instead, that gives us $\sigma_{r+1}= 0.0999$, capacities for the subsequent levels $\tx{C}_{\tx{AMGN}}(\sigma^{2}_{r})=0.9507$, $\tx{C}_{\tx{AMGN}}(\sigma^{2}_{r-1})=0.3223$ and $\tx{C}_{\tx{AMGN}}(\sigma^{2}_{r-2})=0.0024$. Pair of nested codes from $(60,42,3)$ CU-SC-LDPC ensemble gives us rates $0.3$ and $0.95$ resulting in better matching of the rates (negligible rate loss). The resulting DE thresholds are within $0.203$dB from Poltyrev limit. This is reported in the last row in the table. [Couple of lines - Broadly justifying the VC-SC-LDPC construction] Observe that for these parameters we can use a $(60,4,3)$ VC-SC-LDPC ensemble with the same parameters of $(L=72,w=12)$ gives us codes of rates $0.25$ and $0.95$. Although this results in a slight VNR-loss due to the relatively poor mismatching of rates, in this case BP decoding is carried out on a $(3,4)$ Tanner graph instead of a $(42,60)$ which considerably reduces the complexity of decoding.
 
@@ -524,11 +525,11 @@ In Fig.~\ref{Fig:ShapingLoss}, we plot the achievable rate as a function of $P/\
 \section{Application - Bi-Directional Relay Channel}
 \subsection{Problem Statement}
 We consider the Bi-Directional Relay channel where two users try to communicate with each other with the help of a relay node acting as an intermediate. Objective is to design coding schemes at both the users and forwarding scheme at the relay such that at each user the message intended to be transmitted by the other user can be decoded, given the availability of the noise corrupted forwarded signal from the relay.
-The problem can be very simply described by these three equations: 
+The problem can be very simply described by these three equations:
 \begin{align*}
 y_{R}=a x_{1}+b x_{2}+z \\
 y_{1}=x_{F}+z_{1} \\
-y_{2}=x_{F}+z_{2} 
+y_{2}=x_{F}+z_{2}
 \end{align*}
  are received signals at Relay, and Users 1 and 2 respectively and $x_{F}$ is the signal forwarded by the relay and is a function of the  forwarding scheme we use. For simplicity let's assume that $a,b\in \Z$.
 
@@ -543,7 +544,7 @@ y_{R}=a x_{1}+b x_{2} +z
 \end{align*}
 The additive group structure of the lattice and the fact that $x_{1},x_{2}\in \Lmb_{C}$ gives us $a x_{1}+b x_{2}\in \Lmb_{C}$. Using the multi-stage decoding described previously we decode the lattice point $a x_{1} + b x_{2}\in \Lmb_{C}$. Note that in the decoder we need to do the euclidean decoder in the last stage too since not just the corresponding coset of $a x_{1}+b x_{2}$ suffices but we need the actual lattice point.
 
-%For the forwarding part, we compute 
+%For the forwarding part, we compute
 %\begin{align}
 %x_{F}=a x_{1} +b x_{2} \mod 5\Z^{N}.
 %\end{align}
@@ -569,7 +570,7 @@ The additive group structure of the lattice and the fact that $x_{1},x_{2}\in \L
 % The last step is because $x_{2}\mod 5=x_{2}\in \Lmb_{C}$ and hence we can decode $x_{2}\in \mc{C}$.
 % \subsection{Performance : Analysis}
 % This scheme, will be at a gap of atleast 1.53 dB from the AWGN channel capacity(for a given noise variance $\sigma^{2}$ for the uplink channel). If we can reduce this gap by using some vector quantzation scheme instead of the scalar quantization scheme( hypercube shaping) and at the same time avoid the zero divisor problem, that would be great.\\
-% 
+%
 % Let $\Lmb_{S}$ be the shaping lattice generated using a convolutional code over $Z_{5}^{N}$ and then tessellating it over the entire space using $+5\Z^{N}$. \\
 % Claim 1:We can guarantee that for all $x_{i},x_{j}\in \mc{C}$ and $x_{i}\neq x_{j}$, $x_{i} \mod \Lmb_{S}\neq x_{j}\mod \Lmb_{S}$. \\
 % Claim 2: And also because of the tessellation, $x_{i} \mod \Lmb_{S}= x_{i}+5\mbf{k}\mod \Lmb_{S}$ for any $\mbf{k}\in \Z^{N}$.\\
@@ -582,5 +583,5 @@ The additive group structure of the lattice and the fact that $x_{1},x_{2}\in \L
 %   and there is no guarantee that $(a\lmb_{1}+b\lmb_{2})\mod 5\in \Lmb_{C}\cap \Z_{5}^{N}$ and hence in decoding $a x_{1}+bx_{2}\mod \Lmb_{S}$ we loose the error performance protection afforded by the SC LDPC codes in the Coded Lattice $\Lmb_{C}.$
 %   Hence as of now, the shaping loss of 1.53dB looks unavoidable tif we want to avoid the zero divisor problem.
 \bibliographystyle{ieeetr}
-\bibliography{../../bib/journal_full.bib,../../bib/bib_central.bib}
-\end{document}
+\bibliography{../../bib/journal_full,../../bib/bib_central}
+\end{document} 
