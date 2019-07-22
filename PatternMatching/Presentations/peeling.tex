@@ -1,0 +1,100 @@
+\section{Peeling decoder}
+%%%--------------------------------------------------------------2132nslkjsabdjaf132-------------------------------
+\begin{frame}\frametitle{Tanner Graph - LDPC Code}
+\begin{columns}
+
+\column{0.45\textwidth}
+\begin{defn}{Parity-Check Matrix}
+\centering
+\begin{align*}
+H=
+\begin{pmatrix}
+1 & 0 & 1 & 1 & 0 & 0\\
+1 & 1 & 0 & 0 & 1 & 0\\
+0 & 1 & 1 & 0 & 0 & 1
+\end{pmatrix}
+\end{align*}
+\vspace{6ex}
+\begin{align*}
+\text{LDPC Code } \mc{C}=\{x: H\odot x=0 \}
+\end{align*}
+\end{defn}
+
+\pause
+
+\column{0.45\textwidth}
+\begin{defn}{Tanner Graph}
+\centering
+\vspace{0.6cm}
+\resizebox{\textwidth}{!}{\input{\peeling_figpath/tannergraph}}
+\end{defn}
+
+\end{columns}
+\end{frame}
+
+%--------------------------12314yoi34u9123092u308912------------------------------------------
+\begin{frame}
+\frametitle{Iterative peeling process}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{align*}
+x_1\oplus x_3\oplus x_4&=0\\
+x_1\oplus x_2\oplus x_5&=0\\
+x_2\oplus x_3\oplus x_6&=0
+\end{align*}
+
+\vspace{0.2cm}
+\centering
+\only<2->{\includegraphics[scale=0.15,angle=270]{\peeling_figpath/BECchannelmodel.pdf}}
+
+\column{0.6\textwidth}
+\resizebox{0.9\textwidth}{!}{\input{\peeling_figpath/peelingdecoder_BEC.tex}}
+\end{columns}
+\end{frame}
+
+%--------------------------12314yoi34u9123092u308912------------------------------
+\begin{frame}\frametitle{Threshold behavior}
+\begin{columns}
+\column{0.45\textwidth}
+\begin{defn}{Threshold behavior}
+\begin{itemize}
+\item $N$-variable nodes, $m$-check nodes %$\epsilon$-erasure probability
+\item Fixed dd. ($\ell,r$), $m=\alpha N$, $\exists \epsilon^{*}$
+\begin{align*}
+\lim_{N\rightarrow \infty}\Pr(\mc{E})=0 ~~ \text{ if }\epsilon<\epsilon^*
+\end{align*}
+\item $\Pr(\mc{E})>0$ if $\epsilon>\epsilon^*$
+\end{itemize}
+\end{defn}
+
+\column{0.55\textwidth}
+\includegraphics[width=\textwidth]{\peeling_figpath/BEC_MCT.png}
+\begin{itemize}
+\item $\Pr(\mc{E})$ for (3,6) d.d. for $N=2^i, i=6,\ldots,20$.  $m=N/2$
+\end{itemize}
+
+\end{columns}
+\end{frame}
+
+%--------------------------12314yoi34u9123092u308912------------------------------
+\begin{frame}\frametitle{General framework}
+\begin{columns}
+\column{0.4\textwidth}
+\resizebox{\textwidth}{!}{\input{\peeling_figpath/general_tannergraph.tex}}
+
+\column{0.6\textwidth}
+\begin{itemize}
+\item Need to recover $K$ unknowns$/N$ variables
+\item We know values of $m$ functions $y_1,\ldots,y_m$
+\item via peeling decoder, $m=cK$ sufficient {\tiny ($c>1$)}
+	\begin{itemize}
+	\item $c$ depends on the d.d of the graph, can be evaluated analytically via DE
+	\end{itemize}
+\item Max. $K$ iterations$\implies$ complexity $\mc{O}(K)$
+\pause
+\vspace{5ex}
+\item $f$ has to be {\color{blue} amenable for peeling}
+\end{itemize}
+
+\end{columns}
+\end{frame}

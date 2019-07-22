@@ -1,0 +1,79 @@
+% This file was created by matlab2tikz v0.4.7 running on MATLAB 7.14.
+% Copyright (c) 2008--2014, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% Minimal pgfplots version: 1.3
+%
+% The latest updates can be retrieved from
+%   http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
+% where you can also make suggestions and rate matlab2tikz.
+%
+\begin{tikzpicture}
+\def\fsize{\normalsize}
+\pgfplotsset{every y tick label/.append style={font=\footnotesize}}
+\pgfplotsset{every y tick label/.append style={font=\small}}
+
+\begin{axis}[%
+width=0.85\columnwidth,
+height=0.8\columnwidth,
+scale only axis,
+xmin=0,
+xmax=2000,
+xtick = {0,400,800,...,2000},
+xmajorgrids,
+ymode=log,
+ymin=1e-04,
+ymax=1,
+yminorticks=true,
+ymajorgrids,
+yminorgrids,
+xlabel={\fsize{Number of non-zero coefficients ($K$)}},
+ylabel={\fsize{Probability of error ($P_e$)}},
+legend style={at={(0,0)},anchor=south west,draw=black,fill=white,legend cell align=left,font=\fsize}
+]
+\addplot [color=blue,dashed, mark=square,mark options={solid},line width=1pt]
+  table[row sep=crcr]{ 1	0\\
+51	0 \\
+101	0 \\
+151	1e-3 \\
+201	0.008 \\
+251	0.0180 \\
+301	0.0380 \\	
+351	0.0800\\
+401	0.1560\\
+451	0.2730\\
+501	0.4680\\
+551	0.7240\\
+601	0.9430 \\
+651 1\\
+851 1\\
+1051	1\\
+1251	1\\
+1501	1\\
+1701	1\\
+1951	1\\
+};
+\addlegendentry{$d=2, t=1$, scheme in \cite{scheibler2015fast}};
+
+\addplot [color=red,dashed,line width=1pt,mark=triangle,mark options={solid}]
+  table[row sep=crcr]{ 1	0\\
+  	51		0\\
+  	301		0\\
+  	551		0\\
+  	801		0\\
+  	1051	0\\
+  	1301	0\\
+  	1551	0\\
+  	1601	1e-3\\
+  	1651	0.027\\
+  	1701	0.4160\\
+  	1751	0.9550\\
+  	1801	1\\
+  	1851	1\\
+  	1901	1\\
+  	1951	1\\
+  	};
+\addlegendentry{$d=2, t=2$, proposed scheme};
+
+
+\end{axis}
+\end{tikzpicture}% 
