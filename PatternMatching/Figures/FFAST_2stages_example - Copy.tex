@@ -2,11 +2,11 @@
 \begin{tikzpicture}
 
  % Downsampling blocks
-\node[draw,align=center,thick] at (1.6,5.1) {\Large{$\mathbf{\downarrow} 3$} };
-\node[draw,align=center,thick] at (1.6,6.3) {\Large{$\mathbf{\downarrow} 3$ }};
+\node[draw,align=center,thick] at (1.6,5.1) {\Large{$\mathbf{\downarrow} 5$} };
+\node[draw,align=center,thick] at (1.6,6.3) {\Large{$\mathbf{\downarrow} 5$ }};
 
-\node[draw,align=center,thick] at (1.6,7.9) {\Large{$\mathbf{\downarrow} 2$} };
-\node[draw,align=center,thick] at (1.6,9.1) {\Large{$\mathbf{\downarrow} 2$ }};
+\node[draw,align=center,thick] at (1.6,7.9) {\Large{$\mathbf{\downarrow} 4$} };
+\node[draw,align=center,thick] at (1.6,9.1) {\Large{$\mathbf{\downarrow} 4$ }};
 
 %  Input lines to the down-sampling block
  \draw[->,thick] (0,5.1) -- (1.15,5.1);
@@ -35,11 +35,11 @@
   
   
   % DFT blocks
-\node[draw,align=center,thick] at (10.5,5.1) {\Large{2pt. DFT}};
-\node[draw,align=center,thick] at (10.5,6.3) {\Large{2pt. DFT}};
+\node[draw,align=center,thick] at (10.5,5.1) {\Large{4pt. DFT}};
+\node[draw,align=center,thick] at (10.5,6.3) {\Large{4pt. DFT}};
 
-\node[draw,align=center,thick] at (10.5,7.9) {\Large{3pt. DFT}};
-\node[draw,align=center,thick] at (10.5,9.1) {\Large{3pt. DFT}};
+\node[draw,align=center,thick] at (10.5,7.9) {\Large{5pt. DFT}};
+\node[draw,align=center,thick] at (10.5,9.1) {\Large{5pt. DFT}};
 
 % Connectors
  \draw[->,thick] (2.05,9.1) -- (9.25,9.1);
@@ -56,17 +56,17 @@
  
  
   % Labels
-  \node[draw=none,align=center] at (-1.6,9.5) {\Large{$R=(R[0],R[1], \ldots, R[5])$}};
+  \node[draw=none,align=center] at (-1.6,9.5) {\Large{$x=(x[0],x[1], \ldots, x[19])$}};
   
-  \node[draw=none,align=center] at (5.7,9.5) {\Large{$X_{s}=(R[0],R[2],R[4])$}};
-  \node[draw=none,align=center] at (5.7,8.3) {\Large{$X_{s}=(R[1],R[3],R[5])$}};
-  \node[draw=none,align=center] at (5.6,6.7) {\Large{$Z_{s}=(R[0],R[3])$}};
-  \node[draw=none,align=center] at (5.6,5.5) {\Large{$Z_{s}=(R[1],R[4])$}};
+  \node[draw=none,align=center] at (5.7,9.5) {\Large{$x_{s}=(x[0],x[4],x[8],x[12],x[16])$}};
+  \node[draw=none,align=center] at (5.7,8.3) {\Large{$x_{s}=(x[1],x[5],x[9],x[13],x[17])$}};
+  \node[draw=none,align=center] at (5.6,6.7) {\Large{$z_{s}=(x[0],x[5],x[10],x[15])$}};
+  \node[draw=none,align=center] at (5.6,5.5) {\Large{$z_{s}=(x[1],x[6],x[11],x[16])$}};
   
-  \node[draw=none,align=center] at (14.3,9.5) {\Large{$x_{s}=(x_{s}[0],\ldots,x_{s}[2])$}};
-  \node[draw=none,align=center] at (14.3,8.3) {\Large{$\tilde{x_{s}}=(\tilde{x_{s}}[0],\ldots,\tilde{x_{s}}[2])$}};
-  \node[draw=none,align=center] at (14.3,6.7) {\Large{$z_{s}=(z_{s}[0],\ldots,z_{s}[1])$}};
-  \node[draw=none,align=center] at (14.3,5.5) {\Large{$\tilde{z_{s}}=(\tilde{z_{s}}[0],\ldots,\tilde{z_{s}}[1])$}};
+  \node[draw=none,align=center] at (14.3,9.5) {\Large{$X_{s}=(X_{s}[0],\ldots,X_{s}[4])$}};
+  \node[draw=none,align=center] at (14.3,8.3) {\Large{$\tilde{X_{s}}=(\tilde{X_{s}}[0],\ldots,\tilde{X_{s}}[4])$}};
+  \node[draw=none,align=center] at (14.3,6.7) {\Large{$Z_{s}=(Z_{s}[0],\ldots,Z_{s}[3])$}};
+  \node[draw=none,align=center] at (14.3,5.5) {\Large{$\tilde{Z_{s}}=(\tilde{Z_{s}}[0],\ldots,\tilde{Z_{s}}[3])$}};
   
   \node [draw=none] at (-2,5.1) {\Huge${\vdots}$} ;
   

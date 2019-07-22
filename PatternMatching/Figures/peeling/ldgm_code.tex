@@ -1,0 +1,42 @@
+\begin{tikzpicture}
+  [
+  node distance = 12mm, draw=black, thick, >=stealth',
+  bitnode/.style={circle, inner sep = 0pt, minimum size = 3.5mm, draw=black},
+  checknode/.style={rectangle, inner sep = 0pt, minimum size = 4mm, draw=black},
+  ]
+  
+  \foreach \x in {1,2,...,4} {
+    \node[bitnode] (b\x) at (\x,0) {$m_{\x}$};
+  }
+
+  \foreach \x in {1,...,6} {
+    \node[checknode] (cc\x) at (\x-1,+2) {};
+    \node[bitnode,fill=gray] (b1\x) at (\x-1,+3) {};
+	\node[above] at (b1\x.north)  {$x_{\x}$};
+    \draw[thin] (cc\x.north) -- (b1\x.south);
+  }
+
+  \draw[thin] (cc1) -- (b1);
+  \draw[thin] (cc1) -- (b3);
+  \draw[thin] (cc2) -- (b1);
+  \draw[thin] (cc2) -- (b4);
+  \draw[thin] (cc3) -- (b2);
+  \draw[thin] (cc3) -- (b3);
+  \draw[thin] (cc4) -- (b2);
+  \draw[thin] (cc4) -- (b4);
+  \draw[thin] (cc5) -- (b1);
+  \draw[thin] (cc5) -- (b2);
+  \draw[thin] (cc6) -- (b3);
+  \draw[thin] (cc6) -- (b4);
+  
+  \draw[<->] (3.5,0.2) to [bend left=30] (4.5,0.45)  node [right] {\Large $\ell$};
+  \draw[<->] (4.5,1.8) to [bend right=25] (5,1.45) node [right] {\Large $r$};
+
+
+
+\end{tikzpicture}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End: 
