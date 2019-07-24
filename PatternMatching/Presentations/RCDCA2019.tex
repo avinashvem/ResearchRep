@@ -475,29 +475,45 @@ Shifting, sub-sampling $\xrightarrow{M-DFT}$ weighted linear combinations of $X[
 	
 		\begin{block}{}
 			\begin{figure}[t]
-				\centering
-				%\includegraphics[width=3.1in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/X_DFT}
-                \includegraphics[width=3.1in]{X_DFT}
+				\begin{center}
+					\resizebox{1.0\textwidth}{!}{\input{X_DFT_bold.tex}}
+				\end{center}
 			\end{figure}
+%			\begin{figure}[t]
+%				\centering
+%				%\includegraphics[width=3.1in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/X_DFT}
+%                \includegraphics[width=3.1in]{X_DFT}
+%			\end{figure}
 		\end{block}
 		\pause
 		\begin{columns}
 			
 			\column{.47\textwidth}
 			\begin{block}{{\small $\color{red}x_s$:\ Sub-sampled by $f_1=P_1=2$}}
-				\begin{figure}[t]
-					\centering
-					%\includegraphics[width=2.3in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Xs}
-					\includegraphics[width=2.3in]{Xs}
+					\begin{figure}[t]
+					\begin{center}
+						\resizebox{1.0\textwidth}{!}{\input{Xs_bold.tex}}
+					\end{center}
 				\end{figure}
+%				\begin{figure}[t]
+%					\centering
+%					%\includegraphics[width=2.3in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Xs}
+%					\includegraphics[width=2.3in]{Xs}
+%				\end{figure}
 			\end{block}
 			\pause
 			\begin{block}{{\small$\color{red}z_s$:\ Sub-sampled by $f_2=P_2=3$}}
+				
 				\begin{figure}[t]
-					\centering
-					%\includegraphics[width=2.3in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Zs}
-					\includegraphics[width=2.3in]{Zs}
+					\begin{center}
+						\resizebox{1.0\textwidth}{!}{\input{Zs_bold.tex}}
+					\end{center}
 				\end{figure}
+%				\begin{figure}[t]
+%					\centering
+%					%\includegraphics[width=2.3in]{C:/Users/nrkri/Dropbox/Work/RESEARCH/Presentations/NASIT2016/Figures/Zs}
+%					\includegraphics[width=2.3in]{Zs}
+%				\end{figure}
 			\end{block}
 			\pause
 %			\column{.47\textwidth}
@@ -512,7 +528,7 @@ Shifting, sub-sampling $\xrightarrow{M-DFT}$ weighted linear combinations of $X[
 			\begin{block}{\small Factor graph}
 				\begin{figure}[t]
 					\begin{center}
-						\resizebox{1.0\textwidth}{!}{\input{Factorgraph_example.tex}}
+						\resizebox{1.0\textwidth}{!}{\input{Factorgraph_example_bold.tex}}
 					\end{center}
 				\end{figure}
 
@@ -528,26 +544,41 @@ Shifting, sub-sampling $\xrightarrow{M-DFT}$ weighted linear combinations of $X[
 	
 	\begin{block}{$N = P_1 \times P_2 = 2 \times 3$}
 		\begin{figure}[t]
-			\centering
-			\includegraphics[width=3.1in]{X_DFT}
+			\begin{center}
+				\resizebox{1.0\textwidth}{!}{\input{X_DFT_bold.tex}}
+			\end{center}
 		\end{figure}
+%		\begin{figure}[t]
+%			\centering
+%			\includegraphics[width=3.1in]{X_DFT}
+%		\end{figure}
 	\end{block}
 	
 	\begin{columns}
 		
 		\column{.47\textwidth}
 		\begin{block}{{\small $\color{red}x_s$:\ Sub-sampled by $f_1=P_1=2$}}
-			\begin{figure}[t]
-				\centering
-				\includegraphics[width=2.3in]{Xs_shift}
+				\begin{figure}[t]
+				\begin{center}
+					\resizebox{1.0\textwidth}{!}{\input{Xs_shift_bold.tex}}
+				\end{center}
 			\end{figure}
+%			\begin{figure}[t]
+%				\centering
+%				\includegraphics[width=2.3in]{Xs_shift}
+%			\end{figure}
 		\end{block}
 		
 		\begin{block}{{\small$\color{red}z_s$:\ Sub-sampled by $f_2=P_2=3$}}
-			\begin{figure}[t]
-				\centering
-				\includegraphics[width=2.3in]{Zs_shift}
+				\begin{figure}[t]
+				\begin{center}
+					\resizebox{1.0\textwidth}{!}{\input{Zs_shift_bold.tex}}
+				\end{center}
 			\end{figure}
+%			\begin{figure}[t]
+%				\centering
+%				\includegraphics[width=2.3in]{Zs_shift}
+%			\end{figure}
 		\end{block}
 		
 		\column{.47\textwidth}
@@ -555,7 +586,7 @@ Shifting, sub-sampling $\xrightarrow{M-DFT}$ weighted linear combinations of $X[
 			
 			\begin{figure}[t]
 				\begin{center}
-					\resizebox{1.0\textwidth}{!}{\input{Factorgraph_example_tilde.tex}}
+					\resizebox{1.0\textwidth}{!}{\input{Factorgraph_example_tilde_bold.tex}}
 					\end{center}
 				\end{figure}
 %			\begin{figure}[t]
@@ -872,7 +903,7 @@ For the exact matching case, choose $F^{d-1}=\delta N^\alpha$ where $\delta$ are
 			
 			\resizebox{0.7\textwidth}{!}{\input{sim_results_M_10_7.tex}}	
 				\end{center}
-			\caption{Plot of Probability of Missing a Match vs. Sample Gain for Exact Matching of a substring of length $M=10^5$($\mu=0.41$) from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{5}$ blocks each of length $\tilde{N}=10^7$. The substring was simulated to repeat in $L=10^6$($\lambda=0.5$) locations uniformly at random.}
+			\caption{Plot of Probability of missing a match vs. Sample gain for exact matching of a substring of length $M=10^5$($\mu=0.41$) from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{5}$ blocks each of length $\tilde{N}=10^7$. The substring was simulated to repeat in $L=10^6$($\lambda=0.5$) locations uniformly at random.}
 	
 \end{figure}}
 
@@ -880,7 +911,7 @@ For the exact matching case, choose $F^{d-1}=\delta N^\alpha$ where $\delta$ are
 	\begin{center}
 		\resizebox{0.7\textwidth}{!}{\input{sim_results_M_10_3.tex}}	
 	\end{center}
-	\caption{Plot of Probability of Missing a Match vs. Sample Gain for Exact Matching of a substring of length $M=10^3$($\mu=0.25$) from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{6}$ blocks each of length $\tilde{N}=10^6$. The substring was simulated to repeat in $L=10^6$($\lambda=0.5$) locations uniformly at random.}
+	\caption{Plot of Probability of missing a match vs. Sample gain for exact matching of a substring of length $M=10^3$($\mu=0.25$) from a equiprobable  binary \{+1,-1\} sequence of length $N= 10^{12}$, divided into $G=10^{6}$ blocks each of length $\tilde{N}=10^6$. The substring was simulated to repeat in $L=10^6$($\lambda=0.5$) locations uniformly at random.}
 	
 \end{figure}}
 \end{frame}
