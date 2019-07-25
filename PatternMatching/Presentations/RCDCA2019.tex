@@ -141,14 +141,13 @@ Joint work with Nagaraj T. Janakiraman, Avinash Vem, J.-F. Chamberland \\
 	\begin{block}{}
 \begin{itemize}\itemsep5pt
 	\item {\color{blue} Database/String}: $\xv = [x[0], x[1], \cdots, x[N-1]]$ \ (length $N$)
-	\item { \color{blue} Query/Substring}: $\yv = [y[0], y[1], \cdots, y[M-1]]$ \ (length $M = N^\mu$)
-	\item {\color{blue} Signal Model:} When $\yv$ does not match with $\xv$, $\xv$ and $\yv$ are uncorrelated
+	\item { \color{blue} Query/Substring}: $\yv = [y[0], y[1], \cdots, y[M-1]]$ \ (length $M$)
+    \item Determine ({\color{blue}with high probability}) the locations where $\yv$ matches with $\xv$ 
 \end{itemize}
 \end{block}
 
 \vspace{-3pt}
 \only<2>{\begin{block}{}
-Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau_2, \cdots \tau_L]$ with  {\color{blue}high probability}  where
 	\begin{enumerate}
 		\item \alert{Exact Matching}:~  $\yv$ appears {\color{blue}exactly} in $\xv$
 		\begin{itemize}
@@ -161,7 +160,6 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 				\item [-] $\bv$ is a noise sequence with $d_H(\yv,\xv[\tau:\tau+M-1]) \leq K$
 		\end{itemize}
 	\end{enumerate}
-
 	\end{block}
 }
 \only<3>{
@@ -173,7 +171,15 @@ Determine all the {\color{blue} $L$ locations} $\underline{\tau} = [\tau_1, \tau
 	\end{block}
 
 }
-	 \end{frame}
+\only<4>{
+\begin{block}{Signal model}
+		\begin{itemize}
+			\item When $\yv$ does not match with $\xv$, $\xv[\tau:\tau+M-1]$ and $\yv$ are uncorrelated
+            \item To keep things simple assume $\xv$ is a i.i.d. sequence of $\pm 1$s
+		\end{itemize}
+\end{block}
+}
+\end{frame}
 %%-------------------------------------------------------------------------------------------------------------
 
 %\begin{frame} \frametitle{Sketching Model}
@@ -739,7 +745,7 @@ Shifting, sub-sampling $\xrightarrow{M-DFT}$ weighted linear combinations of $X[
 			\omega^{k}_{2} & \omega^{(k+f_i)}_{2} & \ldots & \omega^{(k+(g_i-1)f_i)}_{2}   \\
 			\vdots & \vdots & \ddots & \vdots\\
 			\omega^{k}_{B} & \omega^{(k+f_i)}_{B} & \ldots & \omega^{(k+(g_i-1)f_i)}_{B} \\
-			\end{bmatrix} 
+			\end{bmatrix}
 			\begin{bmatrix}
 			r[k+(0)f_i] \\
 			r[k+(1)f_i] \\
